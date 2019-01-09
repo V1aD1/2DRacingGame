@@ -2,6 +2,19 @@
 //from being included multiple times into a single translation unit
 #pragma once
 
-void Log(const char* message);
+class Log {
+public:
+	const int LogLevelError = 0;
+	const int LogLevelWarning = 1;
+	const int LogLevelInfo = 2;
 
-struct Player {};
+
+private:
+	int logLevel = LogLevelInfo;
+
+public:
+	void SetLevel(int level);
+	void Error(const char* message);
+	void Warn(const char* message);
+	void Info(const char* message);
+};
