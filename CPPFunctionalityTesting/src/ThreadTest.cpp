@@ -1,6 +1,6 @@
 #include <iostream>
 #include <thread>
-#include "ThreadTest.h"
+#include "include/ThreadTest.h"
 
 static bool s_Finished = false;
 

@@ -22,10 +22,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Log.h">
+    <ClInclude Include="src\include\Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ThreadTest.h">
+    <ClInclude Include="src\include\ThreadTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

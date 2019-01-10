@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 
-#include "EventHandler.h"
+#include "include/EventHandler.h"
 
 int main()
 {

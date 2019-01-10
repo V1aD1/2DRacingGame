@@ -5,7 +5,7 @@
 #include <iostream>
 #include <thread>
 
-#include "ThreadTest.h"
+#include "include/ThreadTest.h"
 
 //#define replaces all instances of textToReplace with replacementText
 #define textToReplace replacementText
