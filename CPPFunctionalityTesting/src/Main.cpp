@@ -3,19 +3,29 @@
 
 //#include literally copies the specified contents into this file
 #include <iostream>
-#include "Log.cpp"
+#include <thread>
+
+#include "ThreadTest.h"
 
 //#define replaces all instances of textToReplace with replacementText
 #define textToReplace replacementText
 
-#define 
+void ThreadTest() {
+	std::cout << "Main thread id = " << std::this_thread::get_id() << std::endl;
+
+	std::thread worker(DoWork);
+
+	std::cin.get();
+	FinishWork();
+
+	worker.join();
+
+	std::cout << "Continuing main thread with id = " << std::this_thread::get_id() << std::endl;
+
+	std::cout << "Press ENTER to exit program" << std::endl;
+	std::cin.get();
+}
 
 int main() {
-	
-	Log log;
-
-	log.SetLevel(1);
-	log.Warn("Warning");
-	
-	std::cin.get();
+	ThreadTest();
 }
