@@ -21,11 +21,26 @@ void ThreadTest() {
 	worker.join();
 
 	std::cout << "Continuing main thread with id = " << std::this_thread::get_id() << std::endl;
+}
+
+//templates generate code according to the specified template
+template <typename T>
+void TemplatePrint(T value) {
+	std::cout << value << std::endl;
+}
+
+template <typename T, int N>
+class TemplateArray {
+private:
+	T m_Array[N];
+
+public:
+	int GetSize() const { return N; }
+
+};
+
+int main() {
 
 	std::cout << "Press ENTER to exit program" << std::endl;
 	std::cin.get();
-}
-
-int main() {
-	ThreadTest();
 }
