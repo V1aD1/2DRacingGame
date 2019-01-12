@@ -14,6 +14,10 @@ void EventHandler::HandleResize(int width, int height) {
 	std::cout << "New height: " << height << std::endl;
 }
 
+void EventHandler::HandleInput() {
+
+}
+
 EventHandler::~EventHandler()
 {
 }
