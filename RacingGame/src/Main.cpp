@@ -7,6 +7,11 @@
 #include "include/Car.h"
 
 static const sf::Int32 fpsRefreshMs = 1000;
+static bool upFlag = false;
+static bool downFlag = false;
+static bool leftFlag = false;
+static bool rightFlag = false;
+
 
 bool Setup(sf::RenderWindow& window, sf::Text& fpsText, sf::Font& font) {
 	sf::ContextSettings settings;
@@ -63,32 +68,32 @@ int main()
 				if (event.key.code == sf::Keyboard::Escape)				
 					window.close();
 				
-				if (event.key.code == sf::Keyboard::Up) 
-					car.Accelerate(dtMillis, true);				
+				if (event.key.code == sf::Keyboard::Up)
+					upFlag = true;
 				
 				if (event.key.code == sf::Keyboard::Down)
-					car.Accelerate(dtMillis, false);
+					downFlag = true;
 
-				if (event.key.code == sf::Keyboard::Left) 
-					car.Rotate(dtMillis, true);	
+				if (event.key.code == sf::Keyboard::Left)
+					leftFlag = true;
 				
 				if (event.key.code == sf::Keyboard::Right)
-					car.Rotate(dtMillis, false);
+					rightFlag = true;
 
 				break;
 
 			case sf::Event::KeyReleased:
 				if (event.key.code == sf::Keyboard::Up)
-					car.Accelerate(dtMillis, true);
+					upFlag = false;
 
 				if (event.key.code == sf::Keyboard::Down)
-					car.Accelerate(dtMillis, false);
+					downFlag = false;
 
 				if (event.key.code == sf::Keyboard::Left)
-					car.Rotate(dtMillis, true);
+					leftFlag = false;
 
 				if (event.key.code == sf::Keyboard::Right)
-					car.Rotate(dtMillis, false);
+					rightFlag = false;
 
 			case sf::Event::Resized:
 				EventHandler::HandleResize(event.size.width, event.size.height);
@@ -104,16 +109,16 @@ int main()
 
 		}
 
-		if (event.key.code == upflag)
+		if (upFlag)
 			car.Accelerate(dtMillis, true);
 
-		if (event.key.code == downflag)
+		if (downFlag)
 			car.Accelerate(dtMillis, false);
 
-		if (event.key.code == leftflag)
+		if (leftFlag)
 			car.Rotate(dtMillis, true);
 
-		if (event.key.code == rightflag)
+		if (rightFlag)
 			car.Rotate(dtMillis, false);
 
 		window.clear();
