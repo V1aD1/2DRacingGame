@@ -8,13 +8,7 @@
 
 static const sf::Int32 fpsRefreshMs = 1000;
 
-static sf::RenderWindow window;
-static sf::Text fpsText;
-static sf::Font font;
-
-static EventHandler eventHandler;
-
-bool Setup() {
+bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText) {
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
 	
@@ -37,8 +31,14 @@ bool Setup() {
 
 int main()
 {
+	sf::RenderWindow window;
+	sf::Text fpsText;
+	sf::Font font;
 
-	if (!Setup()) {
+	EventHandler eventHandler;
+
+
+	if (!Setup(window, font, fpsText)) {
 		std::cout << "Problems encountered in setup, terminating program!" << std::endl;
 		return 0;
 	}

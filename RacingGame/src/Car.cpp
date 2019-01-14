@@ -1,4 +1,7 @@
+#define _USE_MATH_DEFINES
+
 #include <iostream>
+#include <cmath>
 
 #include <SFML/Graphics.hpp>
 
@@ -27,10 +30,16 @@ Car::Car(float posX, float posY)
 
 void Car::Rotate(float dtTimeMilli, bool left)
 {
-	if(left)
-		shape.rotate(-1 * rotationSpeed * (dtTimeMilli / 1000.0f));
-	else
-		shape.rotate(rotationSpeed * (dtTimeMilli / 1000.0f));
+	int direction = 1;
+	if (left) { direction = -1; }
+	
+	rotDeg += direction * rotationSpeed * (dtTimeMilli / 1000.0f);
+	shape.setRotation(rotDeg);
+	
+	rotRad = (rotDeg * M_PI) / 180.0f;
+
+	//determine new direction vector base on new rotation
+	forwardDir = sf::Vector2f(std::cos(rotRad), std::sin(rotRad));
 }
 
 void Car::Accelerate(float dtTimeMilli, bool forward)
@@ -46,8 +55,7 @@ void Car::Update(sf::RenderWindow& window, float dtTimeMilli)
 	float dtSec = dtTimeMilli / 1000.0f;
 	shape.move(currentSpeed * forwardDir.x * dtSec, currentSpeed * forwardDir.y * dtSec);
 	std::cout << "Forward vector: " << forwardDir.x << ", " << forwardDir.y << std::endl;
-	std::cout << "Current speec: " << currentSpeed << std::endl;
-
+	//std::cout << rotation << std::endl;
 	window.draw(shape);
 }
 
