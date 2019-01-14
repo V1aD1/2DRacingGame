@@ -7,8 +7,13 @@
 
 #include "include/ThreadTest.h"
 
-//#define replaces all instances of textToReplace with replacementText
+//this is a macro, mostly used for debug purposes
+//#define replaces all instances of textToReplace with replacementText,
+//in the preprocessing stage
 #define textToReplace replacementText
+
+//macro example
+#define LOG(x) std::cout << x << std::endl;
 
 void ThreadTest() {
 	std::cout << "Main thread id = " << std::this_thread::get_id() << std::endl;
