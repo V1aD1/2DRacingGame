@@ -16,11 +16,13 @@ public:
 private:
 	sf::RectangleShape shape;
 	sf::Vector2f forwardDir = sf::Vector2f(1.0f, 0.0f);
+	sf::Vector2f momentum = sf::Vector2f(0.0f, 0.0f);
+	
+	float maxMomentum = 0.3f;
+
 	float rotDeg = 0.0f;
 	float rotRad = 0.0f;
-	float maxSpeed = 200.0f;
 	float rotationSpeed = 180.0f;
-	float acceleration = 120.0f;
-	float currentSpeed = 0.0f;
+	float acceleration = 0.25f;
 };
 

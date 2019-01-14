@@ -1,12 +1,9 @@
-#define _USE_MATH_DEFINES
-
 #include <iostream>
-#include <cmath>
 
 #include <SFML/Graphics.hpp>
 
 #include "include/Car.h"
-
+#include "include/MathCommon.h"
 
 Car::Car()
 {
@@ -36,7 +33,7 @@ void Car::Rotate(float dtTimeMilli, bool left)
 	rotDeg += direction * rotationSpeed * (dtTimeMilli / 1000.0f);
 	shape.setRotation(rotDeg);
 	
-	rotRad = (rotDeg * M_PI) / 180.0f;
+	rotRad = MathCommon::DegreesToRadians(rotDeg);
 
 	//determine new direction vector base on new rotation
 	forwardDir = sf::Vector2f(std::cos(rotRad), std::sin(rotRad));
@@ -44,18 +41,20 @@ void Car::Rotate(float dtTimeMilli, bool left)
 
 void Car::Accelerate(float dtTimeMilli, bool forward)
 {
-	if(forward)
-		currentSpeed = std::min(currentSpeed + (acceleration * (dtTimeMilli / 1000.0f)), maxSpeed);
+	if (forward)
+		momentum += forwardDir * acceleration * (dtTimeMilli / 1000.0f);
 	else
-		currentSpeed = std::max(currentSpeed + (-acceleration * (dtTimeMilli / 1000.0f)), -maxSpeed/2);
+		momentum += -(forwardDir * acceleration * (dtTimeMilli / 1000.0f));
+
+	if(MathCommon::GetMagnitude(momentum) > maxMomentum)
+		momentum = MathCommon::ChangeLength(momentum, maxMomentum);
 }
 
 void Car::Update(sf::RenderWindow& window, float dtTimeMilli)
 {
-	float dtSec = dtTimeMilli / 1000.0f;
-	shape.move(currentSpeed * forwardDir.x * dtSec, currentSpeed * forwardDir.y * dtSec);
-	std::cout << "Forward vector: " << forwardDir.x << ", " << forwardDir.y << std::endl;
-	//std::cout << rotation << std::endl;
+	shape.move(momentum * dtTimeMilli);
+	std::cout << "momentum: " << MathCommon::GetMagnitude(momentum) << std::endl;
+
 	window.draw(shape);
 }
 
