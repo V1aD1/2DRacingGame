@@ -7,13 +7,14 @@
 #include "include/Car.h"
 
 static const sf::Int32 fpsRefreshMs = 1000;
-static bool upFlag = false;
-static bool downFlag = false;
-static bool leftFlag = false;
-static bool rightFlag = false;
 
+static sf::RenderWindow window;
+static sf::Text fpsText;
+static sf::Font font;
 
-bool Setup(sf::RenderWindow& window, sf::Text& fpsText, sf::Font& font) {
+static EventHandler eventHandler;
+
+bool Setup() {
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
 	
@@ -36,14 +37,13 @@ bool Setup(sf::RenderWindow& window, sf::Text& fpsText, sf::Font& font) {
 
 int main()
 {
-	sf::RenderWindow window;
-	sf::Text fpsText;
-	sf::Font font;
 
-	if (!Setup(window, fpsText, font)) {
+	if (!Setup()) {
 		std::cout << "Problems encountered in setup, terminating program!" << std::endl;
 		return 0;
 	}
+
+	eventHandler = EventHandler();
 
 	sf::Int32 timeSinceLastFpsLog = fpsRefreshMs;
 	Car car = Car(40.0f, 50.0f);
@@ -58,67 +58,19 @@ int main()
 		//pollEvent() or waitEvent() MUST be called in the same thread that created the window!!
 		while (window.pollEvent(event))
 		{
-			switch (event.type) {
-
-			case sf::Event::Closed:
-				window.close();
-				break;
-
-			case sf::Event::KeyPressed:
-				if (event.key.code == sf::Keyboard::Escape)				
-					window.close();
-				
-				if (event.key.code == sf::Keyboard::Up)
-					upFlag = true;
-				
-				if (event.key.code == sf::Keyboard::Down)
-					downFlag = true;
-
-				if (event.key.code == sf::Keyboard::Left)
-					leftFlag = true;
-				
-				if (event.key.code == sf::Keyboard::Right)
-					rightFlag = true;
-
-				break;
-
-			case sf::Event::KeyReleased:
-				if (event.key.code == sf::Keyboard::Up)
-					upFlag = false;
-
-				if (event.key.code == sf::Keyboard::Down)
-					downFlag = false;
-
-				if (event.key.code == sf::Keyboard::Left)
-					leftFlag = false;
-
-				if (event.key.code == sf::Keyboard::Right)
-					rightFlag = false;
-
-			case sf::Event::Resized:
-				EventHandler::HandleResize(event.size.width, event.size.height);
-				break;
-
-			case sf::Event::LostFocus:
-				//pause game
-				break;
-
-			default:
-				break;
-			}
-
+			eventHandler.HandleEvent(window, event);
 		}
 
-		if (upFlag)
+		if (eventHandler.upFlag)
 			car.Accelerate(dtMillis, true);
 
-		if (downFlag)
+		if (eventHandler.downFlag)
 			car.Accelerate(dtMillis, false);
 
-		if (leftFlag)
+		if (eventHandler.leftFlag)
 			car.Rotate(dtMillis, true);
 
-		if (rightFlag)
+		if (eventHandler.rightFlag)
 			car.Rotate(dtMillis, false);
 
 		window.clear();
