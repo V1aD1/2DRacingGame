@@ -4,6 +4,7 @@
 #include <SFML/OpenGL.hpp>
 
 #include "include/EventHandler.h"
+#include "include/Car.h"
 
 static const sf::Int32 fpsRefreshMs = 1000;
 
@@ -40,14 +41,7 @@ int main()
 	}
 
 	sf::Int32 timeSinceLastFpsLog = fpsRefreshMs;
-	sf::RectangleShape car(sf::Vector2f(40.0f, 10.0f));
-	car.setFillColor(sf::Color::Blue);
-	car.setOutlineThickness(1.0f);
-	car.setOutlineColor(sf::Color(250, 150, 100));
-
-	car.setOrigin(20.0f, 5.0f);
-
-	car.setPosition(40.0f, 50.0f);
+	Car car = Car(40.0f, 50.0f);
 
 	sf::Clock clock;
 
@@ -66,14 +60,35 @@ int main()
 				break;
 
 			case sf::Event::KeyPressed:
-				if (event.key.code == sf::Keyboard::Escape)
-				{
+				if (event.key.code == sf::Keyboard::Escape)				
 					window.close();
-				}
-				if (event.key.code == sf::Keyboard::Up) {
-					car.rotate(1.0f);
-				}
+				
+				if (event.key.code == sf::Keyboard::Up) 
+					car.Accelerate(dtMillis, true);				
+				
+				if (event.key.code == sf::Keyboard::Down)
+					car.Accelerate(dtMillis, false);
+
+				if (event.key.code == sf::Keyboard::Left) 
+					car.Rotate(dtMillis, true);	
+				
+				if (event.key.code == sf::Keyboard::Right)
+					car.Rotate(dtMillis, false);
+
 				break;
+
+			case sf::Event::KeyReleased:
+				if (event.key.code == sf::Keyboard::Up)
+					car.Accelerate(dtMillis, true);
+
+				if (event.key.code == sf::Keyboard::Down)
+					car.Accelerate(dtMillis, false);
+
+				if (event.key.code == sf::Keyboard::Left)
+					car.Rotate(dtMillis, true);
+
+				if (event.key.code == sf::Keyboard::Right)
+					car.Rotate(dtMillis, false);
 
 			case sf::Event::Resized:
 				EventHandler::HandleResize(event.size.width, event.size.height);
@@ -89,8 +104,21 @@ int main()
 
 		}
 
+		if (event.key.code == upflag)
+			car.Accelerate(dtMillis, true);
+
+		if (event.key.code == downflag)
+			car.Accelerate(dtMillis, false);
+
+		if (event.key.code == leftflag)
+			car.Rotate(dtMillis, true);
+
+		if (event.key.code == rightflag)
+			car.Rotate(dtMillis, false);
+
 		window.clear();
-		window.draw(car);
+		car.Update(window, dtMillis);
+	
 
 		if ((timeSinceLastFpsLog += dtMillis) > fpsRefreshMs) {
 			fpsText.setString(std::to_string(static_cast<int>(1000.0f / dtMillis)));
