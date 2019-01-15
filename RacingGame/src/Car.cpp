@@ -52,6 +52,12 @@ void Car::Brake(float dtTimeMilli)
 	ApplySlowDownForce(brakeForce, dtTimeMilli);
 }
 
+void Car::DBG_Slide(const sf::Vector2f& dir, float dtMilli)
+{
+	momentum = sf::Vector2f(0.0f, 0.0f);
+	shape.move(dir * dtMilli/1000.0f * dbg_slideSpeed);
+}
+
 void Car::ApplyFriction(float dtTimeMilli)
 {
 	ApplySlowDownForce(frictionForce, dtTimeMilli);

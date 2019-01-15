@@ -16,6 +16,11 @@ public:
 	bool rightFlag = false;
 	bool spaceFlag = false;
 
+	bool wFlag = false;
+	bool sFlag = false;
+	bool aFlag = false;
+	bool dFlag = false;
+
 	~EventHandler();
 };
 

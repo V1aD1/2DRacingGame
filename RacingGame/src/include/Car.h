@@ -10,6 +10,7 @@ public:
 	void Rotate(float degrees, bool left);
 	void Accelerate(float dtTimeMilli, bool forward);
 	void Brake(float dtTimeMilli);
+	void DBG_Slide(const sf::Vector2f& dir, float dtMilli);
 	void Update(sf::RenderWindow& window,float dtTimeMilli);
 
 	~Car();
@@ -27,6 +28,7 @@ private:
 	float acceleration = 0.25f;
 	float brakeForce = 0.1f;
 	float frictionForce = 0.1f;
+	float dbg_slideSpeed = 150.0f;
 
 	void ApplyFriction(float dtTimeMilli);
 	void ApplySlowDownForce(float forceMag, float dtTimeMilli);

@@ -22,47 +22,80 @@ void EventHandler::HandleEvent(sf::RenderWindow& window, sf::Event& event) {
 		break;
 
 	case sf::Event::KeyPressed:
-		if (event.key.code == sf::Keyboard::Escape)
+		switch (event.key.code) {
+		case sf::Keyboard::Escape:
 			window.close();
-
-		if (event.key.code == sf::Keyboard::Up)
+			break;
+		case sf::Keyboard::Up:
 			upFlag = true;
-
-		if (event.key.code == sf::Keyboard::Down)
+			break;
+		case sf::Keyboard::Down:
 			downFlag = true;
-
-		if (event.key.code == sf::Keyboard::Left)
+			break;
+		case sf::Keyboard::Left:
 			leftFlag = true;
-
-		if (event.key.code == sf::Keyboard::Right)
+			break;
+		case sf::Keyboard::Right:
 			rightFlag = true;
-
-		if (event.key.code == sf::Keyboard::Space)
+			break;
+		case sf::Keyboard::Space:
 			spaceFlag = true;
+			break;
 
+		case sf::Keyboard::W:
+			wFlag = true;
+			break;
+		case sf::Keyboard::S:
+			sFlag = true;
+			break;
+		case sf::Keyboard::A:
+			aFlag = true;
+			break;
+		case sf::Keyboard::D:
+			dFlag = true;
+			break;
+		}
 		break;
 
 	case sf::Event::KeyReleased:
-		if (event.key.code == sf::Keyboard::Up)
+		switch (event.key.code) {
+		case sf::Keyboard::Up:
 			upFlag = false;
-
-		if (event.key.code == sf::Keyboard::Down)
+			break;
+		case sf::Keyboard::Down:
 			downFlag = false;
-
-		if (event.key.code == sf::Keyboard::Left)
+			break;
+		case sf::Keyboard::Left:
 			leftFlag = false;
-
-		if (event.key.code == sf::Keyboard::Right)
+			break;
+		case sf::Keyboard::Right:
 			rightFlag = false;
-		if (event.key.code == sf::Keyboard::Space)
+			break;
+		case sf::Keyboard::Space:
 			spaceFlag = false;
+			break;
+
+		case sf::Keyboard::W:
+			wFlag = false;
+			break;
+		case sf::Keyboard::S:
+			sFlag = false;
+			break;
+		case sf::Keyboard::A:
+			aFlag = false;
+			break;
+		case sf::Keyboard::D:
+			dFlag = false;
+			break;
+		}
+		break;
 
 	case sf::Event::Resized:
 		HandleResize(event.size.width, event.size.height);
 		break;
 
 	case sf::Event::LostFocus:
-		//pause game
+		//todo pause game
 		break;
 
 	default:

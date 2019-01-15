@@ -81,6 +81,19 @@ int main()
 		if (eventHandler.spaceFlag)
 			car.Brake(dtMillis);
 
+		//debug commands
+		if (eventHandler.wFlag)
+			car.DBG_Slide(sf::Vector2f(0.0f, -1.0f), dtMillis);
+
+		if (eventHandler.sFlag)
+			car.DBG_Slide(sf::Vector2f(0.0f, 1.0f), dtMillis);
+
+		if (eventHandler.aFlag)
+			car.DBG_Slide(sf::Vector2f(-1.0f, 0.0f), dtMillis);
+
+		if (eventHandler.dFlag)
+			car.DBG_Slide(sf::Vector2f(1.0f, 0.0f), dtMillis);
+
 		window.clear();
 		car.Update(window, dtMillis);
 		window.draw(square.shape);
