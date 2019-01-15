@@ -17,3 +17,8 @@ sf::Vector2f MathCommon::ChangeLength(const sf::Vector2f & vec, float newLen)
 {
 	return vec * newLen / GetMagnitude(vec);
 }
+
+sf::Vector2f MathCommon::Normalize(const sf::Vector2f & vec)
+{
+	return vec / GetMagnitude(vec);
+}

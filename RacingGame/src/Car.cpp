@@ -45,19 +45,35 @@ void Car::Accelerate(float dtTimeMilli, bool forward)
 		momentum += forwardDir * acceleration * (dtTimeMilli / 1000.0f);
 	else
 		momentum += -(forwardDir * acceleration * (dtTimeMilli / 1000.0f));
+}
 
-	if(MathCommon::GetMagnitude(momentum) > maxMomentum)
-		momentum = MathCommon::ChangeLength(momentum, maxMomentum);
+void Car::ApplyFriction(float dtTimeMilli)
+{
+	sf::Vector2f momentumDir = MathCommon::Normalize(momentum);
+	sf::Vector2f frictionToApply = MathCommon::Normalize(momentum) * friction * (dtTimeMilli/1000.0f);
+
+	float momentumMag = MathCommon::GetMagnitude(momentum);
+	float frictionMag = MathCommon::GetMagnitude(frictionToApply);
+
+	//to ensure friction doesn't cause car to move backwards
+	if (momentumMag > frictionMag)
+		momentum -= frictionToApply;
+	else
+		momentum = sf::Vector2f(0.0f, 0.0f);
 }
 
 void Car::Update(sf::RenderWindow& window, float dtTimeMilli)
 {
+	ApplyFriction(dtTimeMilli);
+
+	if (MathCommon::GetMagnitude(momentum) > maxMomentum)
+		momentum = MathCommon::ChangeLength(momentum, maxMomentum);
+
 	shape.move(momentum * dtTimeMilli);
 	std::cout << "momentum: " << MathCommon::GetMagnitude(momentum) << std::endl;
 
 	window.draw(shape);
 }
-
 
 Car::~Car()
 {

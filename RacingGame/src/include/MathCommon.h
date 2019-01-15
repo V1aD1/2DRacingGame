@@ -7,6 +7,7 @@ public:
 	static float DegreesToRadians(float deg);
 	static float GetMagnitude(sf::Vector2f vec);
 	static sf::Vector2f ChangeLength(const sf::Vector2f& vec, float newLen);
+	static sf::Vector2f Normalize(const sf::Vector2f& vec);
 };
 
 
