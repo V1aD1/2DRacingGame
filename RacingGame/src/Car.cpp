@@ -47,17 +47,27 @@ void Car::Accelerate(float dtTimeMilli, bool forward)
 		momentum += -(forwardDir * acceleration * (dtTimeMilli / 1000.0f));
 }
 
+void Car::Brake(float dtTimeMilli)
+{
+	ApplySlowDownForce(brake, dtTimeMilli);
+}
+
 void Car::ApplyFriction(float dtTimeMilli)
 {
+	ApplySlowDownForce(friction, dtTimeMilli);
+}
+
+void Car::ApplySlowDownForce(float forceMag, float dtTimeMilli)
+{
 	sf::Vector2f momentumDir = MathCommon::Normalize(momentum);
-	sf::Vector2f frictionToApply = MathCommon::Normalize(momentum) * friction * (dtTimeMilli/1000.0f);
+	sf::Vector2f stoppingForceToApply = MathCommon::Normalize(momentum) * friction * (dtTimeMilli / 1000.0f);
 
 	float momentumMag = MathCommon::GetMagnitude(momentum);
-	float frictionMag = MathCommon::GetMagnitude(frictionToApply);
+	float frictionMag = MathCommon::GetMagnitude(stoppingForceToApply);
 
 	//to ensure friction doesn't cause car to move backwards
 	if (momentumMag > frictionMag)
-		momentum -= frictionToApply;
+		momentum -= stoppingForceToApply;
 	else
 		momentum = sf::Vector2f(0.0f, 0.0f);
 }

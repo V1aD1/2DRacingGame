@@ -73,6 +73,9 @@ int main()
 		if (eventHandler.rightFlag)
 			car.Rotate(dtMillis, false);
 
+		if (eventHandler.spaceFlag)
+			car.Brake(dtMillis);
+
 		window.clear();
 		car.Update(window, dtMillis);
 	

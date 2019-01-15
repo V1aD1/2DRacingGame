@@ -9,6 +9,7 @@ public:
 	
 	void Rotate(float degrees, bool left);
 	void Accelerate(float dtTimeMilli, bool forward);
+	void Brake(float dtTimeMilli);
 	void Update(sf::RenderWindow& window,float dtTimeMilli);
 
 	~Car();
@@ -24,8 +25,10 @@ private:
 	float rotRad = 0.0f;
 	float rotationSpeed = 180.0f;
 	float acceleration = 0.25f;
+	float brake = 0.1f;
 	float friction = 0.1f;
 
 	void ApplyFriction(float dtTimeMilli);
+	void ApplySlowDownForce(float forceMag, float dtTimeMilli);
 };
 

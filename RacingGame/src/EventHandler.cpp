@@ -37,6 +37,9 @@ void EventHandler::HandleEvent(sf::RenderWindow& window, sf::Event& event) {
 		if (event.key.code == sf::Keyboard::Right)
 			rightFlag = true;
 
+		if (event.key.code == sf::Keyboard::Space)
+			spaceFlag = true;
+
 		break;
 
 	case sf::Event::KeyReleased:
@@ -51,6 +54,8 @@ void EventHandler::HandleEvent(sf::RenderWindow& window, sf::Event& event) {
 
 		if (event.key.code == sf::Keyboard::Right)
 			rightFlag = false;
+		if (event.key.code == sf::Keyboard::Space)
+			spaceFlag = false;
 
 	case sf::Event::Resized:
 		HandleResize(event.size.width, event.size.height);
