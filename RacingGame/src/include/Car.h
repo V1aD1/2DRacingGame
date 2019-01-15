@@ -25,8 +25,8 @@ private:
 	float rotRad = 0.0f;
 	float rotationSpeed = 180.0f;
 	float acceleration = 0.25f;
-	float brake = 0.1f;
-	float friction = 0.1f;
+	float brakeForce = 0.1f;
+	float frictionForce = 0.1f;
 
 	void ApplyFriction(float dtTimeMilli);
 	void ApplySlowDownForce(float forceMag, float dtTimeMilli);
