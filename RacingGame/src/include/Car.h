@@ -5,7 +5,7 @@ class Car
 {
 public:
 	Car();
-	Car(float posX, float posY);
+	Car(sf::Vector2f pos);
 	
 	void Rotate(float degrees, bool left);
 	void Accelerate(float dtTimeMilli, bool forward);

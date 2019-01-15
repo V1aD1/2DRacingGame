@@ -15,14 +15,14 @@ Car::Car()
 	shape.setPosition(0.0f, 0.0f);
 }
 
-Car::Car(float posX, float posY)
+Car::Car(sf::Vector2f pos)
 {
 	shape = sf::RectangleShape(sf::Vector2f(40.0f, 10.0f));
 	shape.setFillColor(sf::Color::Blue);
 	shape.setOutlineThickness(1.0f);
 	shape.setOutlineColor(sf::Color(250, 150, 100));
 	shape.setOrigin(20.0f, 5.0f);
-	shape.setPosition(posX, posY);
+	shape.setPosition(pos);
 }
 
 void Car::Rotate(float dtTimeMilli, bool left)

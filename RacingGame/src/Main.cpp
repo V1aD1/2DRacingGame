@@ -5,14 +5,17 @@
 
 #include "include/EventHandler.h"
 #include "include/Car.h"
+#include "include/Square.h"
 
 static const sf::Int32 fpsRefreshMs = 1000;
+static const int screenLen = 1500, screenHeight = 700;
+
 
 bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText) {
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
 	
-	window.create(sf::VideoMode(1500, 700), "Racing Game!", sf::Style::Default, settings);
+	window.create(sf::VideoMode(screenLen, screenHeight), "Racing Game!", sf::Style::Default, settings);
 
 	//never use both setVerticalSyncEnabled and setFramerateLimit at the same time!
 	window.setFramerateLimit(60);
@@ -46,7 +49,9 @@ int main()
 	eventHandler = EventHandler();
 
 	sf::Int32 timeSinceLastFpsLog = fpsRefreshMs;
-	Car car = Car(40.0f, 50.0f);
+	Car car = Car(sf::Vector2f(40.0f, 50.0f));
+	Square square = Square(250, sf::Vector2f(screenLen/2, screenHeight/2));
+
 
 	sf::Clock clock;
 
@@ -78,7 +83,7 @@ int main()
 
 		window.clear();
 		car.Update(window, dtMillis);
-	
+		window.draw(square.shape);
 
 		if ((timeSinceLastFpsLog += dtMillis) > fpsRefreshMs) {
 			fpsText.setString(std::to_string(static_cast<int>(1000.0f / dtMillis)));

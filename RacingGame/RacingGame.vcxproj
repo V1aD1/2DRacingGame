@@ -150,12 +150,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Square.cpp" />
     <ClCompile Include="src\MathCommon.cpp" />
     <ClCompile Include="src\Car.cpp" />
     <ClCompile Include="src\EventHandler.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\include\Square.h" />
     <ClInclude Include="src\include\MathCommon.h" />
     <ClInclude Include="src\include\Car.h" />
     <ClInclude Include="src\include\EventHandler.h" />
