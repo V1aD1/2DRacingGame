@@ -4,6 +4,7 @@
 //#include literally copies the specified contents into this file
 #include <iostream>
 #include <thread>
+#include <array>
 
 #include "include/ThreadTest.h"
 
@@ -44,8 +45,19 @@ public:
 
 };
 
-int main() {
+void ArrayTest() {
+	//similar to c-style arrays,
+	//but has more properties, namely size(),
+	//and has optional bounds checking in DEBUG BUILD
+	//at no performance cost
+	std::array<int, 5> data;
+	int size = data.size();
 
+
+}
+
+int main() {
+	ArrayTest();
 	std::cout << "Press ENTER to exit program" << std::endl;
 	std::cin.get();
 }
