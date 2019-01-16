@@ -10,7 +10,7 @@ float MathCommon::DegreesToRadians(float deg)
 }
 
 float MathCommon::GetMagnitude(sf::Vector2f vec) {
-	return powf(pow(vec.x, 2) + pow(vec.y, 2), 0.5);
+	return powf(powf(vec.x, 2) + powf(vec.y, 2), 0.5);
 }
 
 sf::Vector2f MathCommon::ChangeLength(const sf::Vector2f & vec, float newLen)

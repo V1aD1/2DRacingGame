@@ -50,7 +50,7 @@ int main()
 
 	sf::Int32 timeSinceLastFpsLog = fpsRefreshMs;
 	Car car = Car(sf::Vector2f(40.0f, 50.0f));
-	Square square = Square(250, sf::Vector2f(screenLen/2, screenHeight/2));
+	Square square = Square(250, sf::Vector2f(screenLen/2, screenHeight/2), 45.0f);
 
 
 	sf::Clock clock;
@@ -96,7 +96,7 @@ int main()
 
 		window.clear();
 		car.Update(window, dtMillis);
-		window.draw(square.shape);
+		square.Update(window, dtMillis);
 
 		if ((timeSinceLastFpsLog += dtMillis) > fpsRefreshMs) {
 			fpsText.setString(std::to_string(static_cast<int>(1000.0f / dtMillis)));
