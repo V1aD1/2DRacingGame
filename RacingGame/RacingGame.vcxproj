@@ -151,7 +151,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Square.cpp" />
-    <ClCompile Include="src\MathCommon.cpp" />
+    <ClCompile Include="src\MathCommon.cpp">
+      <FileType>CppClass</FileType>
+    </ClCompile>
     <ClCompile Include="src\Car.cpp" />
     <ClCompile Include="src\EventHandler.cpp" />
     <ClCompile Include="src\Main.cpp" />

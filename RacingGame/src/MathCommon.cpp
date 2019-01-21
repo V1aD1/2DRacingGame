@@ -22,3 +22,13 @@ sf::Vector2f MathCommon::Normalize(const sf::Vector2f & vec)
 {
 	return vec / GetMagnitude(vec);
 }
+
+bool MathCommon::CheckIntersection(const sf::Vector2f& a1, const sf::Vector2f & a2, const sf::Vector2f& b1, const sf::Vector2f& b2)
+{
+	return false;
+}
+
+int MathCommon::GetOrientation(const sf::Vector2f & p1, sf::Vector2f & p2, sf::Vector2f & p3)
+{
+	return 0;
+}
