@@ -115,11 +115,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\FunctionPointerTest.cpp" />
     <ClCompile Include="src\Log.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\ThreadTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\include\FunctionPointerTest.h" />
     <ClInclude Include="src\include\Log.h" />
     <ClInclude Include="src\include\ThreadTest.h" />
   </ItemGroup>

@@ -7,6 +7,7 @@
 #include <array>
 
 #include "include/ThreadTest.h"
+#include "include/FunctionPointerTest.h"
 
 //this is a macro, mostly used for debug purposes
 //#define replaces all instances of textToReplace with replacementText,
@@ -24,6 +25,7 @@ void ThreadTest() {
 	std::cin.get();
 	FinishWork();
 
+	//waits for thread to finish before advancing
 	worker.join();
 
 	std::cout << "Continuing main thread with id = " << std::this_thread::get_id() << std::endl;
@@ -52,12 +54,10 @@ void ArrayTest() {
 	//at no performance cost
 	std::array<int, 5> data;
 	int size = data.size();
-
-
 }
 
 int main() {
-	ArrayTest();
+	FunctionPointerTest();
 	std::cout << "Press ENTER to exit program" << std::endl;
 	std::cin.get();
 }

@@ -20,12 +20,18 @@
     <ClCompile Include="src\ThreadTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\FunctionPointerTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\include\Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\include\ThreadTest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\FunctionPointerTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
