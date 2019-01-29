@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <functional>
 
 #include "include/FunctionPointerTest.h"
 
@@ -14,6 +15,12 @@ void HelloWorld() {
 void ForEach(const std::vector<int>& values, void(*func)(int)) {
 	for (int value : values)
 		func(value);
+}
+
+void ForEachLambda(const std::vector<int>& values, const std::function<void(int)>& func) {
+	for (int value : values) {
+		func(value);
+	}
 }
 
 void PrintValue(int a) {
@@ -39,8 +46,19 @@ void FunctionPointerTest()
 	//passing in function pointers as parameters to a function
 	ForEach(values, PrintValue);
 
-	//this also works
+	//this also works, using lambda function instead of a function pointer
 	ForEach(values, [](int value) {std::cout << "Value: " << value << std::endl; });
 
+}
+
+void LambdaTest()
+{
+	std::vector<int> values = { 1, 2, 3,4 };
+
+	//			   = means every parameter will be passed in by value
+	//			   & means every parameter will be passed in by reference
+	auto lambda = [=](int value) {std::cout << "Value: " << value << std::endl; };
+
+	ForEachLambda(values, lambda);
 }
 

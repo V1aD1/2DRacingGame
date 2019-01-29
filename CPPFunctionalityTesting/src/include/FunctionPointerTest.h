@@ -2,4 +2,6 @@
 
 void FunctionPointerTest();
 
+void LambdaTest();
+
 

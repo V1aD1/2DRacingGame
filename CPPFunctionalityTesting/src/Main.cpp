@@ -57,7 +57,7 @@ void ArrayTest() {
 }
 
 int main() {
-	FunctionPointerTest();
+	LambdaTest();
 	std::cout << "Press ENTER to exit program" << std::endl;
 	std::cin.get();
 }
