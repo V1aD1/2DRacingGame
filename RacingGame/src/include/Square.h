@@ -13,9 +13,12 @@ public:
 
 private: 
 	sf::RectangleShape shape;
-	sf::Vector2f points[4];
+	sf::Vector2f corners[4];
 	float sideLength;
 	float rotation;
 	sf::Vector2f position;
+	bool collisionChecks[4];
+
+	void SetCorner(int index, float value);
 };
 

@@ -19,7 +19,9 @@ private:
 	sf::RectangleShape shape;
 	sf::Vector2f forwardDir = sf::Vector2f(1.0f, 0.0f);
 	sf::Vector2f momentum = sf::Vector2f(0.0f, 0.0f);
-	
+	sf::Vector2f corners[4];
+	sf::Vector2f currPos = sf::Vector2f(0.0f, 0.0f);
+
 	float maxMomentum = 0.3f;
 
 	float rotDeg = 0.0f;
@@ -32,5 +34,8 @@ private:
 
 	void ApplyFriction(float dtTimeMilli);
 	void ApplySlowDownForce(float forceMag, float dtTimeMilli);
+
+	static const float length;
+	static const float height;
 };
 

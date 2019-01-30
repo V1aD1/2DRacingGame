@@ -4,7 +4,7 @@
 #include "include/Square.h"
 #include "include/MathCommon.h"
 
-
+//todo turn into a shape class that receives array of points as input
 Square::Square(float sideLen, sf::Vector2f pos, float rot)
 {
 	sideLength = sideLen;
@@ -20,30 +20,36 @@ Square::Square(float sideLen, sf::Vector2f pos, float rot)
 	shape.setFillColor(sf::Color::Red);
 
 	//top left
-	points[0] = sf::Vector2f(-halfSideLen, -halfSideLen);
+	corners[0] = sf::Vector2f(-halfSideLen, -halfSideLen);
 
 	//top right
-	points[1] = sf::Vector2f(halfSideLen, -halfSideLen);
+	corners[1] = sf::Vector2f(halfSideLen, -halfSideLen);
 
 	//bottom right
-	points[2] = sf::Vector2f(halfSideLen, halfSideLen);
+	corners[2] = sf::Vector2f(halfSideLen, halfSideLen);
 
 	//bottom left
-	points[3] = sf::Vector2f(-halfSideLen, halfSideLen);
+	corners[3] = sf::Vector2f(-halfSideLen, halfSideLen);
 
 	for (int i = 0; i < 4; i++) {
 
 		auto newPoint = sf::Vector2f();
-		newPoint.x = points[i].x * std::cos(rotInRad) - points[i].y * std::sin(rotInRad);
-		newPoint.y = points[i].x * std::sin(rotInRad) + points[i].y * std::cos(rotInRad);
+		newPoint.x = corners[i].x * std::cos(rotInRad) - corners[i].y * std::sin(rotInRad);
+		newPoint.y = corners[i].x * std::sin(rotInRad) + corners[i].y * std::cos(rotInRad);
 
 		//rotating the point about the centre of the square
-		points[i] = newPoint;
-
+		corners[i] = newPoint;
 
 		//moving the point to it's world space coordinates
-		points[i] += position;
+		corners[i] += position;
 	}
+
+	//setting collision info
+	collisionChecks[0] = MathCommon::CrossProduct(corners[0] - corners[1], corners[0] - position) > 0.0f ? true : false;
+	collisionChecks[1] = MathCommon::CrossProduct(corners[1] - corners[2], corners[1] - position) > 0.0f ? true : false;
+	collisionChecks[2] = MathCommon::CrossProduct(corners[2] - corners[3], corners[2] - position) > 0.0f ? true : false;
+	collisionChecks[3] = MathCommon::CrossProduct(corners[3] - corners[0], corners[3] - position) > 0.0f ? true : false;
+
 }
 
 void Square::Update(sf::RenderWindow & window, float dtTimeMilli)
@@ -56,7 +62,7 @@ void Square::Update(sf::RenderWindow & window, float dtTimeMilli)
 	{
 		auto circle = sf::CircleShape(circleRad);
 		circle.setOrigin(circleRad, circleRad);
-		circle.setPosition(points[i]);
+		circle.setPosition(corners[i]);
 		window.draw(circle);
 	}
 }

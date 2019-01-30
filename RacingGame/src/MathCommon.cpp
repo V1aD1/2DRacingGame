@@ -28,6 +28,11 @@ bool MathCommon::CheckIntersection(const sf::Vector2f& a1, const sf::Vector2f & 
 	return false;
 }
 
+float MathCommon::CrossProduct(const sf::Vector2f & a, const sf::Vector2f & b)
+{
+	return (a.x * b.y) - (a.y * b.x);
+}
+
 int MathCommon::GetOrientation(const sf::Vector2f & p1, sf::Vector2f & p2, sf::Vector2f & p3)
 {
 	return 0;

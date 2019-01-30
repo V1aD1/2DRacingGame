@@ -16,7 +16,7 @@ bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText) {
 	Timer("Setup Function ");
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
-	
+
 	window.create(sf::VideoMode(screenLen, screenHeight), "Racing Game!", sf::Style::Default, settings);
 
 	//never use both setVerticalSyncEnabled and setFramerateLimit at the same time!
@@ -52,7 +52,7 @@ int main()
 
 	sf::Int32 timeSinceLastFpsLog = fpsRefreshMs;
 	Car car = Car(sf::Vector2f(40.0f, 50.0f));
-	Square square = Square(250, sf::Vector2f(screenLen/2, screenHeight/2), 45.0f);
+	Square square = Square(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 45.0f);
 
 
 	sf::Clock clock;
@@ -105,8 +105,8 @@ int main()
 			timeSinceLastFpsLog = 0;
 		}
 		window.draw(fpsText);
-		
-		
+
+
 		window.display();
 	}
 
