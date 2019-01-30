@@ -5,6 +5,8 @@
 #include <iostream>
 #include <thread>
 #include <array>
+#include <chrono>
+#include <thread>
 
 #include "include/ThreadTest.h"
 #include "include/FunctionPointerTest.h"
@@ -56,8 +58,22 @@ void ArrayTest() {
 	int size = data.size();
 }
 
+void HowToTime() {
+
+	using namespace std::literals::chrono_literals;
+
+	auto start = std::chrono::high_resolution_clock::now();
+
+	std::this_thread::sleep_for(1s);
+
+	auto end = std::chrono::high_resolution_clock::now();
+	std::chrono::duration<float> duration = end - start;
+
+	std::cout << "Seconds passed: " << duration.count() << std::endl;
+}
+
 int main() {
-	LambdaTest();
+	HowToTime();
 	std::cout << "Press ENTER to exit program" << std::endl;
 	std::cin.get();
 }

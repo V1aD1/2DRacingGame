@@ -157,12 +157,14 @@
     <ClCompile Include="src\Car.cpp" />
     <ClCompile Include="src\EventHandler.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\include\Square.h" />
     <ClInclude Include="src\include\MathCommon.h" />
     <ClInclude Include="src\include\Car.h" />
     <ClInclude Include="src\include\EventHandler.h" />
+    <ClInclude Include="src\include\Timer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
