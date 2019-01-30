@@ -86,7 +86,6 @@ void Car::Update(sf::RenderWindow& window, float dtTimeMilli)
 		momentum = MathCommon::ChangeLength(momentum, maxMomentum);
 
 	shape.move(momentum * dtTimeMilli);
-	std::cout << "momentum: " << MathCommon::GetMagnitude(momentum) << std::endl;
 
 	window.draw(shape);
 }

@@ -13,7 +13,7 @@ static const int screenLen = 1500, screenHeight = 700;
 
 
 bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText) {
-	Timer();
+	Timer("Setup Function ");
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
 	
