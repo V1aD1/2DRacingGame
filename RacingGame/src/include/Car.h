@@ -1,10 +1,20 @@
 #pragma once
+#include <iostream>
+
 #include <SFML/Graphics.hpp>
+
+#include "Square.h"
+
+extern std::vector<Square> G_STATICOBJECTS;
 
 class Car
 {
+	static const float length;
+	static const float height;
+
 public:
 	Car();
+	Car(const Car& car);
 	Car(sf::Vector2f pos);
 	
 	void Rotate(float degrees, bool left);
@@ -32,10 +42,9 @@ private:
 	float frictionForce = 0.1f;
 	float dbg_slideSpeed = 150.0f;
 
+	std::unique_ptr<Car> newState;
+
 	void ApplyFriction(float dtTimeMilli);
 	void ApplySlowDownForce(float forceMag, float dtTimeMilli);
-
-	static const float length;
-	static const float height;
 };
 

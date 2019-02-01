@@ -25,6 +25,28 @@ Car::Car()
 
 }
 
+Car::Car(const Car & car)
+{
+	acceleration = car.acceleration;
+	brakeForce = car.brakeForce;
+	
+	for(int i = 0; i< 4; i++)
+		corners[i] = car.corners[i];
+
+	currPos = car.currPos;
+	//car.dbg_slideSpeed;
+	forwardDir = car.forwardDir;
+	frictionForce = car.frictionForce;
+	//car.height;
+	//car.length;
+	//car.maxMomentum;
+	momentum = car.momentum;
+	rotationSpeed = car.rotationSpeed;
+	rotDeg = car.rotDeg;
+	rotRad = car.rotRad;
+	shape = car.shape;
+}
+
 Car::Car(sf::Vector2f startPos) : Car()
 {
 	currPos = startPos;
@@ -50,7 +72,6 @@ void Car::Rotate(float dtTimeMilli, bool left)
 		newPoint.x = corners[i].x * std::cos(rotAmountRad) - corners[i].y * std::sin(rotAmountRad);
 		newPoint.y = corners[i].x * std::sin(rotAmountRad) + corners[i].y * std::cos(rotAmountRad);
 
-		//rotating the point about the centre of the square
 		corners[i] = newPoint;
 	}
 }
