@@ -18,7 +18,5 @@ private:
 	float rotation;
 	sf::Vector2f position;
 	bool collisionChecks[4];
-
-	void SetCorner(int index, float value);
 };
 

@@ -32,11 +32,14 @@ Car::Car(sf::Vector2f startPos) : Car()
 
 void Car::Rotate(float dtTimeMilli, bool left)
 {
-	int direction = 1;
-	if (left) { direction = -1; }
+	int direction = left ? -1 : 1;
 
-	rotDeg += direction * rotationSpeed * (dtTimeMilli / 1000.0f);
+	float rotAmount = direction * rotationSpeed * (dtTimeMilli / 1000.0f);
+	float rotAmountRad = MathCommon::DegreesToRadians(rotAmount);
+
+	rotDeg += rotAmount;
 	rotRad = MathCommon::DegreesToRadians(rotDeg);
+
 
 	//determine new direction vector based on new rotation
 	forwardDir = sf::Vector2f(std::cos(rotRad), std::sin(rotRad));
@@ -44,14 +47,11 @@ void Car::Rotate(float dtTimeMilli, bool left)
 	for (int i = 0; i < 4; i++) {
 
 		auto newPoint = sf::Vector2f();
-		newPoint.x = corners[i].x * std::cos(rotRad) - corners[i].y * std::sin(rotRad);
-		newPoint.y = corners[i].x * std::sin(rotRad) + corners[i].y * std::cos(rotRad);
+		newPoint.x = corners[i].x * std::cos(rotAmountRad) - corners[i].y * std::sin(rotAmountRad);
+		newPoint.y = corners[i].x * std::sin(rotAmountRad) + corners[i].y * std::cos(rotAmountRad);
 
 		//rotating the point about the centre of the square
 		corners[i] = newPoint;
-
-		//moving the point to it's world space coordinates
-		//corners[i] += shape.getPosition();
 	}
 }
 
