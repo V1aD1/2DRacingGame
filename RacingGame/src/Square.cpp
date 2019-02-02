@@ -67,6 +67,15 @@ void Square::Update(sf::RenderWindow & window, float dtTimeMilli)
 	}
 }
 
+std::array<sf::Vector2f, 4> Square::GetCorners()
+{
+	return corners;
+}
+
+std::array<bool, 4> Square::GetCollisionChecks()
+{
+	return collisionChecks;
+}
 
 Square::~Square()
 {

@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <array>
 
 #include <SFML/Graphics.hpp>
 
@@ -10,6 +11,8 @@ extern std::vector<Square> G_STATICOBJECTS;
 struct CarState {
 	sf::Vector2f forwardDir = sf::Vector2f(1.0f, 0.0f);
 	sf::Vector2f momentum = sf::Vector2f(0.0f, 0.0f);
+	
+	//must add car position to corner to get it's global position
 	sf::Vector2f corners[4];
 	sf::Vector2f position = sf::Vector2f(0.0f, 0.0f);
 
@@ -48,5 +51,7 @@ private:
 
 	void ApplyFriction(float dtTimeMilli);
 	void ApplySlowDownForce(float forceMag, float dtTimeMilli);
+
+	bool CollisionDetected();
 };
 

@@ -1,9 +1,11 @@
 #include <iostream>
+#include <array>
 
 #include <SFML/Graphics.hpp>
 
 #include "include/Car.h"
 #include "include/MathCommon.h"
+#include "include/Square.h"
 
 const float Car::c_length = 40.0f;
 const float Car::c_height = 10.0f;
@@ -102,6 +104,22 @@ void Car::ApplySlowDownForce(float forceMag, float dtTimeMilli)
 		newState.momentum -= stoppingForceToApply;
 	else
 		newState.momentum = sf::Vector2f(0.0f, 0.0f);
+}
+
+bool Car::CollisionDetected() {
+	
+	//check every static object for a collision
+	//using point triangle test method
+	for (auto &object : G_STATICOBJECTS) {
+		//std::array<sf::Vector2f, 4> objCorners = object.GetCorners();
+		//std::array<bool, 4> objCollisionChecks = object.GetCollisionChecks();
+		
+		for (auto &carCorner : newState.corners) {
+			
+		}
+	}
+
+	return false;
 }
 
 void Car::Update(sf::RenderWindow& window, float dtTimeMilli)
