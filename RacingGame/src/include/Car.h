@@ -7,14 +7,28 @@
 
 extern std::vector<Square> G_STATICOBJECTS;
 
+struct CarState {
+	sf::Vector2f forwardDir = sf::Vector2f(1.0f, 0.0f);
+	sf::Vector2f momentum = sf::Vector2f(0.0f, 0.0f);
+	sf::Vector2f corners[4];
+	sf::Vector2f position = sf::Vector2f(0.0f, 0.0f);
+
+	float rotDeg = 0.0f;
+	float rotRad = 0.0f;
+};
+
 class Car
 {
-	static const float length;
-	static const float height;
+	static const float c_length;
+	static const float c_height;
+	static const float c_rotationSpeed;
+	static const float c_acceleration;
+	static const float c_brakeForce;
+	static const float c_frictionForce;
+	static const float c_dbg_slideSpeed;
+	static const float c_maxMomentum;
 
 public:
-	Car();
-	Car(const Car& car);
 	Car(sf::Vector2f pos);
 	
 	void Rotate(float degrees, bool left);
@@ -27,22 +41,10 @@ public:
 
 private:
 	sf::RectangleShape shape;
-	sf::Vector2f forwardDir = sf::Vector2f(1.0f, 0.0f);
-	sf::Vector2f momentum = sf::Vector2f(0.0f, 0.0f);
-	sf::Vector2f corners[4];
-	sf::Vector2f currPos = sf::Vector2f(0.0f, 0.0f);
 
-	float maxMomentum = 0.3f;
 
-	float rotDeg = 0.0f;
-	float rotRad = 0.0f;
-	float rotationSpeed = 180.0f;
-	float acceleration = 0.25f;
-	float brakeForce = 0.1f;
-	float frictionForce = 0.1f;
-	float dbg_slideSpeed = 150.0f;
-
-	std::unique_ptr<Car> newState;
+	CarState newState;
+	CarState currState;
 
 	void ApplyFriction(float dtTimeMilli);
 	void ApplySlowDownForce(float forceMag, float dtTimeMilli);

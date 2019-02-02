@@ -5,136 +5,133 @@
 #include "include/Car.h"
 #include "include/MathCommon.h"
 
-const float Car::length = 40.0f;
-const float Car::height = 10.0f;
+const float Car::c_length = 40.0f;
+const float Car::c_height = 10.0f;
 
-Car::Car()
+const float Car::c_rotationSpeed = 180.0f;
+const float Car::c_acceleration = 0.25f;
+const float Car::c_brakeForce = 0.1f;
+const float Car::c_frictionForce = 0.1f;
+const float Car::c_dbg_slideSpeed = 150.0f;
+const float Car::c_maxMomentum = 0.3f;
+
+Car::Car(sf::Vector2f startPos) : shape(sf::Vector2f(c_length, c_height))
 {
-	shape = sf::RectangleShape(sf::Vector2f(length, height));
 	shape.setFillColor(sf::Color::Blue);
 	shape.setOutlineThickness(1.0f);
 	shape.setOutlineColor(sf::Color(250, 150, 100));
-	shape.setOrigin(length/2.0f, height/2.0f);
-	//shape.setPosition(0.0f, 0.0f);
+	shape.setOrigin(c_length / 2.0f, c_height / 2.0f);
+	shape.setPosition(0.0f, 0.0f);
 
+	newState.corners[0] = sf::Vector2f(-c_length / 2.0f, -c_height / 2.0f);
+	newState.corners[1] = sf::Vector2f(c_length / 2.0f, -c_height / 2.0f);
+	newState.corners[2] = sf::Vector2f(c_length / 2.0f, c_height / 2.0f);
+	newState.corners[3] = sf::Vector2f(-c_length / 2.0f, c_height / 2.0f);
 
-	corners[0] = sf::Vector2f(-length / 2.0f, -height / 2.0f);
-	corners[1] = sf::Vector2f(length / 2.0f, -height / 2.0f);
-	corners[2] = sf::Vector2f(length / 2.0f, height / 2.0f);
-	corners[3] = sf::Vector2f(-length / 2.0f, height / 2.0f);
+	newState.position = startPos;
 
-}
-
-Car::Car(const Car & car)
-{
-	acceleration = car.acceleration;
-	brakeForce = car.brakeForce;
-	
-	for(int i = 0; i< 4; i++)
-		corners[i] = car.corners[i];
-
-	currPos = car.currPos;
-	//car.dbg_slideSpeed;
-	forwardDir = car.forwardDir;
-	frictionForce = car.frictionForce;
-	//car.height;
-	//car.length;
-	//car.maxMomentum;
-	momentum = car.momentum;
-	rotationSpeed = car.rotationSpeed;
-	rotDeg = car.rotDeg;
-	rotRad = car.rotRad;
-	shape = car.shape;
-}
-
-Car::Car(sf::Vector2f startPos) : Car()
-{
-	currPos = startPos;
+	currState = newState;
 }
 
 void Car::Rotate(float dtTimeMilli, bool left)
 {
 	int direction = left ? -1 : 1;
 
-	float rotAmount = direction * rotationSpeed * (dtTimeMilli / 1000.0f);
+	float rotAmount = direction * c_rotationSpeed * (dtTimeMilli / 1000.0f);
 	float rotAmountRad = MathCommon::DegreesToRadians(rotAmount);
 
-	rotDeg += rotAmount;
-	rotRad = MathCommon::DegreesToRadians(rotDeg);
+	newState.rotDeg = currState.rotDeg + rotAmount;
+	newState.rotRad = MathCommon::DegreesToRadians(newState.rotDeg);
 
 
 	//determine new direction vector based on new rotation
-	forwardDir = sf::Vector2f(std::cos(rotRad), std::sin(rotRad));
+	newState.forwardDir = sf::Vector2f(std::cos(newState.rotRad), std::sin(newState.rotRad));
 
 	for (int i = 0; i < 4; i++) {
 
 		auto newPoint = sf::Vector2f();
-		newPoint.x = corners[i].x * std::cos(rotAmountRad) - corners[i].y * std::sin(rotAmountRad);
-		newPoint.y = corners[i].x * std::sin(rotAmountRad) + corners[i].y * std::cos(rotAmountRad);
+		newPoint.x = newState.corners[i].x * std::cos(rotAmountRad) - newState.corners[i].y * std::sin(rotAmountRad);
+		newPoint.y = newState.corners[i].x * std::sin(rotAmountRad) + newState.corners[i].y * std::cos(rotAmountRad);
 
-		corners[i] = newPoint;
+		newState.corners[i] = newPoint;
 	}
 }
 
 void Car::Accelerate(float dtTimeMilli, bool forward)
 {
 	if (forward)
-		momentum += forwardDir * acceleration * (dtTimeMilli / 1000.0f);
+		newState.momentum += newState.forwardDir * c_acceleration * (dtTimeMilli / 1000.0f);
 	else
-		momentum += -(forwardDir * acceleration * (dtTimeMilli / 1000.0f));
+		newState.momentum += -(newState.forwardDir * c_acceleration * (dtTimeMilli / 1000.0f));
 }
 
 void Car::Brake(float dtTimeMilli)
 {
-	ApplySlowDownForce(brakeForce, dtTimeMilli);
+	ApplySlowDownForce(c_brakeForce, dtTimeMilli);
 }
 
 void Car::DBG_Slide(const sf::Vector2f& dir, float dtMilli)
 {
-	momentum = sf::Vector2f(0.0f, 0.0f);
-	shape.move(dir * dtMilli / 1000.0f * dbg_slideSpeed);
+	//halting all movement on the car
+	newState.momentum = sf::Vector2f(0.0f, 0.0f);
+	currState.momentum = sf::Vector2f(0.0f, 0.0f);
+	
+	//placing car to exact position
+	currState.position += dir * dtMilli / 1000.0f * c_dbg_slideSpeed;
+	newState.position = currState.position;
+
+
+	//shape.move(dir * dtMilli / 1000.0f * c_dbg_slideSpeed);
 }
 
 void Car::ApplyFriction(float dtTimeMilli)
 {
-	ApplySlowDownForce(frictionForce, dtTimeMilli);
+	ApplySlowDownForce(c_frictionForce, dtTimeMilli);
 }
 
 void Car::ApplySlowDownForce(float forceMag, float dtTimeMilli)
 {
-	sf::Vector2f momentumDir = MathCommon::Normalize(momentum);
-	sf::Vector2f stoppingForceToApply = MathCommon::Normalize(momentum) * forceMag * (dtTimeMilli / 1000.0f);
+	sf::Vector2f momentumDir = MathCommon::Normalize(newState.momentum);
+	sf::Vector2f stoppingForceToApply = MathCommon::Normalize(newState.momentum) * forceMag * (dtTimeMilli / 1000.0f);
 
-	float momentumMag = MathCommon::GetMagnitude(momentum);
+	float momentumMag = MathCommon::GetMagnitude(newState.momentum);
 	float stoppingForceMag = MathCommon::GetMagnitude(stoppingForceToApply);
 
 	//to ensure stopping force doesn't cause car to move backwards
 	if (momentumMag > stoppingForceMag)
-		momentum -= stoppingForceToApply;
+		newState.momentum -= stoppingForceToApply;
 	else
-		momentum = sf::Vector2f(0.0f, 0.0f);
+		newState.momentum = sf::Vector2f(0.0f, 0.0f);
 }
 
 void Car::Update(sf::RenderWindow& window, float dtTimeMilli)
 {
 	ApplyFriction(dtTimeMilli);
 
-	if (MathCommon::GetMagnitude(momentum) > maxMomentum)
-		momentum = MathCommon::ChangeLength(momentum, maxMomentum);
+	if (MathCommon::GetMagnitude(newState.momentum) > c_maxMomentum)
+		newState.momentum = MathCommon::ChangeLength(newState.momentum, c_maxMomentum);
 
-	currPos += momentum * dtTimeMilli;
-	shape.setRotation(rotDeg);
-	shape.setPosition(currPos);
+	//this calculation MUST ONLY happen in Update() to enusre
+	//position isn't getting updated multiple times
+	newState.position += newState.momentum * dtTimeMilli;
+	
+	//check if collision, if so don't update to new state
+
+	currState = newState;
+	
+	shape.setRotation(currState.rotDeg);
+	shape.setPosition(currState.position);
 
 	window.draw(shape);
 
+	//drawing corners of car
 	float circleRad = 2.0f;
-	for (int i = 0; i< 4; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		//so corners are visible
 		auto circle = sf::CircleShape(circleRad);
 		circle.setOrigin(circleRad, circleRad);
-		circle.setPosition(corners[i] + currPos);
+		circle.setPosition(currState.corners[i] + currState.position);
 		window.draw(circle);
 	}
 }
