@@ -106,16 +106,46 @@ void Car::ApplySlowDownForce(float forceMag, float dtTimeMilli)
 		newState.momentum = sf::Vector2f(0.0f, 0.0f);
 }
 
+///NOTE: function should only be called after computing 
+///final position of newState
 bool Car::CollisionDetected() {
 	
+	std::array<sf::Vector2f, 4> carWorldCorners;
+
+	//set corners to world coordinates
+	for (size_t i = 0; i < 4; i++) {
+		carWorldCorners[i] = newState.corners[i] + newState.position;
+	}
+
 	//check every static object for a collision
 	//using point triangle test method
 	for (auto &object : G_STATICOBJECTS) {
-		//std::array<sf::Vector2f, 4> objCorners = object.GetCorners();
-		//std::array<bool, 4> objCollisionChecks = object.GetCollisionChecks();
+		std::array<sf::Vector2f, 4> objCorners = object.GetCorners();
+		std::array<bool, 4> objCollisionChecks = object.GetCollisionChecks();
 		
-		for (auto &carCorner : newState.corners) {
-			
+		for (auto &carCorner : carWorldCorners) {
+
+			bool collision = true;
+			for (size_t i = 0; i < objCorners.size()-1; i++) {
+				
+				//this operation must be performed in this order!!
+				float check = MathCommon::CrossProduct(objCorners[i] - objCorners[i + 1], objCorners[i] - carCorner);
+
+				if (check > 0.0f && !objCollisionChecks[i]) {
+					collision = false;
+					break;
+				}
+				else if (check < 0.0f && objCollisionChecks[i]) {
+					collision = false;
+					break;
+				}
+				//todo handle check == 0
+			}
+
+			//point is on same side of object as it's origin,
+			//therefore collision occurs
+			if (collision == true)
+				return true;
 		}
 	}
 
@@ -132,25 +162,28 @@ void Car::Update(sf::RenderWindow& window, float dtTimeMilli)
 	//this calculation MUST ONLY happen in Update() to enusre
 	//position isn't getting updated multiple times
 	newState.position += newState.momentum * dtTimeMilli;
-	
-	//check if collision, if so don't update to new state
 
-	currState = newState;
-	
-	shape.setRotation(currState.rotDeg);
-	shape.setPosition(currState.position);
-
-	window.draw(shape);
-
-	//drawing corners of car
-	float circleRad = 2.0f;
-	for (int i = 0; i < 4; i++)
+	//update to new state only if NO collision occured
+	std::cout << CollisionDetected() << std::endl;
+	if (!CollisionDetected())
 	{
-		//so corners are visible
-		auto circle = sf::CircleShape(circleRad);
-		circle.setOrigin(circleRad, circleRad);
-		circle.setPosition(currState.corners[i] + currState.position);
-		window.draw(circle);
+		currState = newState;
+
+		shape.setRotation(currState.rotDeg);
+		shape.setPosition(currState.position);
+
+		window.draw(shape);
+
+		//drawing corners of car
+		float circleRad = 2.0f;
+		for (int i = 0; i < 4; i++)
+		{
+			//so corners are visible
+			auto circle = sf::CircleShape(circleRad);
+			circle.setOrigin(circleRad, circleRad);
+			circle.setPosition(currState.corners[i] + currState.position);
+			window.draw(circle);
+		}
 	}
 }
 

@@ -12,7 +12,7 @@ struct CarState {
 	sf::Vector2f forwardDir = sf::Vector2f(1.0f, 0.0f);
 	sf::Vector2f momentum = sf::Vector2f(0.0f, 0.0f);
 	
-	//must add car position to corner to get it's global position
+	//LOCAL coordinates of car position
 	sf::Vector2f corners[4];
 	sf::Vector2f position = sf::Vector2f(0.0f, 0.0f);
 

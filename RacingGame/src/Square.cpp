@@ -67,6 +67,7 @@ void Square::Update(sf::RenderWindow & window, float dtTimeMilli)
 	}
 }
 
+///Get world coordinates of corners of shape
 std::array<sf::Vector2f, 4> Square::GetCorners()
 {
 	return corners;

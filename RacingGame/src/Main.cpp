@@ -11,7 +11,8 @@
 static const sf::Int32 fpsRefreshMs = 1000;
 static const int screenLen = 1500, screenHeight = 700;
 
-static std::vector<Square> G_STATICOBJECTS;
+//global variables
+std::vector<Square> G_STATICOBJECTS;
 
 bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText) {
 	Timer("Setup Function ");
