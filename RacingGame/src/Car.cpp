@@ -121,7 +121,6 @@ bool Car::CollisionDetected() {
 	//using point triangle test method
 	for (auto &object : G_STATICOBJECTS) {
 		std::array<sf::Vector2f, 4> objCorners = object.GetCorners();
-		std::array<bool, 4> objCollisionChecks = object.GetCollisionChecks();
 
 		for (auto &carCorner : carWorldCorners) {
 

@@ -44,12 +44,6 @@ Square::Square(float sideLen, sf::Vector2f pos, float rot)
 		corners[i] += position;
 	}
 
-	//setting collision info
-	collisionChecks[0] = MathCommon::CrossProduct(corners[0] - corners[1], corners[0] - position) > 0.0f ? true : false;
-	collisionChecks[1] = MathCommon::CrossProduct(corners[1] - corners[2], corners[1] - position) > 0.0f ? true : false;
-	collisionChecks[2] = MathCommon::CrossProduct(corners[2] - corners[3], corners[2] - position) > 0.0f ? true : false;
-	collisionChecks[3] = MathCommon::CrossProduct(corners[3] - corners[0], corners[3] - position) > 0.0f ? true : false;
-
 }
 
 void Square::Update(sf::RenderWindow & window, float dtTimeMilli)
@@ -71,11 +65,6 @@ void Square::Update(sf::RenderWindow & window, float dtTimeMilli)
 std::array<sf::Vector2f, 4> Square::GetCorners()
 {
 	return corners;
-}
-
-std::array<bool, 4> Square::GetCollisionChecks()
-{
-	return collisionChecks;
 }
 
 Square::~Square()
