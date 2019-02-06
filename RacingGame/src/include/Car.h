@@ -13,7 +13,7 @@ struct CarState {
 	sf::Vector2f momentum = sf::Vector2f(0.0f, 0.0f);
 	
 	//LOCAL coordinates of car position
-	sf::Vector2f corners[4];
+	std::array<sf::Vector2f, 4> corners;
 	sf::Vector2f position = sf::Vector2f(0.0f, 0.0f);
 
 	float rotDeg = 0.0f;

@@ -49,7 +49,7 @@ void Car::Rotate(float dtTimeMilli, bool left)
 	//determine new direction vector based on new rotation
 	newState.forwardDir = sf::Vector2f(std::cos(newState.rotRad), std::sin(newState.rotRad));
 
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < newState.corners.size(); i++) {
 
 		auto newPoint = sf::Vector2f();
 		newPoint.x = newState.corners[i].x * std::cos(rotAmountRad) - newState.corners[i].y * std::sin(rotAmountRad);
@@ -113,7 +113,7 @@ bool Car::CollisionDetected() {
 	std::array<sf::Vector2f, 4> carWorldCorners;
 
 	//set corners to world coordinates
-	for (size_t i = 0; i < 4; i++) {
+	for (size_t i = 0; i < newState.corners.size(); i++) {
 		carWorldCorners[i] = newState.corners[i] + newState.position;
 	}
 
@@ -177,7 +177,7 @@ void Car::Update(sf::RenderWindow& window, float dtTimeMilli)
 
 	//drawing corners of car
 	float circleRad = 2.0f;
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < currState.corners.size(); i++)
 	{
 		//so corners are visible
 		auto circle = sf::CircleShape(circleRad);
