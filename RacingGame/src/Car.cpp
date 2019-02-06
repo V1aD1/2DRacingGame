@@ -25,14 +25,14 @@ Car::Car(sf::Vector2f startPos) : shape(sf::Vector2f(c_length, c_height))
 	shape.setOrigin(c_length / 2.0f, c_height / 2.0f);
 	shape.setPosition(0.0f, 0.0f);
 
-	newState.corners[0] = sf::Vector2f(-c_length / 2.0f, -c_height / 2.0f);
-	newState.corners[1] = sf::Vector2f(c_length / 2.0f, -c_height / 2.0f);
-	newState.corners[2] = sf::Vector2f(c_length / 2.0f, c_height / 2.0f);
-	newState.corners[3] = sf::Vector2f(-c_length / 2.0f, c_height / 2.0f);
+	currState.corners[0] = sf::Vector2f(-c_length / 2.0f, -c_height / 2.0f);
+	currState.corners[1] = sf::Vector2f(c_length / 2.0f, -c_height / 2.0f);
+	currState.corners[2] = sf::Vector2f(c_length / 2.0f, c_height / 2.0f);
+	currState.corners[3] = sf::Vector2f(-c_length / 2.0f, c_height / 2.0f);
 
-	newState.position = startPos;
+	currState.position = startPos;
 
-	currState = newState;
+	newState = currState;
 }
 
 void Car::Rotate(float dtTimeMilli, bool left)
@@ -42,7 +42,7 @@ void Car::Rotate(float dtTimeMilli, bool left)
 	float rotAmount = direction * c_rotationSpeed * (dtTimeMilli / 1000.0f);
 	float rotAmountRad = MathCommon::DegreesToRadians(rotAmount);
 
-	newState.rotDeg = currState.rotDeg + rotAmount;
+	newState.rotDeg = newState.rotDeg + rotAmount;
 	newState.rotRad = MathCommon::DegreesToRadians(newState.rotDeg);
 
 
