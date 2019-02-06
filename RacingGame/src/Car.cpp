@@ -122,29 +122,24 @@ bool Car::CollisionDetected() {
 	for (auto &object : G_STATICOBJECTS) {
 		std::array<sf::Vector2f, 4> objCorners = object.GetCorners();
 		std::array<bool, 4> objCollisionChecks = object.GetCollisionChecks();
-		
+
 		for (auto &carCorner : carWorldCorners) {
 
 			bool collision = true;
-			for (size_t i = 0; i < objCorners.size()-1; i++) {
+
+			for (size_t i = 0; i < objCorners.size(); i++) {
 				
 				//this operation must be performed in this order!!
-				float check = MathCommon::CrossProduct(objCorners[i] - objCorners[i + 1], objCorners[i] - carCorner);
+				float check = MathCommon::CrossProduct(objCorners[i] - objCorners[(i + 1)% objCorners.size()], objCorners[i] - carCorner);
 
-				if (check > 0.0f && !objCollisionChecks[i]) {
-					collision = false;
-					break;
-				}
-				else if (check < 0.0f && objCollisionChecks[i]) {
+				if (check < 0.0f) {
 					collision = false;
 					break;
 				}
 				//todo handle check == 0
 			}
 
-			//point is on same side of object as it's origin,
-			//therefore collision occurs
-			if (collision == true)
+			if(collision)
 				return true;
 		}
 	}
@@ -166,25 +161,32 @@ void Car::Update(sf::RenderWindow& window, float dtTimeMilli)
 	//update to new state only if NO collision occured
 	std::cout << CollisionDetected() << std::endl;
 	if (!CollisionDetected())
-	{
 		currState = newState;
+	
 
-		shape.setRotation(currState.rotDeg);
-		shape.setPosition(currState.position);
+	else {
+		//if collision occurs then halt all momentum on the car
+		currState.momentum = sf::Vector2f(0.0f, 0.0f);
 
-		window.draw(shape);
-
-		//drawing corners of car
-		float circleRad = 2.0f;
-		for (int i = 0; i < 4; i++)
-		{
-			//so corners are visible
-			auto circle = sf::CircleShape(circleRad);
-			circle.setOrigin(circleRad, circleRad);
-			circle.setPosition(currState.corners[i] + currState.position);
-			window.draw(circle);
-		}
+		newState = currState;
 	}
+
+
+	shape.setRotation(currState.rotDeg);
+	shape.setPosition(currState.position);
+
+	//drawing corners of car
+	float circleRad = 2.0f;
+	for (int i = 0; i < 4; i++)
+	{
+		//so corners are visible
+		auto circle = sf::CircleShape(circleRad);
+		circle.setOrigin(circleRad, circleRad);
+		circle.setPosition(currState.corners[i] + currState.position);
+		window.draw(circle);
+	}
+
+	window.draw(shape);
 }
 
 Car::~Car()
