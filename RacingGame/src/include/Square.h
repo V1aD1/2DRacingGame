@@ -3,7 +3,9 @@
 #include <array>
 #include <SFML/Graphics.hpp>
 
-class Square
+#include "Entity.h"
+
+class Square : public Entity
 {
 public:
 
@@ -12,13 +14,7 @@ public:
 
 	void Update(sf::RenderWindow& window, float dtTimeMilli);
 
-	std::array<sf::Vector2f, 4> GetCorners();
-
 private: 
-	sf::RectangleShape shape;
-	std::array<sf::Vector2f, 4> corners;
 	float sideLength;
-	float rotation;
-	sf::Vector2f position;
 };
 

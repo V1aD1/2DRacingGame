@@ -4,9 +4,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Square.h"
+#include "Entity.h"
 
-extern std::vector<Square> G_STATICOBJECTS;
+extern std::vector<Entity> G_STATICOBJECTS;
 
 struct CarState {
 	sf::Vector2f forwardDir = sf::Vector2f(1.0f, 0.0f);
