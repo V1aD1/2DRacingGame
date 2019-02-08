@@ -54,7 +54,7 @@ int main()
 
 	sf::Int32 timeSinceLastFpsLog = fpsRefreshMs;
 	Car car = Car(sf::Vector2f(40.0f, 50.0f));
-	Square square = Square(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 45.0f);
+	Square square = Square(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f);
 	G_STATICOBJECTS.push_back(square);
 
 	sf::Clock clock;

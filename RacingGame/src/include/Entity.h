@@ -17,7 +17,7 @@ public:
 	void SetCorners(const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied);
 	void SetShape(sf::Shape* newShape);
 
-	void Rotate(float degrees);
+	void Rotate(float newRotInDegrees);
 
 private:
 	sf::Vector2f m_position;
@@ -26,5 +26,6 @@ private:
 
 	std::array<sf::Vector2f, 4> m_localCorners;
 	sf::Shape* m_shape;
+	void SetRotation(float degrees);
 };
 
