@@ -22,7 +22,7 @@ bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText) {
 	window.create(sf::VideoMode(screenLen, screenHeight), "Racing Game!", sf::Style::Default, settings);
 
 	//never use both setVerticalSyncEnabled and setFramerateLimit at the same time!
-	window.setFramerateLimit(60);
+	//window.setFramerateLimit(60);
 
 	if (!font.loadFromFile("Resources/fonts/MotorolaScreentype.ttf")) {
 		std::cout << "Problems opening font file!" << std::endl;
@@ -61,7 +61,9 @@ int main()
 
 	while (window.isOpen())
 	{
-		sf::Int32 dtMillis = (clock.restart()).asMilliseconds();
+		sf::Time timePassed = clock.restart();
+		sf::Int32 dtMicros = timePassed.asMicroseconds();
+		float dtMillis = dtMicros / 1000.0f;
 		sf::Event event;
 
 		//pollEvent() or waitEvent() MUST be called in the same thread that created the window!!
@@ -103,7 +105,7 @@ int main()
 		square.Update(window, dtMillis);
 
 		if ((timeSinceLastFpsLog += dtMillis) > fpsRefreshMs) {
-			fpsText.setString(std::to_string(static_cast<int>(1000.0f / dtMillis)));
+			fpsText.setString(std::to_string(static_cast<int>(1000000.0f / dtMicros)));
 			timeSinceLastFpsLog = 0;
 		}
 		window.draw(fpsText);

@@ -158,7 +158,6 @@ void Car::Update(sf::RenderWindow& window, float dtTimeMilli)
 	newState.position += newState.momentum * dtTimeMilli;
 
 	//update to new state only if NO collision occured
-	std::cout << CollisionDetected() << std::endl;
 	if (!CollisionDetected())
 		currState = newState;
 	
