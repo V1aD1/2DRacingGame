@@ -81,9 +81,6 @@ void Car::DBG_Slide(const sf::Vector2f& dir, float dtMilli)
 	//placing car to exact position
 	currState.position += dir * dtMilli / 1000.0f * c_dbg_slideSpeed;
 	newState.position = currState.position;
-
-
-	//shape.move(dir * dtMilli / 1000.0f * c_dbg_slideSpeed);
 }
 
 void Car::ApplyFriction(float dtTimeMilli)
