@@ -4,9 +4,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "Entity.h"
+#include "ConvexEntity.h"
 
-extern std::vector<Entity*> G_STATICOBJECTS;
+extern std::vector<ConvexEntity*> G_STATICOBJECTS;
 
 struct CarState {
 	sf::Vector2f forwardDir = sf::Vector2f(1.0f, 0.0f);

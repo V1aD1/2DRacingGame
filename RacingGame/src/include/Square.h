@@ -3,9 +3,9 @@
 #include <array>
 #include <SFML/Graphics.hpp>
 
-#include "Entity.h"
+#include "ConvexEntity.h"
 
-class Square : public Entity
+class Square : public ConvexEntity
 {
 public:
 
