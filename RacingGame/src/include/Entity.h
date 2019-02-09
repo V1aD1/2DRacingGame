@@ -19,6 +19,7 @@ protected:
 	float m_rotation;
 	float m_rotationInRad;
 
+	//sets both the m_rotation and m_rotationInRad
 	void SetRotation(float degrees);
 };
 

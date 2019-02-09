@@ -37,8 +37,7 @@ std::array<sf::Vector2f, 4> ConvexEntity::GetWorldCorners() const
 	return worldCorners;
 }
 
-///This function receives corners in local space, sets them, then rotates them according to the 
-///rotation of the entity
+
 void ConvexEntity::SetCorners(const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied)
 {
 	m_localCorners = cornersWithoutRotationApplied;
