@@ -116,8 +116,8 @@ bool Car::CollisionDetected() {
 
 	//check every static object for a collision
 	//using point triangle test method
-	for (auto &object : G_STATICOBJECTS) {
-		std::array<sf::Vector2f, 4> objCorners = object.GetWorldCorners();
+	for (auto object : G_STATICOBJECTS) {
+		std::array<sf::Vector2f, 4> objCorners = (*object).GetWorldCorners();
 
 		for (auto &carCorner : carWorldCorners) {
 

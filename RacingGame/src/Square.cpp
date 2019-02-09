@@ -45,8 +45,6 @@ Square::~Square()
 
 void Square::Update(sf::RenderWindow & window, float dtTimeMilli)
 {
-	//Rotate(0.01f * dtTimeMilli);
-
 	float circleRad = 8.0f;
 
 	window.draw(*GetShape());

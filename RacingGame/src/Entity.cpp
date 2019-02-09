@@ -73,10 +73,8 @@ void Entity::SetShape(sf::Shape * newShape)
 //I think corners should be turned always according to entity rotation,
 //but now they are decoupled
 void Entity::Rotate(float degrees)
-{
+{	
 	SetRotation(m_rotation + degrees);
-
-	std::cout << degrees << ", " << m_rotation << std::endl;
 
 	float radsToTurn = MathCommon::DegreesToRadians(degrees);
 
