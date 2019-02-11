@@ -8,16 +8,27 @@
 
 extern std::vector<ConvexEntity*> G_STATICOBJECTS;
 
-struct CarState {
+class CarState : public ConvexEntity{
+	
+public:
 	sf::Vector2f forwardDir = sf::Vector2f(1.0f, 0.0f);
 	sf::Vector2f momentum = sf::Vector2f(0.0f, 0.0f);
-	
-	//LOCAL coordinates of car position
-	std::array<sf::Vector2f, 4> corners;
-	sf::Vector2f position = sf::Vector2f(0.0f, 0.0f);
 
-	float rotDeg = 0.0f;
-	float rotRad = 0.0f;
+	CarState() {}
+
+	CarState(sf::Vector2f pos, float rot) : ConvexEntity(pos, rot) {};
+
+	CarState(const CarState& newState): forwardDir(newState.forwardDir), momentum(newState.momentum), ConvexEntity(newState.m_position, newState.m_rotation, newState.m_localCorners) {
+		forwardDir = newState.forwardDir;
+		momentum = newState.momentum;
+
+		//copying shape by value
+		*m_shape = *newState.m_shape;
+	}
+
+	~CarState() {
+		delete GetShape();
+	}
 };
 
 class Car
@@ -31,6 +42,10 @@ class Car
 	static const float c_dbg_slideSpeed;
 	static const float c_maxMomentum;
 
+private:
+	CarState newState;
+	CarState currState;
+
 public:
 	Car(sf::Vector2f pos);
 	
@@ -43,15 +58,8 @@ public:
 	~Car();
 
 private:
-	sf::RectangleShape shape;
-
-
-	CarState newState;
-	CarState currState;
-
 	void ApplyFriction(float dtTimeMilli);
 	void ApplySlowDownForce(float forceMag, float dtTimeMilli);
-
 	bool CollisionDetected();
 };
 

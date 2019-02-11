@@ -4,20 +4,24 @@
 #pragma once
 class Entity
 {
-public:
-	Entity();
-	Entity(sf::Vector2f position, float rot);
-	~Entity();
 
-	sf::Vector2f GetPosition() const;
-	float GetRotation() const;
-	
-	void SetPosition(sf::Vector2f newPos);
-
+//todo make private since rotation should only be changeable through SetRotation()
 protected:
 	sf::Vector2f m_position;
 	float m_rotation;
 	float m_rotationInRad;
+
+public:
+	Entity();
+
+	sf::Vector2f GetPosition() const;
+	float GetRotation() const;
+	void SetPosition(sf::Vector2f newPos);
+
+	~Entity();
+
+protected:
+	Entity(sf::Vector2f position, float rot);
 
 	//sets both the m_rotation and m_rotationInRad
 	void SetRotation(float degrees);

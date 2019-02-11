@@ -2,18 +2,14 @@
 #include "include/MathCommon.h"
 
 
-ConvexEntity::ConvexEntity()
-{
-}
+ConvexEntity::ConvexEntity(){}
 
-ConvexEntity::ConvexEntity(sf::Vector2f pos, float rot) : Entity(pos, rot)
-{
-}
+ConvexEntity::ConvexEntity(sf::Vector2f pos, float rot) : Entity(pos, rot){}
+
+ConvexEntity::ConvexEntity(sf::Vector2f pos, float rot, std::array<sf::Vector2f, 4> localCorners) : Entity(pos, rot), m_localCorners(localCorners) {}
 
 
-ConvexEntity::~ConvexEntity()
-{
-}
+ConvexEntity::~ConvexEntity(){}
 
 void ConvexEntity::SetShape(sf::Shape * newShape)
 {
@@ -72,6 +68,12 @@ void ConvexEntity::Rotate(float degrees)
 		//rotating the point about the centre of the shape
 		m_localCorners[i] = newPoint;
 	}
+}
+
+void ConvexEntity::SetPosition(sf::Vector2f newPos)
+{
+	m_position = newPos;
+	m_shape->setPosition(newPos);
 }
 
 void ConvexEntity::SetRotation(float newRotInDegrees)

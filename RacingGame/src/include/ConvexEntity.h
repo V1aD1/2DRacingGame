@@ -9,6 +9,7 @@ public:
 	ConvexEntity();
 
 	ConvexEntity(sf::Vector2f pos, float rot);
+	ConvexEntity(sf::Vector2f pos, float rot, std::array<sf::Vector2f, 4> localCorners);
 
 	~ConvexEntity();
 
@@ -20,14 +21,15 @@ public:
 	void SetCorners(const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied);
 	std::array<sf::Vector2f, 4> GetWorldCorners() const;
 
-
 	void Rotate(float newRotInDegrees);
+	void SetPosition(sf::Vector2f newPos);
 
-private:
+
+protected:
 	sf::Shape* m_shape;
 	std::array<sf::Vector2f, 4> m_localCorners;
 
-	//sets rotation and rotates corners as well
+	//sets rotation and updates Shape and rotates corners as well
 	void SetRotation(float degrees);
 };
 

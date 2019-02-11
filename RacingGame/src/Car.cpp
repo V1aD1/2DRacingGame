@@ -17,20 +17,26 @@ const float Car::c_frictionForce = 0.1f;
 const float Car::c_dbg_slideSpeed = 150.0f;
 const float Car::c_maxMomentum = 0.3f;
 
-Car::Car(sf::Vector2f startPos) : shape(sf::Vector2f(c_length, c_height))
+Car::Car(sf::Vector2f startPos) : currState(startPos, 0.0f)
 {
-	shape.setFillColor(sf::Color::Blue);
-	shape.setOutlineThickness(1.0f);
-	shape.setOutlineColor(sf::Color(250, 150, 100));
-	shape.setOrigin(c_length / 2.0f, c_height / 2.0f);
-	shape.setPosition(0.0f, 0.0f);
 
-	currState.corners[0] = sf::Vector2f(-c_length / 2.0f, -c_height / 2.0f);
-	currState.corners[1] = sf::Vector2f(c_length / 2.0f, -c_height / 2.0f);
-	currState.corners[2] = sf::Vector2f(c_length / 2.0f, c_height / 2.0f);
-	currState.corners[3] = sf::Vector2f(-c_length / 2.0f, c_height / 2.0f);
+	sf::RectangleShape* shape = new sf::RectangleShape(sf::Vector2f(c_length, c_height));
+	shape->setFillColor(sf::Color::Blue);
+	shape->setOutlineThickness(1.0f);
+	shape->setOutlineColor(sf::Color(250, 150, 100));
+	shape->setOrigin(c_length / 2.0f, c_height / 2.0f);
+	shape->setPosition(0.0f, 0.0f);
 
-	currState.position = startPos;
+	currState.SetShape(shape);
+
+	std::array<sf::Vector2f, 4> corners = std::array<sf::Vector2f, 4>();
+
+	corners[0] = sf::Vector2f(-c_length / 2.0f, -c_height / 2.0f);
+	corners[1] = sf::Vector2f(c_length / 2.0f, -c_height / 2.0f);
+	corners[2] = sf::Vector2f(c_length / 2.0f, c_height / 2.0f);
+	corners[3] = sf::Vector2f(-c_length / 2.0f, c_height / 2.0f);
+
+	currState.SetCorners(corners);
 
 	newState = currState;
 }
@@ -40,6 +46,10 @@ void Car::Rotate(float dtTimeMilli, bool left)
 	int direction = left ? -1 : 1;
 
 	float rotAmount = direction * c_rotationSpeed * (dtTimeMilli / 1000.0f);
+	
+	newState.Rotate(rotAmount);
+
+	/*
 	float rotAmountRad = MathCommon::DegreesToRadians(rotAmount);
 
 	newState.rotDeg = newState.rotDeg + rotAmount;
@@ -56,7 +66,7 @@ void Car::Rotate(float dtTimeMilli, bool left)
 		newPoint.y = newState.corners[i].x * std::sin(rotAmountRad) + newState.corners[i].y * std::cos(rotAmountRad);
 
 		newState.corners[i] = newPoint;
-	}
+	}*/
 }
 
 void Car::Accelerate(float dtTimeMilli, bool forward)
@@ -79,8 +89,8 @@ void Car::DBG_Slide(const sf::Vector2f& dir, float dtMilli)
 	currState.momentum = sf::Vector2f(0.0f, 0.0f);
 	
 	//placing car to exact position
-	currState.position += dir * dtMilli / 1000.0f * c_dbg_slideSpeed;
-	newState.position = currState.position;
+	currState.SetPosition(currState.GetPosition() + dir * dtMilli / 1000.0f * c_dbg_slideSpeed);
+	newState.SetPosition(currState.GetPosition());
 }
 
 void Car::ApplyFriction(float dtTimeMilli)
@@ -106,20 +116,12 @@ void Car::ApplySlowDownForce(float forceMag, float dtTimeMilli)
 ///NOTE: function should only be called after computing 
 ///final position of newState
 bool Car::CollisionDetected() {
-	
-	std::array<sf::Vector2f, 4> carWorldCorners;
-
-	//set corners to world coordinates
-	for (size_t i = 0; i < newState.corners.size(); i++) {
-		carWorldCorners[i] = newState.corners[i] + newState.position;
-	}
-
 	//check every static object for a collision
 	//using point triangle test method
 	for (auto object : G_STATICOBJECTS) {
 		std::array<sf::Vector2f, 4> objCorners = (*object).GetWorldCorners();
 
-		for (auto &carCorner : carWorldCorners) {
+		for (auto &carCorner : newState.GetWorldCorners()) {
 
 			bool collision = true;
 
@@ -152,7 +154,7 @@ void Car::Update(sf::RenderWindow& window, float dtTimeMilli)
 
 	//this calculation MUST ONLY happen in Update() to enusre
 	//position isn't getting updated multiple times
-	newState.position += newState.momentum * dtTimeMilli;
+	newState.SetPosition(newState.GetPosition() + newState.momentum * dtTimeMilli);
 
 	//update to new state only if NO collision occured
 	if (!CollisionDetected())
@@ -166,22 +168,20 @@ void Car::Update(sf::RenderWindow& window, float dtTimeMilli)
 		newState = currState;
 	}
 
-
-	shape.setRotation(currState.rotDeg);
-	shape.setPosition(currState.position);
+	auto corners = currState.GetWorldCorners();
 
 	//drawing corners of car
 	float circleRad = 2.0f;
-	for (int i = 0; i < currState.corners.size(); i++)
+	for (int i = 0; i < corners.size(); i++)
 	{
 		//so corners are visible
 		auto circle = sf::CircleShape(circleRad);
 		circle.setOrigin(circleRad, circleRad);
-		circle.setPosition(currState.corners[i] + currState.position);
+		circle.setPosition(corners[i]);
 		window.draw(circle);
 	}
 
-	window.draw(shape);
+	window.draw(*currState.GetShape());
 }
 
 Car::~Car()
