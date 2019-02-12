@@ -170,6 +170,6 @@ void Car::Update(sf::RenderWindow& window, float dtTimeMilli, EventHandler& hand
 }
 
 Car::~Car() {
-	delete newState.GetShape();
-	delete currState.GetShape();
+	//delete newState.GetShape();
+	//delete currState.GetShape();
 }

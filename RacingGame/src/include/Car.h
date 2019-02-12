@@ -22,12 +22,12 @@ public:
 										momentum(newState.momentum), 
 										ConvexEntity(newState.m_position, newState.m_rotation, newState.m_localCorners) 
 	{
-		forwardDir = newState.forwardDir;
-		momentum = newState.momentum;
-
 		//TODO THIS DOESN'T WORK
 		//copying shape by value
-		*m_shape = *newState.m_shape;
+
+		delete m_shape;
+
+		SetShape(newState.m_shape);
 	}
 
 	~CarState() {
