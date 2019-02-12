@@ -13,7 +13,7 @@ static const int screenLen = 1500, screenHeight = 700;
 
 //global variables
 std::vector<ConvexEntity*> G_STATICOBJECTS;
-std::vector<ConvexEntity*> G_VARIABLEOBJECTS;
+std::vector<VariableEntity*> G_VARIABLEOBJECTS;
 
 bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText) {
 	Timer("Setup Function ");
@@ -42,24 +42,20 @@ int main()
 	sf::RenderWindow window;
 	sf::Text fpsText;
 	sf::Font font;
+	sf::Clock clock;
+	sf::Int32 timeSinceLastFpsLog = fpsRefreshMs;
 
-	EventHandler eventHandler;
+	EventHandler eventHandler = EventHandler();
+	Car car = Car(sf::Vector2f(40.0f, 50.0f));
+	Square square = Square(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f);
 
+	G_VARIABLEOBJECTS.push_back(&car);
+	G_STATICOBJECTS.push_back(&square);
 
 	if (!Setup(window, font, fpsText)) {
 		std::cout << "Problems encountered in setup, terminating program!" << std::endl;
 		return 0;
 	}
-
-	eventHandler = EventHandler();
-
-	sf::Int32 timeSinceLastFpsLog = fpsRefreshMs;
-	Car car = Car(sf::Vector2f(40.0f, 50.0f));
-
-	Square square = Square(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f);
-	G_STATICOBJECTS.push_back(&square);
-
-	sf::Clock clock;
 
 	while (window.isOpen())
 	{
@@ -74,47 +70,21 @@ int main()
 			eventHandler.HandleEvent(window, event);
 		}
 
-		/*if (eventHandler.upFlag)
-			car.Accelerate(dtMillis, true);
-
-		if (eventHandler.downFlag)
-			car.Accelerate(dtMillis, false);
-
-		if (eventHandler.leftFlag)
-			car.Rotate(dtMillis, true);
-
-		if (eventHandler.rightFlag)
-			car.Rotate(dtMillis, false);
-
-		if (eventHandler.spaceFlag)
-			car.Brake(dtMillis);
-
-		//debug commands
-		if (eventHandler.wFlag)
-			car.DBG_Slide(sf::Vector2f(0.0f, -1.0f), dtMillis);
-
-		if (eventHandler.sFlag)
-			car.DBG_Slide(sf::Vector2f(0.0f, 1.0f), dtMillis);
-
-		if (eventHandler.aFlag)
-			car.DBG_Slide(sf::Vector2f(-1.0f, 0.0f), dtMillis);
-
-		if (eventHandler.dFlag)
-			car.DBG_Slide(sf::Vector2f(1.0f, 0.0f), dtMillis);*/
-
 		window.clear();
-		car.Update(window, dtMillis, eventHandler);
 		
-		
+		//static objects before variable objects
 		square.Update(window, dtMillis);
+
+		for (auto variableObjects : G_VARIABLEOBJECTS) {
+			variableObjects->Update(window, dtMillis, eventHandler);
+		}
 
 		if ((timeSinceLastFpsLog += dtMillis) > fpsRefreshMs) {
 			fpsText.setString(std::to_string(static_cast<int>(1000000.0f / dtMicros)));
 			timeSinceLastFpsLog = 0;
 		}
+
 		window.draw(fpsText);
-
-
 		window.display();
 	}
 

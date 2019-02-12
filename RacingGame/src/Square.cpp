@@ -43,6 +43,7 @@ Square::~Square()
 	delete GetShape();
 }
 
+//this function should be moved out to a graphics component that draws to window
 void Square::Update(sf::RenderWindow & window, float dtTimeMilli)
 {
 	//Rotate(0.01f * dtTimeMilli);

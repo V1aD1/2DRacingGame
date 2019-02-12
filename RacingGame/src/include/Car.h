@@ -6,6 +6,7 @@
 
 #include "ConvexEntity.h"
 #include "InputComponent.h"
+#include "VariableEntity.h"
 
 extern std::vector<ConvexEntity*> G_STATICOBJECTS;
 
@@ -34,7 +35,7 @@ public:
 	}
 };
 
-class Car
+class Car : public VariableEntity
 {
 	static const float c_length;
 	static const float c_height;
@@ -57,7 +58,7 @@ public:
 	void Accelerate(float dtTimeMilli, bool forward);
 	void Brake(float dtTimeMilli);
 	void DBG_Slide(const sf::Vector2f& dir, float dtMilli);
-	void Update(sf::RenderWindow& window,float dtTimeMilli, EventHandler& handler);
+	virtual void Update(sf::RenderWindow& window,float dtTimeMilli, EventHandler& handler);
 
 	~Car();
 

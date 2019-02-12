@@ -171,6 +171,7 @@
     <ClInclude Include="src\include\Car.h" />
     <ClInclude Include="src\include\EventHandler.h" />
     <ClInclude Include="src\include\Timer.h" />
+    <ClInclude Include="src\include\VariableEntity.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

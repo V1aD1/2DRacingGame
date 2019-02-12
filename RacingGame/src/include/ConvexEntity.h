@@ -24,7 +24,6 @@ public:
 	void Rotate(float newRotInDegrees);
 	void SetPosition(sf::Vector2f newPos);
 
-
 protected:
 	sf::Shape* m_shape;
 	std::array<sf::Vector2f, 4> m_localCorners;
