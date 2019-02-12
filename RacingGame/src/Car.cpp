@@ -6,6 +6,7 @@
 #include "include/Car.h"
 #include "include/MathCommon.h"
 #include "include/Square.h"
+#include "include/EventHandler.h"
 
 const float Car::c_length = 40.0f;
 const float Car::c_height = 10.0f;
@@ -46,8 +47,10 @@ void Car::Rotate(float dtTimeMilli, bool left)
 	int direction = left ? -1 : 1;
 
 	float rotAmount = direction * c_rotationSpeed * (dtTimeMilli / 1000.0f);
-	
+
 	newState.Rotate(rotAmount);
+
+	newState.forwardDir = sf::Vector2f(std::cos(newState.GetRotationInRadians()), std::sin(newState.GetRotationInRadians()));
 
 	/*
 	float rotAmountRad = MathCommon::DegreesToRadians(rotAmount);
@@ -184,6 +187,7 @@ void Car::Update(sf::RenderWindow& window, float dtTimeMilli)
 	window.draw(*currState.GetShape());
 }
 
-Car::~Car()
-{
+Car::~Car() {
+	delete newState.GetShape();
+	delete currState.GetShape();
 }

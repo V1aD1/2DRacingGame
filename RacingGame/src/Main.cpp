@@ -13,6 +13,7 @@ static const int screenLen = 1500, screenHeight = 700;
 
 //global variables
 std::vector<ConvexEntity*> G_STATICOBJECTS;
+std::vector<ConvexEntity*> G_VARIABLEOBJECTS;
 
 bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText) {
 	Timer("Setup Function ");
@@ -54,6 +55,7 @@ int main()
 
 	sf::Int32 timeSinceLastFpsLog = fpsRefreshMs;
 	Car car = Car(sf::Vector2f(40.0f, 50.0f));
+
 	Square square = Square(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f);
 	G_STATICOBJECTS.push_back(&square);
 
@@ -72,7 +74,7 @@ int main()
 			eventHandler.HandleEvent(window, event);
 		}
 
-		if (eventHandler.upFlag)
+		/*if (eventHandler.upFlag)
 			car.Accelerate(dtMillis, true);
 
 		if (eventHandler.downFlag)
@@ -98,7 +100,7 @@ int main()
 			car.DBG_Slide(sf::Vector2f(-1.0f, 0.0f), dtMillis);
 
 		if (eventHandler.dFlag)
-			car.DBG_Slide(sf::Vector2f(1.0f, 0.0f), dtMillis);
+			car.DBG_Slide(sf::Vector2f(1.0f, 0.0f), dtMillis);*/
 
 		window.clear();
 		car.Update(window, dtMillis);

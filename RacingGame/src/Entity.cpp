@@ -22,9 +22,14 @@ sf::Vector2f Entity::GetPosition() const
 	return m_position;
 }
 
-float Entity::GetRotation() const
+float Entity::GetRotationInDegrees() const
 {
 	return m_rotation;
+}
+
+float Entity::GetRotationInRadians() const
+{
+	return m_rotationInRad;
 }
 
 

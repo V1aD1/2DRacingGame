@@ -8,6 +8,42 @@
 
 extern std::vector<ConvexEntity*> G_STATICOBJECTS;
 
+class InputComponent {
+public:
+	InputComponent() {}
+	~InputComponent() {}
+
+	void Update(Car& car, EventHandler& eventHandler, float dtMillis) {
+		if (eventHandler.upFlag)
+			car.Accelerate(dtMillis, true);
+
+		if (eventHandler.downFlag)
+			car.Accelerate(dtMillis, false);
+
+		if (eventHandler.leftFlag)
+			car.Rotate(dtMillis, true);
+
+		if (eventHandler.rightFlag)
+			car.Rotate(dtMillis, false);
+
+		if (eventHandler.spaceFlag)
+			car.Brake(dtMillis);
+
+		//debug commands
+		if (eventHandler.wFlag)
+			car.DBG_Slide(sf::Vector2f(0.0f, -1.0f), dtMillis);
+
+		if (eventHandler.sFlag)
+			car.DBG_Slide(sf::Vector2f(0.0f, 1.0f), dtMillis);
+
+		if (eventHandler.aFlag)
+			car.DBG_Slide(sf::Vector2f(-1.0f, 0.0f), dtMillis);
+
+		if (eventHandler.dFlag)
+			car.DBG_Slide(sf::Vector2f(1.0f, 0.0f), dtMillis);
+	}
+};
+
 class CarState : public ConvexEntity{
 	
 public:
@@ -22,12 +58,9 @@ public:
 		forwardDir = newState.forwardDir;
 		momentum = newState.momentum;
 
+		//TODO THIS DOESN'T WORK
 		//copying shape by value
 		*m_shape = *newState.m_shape;
-	}
-
-	~CarState() {
-		delete GetShape();
 	}
 };
 
@@ -45,6 +78,7 @@ class Car
 private:
 	CarState newState;
 	CarState currState;
+	InputComponent input;
 
 public:
 	Car(sf::Vector2f pos);

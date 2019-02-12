@@ -10,11 +10,11 @@ Square::Square(float sideLen, sf::Vector2f pos, float rot) : ConvexEntity(pos, r
 	sideLength = sideLen;
 
 	float halfSideLen = sideLength / 2;
-	float rotInRad = MathCommon::DegreesToRadians(GetRotation());
+	float rotInRad = MathCommon::DegreesToRadians(GetRotationInDegrees());
 
 	sf::Shape* shape = new sf::RectangleShape(sf::Vector2f(sideLen, sideLen));
 	shape->setOrigin(halfSideLen, halfSideLen);
-	shape->setRotation(GetRotation());
+	shape->setRotation(GetRotationInDegrees());
 	shape->setPosition(GetPosition());
 	shape->setFillColor(sf::Color::Red);
 

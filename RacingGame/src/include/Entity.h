@@ -15,7 +15,10 @@ public:
 	Entity();
 
 	sf::Vector2f GetPosition() const;
-	float GetRotation() const;
+	float GetRotationInDegrees() const;
+	float GetRotationInRadians() const;
+
+
 	void SetPosition(sf::Vector2f newPos);
 
 	~Entity();
