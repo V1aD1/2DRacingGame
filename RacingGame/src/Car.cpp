@@ -18,9 +18,8 @@ const float Car::c_frictionForce = 0.1f;
 const float Car::c_dbg_slideSpeed = 150.0f;
 const float Car::c_maxMomentum = 0.3f;
 
-Car::Car(sf::Vector2f startPos) : currState(startPos, 0.0f)
+Car::Car(sf::Vector2f startPos) : currState(startPos, 0.0f), input(new InputComponent())
 {
-
 	sf::RectangleShape* shape = new sf::RectangleShape(sf::Vector2f(c_length, c_height));
 	shape->setFillColor(sf::Color::Blue);
 	shape->setOutlineThickness(1.0f);
@@ -51,25 +50,6 @@ void Car::Rotate(float dtTimeMilli, bool left)
 	newState.Rotate(rotAmount);
 
 	newState.forwardDir = sf::Vector2f(std::cos(newState.GetRotationInRadians()), std::sin(newState.GetRotationInRadians()));
-
-	/*
-	float rotAmountRad = MathCommon::DegreesToRadians(rotAmount);
-
-	newState.rotDeg = newState.rotDeg + rotAmount;
-	newState.rotRad = MathCommon::DegreesToRadians(newState.rotDeg);
-
-
-	//determine new direction vector based on new rotation
-	newState.forwardDir = sf::Vector2f(std::cos(newState.rotRad), std::sin(newState.rotRad));
-
-	for (int i = 0; i < newState.corners.size(); i++) {
-
-		auto newPoint = sf::Vector2f();
-		newPoint.x = newState.corners[i].x * std::cos(rotAmountRad) - newState.corners[i].y * std::sin(rotAmountRad);
-		newPoint.y = newState.corners[i].x * std::sin(rotAmountRad) + newState.corners[i].y * std::cos(rotAmountRad);
-
-		newState.corners[i] = newPoint;
-	}*/
 }
 
 void Car::Accelerate(float dtTimeMilli, bool forward)
@@ -148,8 +128,10 @@ bool Car::CollisionDetected() {
 	return false;
 }
 
-void Car::Update(sf::RenderWindow& window, float dtTimeMilli)
+void Car::Update(sf::RenderWindow& window, float dtTimeMilli, EventHandler& handler)
 {
+	(*input).Update(*this, handler, dtTimeMilli);
+
 	ApplyFriction(dtTimeMilli);
 
 	if (MathCommon::GetMagnitude(newState.momentum) > c_maxMomentum)

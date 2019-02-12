@@ -1,12 +1,11 @@
 #pragma once
-#include "ConvexEntity.h"
 #include "EventHandler.h"
+
+class Car;
 
 class InputComponent
 {
 public:
-	virtual void Update(ConvexEntity& car, EventHandler& eventHandler, float dtMillis) = 0;
-
-	virtual ~InputComponent(){}
+	virtual void Update(Car& car, EventHandler& eventHandler, float dtMillis);
 };
 

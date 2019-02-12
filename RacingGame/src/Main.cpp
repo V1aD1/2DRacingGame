@@ -103,7 +103,9 @@ int main()
 			car.DBG_Slide(sf::Vector2f(1.0f, 0.0f), dtMillis);*/
 
 		window.clear();
-		car.Update(window, dtMillis);
+		car.Update(window, dtMillis, eventHandler);
+		
+		
 		square.Update(window, dtMillis);
 
 		if ((timeSinceLastFpsLog += dtMillis) > fpsRefreshMs) {
