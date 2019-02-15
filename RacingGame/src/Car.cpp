@@ -18,28 +18,9 @@ const float Car::c_frictionForce = 0.1f;
 const float Car::c_dbg_slideSpeed = 150.0f;
 const float Car::c_maxMomentum = 0.3f;
 
-Car::Car(sf::Vector2f startPos) : currState(startPos, 0.0f), input(new InputComponent())
-{
-	sf::RectangleShape* shape = new sf::RectangleShape(sf::Vector2f(c_length, c_height));
-	shape->setFillColor(sf::Color::Blue);
-	shape->setOutlineThickness(1.0f);
-	shape->setOutlineColor(sf::Color(250, 150, 100));
-	shape->setOrigin(c_length / 2.0f, c_height / 2.0f);
-	shape->setPosition(0.0f, 0.0f);
-
-	currState.SetShape(shape);
-
-	std::array<sf::Vector2f, 4> corners = std::array<sf::Vector2f, 4>();
-
-	corners[0] = sf::Vector2f(-c_length / 2.0f, -c_height / 2.0f);
-	corners[1] = sf::Vector2f(c_length / 2.0f, -c_height / 2.0f);
-	corners[2] = sf::Vector2f(c_length / 2.0f, c_height / 2.0f);
-	corners[3] = sf::Vector2f(-c_length / 2.0f, c_height / 2.0f);
-
-	currState.SetCorners(corners);
-
-	newState = currState;
-}
+Car::Car(sf::Vector2f startPos) : newState(startPos, 0.0f, sf::Vector2f(c_length, c_height)), 
+								  currState(startPos, 0.0f, sf::Vector2f(c_length, c_height)), 
+								  input(new InputComponent()){}
 
 void Car::Rotate(float dtTimeMilli, bool left)
 {

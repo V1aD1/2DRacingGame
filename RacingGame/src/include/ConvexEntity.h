@@ -26,6 +26,8 @@ public:
 
 protected:
 	sf::Shape* m_shape;
+
+	//todo entire corners functionality can be replaced by sf::SHape.getPoint()...
 	std::array<sf::Vector2f, 4> m_localCorners;
 
 	//sets rotation and updates Shape and rotates corners as well

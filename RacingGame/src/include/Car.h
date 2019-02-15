@@ -17,7 +17,25 @@ public:
 
 public:
 	CarState(){}
-	CarState(sf::Vector2f pos, float rot) : ConvexEntity(pos, rot) {};
+	CarState(sf::Vector2f pos, float rot, sf::Vector2f size) : ConvexEntity(pos, rot) 
+	{
+		sf::RectangleShape* shape = new sf::RectangleShape(size);
+		shape->setFillColor(sf::Color::Blue);
+		shape->setOutlineThickness(1.0f);
+		shape->setOutlineColor(sf::Color(250, 150, 100));
+		shape->setOrigin(size.x / 2.0f, size.y / 2.0f);
+		shape->setPosition(0.0f, 0.0f);
+		SetShape(shape);
+
+		std::array<sf::Vector2f, 4> corners = std::array<sf::Vector2f, 4>();
+		corners[0] = sf::Vector2f(-size.x / 2.0f, -size.y / 2.0f);
+		corners[1] = sf::Vector2f(size.x / 2.0f, -size.y / 2.0f);
+		corners[2] = sf::Vector2f(size.x / 2.0f, size.y / 2.0f);
+		corners[3] = sf::Vector2f(-size.x / 2.0f, size.y / 2.0f);
+		SetCorners(corners);
+	};
+
+	//copy constructor
 	CarState(const CarState& newState): forwardDir(newState.forwardDir), 
 										momentum(newState.momentum), 
 										ConvexEntity(newState.m_position, newState.m_rotation, newState.m_localCorners) 
@@ -25,14 +43,13 @@ public:
 		//TODO THIS DOESN'T WORK
 		//copying shape by value
 
-		delete m_shape;
-
-		SetShape(newState.m_shape);
+		//should copy just the position and rotation of the newState into the currentState?
+		
 	}
-
 	~CarState() {
 		delete m_shape;
 	}
+
 };
 
 class Car : public VariableEntity

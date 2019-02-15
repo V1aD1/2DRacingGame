@@ -59,3 +59,4 @@ void Square::Update(sf::RenderWindow & window, float dtTimeMilli)
 		window.draw(circle);
 	}
 }
+
