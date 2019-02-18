@@ -111,7 +111,7 @@ bool Car::CollisionDetected() {
 
 void Car::Update(sf::RenderWindow& window, float dtTimeMilli, EventHandler& handler)
 {
-	(*input).Update(*this, handler, dtTimeMilli);
+	input->Update(*this, handler, dtTimeMilli);
 
 	ApplyFriction(dtTimeMilli);
 
@@ -124,14 +124,14 @@ void Car::Update(sf::RenderWindow& window, float dtTimeMilli, EventHandler& hand
 
 	//update to new state only if NO collision occured
 	if (!CollisionDetected())
-		currState = newState;
+		currState.UpdateToNewState(newState);
 	
 
 	else {
 		//if collision occurs then halt all momentum on the car
 		currState.momentum = sf::Vector2f(0.0f, 0.0f);
 
-		newState = currState;
+		newState.UpdateToNewState(currState);
 	}
 
 	auto corners = currState.GetWorldCorners();
@@ -151,6 +151,4 @@ void Car::Update(sf::RenderWindow& window, float dtTimeMilli, EventHandler& hand
 }
 
 Car::~Car() {
-	//delete newState.GetShape();
-	//delete currState.GetShape();
 }

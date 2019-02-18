@@ -2,19 +2,14 @@
 #include "include/MathCommon.h"
 
 
-ConvexEntity::ConvexEntity(){}
+ConvexEntity::ConvexEntity(): m_graphics(new GraphicsComponent()){}
 
-ConvexEntity::ConvexEntity(sf::Vector2f pos, float rot) : Entity(pos, rot){}
+ConvexEntity::ConvexEntity(sf::Vector2f pos, float rot) : Entity(pos, rot), m_graphics(new GraphicsComponent()) {}
 
-ConvexEntity::ConvexEntity(sf::Vector2f pos, float rot, std::array<sf::Vector2f, 4> localCorners) : Entity(pos, rot), m_localCorners(localCorners) {}
+ConvexEntity::ConvexEntity(sf::Vector2f pos, float rot, std::array<sf::Vector2f, 4> localCorners) : Entity(pos, rot), m_localCorners(localCorners), m_graphics(new GraphicsComponent()) {}
 
 
 ConvexEntity::~ConvexEntity(){}
-
-void ConvexEntity::SetShape(sf::Shape * newShape)
-{
-	m_shape = newShape;
-}
 
 sf::Shape * const ConvexEntity::GetShape() const
 {
@@ -31,23 +26,6 @@ std::array<sf::Vector2f, 4> ConvexEntity::GetWorldCorners() const
 	}
 
 	return worldCorners;
-}
-
-
-void ConvexEntity::SetCorners(const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied)
-{
-	m_localCorners = cornersWithoutRotationApplied;
-
-	//orienting corners according to Entity rotation
-	for (int i = 0; i < m_localCorners.size(); i++) {
-
-		auto newPoint = sf::Vector2f();
-		newPoint.x = m_localCorners[i].x * std::cos(m_rotationInRad) - m_localCorners[i].y * std::sin(m_rotationInRad);
-		newPoint.y = m_localCorners[i].x * std::sin(m_rotationInRad) + m_localCorners[i].y * std::cos(m_rotationInRad);
-
-		//rotating the point about the centre of the shape
-		m_localCorners[i] = newPoint;
-	}
 }
 
 //todo find better way to turn,
@@ -70,10 +48,36 @@ void ConvexEntity::Rotate(float degrees)
 	}
 }
 
+void ConvexEntity::SetShape(sf::Shape * newShape)
+{
+	m_shape = newShape;
+}
+
+void ConvexEntity::SetCorners(const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied)
+{
+	m_localCorners = cornersWithoutRotationApplied;
+
+	//orienting corners according to Entity rotation
+	for (int i = 0; i < m_localCorners.size(); i++) {
+
+		auto newPoint = sf::Vector2f();
+		newPoint.x = m_localCorners[i].x * std::cos(m_rotationInRad) - m_localCorners[i].y * std::sin(m_rotationInRad);
+		newPoint.y = m_localCorners[i].x * std::sin(m_rotationInRad) + m_localCorners[i].y * std::cos(m_rotationInRad);
+
+		//rotating the point about the centre of the shape
+		m_localCorners[i] = newPoint;
+	}
+}
+
 void ConvexEntity::SetPosition(sf::Vector2f newPos)
 {
 	m_position = newPos;
 	m_shape->setPosition(newPos);
+}
+
+void ConvexEntity::Update(sf::RenderWindow & window, float dtTimeMilli)
+{
+	m_graphics->Update(*this, window, dtTimeMilli);
 }
 
 void ConvexEntity::SetRotation(float newRotInDegrees)

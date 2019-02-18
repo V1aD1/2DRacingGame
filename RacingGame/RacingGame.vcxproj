@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\GraphicsComponent.cpp" />
     <ClCompile Include="src\ConvexEntity.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\InputComponent.cpp" />
@@ -163,6 +164,7 @@
     <ClCompile Include="src\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\include\GraphicsComponent.h" />
     <ClInclude Include="src\include\InputComponent.h" />
     <ClInclude Include="src\include\ConvexEntity.h" />
     <ClInclude Include="src\include\Entity.h" />

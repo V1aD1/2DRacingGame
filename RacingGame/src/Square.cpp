@@ -43,20 +43,3 @@ Square::~Square()
 	delete GetShape();
 }
 
-//this function should be moved out to a graphics component that draws to window
-void Square::Update(sf::RenderWindow & window, float dtTimeMilli)
-{
-	//Rotate(0.01f * dtTimeMilli);
-
-	float circleRad = 8.0f;
-
-	window.draw(*GetShape());
-	for(auto corner : GetWorldCorners())
-	{
-		auto circle = sf::CircleShape(circleRad);
-		circle.setOrigin(circleRad, circleRad);
-		circle.setPosition(corner);
-		window.draw(circle);
-	}
-}
-

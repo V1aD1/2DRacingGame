@@ -8,7 +8,7 @@
 #include "include/Square.h"
 #include "include/Timer.h"
 
-static const sf::Int32 fpsRefreshMs = 1000;
+static const sf::Int32 fpsRefreshMs = 500;
 static const int screenLen = 1500, screenHeight = 700;
 
 //global variables

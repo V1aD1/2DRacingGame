@@ -35,17 +35,16 @@ public:
 		SetCorners(corners);
 	};
 
-	//copy constructor
-	CarState(const CarState& newState): forwardDir(newState.forwardDir), 
-										momentum(newState.momentum), 
-										ConvexEntity(newState.m_position, newState.m_rotation, newState.m_localCorners) 
-	{
-		//TODO THIS DOESN'T WORK
-		//copying shape by value
-
-		//should copy just the position and rotation of the newState into the currentState?
+	void UpdateToNewState(const CarState& newState) {
+		forwardDir = newState.forwardDir;
+		momentum = newState.momentum;
 		
+		//todo extremely convoluted way to do this, should get rid of Rotate method all together
+		Rotate(newState.m_rotation - m_rotation);
+		SetPosition(newState.m_position);
+		SetRotation(newState.m_rotation);	
 	}
+
 	~CarState() {
 		delete m_shape;
 	}
