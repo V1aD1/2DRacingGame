@@ -150,6 +150,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\CarState.cpp" />
+    <ClCompile Include="src\PhysicsComponent.cpp" />
     <ClCompile Include="src\GraphicsComponent.cpp" />
     <ClCompile Include="src\ConvexEntity.cpp" />
     <ClCompile Include="src\Entity.cpp" />
@@ -162,6 +164,8 @@
     <ClCompile Include="src\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\include\CarState.h" />
+    <ClInclude Include="src\include\PhysicsComponent.h" />
     <ClInclude Include="src\include\GraphicsComponent.h" />
     <ClInclude Include="src\include\InputComponent.h" />
     <ClInclude Include="src\include\ConvexEntity.h" />

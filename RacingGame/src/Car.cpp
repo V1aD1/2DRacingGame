@@ -112,27 +112,7 @@ bool Car::CollisionDetected() {
 void Car::Update(sf::RenderWindow& window, float dtTimeMilli, EventHandler& handler)
 {
 	input->Update(*this, handler, dtTimeMilli);
-
-	ApplyFriction(dtTimeMilli);
-
-	if (MathCommon::GetMagnitude(newState.momentum) > c_maxMomentum)
-		newState.momentum = MathCommon::ChangeLength(newState.momentum, c_maxMomentum);
-
-	//this calculation MUST ONLY happen in Update() to enusre
-	//position isn't getting updated multiple times
-	newState.SetPosition(newState.GetPosition() + newState.momentum * dtTimeMilli);
-
-	//update to new state only if NO collision occured
-	if (!CollisionDetected())
-		currState.UpdateToNewState(newState);
-	
-
-	else {
-		//if collision occurs then halt all momentum on the car
-		currState.momentum = sf::Vector2f(0.0f, 0.0f);
-
-		newState.UpdateToNewState(currState);
-	}
+	physics->Update(currState, newState, dtTimeMilli);
 
 	auto corners = currState.GetWorldCorners();
 

@@ -1,6 +1,10 @@
 #include "include/InputComponent.h"
 #include "include/Car.h"
 
+InputComponent::InputComponent()
+{
+}
+
 void InputComponent::Update(Car& car, EventHandler& eventHandler, float dtMillis) {
 	if (eventHandler.upFlag)
 		car.Accelerate(dtMillis, true);
