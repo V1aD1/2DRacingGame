@@ -154,10 +154,8 @@
     <ClCompile Include="src\ConvexEntity.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\InputComponent.cpp" />
+    <ClCompile Include="src\MathCommon.cpp" />
     <ClCompile Include="src\Square.cpp" />
-    <ClCompile Include="src\MathCommon.cpp">
-      <FileType>CppClass</FileType>
-    </ClCompile>
     <ClCompile Include="src\Car.cpp" />
     <ClCompile Include="src\EventHandler.cpp" />
     <ClCompile Include="src\Main.cpp" />
