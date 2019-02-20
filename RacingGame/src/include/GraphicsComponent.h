@@ -11,7 +11,7 @@ public:
 	~GraphicsComponent();
 
 
-	void Update(const ConvexEntity& convexEntity, sf::RenderWindow & window, float dtTimeMilli);
+	void Update(const ConvexEntity& convexEntity, sf::RenderWindow & window);
 
 };
 

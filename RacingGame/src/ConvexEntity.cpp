@@ -75,9 +75,9 @@ void ConvexEntity::SetPosition(sf::Vector2f newPos)
 	m_shape->setPosition(newPos);
 }
 
-void ConvexEntity::Update(sf::RenderWindow & window, float dtTimeMilli)
+void ConvexEntity::Update(sf::RenderWindow & window)
 {
-	m_graphics->Update(*this, window, dtTimeMilli);
+	m_graphics->Update(*this, window);
 }
 
 void ConvexEntity::SetRotation(float newRotInDegrees)

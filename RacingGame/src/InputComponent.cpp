@@ -5,6 +5,10 @@ InputComponent::InputComponent()
 {
 }
 
+InputComponent::~InputComponent()
+{
+}
+
 void InputComponent::Update(Car& car, EventHandler& eventHandler, float dtMillis) {
 	if (eventHandler.upFlag)
 		car.Accelerate(dtMillis, true);

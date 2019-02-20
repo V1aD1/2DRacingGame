@@ -7,6 +7,7 @@ class InputComponent
 {
 public:
 	InputComponent();
+	~InputComponent();
 	virtual void Update(Car& car, EventHandler& eventHandler, float dtMillis);
 };
 

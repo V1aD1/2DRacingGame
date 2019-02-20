@@ -6,11 +6,9 @@ GraphicsComponent::GraphicsComponent()
 {
 }
 
-void GraphicsComponent::Update(const ConvexEntity& convexEntity, sf::RenderWindow & window, float dtTimeMilli)
+void GraphicsComponent::Update(const ConvexEntity& convexEntity, sf::RenderWindow & window)
 {
-	//Rotate(0.01f * dtTimeMilli);
-
-	float circleRad = 8.0f;
+	float circleRad = 2.0f;
 
 	window.draw(*(convexEntity.GetShape()));
 	for (auto corner : convexEntity.GetWorldCorners())

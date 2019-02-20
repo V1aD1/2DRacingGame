@@ -21,7 +21,7 @@ public:
 	void SetPosition(sf::Vector2f newPos);
 
 	void Rotate(float newRotInDegrees);
-	void Update(sf::RenderWindow & window, float dtTimeMilli);
+	void Update(sf::RenderWindow & window);
 
 protected:
 	sf::Shape* m_shape;

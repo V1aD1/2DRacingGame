@@ -73,7 +73,7 @@ int main()
 		window.clear();
 		
 		//static objects before variable objects
-		square.Update(window, dtMillis);
+		square.Update(window);
 
 		for (auto variableObjects : G_VARIABLEOBJECTS) {
 			variableObjects->Update(window, dtMillis, eventHandler);

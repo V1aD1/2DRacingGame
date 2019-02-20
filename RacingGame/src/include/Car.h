@@ -9,6 +9,7 @@
 #include "PhysicsComponent.h"
 #include "VariableEntity.h"
 #include "CarState.h"
+#include "GraphicsComponent.h"
 
 extern std::vector<ConvexEntity*> G_STATICOBJECTS;
 
@@ -29,6 +30,7 @@ private:
 	CarState currState;
 	InputComponent* input;
 	PhysicsComponent* physics;
+	GraphicsComponent* graphics;
 
 public:
 	Car(sf::Vector2f pos);
@@ -38,8 +40,7 @@ public:
 	void Brake(float dtTimeMilli);
 	void DBG_Slide(const sf::Vector2f& dir, float dtMilli);
 	void ApplySlowDownForce(float forceMag, float dtTimeMilli);
-	void ApplyFriction(float dtTimeMilli);
-	bool CollisionDetected();	
+	void ApplyFriction(float dtTimeMilli);	
 	virtual void Update(sf::RenderWindow& window,float dtTimeMilli, EventHandler& handler);
 
 	~Car();
