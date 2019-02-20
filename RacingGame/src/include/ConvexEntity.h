@@ -6,7 +6,6 @@ class ConvexEntity : public Entity
 {
 
 public:
-	ConvexEntity();
 	ConvexEntity(sf::Vector2f pos, float rot);
 	ConvexEntity(sf::Vector2f pos, float rot, std::array<sf::Vector2f, 4> localCorners);
 	~ConvexEntity();

@@ -1,7 +1,6 @@
 #include "include/CarState.h"
 #include "include/MathCommon.h"
 
-CarState::CarState() {}
 CarState::CarState(sf::Vector2f pos, float rot, sf::Vector2f size) : ConvexEntity(pos, rot)
 {
 	sf::RectangleShape* shape = new sf::RectangleShape(size);

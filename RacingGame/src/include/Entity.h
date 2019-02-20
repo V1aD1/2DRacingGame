@@ -1,6 +1,10 @@
 #include <array>
 #include <SFML/Graphics.hpp>
 
+#include "InputComponent.h"
+#include "PhysicsComponent.h"
+#include "GraphicsComponent.h"
+
 #pragma once
 class Entity
 {
@@ -12,19 +16,21 @@ protected:
 	float m_rotationInRad;
 
 public:
-	Entity();
+	Entity(sf::Vector2f position, float rot);
 
 	sf::Vector2f GetPosition() const;
 	float GetRotationInDegrees() const;
 	float GetRotationInRadians() const;
+
+	//sets both the m_rotation and m_rotationInRad
+	void SetRotation(float degrees);
 	void SetPosition(sf::Vector2f newPos);
 
 	~Entity();
 
-protected:
-	Entity(sf::Vector2f position, float rot);
-
-	//sets both the m_rotation and m_rotationInRad
-	void SetRotation(float degrees);
+private:
+	InputComponent * input;
+	PhysicsComponent* physics;
+	GraphicsComponent* graphics;
 };
 

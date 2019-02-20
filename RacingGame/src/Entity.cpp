@@ -3,9 +3,6 @@
 #include "include/Entity.h"
 #include "include/MathCommon.h"
 
-Entity::Entity(){
-
-}
 
 Entity::Entity(sf::Vector2f position, float rot)
 {

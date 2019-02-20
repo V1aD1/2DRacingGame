@@ -2,7 +2,6 @@
 #include "include/MathCommon.h"
 
 
-ConvexEntity::ConvexEntity(): m_graphics(new GraphicsComponent()){}
 
 ConvexEntity::ConvexEntity(sf::Vector2f pos, float rot) : Entity(pos, rot), m_graphics(new GraphicsComponent()) {}
 

@@ -6,7 +6,6 @@ public:
 	sf::Vector2f momentum = sf::Vector2f(0.0f, 0.0f);
 
 public:
-	CarState();
 	~CarState();
 
 	CarState(sf::Vector2f pos, float rot, sf::Vector2f size);
