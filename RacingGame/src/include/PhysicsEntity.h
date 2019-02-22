@@ -12,7 +12,7 @@ public:
 	PhysicsEntity(sf::Vector2f pos, float rot, InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics);
 	~PhysicsEntity();
 
-	void Rotate(float degrees, bool left);
+	//void Rotate(float degrees, bool left);
 	void Accelerate(float dtTimeMilli, bool forward);
 	void Brake(float dtTimeMilli);
 	void DBG_Slide(const sf::Vector2f& dir, float dtMilli);

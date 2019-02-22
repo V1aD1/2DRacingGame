@@ -1,7 +1,7 @@
 #include "include/CarState.h"
 #include "include/MathCommon.h"
 
-CarState::CarState(sf::Vector2f pos, float rot, sf::Vector2f size) : ConvexEntity(pos, rot)
+CarState::CarState(sf::Vector2f pos, float rot, sf::Vector2f size) : Entity(pos, rot)
 {
 	sf::RectangleShape* shape = new sf::RectangleShape(size);
 	shape->setFillColor(sf::Color::Blue);

@@ -3,18 +3,18 @@
 #include "ConvexEntity.h"
 
 //forward declaration
-class ConvexEntity;
+class Entity;
 
 class GraphicsComponent
 {
 public:
-	GraphicsComponent(ConvexEntity* convexEnt);
+	GraphicsComponent(Entity* convexEnt);
 	~GraphicsComponent();
 
 
 	void Update(sf::RenderWindow & window);
 
 private:
-	ConvexEntity * m_convexEnt;
+	Entity * m_convexEnt;
 };
 

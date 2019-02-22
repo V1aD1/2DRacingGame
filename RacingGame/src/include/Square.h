@@ -5,7 +5,7 @@
 
 #include "ConvexEntity.h"
 
-class Square : virtual public ConvexEntity
+class Square : virtual public Entity
 {
 public:
 

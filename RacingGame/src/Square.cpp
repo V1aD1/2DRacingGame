@@ -5,7 +5,7 @@
 #include "include/MathCommon.h"
 
 //todo turn into a shape class that receives array of points as input
-Square::Square(float sideLen, sf::Vector2f pos, float rot) : ConvexEntity(pos, rot)
+Square::Square(float sideLen, sf::Vector2f pos, float rot) : Entity(pos, rot)
 {
 	sideLength = sideLen;
 

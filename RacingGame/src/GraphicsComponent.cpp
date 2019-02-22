@@ -2,7 +2,7 @@
 #include "include/GraphicsComponent.h"
 
 
-GraphicsComponent::GraphicsComponent(ConvexEntity* convexEnt)
+GraphicsComponent::GraphicsComponent(Entity* convexEnt)
 {
 	m_convexEnt = convexEnt;
 }

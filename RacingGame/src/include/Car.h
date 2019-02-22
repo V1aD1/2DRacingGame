@@ -11,7 +11,7 @@
 #include "CarState.h"
 #include "GraphicsComponent.h"
 
-extern std::vector<ConvexEntity*> G_STATICOBJECTS;
+extern std::vector<Entity*> G_STATICOBJECTS;
 
 class Car : public VariableEntity
 {

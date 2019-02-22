@@ -17,7 +17,7 @@ PhysicsEntity::PhysicsEntity(sf::Vector2f pos,
 PhysicsEntity::~PhysicsEntity(){}
 
 
-void PhysicsEntity::Rotate(float dtTimeMilli, bool left)
+/*void PhysicsEntity::Rotate(float dtTimeMilli, bool left)
 {
 	int direction = left ? -1 : 1;
 
@@ -26,7 +26,7 @@ void PhysicsEntity::Rotate(float dtTimeMilli, bool left)
 	m_newState.Rotate(rotAmount);
 
 	m_newState.forwardDir = sf::Vector2f(std::cos(m_newState.GetRotationInRadians()), std::sin(m_newState.GetRotationInRadians()));
-}
+}*/
 
 void PhysicsEntity::Accelerate(float dtTimeMilli, bool forward)
 {

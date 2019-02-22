@@ -1,6 +1,8 @@
 #pragma once
-#include "c:\SFML Projects\RacingGame\RacingGame\src\include\ConvexEntity.h"
-class CarState : public ConvexEntity{
+#include "PhysicsEntity.h"
+
+
+class CarState : public PhysicsEntity{
 public:
 	sf::Vector2f forwardDir = sf::Vector2f(1.0f, 0.0f);
 	sf::Vector2f momentum = sf::Vector2f(0.0f, 0.0f);
