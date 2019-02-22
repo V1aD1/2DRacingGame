@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "ConvexEntity.h"
 
 //forward declaration
 class ConvexEntity;
@@ -7,11 +8,13 @@ class ConvexEntity;
 class GraphicsComponent
 {
 public:
-	GraphicsComponent();
+	GraphicsComponent(ConvexEntity* convexEnt);
 	~GraphicsComponent();
 
 
-	void Update(const ConvexEntity& convexEntity, sf::RenderWindow & window);
+	void Update(sf::RenderWindow & window);
 
+private:
+	ConvexEntity * m_convexEnt;
 };
 

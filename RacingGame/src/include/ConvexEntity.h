@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include "GraphicsComponent.h"
+#include "EventHandler.h"
 
 class ConvexEntity : public Entity
 {
@@ -20,7 +21,7 @@ public:
 	void SetPosition(sf::Vector2f newPos);
 
 	void Rotate(float newRotInDegrees);
-	void Update(sf::RenderWindow & window);
+	void Update(sf::RenderWindow & window, float dtTimeMilli, EventHandler& handler);
 
 protected:
 	sf::Shape* m_shape;
@@ -29,8 +30,5 @@ protected:
 protected:
 	//sets rotation and updates Shape and rotates corners as well
 	void SetRotation(float degrees);
-
-private:
-	GraphicsComponent* m_graphics;
 };
 

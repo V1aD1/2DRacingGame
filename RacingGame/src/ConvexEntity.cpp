@@ -3,9 +3,9 @@
 
 
 
-ConvexEntity::ConvexEntity(sf::Vector2f pos, float rot) : Entity(pos, rot), m_graphics(new GraphicsComponent()) {}
+ConvexEntity::ConvexEntity(sf::Vector2f pos, float rot) : Entity(pos, rot, new InputComponent(), new PhysicsComponent(), new GraphicsComponent()) {}
 
-ConvexEntity::ConvexEntity(sf::Vector2f pos, float rot, std::array<sf::Vector2f, 4> localCorners) : Entity(pos, rot), m_localCorners(localCorners), m_graphics(new GraphicsComponent()) {}
+ConvexEntity::ConvexEntity(sf::Vector2f pos, float rot, std::array<sf::Vector2f, 4> localCorners) : Entity(pos, rot, new InputComponent(), new PhysicsComponent(), new GraphicsComponent()), m_localCorners(localCorners) {}
 
 
 ConvexEntity::~ConvexEntity(){}
@@ -74,9 +74,9 @@ void ConvexEntity::SetPosition(sf::Vector2f newPos)
 	m_shape->setPosition(newPos);
 }
 
-void ConvexEntity::Update(sf::RenderWindow & window)
+void ConvexEntity::Update(sf::RenderWindow & window, float dtTimeMilli, EventHandler& handler)
 {
-	m_graphics->Update(*this, window);
+	Entity::Update(window, float dtTimeMilli, EventHandler& handler);
 }
 
 void ConvexEntity::SetRotation(float newRotInDegrees)

@@ -19,8 +19,7 @@ const float Car::c_dbg_slideSpeed = 150.0f;
 const float Car::c_maxMomentum = 0.3f;
 
 Car::Car(sf::Vector2f startPos) : newState(startPos, 0.0f, sf::Vector2f(c_length, c_height)), 
-								  currState(startPos, 0.0f, sf::Vector2f(c_length, c_height)), 
-								  input(new InputComponent()){}
+								  currState(startPos, 0.0f, sf::Vector2f(c_length, c_height)){}
 
 void Car::Rotate(float dtTimeMilli, bool left)
 {
@@ -79,9 +78,9 @@ void Car::ApplySlowDownForce(float forceMag, float dtTimeMilli)
 
 void Car::Update(sf::RenderWindow& window, float dtTimeMilli, EventHandler& handler)
 {
-	input->Update(*this, handler, dtTimeMilli);
-	physics->Update(currState, newState, dtTimeMilli);
-	graphics->Update(currState, window);
+	//input->Update(*this, handler, dtTimeMilli);
+	//physics->Update(currState, newState, dtTimeMilli);
+	//graphics->Update(currState, window);
 }
 
 Car::~Car() {

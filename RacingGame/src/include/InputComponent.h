@@ -8,6 +8,6 @@ class InputComponent
 public:
 	InputComponent();
 	~InputComponent();
-	virtual void Update(Car& car, EventHandler& eventHandler, float dtMillis);
+	virtual void Update(Car& car, const EventHandler& eventHandler, float dtMillis);
 };
 

@@ -2,16 +2,31 @@
 
 #include "include/Entity.h"
 #include "include/MathCommon.h"
+#include "include/InputComponent.h"
+#include "include/PhysicsComponent.h"
+#include "include/GraphicsComponent.h"
 
-
-Entity::Entity(sf::Vector2f position, float rot)
+Entity::Entity(sf::Vector2f position, float rot, InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics)
 {
 	m_position = position;
 	SetRotation(rot);
+	m_input = input;
+	m_physics = physics;
+	m_graphics = graphics;
 }
 
 Entity::~Entity()
 {
+	delete m_input;
+	delete m_physics;
+	delete m_graphics;
+}
+
+void Entity::Update(sf::RenderWindow& window, float dtTimeMilli, const EventHandler& handler)
+{
+	//m_input->Update()
+	//m_physics->Update()
+	//m_graphics->Update()
 }
 
 sf::Vector2f Entity::GetPosition() const

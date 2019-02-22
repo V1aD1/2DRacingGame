@@ -9,7 +9,7 @@ InputComponent::~InputComponent()
 {
 }
 
-void InputComponent::Update(Car& car, EventHandler& eventHandler, float dtMillis) {
+void InputComponent::Update(Car& car, const EventHandler& eventHandler, float dtMillis) {
 	if (eventHandler.upFlag)
 		car.Accelerate(dtMillis, true);
 

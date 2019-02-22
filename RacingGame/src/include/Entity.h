@@ -5,6 +5,8 @@
 #include "PhysicsComponent.h"
 #include "GraphicsComponent.h"
 
+#include "EventHandler.h"
+
 #pragma once
 class Entity
 {
@@ -16,7 +18,10 @@ protected:
 	float m_rotationInRad;
 
 public:
-	Entity(sf::Vector2f position, float rot);
+	Entity(sf::Vector2f position, float rot, InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics);
+	~Entity();
+
+	void Update(sf::RenderWindow& window, float dtTimeMilli, const EventHandler& handler);
 
 	sf::Vector2f GetPosition() const;
 	float GetRotationInDegrees() const;
@@ -26,11 +31,9 @@ public:
 	void SetRotation(float degrees);
 	void SetPosition(sf::Vector2f newPos);
 
-	~Entity();
-
 private:
-	InputComponent * input;
-	PhysicsComponent* physics;
-	GraphicsComponent* graphics;
+	InputComponent* m_input;
+	PhysicsComponent* m_physics;
+	GraphicsComponent* m_graphics;
 };
 
