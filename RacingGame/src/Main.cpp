@@ -7,13 +7,14 @@
 #include "include/Car.h"
 #include "include/Square.h"
 #include "include/Timer.h"
+#include "include/Entity.h"
 
 static const sf::Int32 fpsRefreshMs = 500;
 static const int screenLen = 1500, screenHeight = 700;
 
 //global variables
 std::vector<Entity*> G_STATICOBJECTS;
-std::vector<VariableEntity*> G_VARIABLEOBJECTS;
+std::vector<Entity*> G_VARIABLEOBJECTS;
 
 bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText) {
 	Timer("Setup Function ");

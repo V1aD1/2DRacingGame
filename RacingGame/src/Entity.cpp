@@ -106,7 +106,7 @@ void Entity::SetShape(sf::Shape * newShape)
 //todo find better way to turn,
 //I think corners should be turned always according to entity rotation,
 //but now they are decoupled
-void ConvexEntity::Rotate(float degrees)
+void Entity::Rotate(float degrees)
 {
 	SetRotation(m_rotation + degrees);
 

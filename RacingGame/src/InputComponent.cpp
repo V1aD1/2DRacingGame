@@ -1,5 +1,6 @@
 #include "include/InputComponent.h"
 #include "include/Car.h"
+#include "include/PhysicsComponent.h"
 
 InputComponent::InputComponent()
 {
@@ -9,33 +10,36 @@ InputComponent::~InputComponent()
 {
 }
 
-void InputComponent::Update(Car& car, const EventHandler& eventHandler, float dtMillis) {
+void InputComponent::Update(Entity& entity, PhysicsComponent* physics, const EventHandler& eventHandler, float dtMillis) {
 	if (eventHandler.upFlag)
-		car.Accelerate(dtMillis, true);
+		physics->Accelerate(dtMillis, true);
 
 	if (eventHandler.downFlag)
-		car.Accelerate(dtMillis, false);
+		physics->Accelerate(dtMillis, false);
 
-	if (eventHandler.leftFlag)
-		car.Rotate(dtMillis, true);
+	if (eventHandler.leftFlag) {
+		//rotating entity position
+		physics->Rotate(entity, dtMillis, true);
+	}
 
-	if (eventHandler.rightFlag)
-		car.Rotate(dtMillis, false);
+	if (eventHandler.rightFlag) {
+		physics->Rotate(entity, dtMillis, false);
+	}
 
 	if (eventHandler.spaceFlag)
-		car.Brake(dtMillis);
+		physics->Brake(dtMillis);
 
 	//debug commands
 	if (eventHandler.wFlag)
-		car.DBG_Slide(sf::Vector2f(0.0f, -1.0f), dtMillis);
+		physics->DBG_Slide(sf::Vector2f(0.0f, -1.0f), dtMillis);
 
 	if (eventHandler.sFlag)
-		car.DBG_Slide(sf::Vector2f(0.0f, 1.0f), dtMillis);
+		physics->DBG_Slide(sf::Vector2f(0.0f, 1.0f), dtMillis);
 
 	if (eventHandler.aFlag)
-		car.DBG_Slide(sf::Vector2f(-1.0f, 0.0f), dtMillis);
+		physics->DBG_Slide(sf::Vector2f(-1.0f, 0.0f), dtMillis);
 
 	if (eventHandler.dFlag)
-		car.DBG_Slide(sf::Vector2f(1.0f, 0.0f), dtMillis);
+		physics->DBG_Slide(sf::Vector2f(1.0f, 0.0f), dtMillis);
 
 }

@@ -39,7 +39,7 @@ public:
 	void Rotate(float newRotInDegrees);
 protected:
 	sf::Shape* m_shape;
-	std::array<sf::Vector2f, 4> m_localCorners;
+
 
 private:
 	InputComponent* m_input;

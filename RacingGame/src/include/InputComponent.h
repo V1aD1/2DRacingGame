@@ -2,12 +2,14 @@
 #include "EventHandler.h"
 
 class Car;
+class PhysicsComponent;
+class GraphicsComponent;
 
 class InputComponent
 {
 public:
 	InputComponent();
 	~InputComponent();
-	virtual void Update(Car& car, const EventHandler& eventHandler, float dtMillis);
+	virtual void Update(Entity& entity, PhysicsComponent* physics, const EventHandler& eventHandler, float dtMillis);
 };
 
