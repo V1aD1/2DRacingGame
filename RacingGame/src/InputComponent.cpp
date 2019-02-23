@@ -10,21 +10,20 @@ InputComponent::~InputComponent()
 {
 }
 
-void InputComponent::Update(Entity& entity, PhysicsComponent* physics, const EventHandler& eventHandler, float dtMillis) {
+void InputComponent::Update(Entity& entity, const EventHandler& eventHandler, float dtMillis) {
+	PhysicsComponent* physics = entity.m_physics;
+
 	if (eventHandler.upFlag)
 		physics->Accelerate(dtMillis, true);
 
 	if (eventHandler.downFlag)
 		physics->Accelerate(dtMillis, false);
 
-	if (eventHandler.leftFlag) {
-		//rotating entity position
+	if (eventHandler.leftFlag) 
 		physics->Rotate(entity, dtMillis, true);
-	}
-
-	if (eventHandler.rightFlag) {
-		physics->Rotate(entity, dtMillis, false);
-	}
+	
+	if (eventHandler.rightFlag) 
+		physics->Rotate(entity, dtMillis, false);	
 
 	if (eventHandler.spaceFlag)
 		physics->Brake(dtMillis);
@@ -41,5 +40,4 @@ void InputComponent::Update(Entity& entity, PhysicsComponent* physics, const Eve
 
 	if (eventHandler.dFlag)
 		physics->DBG_Slide(sf::Vector2f(1.0f, 0.0f), dtMillis);
-
 }

@@ -1,7 +1,9 @@
 #include "include/PhysicsComponent.h"
 #include "include/Entity.h"
 #include "include/MathCommon.h"
+#include "include/CarState.h"
 
+extern std::vector<Entity*> G_STATICOBJECTS;
 
 const float PhysicsComponent::c_length = 40.0f;
 const float PhysicsComponent::c_height = 10.0f;
@@ -13,54 +15,60 @@ const float PhysicsComponent::c_frictionForce = 0.1f;
 const float PhysicsComponent::c_dbg_slideSpeed = 150.0f;
 const float PhysicsComponent::c_maxMomentum = 0.3f;
 
-PhysicsComponent::PhysicsComponent()
+PhysicsComponent::PhysicsComponent(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied)
 {
+	m_currState = CarState(entity, cornersWithoutRotationApplied);
+	m_newState = CarState(entity, cornersWithoutRotationApplied);
+	m_entity = entity;
 }
-
 
 PhysicsComponent::~PhysicsComponent()
 {
 }
 
-void PhysicsComponent::Update(Entity entity, float dtMilli)
+void PhysicsComponent::Update(float dtMilli)
 {
 	ApplyFriction(dtMilli);
 
-	if (MathCommon::GetMagnitude(newState.momentum) > c_maxMomentum)
-		newState.momentum = MathCommon::ChangeLength(newState.momentum, c_maxMomentum);
+	if (MathCommon::GetMagnitude(m_newState.momentum) > c_maxMomentum)
+		m_newState.momentum = MathCommon::ChangeLength(m_newState.momentum, c_maxMomentum);
 
-	//this calculation MUST ONLY happen in Update() to enusre
+	//this calculation MUST ONLY happen in Update() to ensure
 	//position isn't getting updated multiple times
-	newState.SetPosition(newState.GetPosition() + newState.momentum * dtMilli);
+	m_newState.worldPos = m_newState.worldPos + m_newState.momentum * dtMilli;
 
 	//update to new state only if NO collision occured
-	if (!CollisionDetected(newState))
-		currState.UpdateToNewState(newState);
+	if (!CollisionDetected())
+		m_currState.UpdateToNewState(m_newState);
 
 
 	else {
 		//if collision occurs then halt all momentum on the car
-		currState.momentum = sf::Vector2f(0.0f, 0.0f);
-		newState.UpdateToNewState(currState);
+		m_currState.momentum = sf::Vector2f(0.0f, 0.0f);
+		m_newState.UpdateToNewState(m_currState);
 	}
+
+	//todo this should NOT be happening here!
+	m_entity->SetPosition(m_currState.worldPos);
+	m_entity->SetRotation(MathCommon::DegreesToRadians(m_currState.rotInRad));
 }
 
 ///NOTE: function should only be called after computing 
-///final position of newState
-bool PhysicsComponent::CollisionDetected(const CarState& state) {
+///final position of m_newState
+bool PhysicsComponent::CollisionDetected() {
 	//check every static object for a collision
 	//using point triangle test method
 	for (auto object : G_STATICOBJECTS) {
 		std::array<sf::Vector2f, 4> objCorners = (*object).GetWorldCorners();
 
-		for (auto &carCorner : state.GetWorldCorners()) {
+		for (auto &carCorner : GetFutureWorldCorners()) {
 
 			bool collision = true;
 
 			for (size_t i = 0; i < objCorners.size(); i++) {
 
 				//this operation must be performed in this order!!
-				float check = MathCommon::CrossProduct(objCorners[i] - objCorners[(i + 1) % objCorners.size()], objCorners[i] - carCorner);
+				float check = MathCommon::CrossProduct(objCorners[i] - objCorners[(i + 1) % objCorners.size()], objCorners[i] - (carCorner));
 
 				if (check < 0.0f) {
 					collision = false;
@@ -80,9 +88,9 @@ bool PhysicsComponent::CollisionDetected(const CarState& state) {
 void PhysicsComponent::Accelerate(float dtTimeMilli, bool forward)
 {
 	if (forward)
-		newState.momentum += newState.forwardDir * c_acceleration * (dtTimeMilli / 1000.0f);
+		m_newState.momentum += m_newState.forwardDir * c_acceleration * (dtTimeMilli / 1000.0f);
 	else
-		newState.momentum += -(newState.forwardDir * c_acceleration * (dtTimeMilli / 1000.0f));
+		m_newState.momentum += -(m_newState.forwardDir * c_acceleration * (dtTimeMilli / 1000.0f));
 }
 
 void PhysicsComponent::Brake(float dtTimeMilli)
@@ -93,12 +101,12 @@ void PhysicsComponent::Brake(float dtTimeMilli)
 void PhysicsComponent::DBG_Slide(const sf::Vector2f& dir, float dtMilli)
 {
 	//halting all movement on the car
-	newState.momentum = sf::Vector2f(0.0f, 0.0f);
-	currState.momentum = sf::Vector2f(0.0f, 0.0f);
+	m_newState.momentum = sf::Vector2f(0.0f, 0.0f);
+	m_currState.momentum = sf::Vector2f(0.0f, 0.0f);
 
 	//placing car to exact position
-	currState.SetPosition(currState.GetPosition() + dir * dtMilli / 1000.0f * c_dbg_slideSpeed);
-	newState.SetPosition(currState.GetPosition());
+	m_entity->SetPosition(m_entity->GetPosition() + dir * dtMilli / 1000.0f * c_dbg_slideSpeed);
+	m_entity->SetPosition(m_entity->GetPosition());
 }
 
 void PhysicsComponent::ApplyFriction(float dtTimeMilli)
@@ -108,28 +116,51 @@ void PhysicsComponent::ApplyFriction(float dtTimeMilli)
 
 void PhysicsComponent::ApplySlowDownForce(float forceMag, float dtTimeMilli)
 {
-	sf::Vector2f momentumDir = MathCommon::Normalize(newState.momentum);
-	sf::Vector2f stoppingForceToApply = MathCommon::Normalize(newState.momentum) * forceMag * (dtTimeMilli / 1000.0f);
+	sf::Vector2f momentumDir = MathCommon::Normalize(m_newState.momentum);
+	sf::Vector2f stoppingForceToApply = MathCommon::Normalize(m_newState.momentum) * forceMag * (dtTimeMilli / 1000.0f);
 
-	float momentumMag = MathCommon::GetMagnitude(newState.momentum);
+	float momentumMag = MathCommon::GetMagnitude(m_newState.momentum);
 	float stoppingForceMag = MathCommon::GetMagnitude(stoppingForceToApply);
 
 	//to ensure stopping force doesn't cause car to move backwards
 	if (momentumMag > stoppingForceMag)
-		newState.momentum -= stoppingForceToApply;
+		m_newState.momentum -= stoppingForceToApply;
 	else
-		newState.momentum = sf::Vector2f(0.0f, 0.0f);
+		m_newState.momentum = sf::Vector2f(0.0f, 0.0f);
 }
 
-void PhysicsComponent::Rotate(Entity& entity, float dtTimeMilli, bool left)
+void PhysicsComponent::Rotate(float dtTimeMilli, bool left)
 {
 	int direction = left ? -1 : 1;
 
 	float rotAmount = direction * c_rotationSpeed * (dtTimeMilli / 1000.0f);
 
-	entity.Rotate(rotAmount);
+	m_entity->Rotate(rotAmount);
 
-	m_newState.forwardDir = sf::Vector2f(std::cos(m_newState.GetRotationInRadians()), std::sin(m_newState.GetRotationInRadians()));
+	m_newState.forwardDir = sf::Vector2f(std::cos(m_entity->GetRotationInRadians()), std::sin(m_entity->GetRotationInRadians()));
+	m_newState.Rotate(MathCommon::DegreesToRadians(rotAmount));
 }
 
+//todo returns COPY of array, maybe should return reference or *?
+std::array<sf::Vector2f, 4> PhysicsComponent::GetWorldCorners() const
+{
+	auto worldCorners = std::array<sf::Vector2f, 4>();
 
+	for (int i = 0; i < m_currState.m_localCorners.size(); i++) {
+		(worldCorners)[i] = m_currState.m_localCorners[i] + m_entity->GetPosition();
+	}
+
+	return worldCorners;
+}
+
+//todo returns COPY of array, maybe should return reference or *?
+std::array<sf::Vector2f, 4> PhysicsComponent::GetFutureWorldCorners() const
+{
+	auto worldCorners = std::array<sf::Vector2f, 4>();
+
+	for (int i = 0; i < m_newState.m_localCorners.size(); i++) {
+		(worldCorners)[i] = m_newState.m_localCorners[i] + m_newState.worldPos;
+	}
+
+	return worldCorners;
+}

@@ -2,17 +2,21 @@
 #include "include/GraphicsComponent.h"
 
 
-GraphicsComponent::GraphicsComponent(Entity* convexEnt)
+GraphicsComponent::GraphicsComponent(sf::Shape* shape)
 {
-	m_convexEnt = convexEnt;
+	m_shape = shape;
 }
 
-void GraphicsComponent::Update(sf::RenderWindow & window)
+void GraphicsComponent::Update(const Entity& entity, sf::RenderWindow & window)
 {
+	if (m_shape) {
+		m_shape->setRotation(entity.GetRotationInDegrees());
+	}
+
 	float circleRad = 2.0f;
 
-	window.draw(*(m_convexEnt->GetShape()));
-	for (auto corner : m_convexEnt->GetWorldCorners())
+	window.draw(*m_shape);
+	for (auto corner : entity.GetWorldCorners())
 	{
 		auto circle = sf::CircleShape(circleRad);
 		circle.setOrigin(circleRad, circleRad);

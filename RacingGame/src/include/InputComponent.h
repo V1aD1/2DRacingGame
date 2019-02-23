@@ -10,6 +10,6 @@ class InputComponent
 public:
 	InputComponent();
 	~InputComponent();
-	virtual void Update(Entity& entity, PhysicsComponent* physics, const EventHandler& eventHandler, float dtMillis);
+	virtual void Update(Entity& entity, const EventHandler& eventHandler, float dtMillis);
 };
 

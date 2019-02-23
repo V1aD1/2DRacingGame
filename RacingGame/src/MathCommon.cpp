@@ -9,6 +9,11 @@ float MathCommon::DegreesToRadians(float deg)
 	return (deg * M_PI) / 180.0f;
 }
 
+float MathCommon::RadiansToDegrees(float rad)
+{
+	return (rad * 180.0f) / M_PI;
+}
+
 float MathCommon::GetMagnitude(sf::Vector2f vec) {
 	return powf(powf(vec.x, 2) + powf(vec.y, 2), 0.5);
 }

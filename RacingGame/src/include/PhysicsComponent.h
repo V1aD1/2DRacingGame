@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "include/Entity.h"
 
 class CarState;
 
@@ -17,22 +18,25 @@ public:
 	static const float c_maxMomentum;
 
 public:
-	PhysicsComponent();
+	PhysicsComponent(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied);
 	~PhysicsComponent();
 
-	void Update(CarState& currState, CarState& newState, float dtMilli);
-	void Rotate(Entity& entity, float degrees, bool left);
+	void Update(float dtMilli);
+	void Rotate(float degrees, bool left);
 	void Accelerate(float dtTimeMilli, bool forward);
 	void Brake(float dtTimeMilli);
 	void DBG_Slide(const sf::Vector2f& dir, float dtMilli);
+	std::array<sf::Vector2f, 4> GetWorldCorners() const;
 
 private:
-	bool CollisionDetected(const CarState& state);
+	bool CollisionDetected();
 	void ApplySlowDownForce(float forceMag, float dtTimeMilli);
 	void ApplyFriction(float dtTimeMilli);
+	std::array<sf::Vector2f, 4> GetFutureWorldCorners() const;
 
 private:
-	CarState newState;
-	CarState currState;
+	CarState m_newState;
+	CarState m_currState;
+	Entity* m_entity;
 };
 

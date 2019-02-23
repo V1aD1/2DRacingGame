@@ -8,13 +8,13 @@ class Entity;
 class GraphicsComponent
 {
 public:
-	GraphicsComponent(Entity* convexEnt);
+	GraphicsComponent(sf::Shape* shape);
 	~GraphicsComponent();
 
 
-	void Update(sf::RenderWindow & window);
+	void Update(const Entity& entity, sf::RenderWindow & window);
 
 private:
-	Entity * m_convexEnt;
+	sf::Shape* m_shape;
 };
 
