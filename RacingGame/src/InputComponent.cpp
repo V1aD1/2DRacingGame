@@ -1,6 +1,6 @@
 #include "include/InputComponent.h"
-#include "include/Car.h"
 #include "include/PhysicsComponent.h"
+#include "include/Entity.h"
 
 InputComponent::InputComponent()
 {
@@ -20,10 +20,10 @@ void InputComponent::Update(Entity& entity, const EventHandler& eventHandler, fl
 		physics->Accelerate(dtMillis, false);
 
 	if (eventHandler.leftFlag) 
-		physics->Rotate(entity, dtMillis, true);
+		physics->Rotate(dtMillis, true);
 	
 	if (eventHandler.rightFlag) 
-		physics->Rotate(entity, dtMillis, false);	
+		physics->Rotate(dtMillis, false);	
 
 	if (eventHandler.spaceFlag)
 		physics->Brake(dtMillis);

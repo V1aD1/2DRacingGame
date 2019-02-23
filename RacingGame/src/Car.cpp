@@ -1,4 +1,4 @@
-#include <iostream>
+/*#include <iostream>
 #include <array>
 
 #include <SFML/Graphics.hpp>
@@ -44,4 +44,4 @@ Car::Car(sf::Vector2f startPos){
 Car::~Car() {
 
 	//delete graphics component m_shape here
-}
+}*/

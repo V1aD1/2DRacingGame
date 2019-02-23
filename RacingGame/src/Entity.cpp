@@ -6,6 +6,8 @@
 #include "include/PhysicsComponent.h"
 #include "include/GraphicsComponent.h"
 
+Entity::Entity() {}
+
 Entity::Entity(sf::Vector2f position, float rot, InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics)
 {
 	m_position = position;
@@ -15,18 +17,16 @@ Entity::Entity(sf::Vector2f position, float rot, InputComponent* input, PhysicsC
 	m_graphics = graphics;
 }
 
-Entity::~Entity()
-{
-	delete m_input;
-	delete m_physics;
-	delete m_graphics;
-}
+Entity::~Entity(){}
 
 void Entity::Update(sf::RenderWindow& window, float dtTimeMilli, const EventHandler& handler)
 {
-	m_input->Update(*this, handler, dtTimeMilli);
-	m_physics->Update(dtTimeMilli);
-	m_graphics->Update(*this, window);
+	if(m_input)
+		m_input->Update(*this, handler, dtTimeMilli);
+	if(m_physics)
+		m_physics->Update(dtTimeMilli);
+	if(m_graphics)
+		m_graphics->Update(*this, window);
 }
 
 sf::Vector2f Entity::GetPosition() const
@@ -45,13 +45,12 @@ float Entity::GetRotationInRadians() const
 }
 
 //todo returns COPY of array, maybe should return reference or *?
-std::array<sf::Vector2f, 4> Entity::GetWorldCorners() const
+const std::array<sf::Vector2f, 4>* Entity::GetWorldCorners() const
 {
 	if(m_physics)
-		return m_physics->GetWorldCorners();
+		return &(m_physics->GetWorldCorners());
 
-	//is this right?
-	return std::array<sf::Vector2f, 4>();
+	return nullptr;
 }
 
 void Entity::SetPosition(sf::Vector2f newPos)

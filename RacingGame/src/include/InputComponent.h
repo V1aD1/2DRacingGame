@@ -4,6 +4,7 @@
 class Car;
 class PhysicsComponent;
 class GraphicsComponent;
+class Entity;
 
 class InputComponent
 {

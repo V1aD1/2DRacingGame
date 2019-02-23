@@ -1,7 +1,6 @@
 #include "include/PhysicsComponent.h"
 #include "include/Entity.h"
 #include "include/MathCommon.h"
-#include "include/CarState.h"
 
 extern std::vector<Entity*> G_STATICOBJECTS;
 
@@ -59,26 +58,32 @@ bool PhysicsComponent::CollisionDetected() {
 	//check every static object for a collision
 	//using point triangle test method
 	for (auto object : G_STATICOBJECTS) {
-		std::array<sf::Vector2f, 4> objCorners = (*object).GetWorldCorners();
 
-		for (auto &carCorner : GetFutureWorldCorners()) {
+		auto objCornersPtr = object->GetWorldCorners();
 
-			bool collision = true;
+		if (objCornersPtr) {
 
-			for (size_t i = 0; i < objCorners.size(); i++) {
+			std::array<sf::Vector2f, 4> objCorners = *objCornersPtr;
 
-				//this operation must be performed in this order!!
-				float check = MathCommon::CrossProduct(objCorners[i] - objCorners[(i + 1) % objCorners.size()], objCorners[i] - (carCorner));
+			for (auto &carCorner : GetFutureWorldCorners()) {
 
-				if (check < 0.0f) {
-					collision = false;
-					break;
+				bool collision = true;
+
+				for (size_t i = 0; i < objCorners.size(); i++) {
+
+					//this operation must be performed in this order!!
+					float check = MathCommon::CrossProduct(objCorners[i] - objCorners[(i + 1) % objCorners.size()], objCorners[i] - (carCorner));
+
+					if (check < 0.0f) {
+						collision = false;
+						break;
+					}
+					//todo handle check == 0
 				}
-				//todo handle check == 0
-			}
 
-			if (collision)
-				return true;
+				if (collision)
+					return true;
+			}
 		}
 	}
 
@@ -135,22 +140,17 @@ void PhysicsComponent::Rotate(float dtTimeMilli, bool left)
 
 	float rotAmount = direction * c_rotationSpeed * (dtTimeMilli / 1000.0f);
 
+	//todo not sure this should be happening here, but it's either here or in the input component
 	m_entity->Rotate(rotAmount);
 
 	m_newState.forwardDir = sf::Vector2f(std::cos(m_entity->GetRotationInRadians()), std::sin(m_entity->GetRotationInRadians()));
-	m_newState.Rotate(MathCommon::DegreesToRadians(rotAmount));
+	m_newState.Rotate(MathCommon::DegreesToRadians(rotAmount), m_entity->GetPosition());
 }
 
 //todo returns COPY of array, maybe should return reference or *?
-std::array<sf::Vector2f, 4> PhysicsComponent::GetWorldCorners() const
+const std::array<sf::Vector2f, 4>& PhysicsComponent::GetWorldCorners() const
 {
-	auto worldCorners = std::array<sf::Vector2f, 4>();
-
-	for (int i = 0; i < m_currState.m_localCorners.size(); i++) {
-		(worldCorners)[i] = m_currState.m_localCorners[i] + m_entity->GetPosition();
-	}
-
-	return worldCorners;
+	return m_currState.m_worldCorners;
 }
 
 //todo returns COPY of array, maybe should return reference or *?

@@ -1,4 +1,4 @@
-#pragma once
+/*#pragma once
 #include "Entity.h"
 #include "GraphicsComponent.h"
 #include "EventHandler.h"
@@ -30,5 +30,5 @@ protected:
 protected:
 	//sets rotation and updates Shape and rotates corners as well
 	void SetRotation(float degrees);
-};
+};*/
 

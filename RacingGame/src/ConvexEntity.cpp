@@ -1,4 +1,4 @@
-#include "include/ConvexEntity.h"
+/*#include "include/ConvexEntity.h"
 #include "include/MathCommon.h"
 
 
@@ -86,4 +86,4 @@ void ConvexEntity::SetRotation(float newRotInDegrees)
 	if (m_shape) {
 		m_shape->setRotation(m_rotation);
 	}
-}
+}*/

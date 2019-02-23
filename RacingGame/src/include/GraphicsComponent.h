@@ -1,20 +1,17 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "ConvexEntity.h"
 
-//forward declaration
 class Entity;
 
 class GraphicsComponent
 {
 public:
 	GraphicsComponent(sf::Shape* shape);
-	~GraphicsComponent();
+	virtual ~GraphicsComponent();
 
+	virtual void Update(const Entity& entity, sf::RenderWindow & window) = 0;
 
-	void Update(const Entity& entity, sf::RenderWindow & window);
-
-private:
+protected:
 	sf::Shape* m_shape;
 };
 

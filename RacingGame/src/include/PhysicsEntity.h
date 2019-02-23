@@ -1,10 +1,10 @@
-#pragma once
-
-#include "Entity.h"
-#include "CarState.h"
+/*#pragma once
 #include "InputComponent.h"
 #include "PhysicsComponent.h"
 #include "GraphicsComponent.h"
+
+class Entity;
+class CarState;
 
 class PhysicsEntity : public Entity
 {
@@ -31,3 +31,4 @@ private:
 	CarState m_currState;
 };
 
+*/

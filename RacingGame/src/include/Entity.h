@@ -7,6 +7,8 @@
 
 #include "EventHandler.h"
 
+
+
 #pragma once
 class Entity
 {
@@ -23,6 +25,7 @@ protected:
 	float m_rotationInRad;
 
 public:
+	Entity();
 	Entity(sf::Vector2f position, float rot, InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics);
 	~Entity();
 
@@ -31,7 +34,7 @@ public:
 	sf::Vector2f GetPosition() const;
 	float GetRotationInDegrees() const;
 	float GetRotationInRadians() const;
-	std::array<sf::Vector2f, 4> GetWorldCorners() const;
+	virtual const std::array<sf::Vector2f, 4>* GetWorldCorners() const = 0;
 	
 	void SetRotation(float degrees);
 	void SetPosition(sf::Vector2f newPos);

@@ -1,4 +1,4 @@
-#pragma once
+/*#pragma once
 #include <iostream>
 #include <array>
 
@@ -32,3 +32,4 @@ public:
 
 };
 
+*/

@@ -1,9 +1,9 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "include/Entity.h"
+#include "CarState.h"
 
-class CarState;
+class Entity;
 
 class PhysicsComponent
 {
@@ -26,7 +26,7 @@ public:
 	void Accelerate(float dtTimeMilli, bool forward);
 	void Brake(float dtTimeMilli);
 	void DBG_Slide(const sf::Vector2f& dir, float dtMilli);
-	std::array<sf::Vector2f, 4> GetWorldCorners() const;
+	const std::array<sf::Vector2f, 4>& GetWorldCorners() const;
 
 private:
 	bool CollisionDetected();

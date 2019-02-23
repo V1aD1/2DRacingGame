@@ -1,4 +1,4 @@
-#include "include/ConvexEntity.h"
+#include "include/Entity.h"
 #include "include/GraphicsComponent.h"
 
 
@@ -16,12 +16,18 @@ void GraphicsComponent::Update(const Entity& entity, sf::RenderWindow & window)
 	float circleRad = 2.0f;
 
 	window.draw(*m_shape);
-	for (auto corner : entity.GetWorldCorners())
-	{
-		auto circle = sf::CircleShape(circleRad);
-		circle.setOrigin(circleRad, circleRad);
-		circle.setPosition(corner);
-		window.draw(circle);
+
+	auto entityCorners = entity.GetWorldCorners();
+
+	if (entityCorners) {
+
+		for (auto corner : *entityCorners)
+		{
+			auto circle = sf::CircleShape(circleRad);
+			circle.setOrigin(circleRad, circleRad);
+			circle.setPosition(corner);
+			window.draw(circle);
+		}
 	}
 }
 
