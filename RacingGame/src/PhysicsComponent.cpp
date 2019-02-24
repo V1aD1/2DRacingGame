@@ -4,9 +4,6 @@
 
 extern std::vector<Entity*> G_STATICOBJECTS;
 
-const float PhysicsComponent::c_length = 40.0f;
-const float PhysicsComponent::c_height = 10.0f;
-
 const float PhysicsComponent::c_rotationSpeed = 180.0f;
 const float PhysicsComponent::c_acceleration = 0.25f;
 const float PhysicsComponent::c_brakeForce = 0.1f;
@@ -14,15 +11,18 @@ const float PhysicsComponent::c_frictionForce = 0.1f;
 const float PhysicsComponent::c_dbg_slideSpeed = 150.0f;
 const float PhysicsComponent::c_maxMomentum = 0.3f;
 
-PhysicsComponent::PhysicsComponent(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied)
+PhysicsComponent::PhysicsComponent(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied): 
+					m_currState(entity, cornersWithoutRotationApplied),
+					m_newState(entity, cornersWithoutRotationApplied),
+					m_entity(entity)
 {
-	m_currState = CarState(entity, cornersWithoutRotationApplied);
-	m_newState = CarState(entity, cornersWithoutRotationApplied);
-	m_entity = entity;
 }
 
+//todo this SHOULD delete entity pointer but that'll lead to circular deletes
+//so remove the Entity* member!!
 PhysicsComponent::~PhysicsComponent()
 {
+	
 }
 
 void PhysicsComponent::Update(float dtMilli)
@@ -32,14 +32,20 @@ void PhysicsComponent::Update(float dtMilli)
 	if (MathCommon::GetMagnitude(m_newState.momentum) > c_maxMomentum)
 		m_newState.momentum = MathCommon::ChangeLength(m_newState.momentum, c_maxMomentum);
 
+	//todo m_newState updates should happen in a CarState function
+
 	//this calculation MUST ONLY happen in Update() to ensure
 	//position isn't getting updated multiple times
 	m_newState.worldPos = m_newState.worldPos + m_newState.momentum * dtMilli;
+	
+	//update corners
+	for (int i = 0; i < m_newState.m_localCorners.size(); i++) {
+		m_newState.m_worldCorners[i] = m_newState.m_localCorners[i] + m_newState.worldPos;
+	}
 
 	//update to new state only if NO collision occured
 	if (!CollisionDetected())
 		m_currState.UpdateToNewState(m_newState);
-
 
 	else {
 		//if collision occurs then halt all momentum on the car
@@ -48,8 +54,9 @@ void PhysicsComponent::Update(float dtMilli)
 	}
 
 	//todo this should NOT be happening here!
+	//...or maybe it should be?
 	m_entity->SetPosition(m_currState.worldPos);
-	m_entity->SetRotation(MathCommon::DegreesToRadians(m_currState.rotInRad));
+	m_entity->SetRotation(MathCommon::RadiansToDegrees(m_currState.rotInRad));
 }
 
 ///NOTE: function should only be called after computing 
@@ -65,7 +72,7 @@ bool PhysicsComponent::CollisionDetected() {
 
 			std::array<sf::Vector2f, 4> objCorners = *objCornersPtr;
 
-			for (auto &carCorner : GetFutureWorldCorners()) {
+			for (auto &carCorner : m_newState.m_worldCorners) {
 
 				bool collision = true;
 
@@ -140,10 +147,6 @@ void PhysicsComponent::Rotate(float dtTimeMilli, bool left)
 
 	float rotAmount = direction * c_rotationSpeed * (dtTimeMilli / 1000.0f);
 
-	//todo not sure this should be happening here, but it's either here or in the input component
-	m_entity->Rotate(rotAmount);
-
-	m_newState.forwardDir = sf::Vector2f(std::cos(m_entity->GetRotationInRadians()), std::sin(m_entity->GetRotationInRadians()));
 	m_newState.Rotate(MathCommon::DegreesToRadians(rotAmount), m_entity->GetPosition());
 }
 
@@ -151,16 +154,4 @@ void PhysicsComponent::Rotate(float dtTimeMilli, bool left)
 const std::array<sf::Vector2f, 4>& PhysicsComponent::GetWorldCorners() const
 {
 	return m_currState.m_worldCorners;
-}
-
-//todo returns COPY of array, maybe should return reference or *?
-std::array<sf::Vector2f, 4> PhysicsComponent::GetFutureWorldCorners() const
-{
-	auto worldCorners = std::array<sf::Vector2f, 4>();
-
-	for (int i = 0; i < m_newState.m_localCorners.size(); i++) {
-		(worldCorners)[i] = m_newState.m_localCorners[i] + m_newState.worldPos;
-	}
-
-	return worldCorners;
 }

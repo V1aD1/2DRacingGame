@@ -57,9 +57,9 @@ Square::Square(float sideLen, sf::Vector2f pos, float rot)
 	m_worldCorners = worldCorners;
 }
 
+//todo may not be necessary
 Square::~Square()
 {
-	delete m_graphics;
 }
 
 const std::array<sf::Vector2f, 4>* Square::GetWorldCorners() const

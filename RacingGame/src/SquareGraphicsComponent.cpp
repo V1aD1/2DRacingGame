@@ -3,11 +3,10 @@
 
 
 SquareGraphicsComponent::SquareGraphicsComponent(sf::Shape* shape, std::array<sf::Vector2f, 4> worldCorners) : GraphicsComponent(shape) {
-	m_shape = shape;
 	m_worldCorners = worldCorners;
 }
 
-
+//todo may not be necessary
 SquareGraphicsComponent::~SquareGraphicsComponent()
 {
 }

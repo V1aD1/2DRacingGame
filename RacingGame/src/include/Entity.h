@@ -34,6 +34,8 @@ public:
 	sf::Vector2f GetPosition() const;
 	float GetRotationInDegrees() const;
 	float GetRotationInRadians() const;
+
+	//todo consider moving this out to another interface once factory is implemnented
 	virtual const std::array<sf::Vector2f, 4>* GetWorldCorners() const = 0;
 	
 	void SetRotation(float degrees);

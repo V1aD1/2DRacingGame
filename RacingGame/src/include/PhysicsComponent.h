@@ -8,8 +8,6 @@ class Entity;
 class PhysicsComponent
 {
 public:
-	static const float c_length;
-	static const float c_height;
 	static const float c_rotationSpeed;
 	static const float c_acceleration;
 	static const float c_brakeForce;
@@ -32,11 +30,12 @@ private:
 	bool CollisionDetected();
 	void ApplySlowDownForce(float forceMag, float dtTimeMilli);
 	void ApplyFriction(float dtTimeMilli);
-	std::array<sf::Vector2f, 4> GetFutureWorldCorners() const;
 
 private:
 	CarState m_newState;
 	CarState m_currState;
+
+	//todo definetly remove this and instead pass as param for every method
 	Entity* m_entity;
 };
 

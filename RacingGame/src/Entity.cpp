@@ -6,7 +6,9 @@
 #include "include/PhysicsComponent.h"
 #include "include/GraphicsComponent.h"
 
-Entity::Entity() {}
+Entity::Entity() 
+{
+}
 
 Entity::Entity(sf::Vector2f position, float rot, InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics)
 {
@@ -17,7 +19,15 @@ Entity::Entity(sf::Vector2f position, float rot, InputComponent* input, PhysicsC
 	m_graphics = graphics;
 }
 
-Entity::~Entity(){}
+Entity::~Entity()
+{
+	if (m_input)
+		delete m_input;
+	if (m_physics)
+		delete m_physics;
+	if (m_graphics)
+		delete m_graphics;
+}
 
 void Entity::Update(sf::RenderWindow& window, float dtTimeMilli, const EventHandler& handler)
 {
@@ -42,15 +52,6 @@ float Entity::GetRotationInDegrees() const
 float Entity::GetRotationInRadians() const
 {
 	return m_rotationInRad;
-}
-
-//todo returns COPY of array, maybe should return reference or *?
-const std::array<sf::Vector2f, 4>* Entity::GetWorldCorners() const
-{
-	if(m_physics)
-		return &(m_physics->GetWorldCorners());
-
-	return nullptr;
 }
 
 void Entity::SetPosition(sf::Vector2f newPos)

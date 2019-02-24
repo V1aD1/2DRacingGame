@@ -1,47 +1,50 @@
-/*#include <iostream>
+#include <iostream>
 #include <array>
 
 #include <SFML/Graphics.hpp>
 
 #include "include/Car.h"
-#include "include/MathCommon.h"
-#include "include/Square.h"
-#include "include/EventHandler.h"
+#include "include/Entity.h"
+#include "include/InputComponent.h"
+#include "include/PhysicsComponent.h"
+#include "include/CarGraphicsComponent.h"
 
 const float Car::c_length = 40.0f;
 const float Car::c_height = 10.0f;
 
-const float Car::c_rotationSpeed = 180.0f;
-const float Car::c_acceleration = 0.25f;
-const float Car::c_brakeForce = 0.1f;
-const float Car::c_frictionForce = 0.1f;
-const float Car::c_dbg_slideSpeed = 150.0f;
-const float Car::c_maxMomentum = 0.3f;
-
 Car::Car(sf::Vector2f startPos){
+	m_position = startPos;
+	SetRotation(0.0f);
 
-	//set rotation to 0,
+	auto size = sf::Vector2f(c_length, c_height);
 
-	//set shape for graphics component
+	//create shape for graphics component
 	sf::RectangleShape* shape = new sf::RectangleShape(size);
 	shape->setFillColor(sf::Color::Blue);
 	shape->setOutlineThickness(1.0f);
 	shape->setOutlineColor(sf::Color(250, 150, 100));
 	shape->setOrigin(size.x / 2.0f, size.y / 2.0f);
 	shape->setPosition(0.0f, 0.0f);
-	SetShape(shape);
 
-	//set corners for physics component
+
+	//create corners for physics component
 	std::array<sf::Vector2f, 4> corners = std::array<sf::Vector2f, 4>();
 	corners[0] = sf::Vector2f(-size.x / 2.0f, -size.y / 2.0f);
 	corners[1] = sf::Vector2f(size.x / 2.0f, -size.y / 2.0f);
 	corners[2] = sf::Vector2f(size.x / 2.0f, size.y / 2.0f);
 	corners[3] = sf::Vector2f(-size.x / 2.0f, size.y / 2.0f);
-	SetCorners(corners);
 
+	m_input = new InputComponent();
+	m_physics = new PhysicsComponent(this, corners);
+	m_graphics = new CarGraphicsComponent(shape);
 }
 
 Car::~Car() {
+	
+}
 
-	//delete graphics component m_shape here
-}*/
+//todo returns COPY of array, maybe should return reference or *?
+const std::array<sf::Vector2f, 4>* Car::GetWorldCorners() const
+{
+	return &(m_physics->GetWorldCorners());
+}

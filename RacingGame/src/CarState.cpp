@@ -2,11 +2,6 @@
 #include "include/MathCommon.h"
 #include "include/Entity.h"
 
-CarState::CarState() {
-	//nothing should enter here
-	;
-}
-
 CarState::CarState(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied){
 	m_localCorners = cornersWithoutRotationApplied;
 
@@ -45,6 +40,7 @@ void CarState::UpdateToNewState(const CarState& newState) {
 //but now they are decoupled
 void CarState::Rotate(float radsToTurn, sf::Vector2f entityWorldPos)
 {
+	rotInRad += radsToTurn;
 	for (int i = 0; i < m_localCorners.size(); i++) {
 
 		auto newPoint = sf::Vector2f();
@@ -55,8 +51,9 @@ void CarState::Rotate(float radsToTurn, sf::Vector2f entityWorldPos)
 		m_localCorners[i] = newPoint;
 	}
 
-
 	for (int i = 0; i < m_localCorners.size(); i++) {
 		m_worldCorners[i] = m_localCorners[i] + entityWorldPos;
 	}
+
+	forwardDir = sf::Vector2f(std::cos(rotInRad), std::sin(rotInRad));
 }

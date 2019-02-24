@@ -4,7 +4,7 @@
 #include <SFML/OpenGL.hpp>
 
 #include "include/EventHandler.h"
-//#include "include/Car.h"
+#include "include/Car.h"
 #include "include/Square.h"
 #include "include/Timer.h"
 #include "include/Entity.h"
@@ -47,10 +47,10 @@ int main()
 	sf::Int32 timeSinceLastFpsLog = fpsRefreshMs;
 
 	EventHandler eventHandler = EventHandler();
-	//Car car = Car(sf::Vector2f(40.0f, 50.0f));
+	Car car = Car(sf::Vector2f(40.0f, 50.0f));
 	Square square = Square(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f);
 
-	//G_VARIABLEOBJECTS.push_back(&car);
+	G_VARIABLEOBJECTS.push_back(&car);
 	G_STATICOBJECTS.push_back(&square);
 
 	if (!Setup(window, font, fpsText)) {
@@ -74,7 +74,9 @@ int main()
 		window.clear();
 		
 		//static objects before variable objects
-		square.Update(window, dtMillis, eventHandler);
+		for (auto staticObjects : G_STATICOBJECTS) {
+			staticObjects->Update(window, dtMillis, eventHandler);
+		}
 
 		for (auto variableObjects : G_VARIABLEOBJECTS) {
 			variableObjects->Update(window, dtMillis, eventHandler);

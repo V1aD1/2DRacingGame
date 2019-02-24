@@ -150,11 +150,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\GraphicsComponent.cpp" />
     <ClCompile Include="src\SquareGraphicsComponent.cpp" />
     <ClCompile Include="src\PhysicsEntity.cpp" />
     <ClCompile Include="src\CarState.cpp" />
     <ClCompile Include="src\PhysicsComponent.cpp" />
-    <ClCompile Include="src\GraphicsComponent.cpp" />
+    <ClCompile Include="src\CarGraphicsComponent.cpp" />
     <ClCompile Include="src\ConvexEntity.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\InputComponent.cpp" />
@@ -166,6 +167,7 @@
     <ClCompile Include="src\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\include\CarGraphicsComponent.h" />
     <ClInclude Include="src\include\SquareGraphicsComponent.h" />
     <ClInclude Include="src\include\PhysicsEntity.h" />
     <ClInclude Include="src\include\CarState.h" />

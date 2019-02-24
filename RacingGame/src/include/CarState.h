@@ -16,7 +16,6 @@ public:
 
 public:
 	CarState(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied);
-	CarState();
 	~CarState();
 
 	void UpdateToNewState(const CarState& newState);
