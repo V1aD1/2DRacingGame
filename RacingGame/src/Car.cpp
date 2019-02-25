@@ -43,7 +43,6 @@ Car::~Car() {
 	
 }
 
-//todo returns COPY of array, maybe should return reference or *?
 const std::array<sf::Vector2f, 4>* Car::GetWorldCorners() const
 {
 	return &(m_physics->GetWorldCorners());

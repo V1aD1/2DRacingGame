@@ -6,17 +6,13 @@
 #include "include/PhysicsComponent.h"
 #include "include/GraphicsComponent.h"
 
-Entity::Entity() 
+Entity::Entity()
 {
 }
 
-Entity::Entity(sf::Vector2f position, float rot, InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics)
+Entity::Entity(sf::Vector2f position, float rot, InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics) :m_position(position), m_input(input), m_physics(physics), m_graphics(graphics)
 {
-	m_position = position;
-	SetRotation(rot);
-	m_input = input;
-	m_physics = physics;
-	m_graphics = graphics;
+	SetRotation(rot);;
 }
 
 Entity::~Entity()
@@ -31,11 +27,11 @@ Entity::~Entity()
 
 void Entity::Update(sf::RenderWindow& window, float dtTimeMilli, const EventHandler& handler)
 {
-	if(m_input)
+	if (m_input)
 		m_input->Update(*this, handler, dtTimeMilli);
-	if(m_physics)
+	if (m_physics)
 		m_physics->Update(dtTimeMilli);
-	if(m_graphics)
+	if (m_graphics)
 		m_graphics->Update(*this, window);
 }
 
@@ -62,11 +58,11 @@ void Entity::SetPosition(sf::Vector2f newPos)
 void Entity::SetRotation(float newRotInDegrees)
 {
 	m_rotation = newRotInDegrees;
-	
+
 	//to avoid potential overflow
 	if (m_rotation > 360.0f)
 		m_rotation -= 360.0f;
-	
+
 	m_rotationInRad = MathCommon::DegreesToRadians(m_rotation);
 }
 

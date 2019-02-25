@@ -34,8 +34,6 @@ private:
 private:
 	CarState m_newState;
 	CarState m_currState;
-
-	//todo definetly remove this and instead pass as param for every method
 	Entity* m_entity;
 };
 

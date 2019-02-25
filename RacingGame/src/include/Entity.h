@@ -12,17 +12,15 @@
 #pragma once
 class Entity
 {
+protected:
+	sf::Vector2f m_position;
+	float m_rotation;
+	float m_rotationInRad;
 
 public: 
 	InputComponent* m_input;
 	PhysicsComponent* m_physics;
 	GraphicsComponent* m_graphics;
-
-//todo make private since rotation should only be changeable through SetRotation()
-protected:
-	sf::Vector2f m_position;
-	float m_rotation;
-	float m_rotationInRad;
 
 public:
 	Entity();
