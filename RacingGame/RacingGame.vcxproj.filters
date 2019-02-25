@@ -33,9 +33,6 @@
     <ClCompile Include="src\Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ConvexEntity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\InputComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -46,9 +43,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\CarState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PhysicsEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\SquareGraphicsComponent.cpp">
@@ -80,9 +74,6 @@
     <ClInclude Include="src\include\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\ConvexEntity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\include\InputComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -96,9 +87,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\include\CarState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\include\PhysicsEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\include\SquareGraphicsComponent.h">

@@ -24,7 +24,6 @@ void CarGraphicsComponent::Update(const Entity& entity, sf::RenderWindow& window
 	auto entityCorners = entity.GetWorldCorners();
 
 	if (entityCorners) {
-		std::cout << (*entityCorners)[0].x << std::endl;
 		for (auto corner : *entityCorners)
 		{
 			auto circle = sf::CircleShape(circleRad);
