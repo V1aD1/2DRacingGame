@@ -29,18 +29,18 @@ void PhysicsComponent::Update(float dtMilli)
 {
 	ApplyFriction(dtMilli);
 
-	if (MathCommon::GetMagnitude(m_newState.momentum) > c_maxMomentum)
-		m_newState.momentum = MathCommon::ChangeLength(m_newState.momentum, c_maxMomentum);
+	if (MathCommon::GetMagnitude(m_newState.m_momentum) > c_maxMomentum)
+		m_newState.m_momentum = MathCommon::ChangeLength(m_newState.m_momentum, c_maxMomentum);
 
 	//todo m_newState updates should happen in a CarState function
 
 	//this calculation MUST ONLY happen in Update() to ensure
 	//position isn't getting updated multiple times
-	m_newState.worldPos = m_newState.worldPos + m_newState.momentum * dtMilli;
+	m_newState.m_worldPos = m_newState.m_worldPos + m_newState.m_momentum * dtMilli;
 	
 	//update corners
 	for (int i = 0; i < m_newState.m_localCorners.size(); i++) {
-		m_newState.m_worldCorners[i] = m_newState.m_localCorners[i] + m_newState.worldPos;
+		m_newState.m_worldCorners[i] = m_newState.m_localCorners[i] + m_newState.m_worldPos;
 	}
 
 	//update to new state only if NO collision occured
@@ -49,14 +49,14 @@ void PhysicsComponent::Update(float dtMilli)
 
 	else {
 		//if collision occurs then halt all momentum on the car
-		m_currState.momentum = sf::Vector2f(0.0f, 0.0f);
+		m_currState.m_momentum = sf::Vector2f(0.0f, 0.0f);
 		m_newState.UpdateToNewState(m_currState);
 	}
 
 	//todo this should NOT be happening here!
 	//...or maybe it should be?
-	m_entity->SetPosition(m_currState.worldPos);
-	m_entity->SetRotation(MathCommon::RadiansToDegrees(m_currState.rotInRad));
+	m_entity->SetPosition(m_currState.m_worldPos);
+	m_entity->SetRotation(MathCommon::RadiansToDegrees(m_currState.m_rotInRad));
 }
 
 ///NOTE: function should only be called after computing 
@@ -100,9 +100,9 @@ bool PhysicsComponent::CollisionDetected() {
 void PhysicsComponent::Accelerate(float dtTimeMilli, bool forward)
 {
 	if (forward)
-		m_newState.momentum += m_newState.forwardDir * c_acceleration * (dtTimeMilli / 1000.0f);
+		m_newState.m_momentum += m_newState.m_forwardDir * c_acceleration * (dtTimeMilli / 1000.0f);
 	else
-		m_newState.momentum += -(m_newState.forwardDir * c_acceleration * (dtTimeMilli / 1000.0f));
+		m_newState.m_momentum += -(m_newState.m_forwardDir * c_acceleration * (dtTimeMilli / 1000.0f));
 }
 
 void PhysicsComponent::Brake(float dtTimeMilli)
@@ -113,12 +113,19 @@ void PhysicsComponent::Brake(float dtTimeMilli)
 void PhysicsComponent::DBG_Slide(const sf::Vector2f& dir, float dtMilli)
 {
 	//halting all movement on the car
-	m_newState.momentum = sf::Vector2f(0.0f, 0.0f);
-	m_currState.momentum = sf::Vector2f(0.0f, 0.0f);
+	m_newState.m_momentum = sf::Vector2f(0.0f, 0.0f);
+	m_newState.m_worldPos += dir * dtMilli / 1000.0f * c_dbg_slideSpeed;
+	
+	for (int i = 0; i < m_newState.m_localCorners.size(); i++) {
+		m_newState.m_worldCorners[i] = m_newState.m_localCorners[i] + m_newState.m_worldPos;
+	}
+
+	//ensuring current state matches new state
+	m_currState.UpdateToNewState(m_newState);
 
 	//placing car to exact position
-	m_entity->SetPosition(m_entity->GetPosition() + dir * dtMilli / 1000.0f * c_dbg_slideSpeed);
-	m_entity->SetPosition(m_entity->GetPosition());
+	m_entity->SetPosition(m_newState.m_worldPos);
+	m_entity->SetRotation(MathCommon::RadiansToDegrees(m_newState.m_rotInRad));
 }
 
 void PhysicsComponent::ApplyFriction(float dtTimeMilli)
@@ -128,17 +135,17 @@ void PhysicsComponent::ApplyFriction(float dtTimeMilli)
 
 void PhysicsComponent::ApplySlowDownForce(float forceMag, float dtTimeMilli)
 {
-	sf::Vector2f momentumDir = MathCommon::Normalize(m_newState.momentum);
-	sf::Vector2f stoppingForceToApply = MathCommon::Normalize(m_newState.momentum) * forceMag * (dtTimeMilli / 1000.0f);
+	sf::Vector2f momentumDir = MathCommon::Normalize(m_newState.m_momentum);
+	sf::Vector2f stoppingForceToApply = MathCommon::Normalize(m_newState.m_momentum) * forceMag * (dtTimeMilli / 1000.0f);
 
-	float momentumMag = MathCommon::GetMagnitude(m_newState.momentum);
+	float momentumMag = MathCommon::GetMagnitude(m_newState.m_momentum);
 	float stoppingForceMag = MathCommon::GetMagnitude(stoppingForceToApply);
 
 	//to ensure stopping force doesn't cause car to move backwards
 	if (momentumMag > stoppingForceMag)
-		m_newState.momentum -= stoppingForceToApply;
+		m_newState.m_momentum -= stoppingForceToApply;
 	else
-		m_newState.momentum = sf::Vector2f(0.0f, 0.0f);
+		m_newState.m_momentum = sf::Vector2f(0.0f, 0.0f);
 }
 
 void PhysicsComponent::Rotate(float dtTimeMilli, bool left)

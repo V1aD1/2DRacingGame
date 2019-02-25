@@ -5,32 +5,32 @@
 CarState::CarState(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied){
 	m_localCorners = cornersWithoutRotationApplied;
 
-	rotInRad = entity->GetRotationInRadians();
-	worldPos = entity->GetPosition();
+	m_rotInRad = entity->GetRotationInRadians();
+	m_worldPos = entity->GetPosition();
 
 	//orienting corners according to Entity rotation
 	for (int i = 0; i < m_localCorners.size(); i++) {
 
 		auto newPoint = sf::Vector2f();
-		newPoint.x = m_localCorners[i].x * std::cos(rotInRad) - m_localCorners[i].y * std::sin(rotInRad);
-		newPoint.y = m_localCorners[i].x * std::sin(rotInRad) + m_localCorners[i].y * std::cos(rotInRad);
+		newPoint.x = m_localCorners[i].x * std::cos(m_rotInRad) - m_localCorners[i].y * std::sin(m_rotInRad);
+		newPoint.y = m_localCorners[i].x * std::sin(m_rotInRad) + m_localCorners[i].y * std::cos(m_rotInRad);
 
 		//rotating the point about the centre of the shape
 		m_localCorners[i] = newPoint;
 	}
 
 	for (int i = 0; i < m_localCorners.size(); i++) {
-		m_worldCorners[i] = m_localCorners[i] + entity->GetPosition();
+		m_worldCorners[i] = m_localCorners[i] + m_worldPos;
 	}
 }
 
 CarState::~CarState() {}
 
 void CarState::UpdateToNewState(const CarState& newState) {
-	worldPos = newState.worldPos;
-	rotInRad = newState.rotInRad;
-	forwardDir = newState.forwardDir;
-	momentum = newState.momentum;
+	m_worldPos = newState.m_worldPos;
+	m_rotInRad = newState.m_rotInRad;
+	m_forwardDir = newState.m_forwardDir;
+	m_momentum = newState.m_momentum;
 	m_localCorners = newState.m_localCorners;
 	m_worldCorners = newState.m_worldCorners;
 }
@@ -40,7 +40,7 @@ void CarState::UpdateToNewState(const CarState& newState) {
 //but now they are decoupled
 void CarState::Rotate(float radsToTurn, sf::Vector2f entityWorldPos)
 {
-	rotInRad += radsToTurn;
+	m_rotInRad += radsToTurn;
 	for (int i = 0; i < m_localCorners.size(); i++) {
 
 		auto newPoint = sf::Vector2f();
@@ -52,8 +52,8 @@ void CarState::Rotate(float radsToTurn, sf::Vector2f entityWorldPos)
 	}
 
 	for (int i = 0; i < m_localCorners.size(); i++) {
-		m_worldCorners[i] = m_localCorners[i] + entityWorldPos;
+		m_worldCorners[i] = m_localCorners[i] + m_worldPos;
 	}
 
-	forwardDir = sf::Vector2f(std::cos(rotInRad), std::sin(rotInRad));
+	m_forwardDir = sf::Vector2f(std::cos(m_rotInRad), std::sin(m_rotInRad));
 }
