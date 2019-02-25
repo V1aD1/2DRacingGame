@@ -51,7 +51,6 @@ Square::Square(float sideLen, sf::Vector2f pos, float rotDeg) : Entity(pos, rotD
 	m_worldCorners = worldCorners;
 }
 
-//todo may not be necessary
 Square::~Square(){
 }
 

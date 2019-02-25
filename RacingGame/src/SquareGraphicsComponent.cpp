@@ -6,14 +6,11 @@ SquareGraphicsComponent::SquareGraphicsComponent(sf::Shape* shape, std::array<sf
 	m_worldCorners = worldCorners;
 }
 
-//todo may not be necessary
-SquareGraphicsComponent::~SquareGraphicsComponent()
-{
+SquareGraphicsComponent::~SquareGraphicsComponent(){
 }
 
 //overridden Update() method from GraphicsComponent
-void SquareGraphicsComponent::Update(const Entity& entity, sf::RenderWindow& window)
-{
+void SquareGraphicsComponent::Update(const Entity& entity, sf::RenderWindow& window){
 	if (m_shape) {
 		m_shape->setRotation(entity.GetRotationInDegrees());
 	}
