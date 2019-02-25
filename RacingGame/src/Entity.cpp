@@ -64,16 +64,12 @@ void Entity::SetRotation(float newRotInDegrees)
 {
 	m_rotation = newRotInDegrees;
 
-	//to avoid potential overflow
 	if (m_rotation > 360.0f)
 		m_rotation -= 360.0f;
 
 	m_rotationInRad = MathCommon::DegreesToRadians(m_rotation);
 }
 
-//todo find better way to turn,
-//I think corners should be turned always according to entity rotation,
-//but now they are decoupled
 void Entity::Rotate(float degrees)
 {
 	SetRotation(m_rotation + degrees);

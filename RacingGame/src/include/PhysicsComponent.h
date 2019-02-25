@@ -13,7 +13,6 @@ public:
 	static const float c_brakeForce;
 	static const float c_frictionForce;
 	static const float c_dbg_slideSpeed;
-	static const float c_maxMomentum;
 
 public:
 	PhysicsComponent(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied);
