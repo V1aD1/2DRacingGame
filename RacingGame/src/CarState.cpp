@@ -38,7 +38,7 @@ void CarState::UpdateToNewState(const CarState& newState) {
 //todo find better way to turn,
 //I think corners should be turned always according to entity rotation,
 //but now they are decoupled
-void CarState::Rotate(float radsToTurn, sf::Vector2f entityWorldPos)
+void CarState::Rotate(float radsToTurn)
 {
 	m_rotInRad += radsToTurn;
 	for (int i = 0; i < m_localCorners.size(); i++) {

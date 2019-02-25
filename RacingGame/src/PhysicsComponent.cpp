@@ -13,19 +13,13 @@ const float PhysicsComponent::c_maxMomentum = 0.3f;
 
 PhysicsComponent::PhysicsComponent(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied): 
 					m_currState(entity, cornersWithoutRotationApplied),
-					m_newState(entity, cornersWithoutRotationApplied),
-					m_entity(entity)
+					m_newState(entity, cornersWithoutRotationApplied)
 {
 }
 
-//todo this SHOULD delete entity pointer but that'll lead to circular deletes
-//so remove the Entity* member!!
-PhysicsComponent::~PhysicsComponent()
-{
-	
-}
+PhysicsComponent::~PhysicsComponent(){}
 
-void PhysicsComponent::Update(float dtMilli)
+void PhysicsComponent::Update(Entity& entity, float dtMilli)
 {
 	ApplyFriction(dtMilli);
 
@@ -55,8 +49,8 @@ void PhysicsComponent::Update(float dtMilli)
 
 	//todo this should NOT be happening here!
 	//...or maybe it should be?
-	m_entity->SetPosition(m_currState.m_worldPos);
-	m_entity->SetRotation(MathCommon::RadiansToDegrees(m_currState.m_rotInRad));
+	entity.SetPosition(m_currState.m_worldPos);
+	entity.SetRotation(MathCommon::RadiansToDegrees(m_currState.m_rotInRad));
 }
 
 ///NOTE: function should only be called after computing 
@@ -110,7 +104,7 @@ void PhysicsComponent::Brake(float dtTimeMilli)
 	ApplySlowDownForce(c_brakeForce, dtTimeMilli);
 }
 
-void PhysicsComponent::DBG_Slide(const sf::Vector2f& dir, float dtMilli)
+void PhysicsComponent::DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli)
 {
 	//halting all movement on the car
 	m_newState.m_momentum = sf::Vector2f(0.0f, 0.0f);
@@ -124,8 +118,8 @@ void PhysicsComponent::DBG_Slide(const sf::Vector2f& dir, float dtMilli)
 	m_currState.UpdateToNewState(m_newState);
 
 	//placing car to exact position
-	m_entity->SetPosition(m_newState.m_worldPos);
-	m_entity->SetRotation(MathCommon::RadiansToDegrees(m_newState.m_rotInRad));
+	entity.SetPosition(m_newState.m_worldPos);
+	entity.SetRotation(MathCommon::RadiansToDegrees(m_newState.m_rotInRad));
 }
 
 void PhysicsComponent::ApplyFriction(float dtTimeMilli)
@@ -154,7 +148,7 @@ void PhysicsComponent::Rotate(float dtTimeMilli, bool left)
 
 	float rotAmount = direction * c_rotationSpeed * (dtTimeMilli / 1000.0f);
 
-	m_newState.Rotate(MathCommon::DegreesToRadians(rotAmount), m_entity->GetPosition());
+	m_newState.Rotate(MathCommon::DegreesToRadians(rotAmount));
 }
 
 //todo returns COPY of array, maybe should return reference or *?

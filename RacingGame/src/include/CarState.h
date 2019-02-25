@@ -19,6 +19,6 @@ public:
 	~CarState();
 
 	void UpdateToNewState(const CarState& newState);
-	void Rotate(float radsToTurn, sf::Vector2f entityWorldPos);
+	void Rotate(float radsToTurn);
 };
 

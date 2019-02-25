@@ -30,7 +30,7 @@ void Entity::Update(sf::RenderWindow& window, float dtTimeMilli, const EventHand
 	if (m_input)
 		m_input->Update(*this, handler, dtTimeMilli);
 	if (m_physics)
-		m_physics->Update(dtTimeMilli);
+		m_physics->Update(*this, dtTimeMilli);
 	if (m_graphics)
 		m_graphics->Update(*this, window);
 }

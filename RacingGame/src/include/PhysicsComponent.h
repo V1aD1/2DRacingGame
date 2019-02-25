@@ -19,11 +19,11 @@ public:
 	PhysicsComponent(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied);
 	~PhysicsComponent();
 
-	void Update(float dtMilli);
+	void Update(Entity& entity, float dtMilli);
 	void Rotate(float degrees, bool left);
 	void Accelerate(float dtTimeMilli, bool forward);
 	void Brake(float dtTimeMilli);
-	void DBG_Slide(const sf::Vector2f& dir, float dtMilli);
+	void DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli);
 	const std::array<sf::Vector2f, 4>& GetWorldCorners() const;
 
 private:
@@ -34,6 +34,5 @@ private:
 private:
 	CarState m_newState;
 	CarState m_currState;
-	Entity* m_entity;
 };
 
