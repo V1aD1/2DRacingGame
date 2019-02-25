@@ -10,6 +10,11 @@ Entity::Entity()
 {
 }
 
+Entity::Entity(sf::Vector2f position, float rotDeg) : m_position(position) 
+{
+	SetRotation(rotDeg);
+}
+
 Entity::Entity(sf::Vector2f position, float rot, InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics) :m_position(position), m_input(input), m_physics(physics), m_graphics(graphics)
 {
 	SetRotation(rot);;

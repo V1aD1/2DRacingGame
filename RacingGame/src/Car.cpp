@@ -12,10 +12,7 @@
 const float Car::c_length = 40.0f;
 const float Car::c_height = 10.0f;
 
-Car::Car(sf::Vector2f startPos){
-	m_position = startPos;
-	SetRotation(0.0f);
-
+Car::Car(sf::Vector2f startPos): Entity(startPos, 0.0f){
 	auto size = sf::Vector2f(c_length, c_height);
 
 	//create shape for graphics component
@@ -43,7 +40,6 @@ Car::~Car() {
 	
 }
 
-const std::array<sf::Vector2f, 4>* Car::GetWorldCorners() const
-{
-	return &(m_physics->GetWorldCorners());
+const std::array<sf::Vector2f, 4>* Car::GetWorldCorners() const{
+	return m_physics->GetWorldCorners();
 }

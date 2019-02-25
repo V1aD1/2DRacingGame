@@ -24,7 +24,7 @@ public:
 	void Accelerate(float dtTimeMilli, bool forward);
 	void Brake(float dtTimeMilli);
 	void DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli);
-	const std::array<sf::Vector2f, 4>& GetWorldCorners() const;
+	const std::array<sf::Vector2f, 4>* GetWorldCorners() const;
 
 private:
 	bool CollisionDetected();

@@ -12,10 +12,13 @@
 #pragma once
 class Entity
 {
-protected:
-	sf::Vector2f m_position;
+
+private:
 	float m_rotation;
 	float m_rotationInRad;
+
+protected:
+	sf::Vector2f m_position;
 
 public: 
 	InputComponent* m_input;
@@ -24,7 +27,8 @@ public:
 
 public:
 	Entity();
-	Entity(sf::Vector2f position, float rot, InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics);
+	Entity(sf::Vector2f position, float rotDeg);
+	Entity(sf::Vector2f position, float rotDeg, InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics);
 	~Entity();
 
 	void Update(sf::RenderWindow& window, float dtTimeMilli, const EventHandler& handler);

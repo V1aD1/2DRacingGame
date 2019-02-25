@@ -15,7 +15,6 @@ public:
 	virtual const std::array<sf::Vector2f, 4>* GetWorldCorners() const;
 
 private: 
-	float sideLength;
 	std::array<sf::Vector2f, 4> m_worldCorners;
 };
 

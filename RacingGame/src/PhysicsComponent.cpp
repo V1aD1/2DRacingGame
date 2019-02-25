@@ -13,23 +13,17 @@ const float PhysicsComponent::c_maxMomentum = 0.3f;
 
 PhysicsComponent::PhysicsComponent(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied): 
 					m_currState(entity, cornersWithoutRotationApplied),
-					m_newState(entity, cornersWithoutRotationApplied)
-{
-}
+					m_newState(entity, cornersWithoutRotationApplied){}
 
 PhysicsComponent::~PhysicsComponent(){}
 
-void PhysicsComponent::Update(Entity& entity, float dtMilli)
-{
+void PhysicsComponent::Update(Entity& entity, float dtMilli){
 	ApplyFriction(dtMilli);
 
 	if (MathCommon::GetMagnitude(m_newState.m_momentum) > c_maxMomentum)
 		m_newState.m_momentum = MathCommon::ChangeLength(m_newState.m_momentum, c_maxMomentum);
 
-	//todo m_newState updates should happen in a CarState function
-
-	//this calculation MUST ONLY happen in Update() to ensure
-	//position isn't getting updated multiple times
+	//this calculation MUST ONLY happen in Update() to ensure position isn't getting updated multiple times
 	m_newState.m_worldPos = m_newState.m_worldPos + m_newState.m_momentum * dtMilli;
 	
 	//update corners
@@ -41,14 +35,12 @@ void PhysicsComponent::Update(Entity& entity, float dtMilli)
 	if (!CollisionDetected())
 		m_currState.UpdateToNewState(m_newState);
 
+	//if collision occurs then halt all momentum on the car
 	else {
-		//if collision occurs then halt all momentum on the car
 		m_currState.m_momentum = sf::Vector2f(0.0f, 0.0f);
 		m_newState.UpdateToNewState(m_currState);
 	}
 
-	//todo this should NOT be happening here!
-	//...or maybe it should be?
 	entity.SetPosition(m_currState.m_worldPos);
 	entity.SetRotation(MathCommon::RadiansToDegrees(m_currState.m_rotInRad));
 }
@@ -75,11 +67,10 @@ bool PhysicsComponent::CollisionDetected() {
 					//this operation must be performed in this order!!
 					float check = MathCommon::CrossProduct(objCorners[i] - objCorners[(i + 1) % objCorners.size()], objCorners[i] - (carCorner));
 
-					if (check < 0.0f) {
+					if (check <= 0.0f) {
 						collision = false;
 						break;
 					}
-					//todo handle check == 0
 				}
 
 				if (collision)
@@ -91,21 +82,18 @@ bool PhysicsComponent::CollisionDetected() {
 	return false;
 }
 
-void PhysicsComponent::Accelerate(float dtTimeMilli, bool forward)
-{
+void PhysicsComponent::Accelerate(float dtTimeMilli, bool forward){
 	if (forward)
 		m_newState.m_momentum += m_newState.m_forwardDir * c_acceleration * (dtTimeMilli / 1000.0f);
 	else
 		m_newState.m_momentum += -(m_newState.m_forwardDir * c_acceleration * (dtTimeMilli / 1000.0f));
 }
 
-void PhysicsComponent::Brake(float dtTimeMilli)
-{
+void PhysicsComponent::Brake(float dtTimeMilli){
 	ApplySlowDownForce(c_brakeForce, dtTimeMilli);
 }
 
-void PhysicsComponent::DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli)
-{
+void PhysicsComponent::DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli){
 	//halting all movement on the car
 	m_newState.m_momentum = sf::Vector2f(0.0f, 0.0f);
 	m_newState.m_worldPos += dir * dtMilli / 1000.0f * c_dbg_slideSpeed;
@@ -122,13 +110,11 @@ void PhysicsComponent::DBG_Slide(Entity& entity, const sf::Vector2f& dir, float 
 	entity.SetRotation(MathCommon::RadiansToDegrees(m_newState.m_rotInRad));
 }
 
-void PhysicsComponent::ApplyFriction(float dtTimeMilli)
-{
+void PhysicsComponent::ApplyFriction(float dtTimeMilli){
 	ApplySlowDownForce(c_frictionForce, dtTimeMilli);
 }
 
-void PhysicsComponent::ApplySlowDownForce(float forceMag, float dtTimeMilli)
-{
+void PhysicsComponent::ApplySlowDownForce(float forceMag, float dtTimeMilli){
 	sf::Vector2f momentumDir = MathCommon::Normalize(m_newState.m_momentum);
 	sf::Vector2f stoppingForceToApply = MathCommon::Normalize(m_newState.m_momentum) * forceMag * (dtTimeMilli / 1000.0f);
 
@@ -142,8 +128,7 @@ void PhysicsComponent::ApplySlowDownForce(float forceMag, float dtTimeMilli)
 		m_newState.m_momentum = sf::Vector2f(0.0f, 0.0f);
 }
 
-void PhysicsComponent::Rotate(float dtTimeMilli, bool left)
-{
+void PhysicsComponent::Rotate(float dtTimeMilli, bool left){
 	int direction = left ? -1 : 1;
 
 	float rotAmount = direction * c_rotationSpeed * (dtTimeMilli / 1000.0f);
@@ -151,8 +136,6 @@ void PhysicsComponent::Rotate(float dtTimeMilli, bool left)
 	m_newState.Rotate(MathCommon::DegreesToRadians(rotAmount));
 }
 
-//todo returns COPY of array, maybe should return reference or *?
-const std::array<sf::Vector2f, 4>& PhysicsComponent::GetWorldCorners() const
-{
-	return m_currState.m_worldCorners;
+const std::array<sf::Vector2f, 4>* PhysicsComponent::GetWorldCorners() const{
+	return &(m_currState.m_worldCorners);
 }
