@@ -4,28 +4,26 @@
 
 class Entity;
 
-class CarState{
-private:
-	static const float c_maxMomentum;
-
+class PhysicsState {
 private:
 	sf::Vector2f m_worldPos = sf::Vector2f(0.0f, 0.0f);
 	sf::Vector2f m_forwardDir = sf::Vector2f(1.0f, 0.0f);
 	sf::Vector2f m_momentum = sf::Vector2f(0.0f, 0.0f);
 	std::array<sf::Vector2f, 4> m_localCorners;
 	std::array<sf::Vector2f, 4> m_worldCorners;
+	float m_maxMomentum;
 
 public:
 	float m_rotInRad = 0.0f;
 
 public:
-	CarState(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied);
-	~CarState();
+	PhysicsState(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied, float maxMomentum);
+	~PhysicsState();
 
 	void Update(float dtMilli);
-	
-	CarState(const CarState& other);
-	CarState& operator=(const CarState& other);
+
+	PhysicsState(const PhysicsState& other);
+	PhysicsState& operator=(const PhysicsState& other);
 
 	void Rotate(float radsToTurn);
 	void Accelerate(float acceleration);

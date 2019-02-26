@@ -48,13 +48,8 @@ Square::Square(float sideLen, sf::Vector2f pos, float rotDeg) : Entity(pos, rotD
 	}
 
 	m_graphics = new SquareGraphicsComponent(shape, worldCorners);
-	m_worldCorners = worldCorners;
+	//m_worldCorners = worldCorners;
 }
 
-Square::~Square(){
-}
-
-const std::array<sf::Vector2f, 4>* Square::GetWorldCorners() const{
-	return &m_worldCorners;
-}
+Square::~Square(){}
 

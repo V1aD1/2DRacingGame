@@ -1,25 +1,23 @@
-#include "include/CarState.h"
+#include "include/PhysicsState.h"
 #include "include/MathCommon.h"
 #include "include/Entity.h"
 
-const float CarState::c_maxMomentum = 0.3f;
-
-CarState::CarState(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied){
+PhysicsState::PhysicsState(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied, float maxMomentum) {
 	m_localCorners = cornersWithoutRotationApplied;
-
 	m_rotInRad = entity->GetRotationInRadians();
 	m_worldPos = entity->GetPosition();
+	m_maxMomentum = maxMomentum;
 }
 
-CarState::~CarState() {}
+PhysicsState::~PhysicsState() {}
 
-void CarState::Update(float dtMilli) {
+void PhysicsState::Update(float dtMilli) {
 	//update forward dir
 	m_forwardDir = sf::Vector2f(std::cos(m_rotInRad), std::sin(m_rotInRad));
 
 	//update world position
-	if (MathCommon::GetMagnitude(m_momentum) > c_maxMomentum)
-		m_momentum = MathCommon::ChangeLength(m_momentum, c_maxMomentum);
+	if (MathCommon::GetMagnitude(m_momentum) > m_maxMomentum)
+		m_momentum = MathCommon::ChangeLength(m_momentum, m_maxMomentum);
 
 	m_worldPos = m_worldPos + m_momentum * dtMilli;
 
@@ -40,7 +38,7 @@ void CarState::Update(float dtMilli) {
 	}
 }
 
-CarState::CarState(const CarState & other)
+PhysicsState::PhysicsState(const PhysicsState & other)
 {
 	m_worldPos = other.m_worldPos;
 	m_rotInRad = other.m_rotInRad;
@@ -50,7 +48,7 @@ CarState::CarState(const CarState & other)
 	m_worldCorners = other.m_worldCorners;
 }
 
-CarState & CarState::operator=(const CarState & other)
+PhysicsState & PhysicsState::operator=(const PhysicsState & other)
 {
 	m_worldPos = other.m_worldPos;
 	m_rotInRad = other.m_rotInRad;
@@ -62,46 +60,46 @@ CarState & CarState::operator=(const CarState & other)
 	return *this;
 }
 
-void CarState::Rotate(float radsToTurn){
+void PhysicsState::Rotate(float radsToTurn) {
 	m_rotInRad += radsToTurn;
-	
+
 	//m_forwardDir should be updated in Update() function exclusively,
 	//but the driving feels too floaty then, so I'll also update it
 	//while turning the car
 	m_forwardDir = sf::Vector2f(std::cos(m_rotInRad), std::sin(m_rotInRad));
 }
 
-void CarState::Accelerate(float acceleration)
+void PhysicsState::Accelerate(float acceleration)
 {
 	m_momentum += m_forwardDir * acceleration;
 }
 
-void CarState::ApplyForce(sf::Vector2f force)
+void PhysicsState::ApplyForce(sf::Vector2f force)
 {
 	m_momentum += force;
 }
 
-const std::array<sf::Vector2f, 4>* CarState::GetWorldCorners() const
+const std::array<sf::Vector2f, 4>* PhysicsState::GetWorldCorners() const
 {
 	return &m_worldCorners;
 }
 
-sf::Vector2f CarState::GetWorldPosition()
+sf::Vector2f PhysicsState::GetWorldPosition()
 {
 	return m_worldPos;
 }
 
-sf::Vector2f CarState::GetMomentum()
+sf::Vector2f PhysicsState::GetMomentum()
 {
 	return m_momentum;
 }
 
-void CarState::SetWorldPos(sf::Vector2f newPos)
+void PhysicsState::SetWorldPos(sf::Vector2f newPos)
 {
 	m_worldPos = newPos;
 }
 
-void CarState::SetMomentum(sf::Vector2f newMomentum)
+void PhysicsState::SetMomentum(sf::Vector2f newMomentum)
 {
 	m_momentum = newMomentum;
 }

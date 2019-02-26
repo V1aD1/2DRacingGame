@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "CarState.h"
+#include "PhysicsState.h"
 
 class Entity;
 
@@ -13,6 +13,7 @@ public:
 	static const float c_brakeForce;
 	static const float c_frictionForce;
 	static const float c_dbg_slideSpeed;
+	static const float c_maxMomentum;
 
 public:
 	PhysicsComponent(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied);
@@ -31,7 +32,7 @@ private:
 	void ApplyFriction(float dtTimeMilli);
 
 private:
-	CarState m_newState;
-	CarState m_currState;
+	PhysicsState m_newState;
+	PhysicsState m_currState;
 };
 

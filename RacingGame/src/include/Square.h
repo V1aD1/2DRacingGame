@@ -11,10 +11,5 @@ public:
 
 	Square(float sideLen, sf::Vector2f position, float rotation);
 	~Square();
-
-	virtual const std::array<sf::Vector2f, 4>* GetWorldCorners() const;
-
-private: 
-	std::array<sf::Vector2f, 4> m_worldCorners;
 };
 

@@ -60,6 +60,14 @@ void Entity::SetPosition(sf::Vector2f newPos)
 	m_position = newPos;
 }
 
+const std::array<sf::Vector2f, 4>* Entity::GetWorldCorners() const
+{
+	if (m_physics)
+		return m_physics->GetWorldCorners();
+
+	return nullptr;
+}
+
 void Entity::SetRotation(float newRotInDegrees)
 {
 	m_rotation = newRotInDegrees;

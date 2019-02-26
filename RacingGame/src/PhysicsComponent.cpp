@@ -9,10 +9,11 @@ const float PhysicsComponent::c_acceleration = 0.25f;
 const float PhysicsComponent::c_brakeForce = 0.1f;
 const float PhysicsComponent::c_frictionForce = 0.1f;
 const float PhysicsComponent::c_dbg_slideSpeed = 150.0f;
+const float PhysicsComponent::c_maxMomentum = 0.3f;
 
 PhysicsComponent::PhysicsComponent(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied): 
-					m_currState(entity, cornersWithoutRotationApplied),
-					m_newState(entity, cornersWithoutRotationApplied){}
+					m_currState(entity, cornersWithoutRotationApplied, c_maxMomentum),
+					m_newState(entity, cornersWithoutRotationApplied, c_maxMomentum){}
 
 PhysicsComponent::~PhysicsComponent(){}
 
