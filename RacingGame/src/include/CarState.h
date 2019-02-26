@@ -23,8 +23,9 @@ public:
 	~CarState();
 
 	void Update(float dtMilli);
-	void UpdateToNewState(const CarState& newState);
 	
+	CarState& operator=(const CarState& other);
+
 	void Rotate(float radsToTurn);
 	void Accelerate(float acceleration);
 	void ApplyForce(sf::Vector2f force);

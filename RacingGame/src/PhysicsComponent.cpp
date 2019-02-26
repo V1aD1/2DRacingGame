@@ -23,12 +23,12 @@ void PhysicsComponent::Update(Entity& entity, float dtMilli){
 
 	//update to new state only if NO collision occured
 	if (!CollisionDetected())
-		m_currState.UpdateToNewState(m_newState);
+		m_currState = m_newState;
 
 	//if collision occurs then halt all momentum on the car
 	else {
 		m_currState.SetMomentum(sf::Vector2f(0.0f, 0.0f));
-		m_newState.UpdateToNewState(m_currState);
+		m_newState = m_currState;
 	}
 
 	entity.SetPosition(m_currState.GetWorldPosition());
@@ -89,7 +89,7 @@ void PhysicsComponent::DBG_Slide(Entity& entity, const sf::Vector2f& dir, float 
 	m_newState.Update(dtMilli);
 
 	//ensuring current state matches new state
-	m_currState.UpdateToNewState(m_newState);
+	m_currState = m_newState;
 }
 
 void PhysicsComponent::ApplyFriction(float dtTimeMilli){
