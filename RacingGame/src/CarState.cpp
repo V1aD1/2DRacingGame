@@ -40,6 +40,16 @@ void CarState::Update(float dtMilli) {
 	}
 }
 
+CarState::CarState(const CarState & other)
+{
+	m_worldPos = other.m_worldPos;
+	m_rotInRad = other.m_rotInRad;
+	m_forwardDir = other.m_forwardDir;
+	m_momentum = other.m_momentum;
+	m_localCorners = other.m_localCorners;
+	m_worldCorners = other.m_worldCorners;
+}
+
 CarState & CarState::operator=(const CarState & other)
 {
 	m_worldPos = other.m_worldPos;

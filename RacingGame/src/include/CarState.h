@@ -24,6 +24,7 @@ public:
 
 	void Update(float dtMilli);
 	
+	CarState(const CarState& other);
 	CarState& operator=(const CarState& other);
 
 	void Rotate(float radsToTurn);
