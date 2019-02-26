@@ -2,22 +2,21 @@
 #include "include/MathCommon.h"
 #include "include/Entity.h"
 
-PhysicsState::PhysicsState(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied, float maxMomentum) {
+PhysicsState::PhysicsState(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied) {
 	m_localCorners = cornersWithoutRotationApplied;
 	m_rotInRad = entity->GetRotationInRadians();
 	m_worldPos = entity->GetPosition();
-	m_maxMomentum = maxMomentum;
 }
 
 PhysicsState::~PhysicsState() {}
 
-void PhysicsState::Update(float dtMilli) {
+void PhysicsState::Update(float dtMilli, float maxMomentum) {
 	//update forward dir
 	m_forwardDir = sf::Vector2f(std::cos(m_rotInRad), std::sin(m_rotInRad));
 
 	//update world position
-	if (MathCommon::GetMagnitude(m_momentum) > m_maxMomentum)
-		m_momentum = MathCommon::ChangeLength(m_momentum, m_maxMomentum);
+	if (MathCommon::GetMagnitude(m_momentum) > maxMomentum)
+		m_momentum = MathCommon::ChangeLength(m_momentum, maxMomentum);
 
 	m_worldPos = m_worldPos + m_momentum * dtMilli;
 
@@ -92,6 +91,11 @@ sf::Vector2f PhysicsState::GetWorldPosition()
 sf::Vector2f PhysicsState::GetMomentum()
 {
 	return m_momentum;
+}
+
+float PhysicsState::GetRotInRad()
+{
+	return m_rotInRad;
 }
 
 void PhysicsState::SetWorldPos(sf::Vector2f newPos)

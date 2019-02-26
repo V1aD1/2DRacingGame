@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\CarPhysicsComponent.cpp" />
     <ClCompile Include="src\GraphicsComponent.cpp" />
     <ClCompile Include="src\PhysicsState.cpp" />
     <ClCompile Include="src\SquareGraphicsComponent.cpp" />
@@ -165,6 +166,7 @@
     <ClCompile Include="src\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\include\CarPhysicsComponent.h" />
     <ClInclude Include="src\include\CarGraphicsComponent.h" />
     <ClInclude Include="src\include\PhysicsState.h" />
     <ClInclude Include="src\include\SquareGraphicsComponent.h" />

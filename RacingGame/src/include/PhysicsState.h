@@ -11,16 +11,13 @@ private:
 	sf::Vector2f m_momentum = sf::Vector2f(0.0f, 0.0f);
 	std::array<sf::Vector2f, 4> m_localCorners;
 	std::array<sf::Vector2f, 4> m_worldCorners;
-	float m_maxMomentum;
-
-public:
 	float m_rotInRad = 0.0f;
 
 public:
-	PhysicsState(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied, float maxMomentum);
+	PhysicsState(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied);
 	~PhysicsState();
 
-	void Update(float dtMilli);
+	void Update(float dtMilli, float maxMomentum);
 
 	PhysicsState(const PhysicsState& other);
 	PhysicsState& operator=(const PhysicsState& other);
@@ -32,6 +29,7 @@ public:
 	const std::array<sf::Vector2f, 4>* GetWorldCorners() const;
 	sf::Vector2f GetWorldPosition();
 	sf::Vector2f GetMomentum();
+	float GetRotInRad();
 
 	//should ONLY be used by DBG_ commands
 	void SetWorldPos(sf::Vector2f newPos);

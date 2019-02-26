@@ -6,7 +6,7 @@
 #include "include/Car.h"
 #include "include/Entity.h"
 #include "include/InputComponent.h"
-#include "include/PhysicsComponent.h"
+#include "include/CarPhysicsComponent.h"
 #include "include/CarGraphicsComponent.h"
 
 const float Car::c_length = 40.0f;
@@ -32,7 +32,7 @@ Car::Car(sf::Vector2f startPos): Entity(startPos, 0.0f){
 	corners[3] = sf::Vector2f(-size.x / 2.0f, size.y / 2.0f);
 
 	m_input = new InputComponent();
-	m_physics = new PhysicsComponent(this, corners);
+	m_physics = new CarPhysicsComponent(this, corners);
 	m_graphics = new CarGraphicsComponent(shape);
 }
 
