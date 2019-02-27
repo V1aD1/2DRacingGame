@@ -35,8 +35,7 @@ bool PhysicsComponent::CollisionDetected() {
 		if (objCornersPtr) {
 			std::array<sf::Vector2f, 4> objCorners = *objCornersPtr;
 
-			//todo check if u can use GetWorldCoenrenrs() here?
-			for (auto &carCorner : *(GetWorldCorners())) {
+			for (auto &carCorner : *(m_newState.GetWorldCorners())) {
 
 				bool collision = true;
 
@@ -72,8 +71,6 @@ void PhysicsComponent::ApplyFriction(float dtTimeMilli){
 	ApplySlowDownForce(m_frictionForce, dtTimeMilli);
 }
 
-//todo since it manipulates newState and currState, it maybe shouldn't be 
-//implemented here...
 void PhysicsComponent::ApplySlowDownForce(float forceMag, float dtTimeMilli){
 
 	auto newStateMomentum = m_newState.GetMomentum();
@@ -95,9 +92,4 @@ void PhysicsComponent::Rotate(float dtTimeMilli, bool left){
 	int direction = left ? -1 : 1;
 	float rotAmount = direction * m_rotationSpeed * (dtTimeMilli / 1000.0f);
 	m_newState.Rotate(MathCommon::DegreesToRadians(rotAmount));
-}
-
-//todo shouldn't be 4 corners
-const std::array<sf::Vector2f, 4>* PhysicsComponent::GetWorldCorners() const{
-	return m_currState.GetWorldCorners();
 }

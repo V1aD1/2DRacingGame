@@ -5,6 +5,7 @@
 #include "include/InputComponent.h"
 #include "include/PhysicsComponent.h"
 #include "include/GraphicsComponent.h"
+#include "include/CollisionComponent.h"
 
 Entity::Entity()
 {
@@ -15,7 +16,8 @@ Entity::Entity(sf::Vector2f position, float rotDeg) : m_position(position)
 	SetRotation(rotDeg);
 }
 
-Entity::Entity(sf::Vector2f position, float rot, InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics) :m_position(position), m_input(input), m_physics(physics), m_graphics(graphics)
+Entity::Entity(sf::Vector2f position, float rot, InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics, CollisionComponent* collision) : 
+				m_position(position), m_input(input), m_physics(physics), m_graphics(graphics), m_collision(collision)
 {
 	SetRotation(rot);;
 }
@@ -28,6 +30,8 @@ Entity::~Entity()
 		delete m_physics;
 	if (m_graphics)
 		delete m_graphics;
+	if (m_collision)
+		delete m_collision;
 }
 
 void Entity::Update(sf::RenderWindow& window, float dtTimeMilli, const EventHandler& handler)
@@ -36,6 +40,8 @@ void Entity::Update(sf::RenderWindow& window, float dtTimeMilli, const EventHand
 		m_input->Update(*this, handler, dtTimeMilli);
 	if (m_physics)
 		m_physics->Update(*this, dtTimeMilli);
+	if (m_collision)
+		m_collision->Update(m_position, m_rotationInRad);
 	if (m_graphics)
 		m_graphics->Update(*this, window);
 }
@@ -62,8 +68,8 @@ void Entity::SetPosition(sf::Vector2f newPos)
 
 const std::array<sf::Vector2f, 4>* Entity::GetWorldCorners() const
 {
-	if (m_physics)
-		return m_physics->GetWorldCorners();
+	if (m_collision)
+		return m_collision->GetWorldCorners();
 
 	return nullptr;
 }

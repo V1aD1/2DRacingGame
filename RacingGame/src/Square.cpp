@@ -48,7 +48,6 @@ Square::Square(float sideLen, sf::Vector2f pos, float rotDeg) : Entity(pos, rotD
 	}
 
 	m_graphics = new SquareGraphicsComponent(shape, worldCorners);
-	//m_worldCorners = worldCorners;
 }
 
 Square::~Square(){}

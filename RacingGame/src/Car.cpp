@@ -34,12 +34,9 @@ Car::Car(sf::Vector2f startPos): Entity(startPos, 0.0f){
 	m_input = new InputComponent();
 	m_physics = new CarPhysicsComponent(this, corners);
 	m_graphics = new CarGraphicsComponent(shape);
+	m_collision = new CollisionComponent(startPos, 0.0f, corners);
 }
 
 Car::~Car() {
 	
-}
-
-const std::array<sf::Vector2f, 4>* Car::GetWorldCorners() const{
-	return m_physics->GetWorldCorners();
 }

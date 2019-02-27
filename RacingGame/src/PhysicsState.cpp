@@ -1,11 +1,12 @@
 #include "include/PhysicsState.h"
 #include "include/MathCommon.h"
 #include "include/Entity.h"
+#include "include/CollisionComponent.h"
 
 PhysicsState::PhysicsState(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied) {
-	m_localCorners = cornersWithoutRotationApplied;
 	m_rotInRad = entity->GetRotationInRadians();
 	m_worldPos = entity->GetPosition();
+	m_collissionComp = new CollisionComponent(m_worldPos, m_rotInRad, cornersWithoutRotationApplied);
 }
 
 PhysicsState::~PhysicsState() {}
@@ -20,21 +21,7 @@ void PhysicsState::Update(float dtMilli, float maxMomentum) {
 
 	m_worldPos = m_worldPos + m_momentum * dtMilli;
 
-	//update m_worldCoords
-	for (int i = 0; i < m_localCorners.size(); i++) {
-		m_worldCorners[i] = m_localCorners[i] + m_worldPos;
-	}
-
-	//orienting corners according to Entity rotation
-	for (int i = 0; i < m_localCorners.size(); i++) {
-
-		auto newPoint = sf::Vector2f();
-		newPoint.x = m_localCorners[i].x * std::cos(m_rotInRad) - m_localCorners[i].y * std::sin(m_rotInRad);
-		newPoint.y = m_localCorners[i].x * std::sin(m_rotInRad) + m_localCorners[i].y * std::cos(m_rotInRad);
-
-		//rotating the point about the centre of the shape
-		m_worldCorners[i] = newPoint + m_worldPos;
-	}
+	m_collissionComp->Update(m_worldPos, m_rotInRad);
 }
 
 PhysicsState::PhysicsState(const PhysicsState & other)
@@ -43,8 +30,10 @@ PhysicsState::PhysicsState(const PhysicsState & other)
 	m_rotInRad = other.m_rotInRad;
 	m_forwardDir = other.m_forwardDir;
 	m_momentum = other.m_momentum;
-	m_localCorners = other.m_localCorners;
-	m_worldCorners = other.m_worldCorners;
+
+	//is this right?
+	delete m_collissionComp;
+	m_collissionComp = new CollisionComponent(*other.m_collissionComp);
 }
 
 PhysicsState & PhysicsState::operator=(const PhysicsState & other)
@@ -53,8 +42,10 @@ PhysicsState & PhysicsState::operator=(const PhysicsState & other)
 	m_rotInRad = other.m_rotInRad;
 	m_forwardDir = other.m_forwardDir;
 	m_momentum = other.m_momentum;
-	m_localCorners = other.m_localCorners;
-	m_worldCorners = other.m_worldCorners;
+	
+	//is this right?
+	delete m_collissionComp;
+	m_collissionComp = new CollisionComponent(*other.m_collissionComp);
 
 	return *this;
 }
@@ -80,7 +71,7 @@ void PhysicsState::ApplyForce(sf::Vector2f force)
 
 const std::array<sf::Vector2f, 4>* PhysicsState::GetWorldCorners() const
 {
-	return &m_worldCorners;
+	return m_collissionComp->GetWorldCorners();
 }
 
 sf::Vector2f PhysicsState::GetWorldPosition()

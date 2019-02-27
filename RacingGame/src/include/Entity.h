@@ -4,6 +4,7 @@
 #include "InputComponent.h"
 #include "PhysicsComponent.h"
 #include "GraphicsComponent.h"
+#include "CollisionComponent.h"
 
 #include "EventHandler.h"
 
@@ -24,11 +25,12 @@ public:
 	InputComponent* m_input;
 	PhysicsComponent* m_physics;
 	GraphicsComponent* m_graphics;
+	CollisionComponent* m_collision;
 
 public:
 	Entity();
 	Entity(sf::Vector2f position, float rotDeg);
-	Entity(sf::Vector2f position, float rotDeg, InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics);
+	Entity(sf::Vector2f position, float rotDeg, InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics, CollisionComponent* collision);
 	~Entity();
 
 	void Update(sf::RenderWindow& window, float dtTimeMilli, const EventHandler& handler);
@@ -37,7 +39,7 @@ public:
 	float GetRotationInDegrees() const;
 	float GetRotationInRadians() const;
 
-	//todo consider moving this out to another interface once factory is implemnented
+	//todo shouldn't be 4 corners
 	virtual const std::array<sf::Vector2f, 4>* GetWorldCorners() const;
 	
 	void SetRotation(float degrees);
