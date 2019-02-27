@@ -73,7 +73,7 @@ int main()
 
 		window.clear();
 		
-		//static objects before variable objects
+		//update static objects before variable objects
 		for (auto staticObjects : G_STATICOBJECTS) {
 			staticObjects->Update(window, dtMillis, eventHandler);
 		}
