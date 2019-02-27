@@ -4,6 +4,7 @@
 #include "include/Square.h"
 #include "include/SquareGraphicsComponent.h"
 #include "include/MathCommon.h"
+#include "include/CollisionComponent.h"
 
 //todo turn into a shape class that receives array of points as input
 Square::Square(float sideLen, sf::Vector2f pos, float rotDeg) : Entity(pos, rotDeg){
@@ -32,22 +33,9 @@ Square::Square(float sideLen, sf::Vector2f pos, float rotDeg) : Entity(pos, rotD
 
 	auto currentRotRad = GetRotationInRadians();
 
-	//orienting corners according to Entity rotation
-	for (int i = 0; i < localCorners.size(); i++) {
 
-		auto newPoint = sf::Vector2f();
-		newPoint.x = localCorners[i].x * std::cos(currentRotRad) - localCorners[i].y * std::sin(currentRotRad);
-		newPoint.y = localCorners[i].x * std::sin(currentRotRad) + localCorners[i].y * std::cos(currentRotRad);
-
-		//rotating the point about the centre of the shape
-		localCorners[i] = newPoint;
-	}
-
-	for (int i = 0; i < localCorners.size(); i++) {
-		worldCorners[i] = localCorners[i] + pos;
-	}
-
-	m_graphics = new SquareGraphicsComponent(shape, worldCorners);
+	m_collision = new CollisionComponent(pos, currentRotRad, localCorners);
+	m_graphics = new SquareGraphicsComponent(shape);
 }
 
 Square::~Square(){}

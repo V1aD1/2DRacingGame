@@ -7,12 +7,8 @@
 class SquareGraphicsComponent : public GraphicsComponent
 {
 public:
-	SquareGraphicsComponent(sf::Shape* shape, std::array<sf::Vector2f, 4> worldCorners);
+	SquareGraphicsComponent(sf::Shape* shape);
 	virtual ~SquareGraphicsComponent();
-
 	virtual void Update(const Entity& entity, sf::RenderWindow & window);
-
-private:
-	std::array<sf::Vector2f, 4> m_worldCorners;
 };
 
