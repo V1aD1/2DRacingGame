@@ -27,16 +27,10 @@ Entity* EntityFactory::CreateSquare(float sideLen, sf::Vector2f pos, float rotDe
 	std::array<sf::Vector2f, 4> localCorners;
 	std::array<sf::Vector2f, 4> worldCorners;
 
-	//top left
+
 	localCorners[0] = sf::Vector2f(-halfSideLen, -halfSideLen);
-
-	//top right
 	localCorners[1] = sf::Vector2f(halfSideLen, -halfSideLen);
-
-	//bottom right
 	localCorners[2] = sf::Vector2f(halfSideLen, halfSideLen);
-
-	//bottom left
 	localCorners[3] = sf::Vector2f(-halfSideLen, halfSideLen);
 
 	auto graphics = new SquareGraphicsComponent(shape);
