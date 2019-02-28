@@ -2,6 +2,8 @@
 #include "include/Entity.h"
 #include "include/SquareGraphicsComponent.h"
 #include "include/MathCommon.h"
+#include "include/CarGraphicsComponent.h"
+#include "include/CarPhysicsComponent.h"
 
 const float EntityFactory::c_car_length = 40.0f;
 const float EntityFactory::c_car_height = 10.0f;
@@ -37,15 +39,38 @@ Entity* EntityFactory::CreateSquare(float sideLen, sf::Vector2f pos, float rotDe
 	//bottom left
 	localCorners[3] = sf::Vector2f(-halfSideLen, halfSideLen);
 
-	auto graphicsCom = new SquareGraphicsComponent(shape);
-	auto collisionCom = new CollisionComponent(pos, MathCommon::DegreesToRadians(rotDeg), localCorners);
+	auto graphics = new SquareGraphicsComponent(shape);
+	auto collision = new CollisionComponent(pos, MathCommon::DegreesToRadians(rotDeg), localCorners);
 
-	return new Entity(pos, rotDeg, nullptr, nullptr, graphicsCom, collisionCom);
+	return new Entity(pos, rotDeg, nullptr, nullptr, graphics, collision);
 }
 
-Entity * EntityFactory::CreateCar(sf::Vector2f pos)
+Entity * EntityFactory::CreateCar(sf::Vector2f startPos)
 {
-	return nullptr;
+	auto size = sf::Vector2f(c_car_length, c_car_height);
+
+	//create shape for graphics component
+	sf::RectangleShape* shape = new sf::RectangleShape(size);
+	shape->setFillColor(sf::Color::Blue);
+	shape->setOutlineThickness(1.0f);
+	shape->setOutlineColor(sf::Color(250, 150, 100));
+	shape->setOrigin(size.x / 2.0f, size.y / 2.0f);
+	shape->setPosition(0.0f, 0.0f);
+
+
+	//create corners for physics component
+	std::array<sf::Vector2f, 4> corners = std::array<sf::Vector2f, 4>();
+	corners[0] = sf::Vector2f(-size.x / 2.0f, -size.y / 2.0f);
+	corners[1] = sf::Vector2f(size.x / 2.0f, -size.y / 2.0f);
+	corners[2] = sf::Vector2f(size.x / 2.0f, size.y / 2.0f);
+	corners[3] = sf::Vector2f(-size.x / 2.0f, size.y / 2.0f);
+
+	auto input = new InputComponent();
+	auto physics = new CarPhysicsComponent(startPos, MathCommon::DegreesToRadians(0.0f), corners);
+	auto graphics = new CarGraphicsComponent(shape);
+	auto collision = new CollisionComponent(startPos, 0.0f, corners);
+
+	return new Entity(startPos, 0.0f, input, physics, graphics, collision);
 }
 
 

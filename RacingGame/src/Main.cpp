@@ -4,8 +4,6 @@
 #include <SFML/OpenGL.hpp>
 
 #include "include/EventHandler.h"
-#include "include/Car.h"
-#include "include/Square.h"
 #include "include/Timer.h"
 #include "include/Entity.h"
 #include "include/EntityFactory.h"
@@ -49,10 +47,10 @@ int main()
 
 	EntityFactory entityFactory = EntityFactory();
 	EventHandler eventHandler = EventHandler();
-	Car car = Car(sf::Vector2f(40.0f, 50.0f));
+	auto car = entityFactory.CreateCar(sf::Vector2f(40.0f, 50.0f));
 	auto square = entityFactory.CreateSquare(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f);
 
-	G_VARIABLEOBJECTS.push_back(&car);
+	G_VARIABLEOBJECTS.push_back(car);
 	G_STATICOBJECTS.push_back(square);
 
 	if (!Setup(window, font, fpsText)) {

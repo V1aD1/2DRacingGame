@@ -8,14 +8,15 @@ class Entity;
 class PhysicsComponent
 {
 public:
-	PhysicsComponent(Entity* entity,
-		const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied,
-		float maxMomentum,
-		float rotSpeed,
-		float acceleration,
-		float brakeForce,
-		float frictionForce,
-		float dbg_slideSpeed);
+	PhysicsComponent(sf::Vector2f pos, 
+					float rotRad,
+					const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied,
+					float maxMomentum,
+					float rotSpeed,
+					float acceleration,
+					float brakeForce,
+					float frictionForce,
+					float dbg_slideSpeed);
 	~PhysicsComponent();
 
 public:

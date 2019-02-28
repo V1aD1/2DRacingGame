@@ -3,9 +3,9 @@
 #include "include/Entity.h"
 #include "include/CollisionComponent.h"
 
-PhysicsState::PhysicsState(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied) {
-	m_rotInRad = entity->GetRotationInRadians();
-	m_worldPos = entity->GetPosition();
+PhysicsState::PhysicsState(sf::Vector2f pos, float rotRad, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied) {
+	m_worldPos = pos;
+	m_rotInRad = rotRad;
 	m_collissionComp = new CollisionComponent(m_worldPos, m_rotInRad, cornersWithoutRotationApplied);
 }
 

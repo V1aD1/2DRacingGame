@@ -14,7 +14,7 @@ private:
 	float m_rotInRad = 0.0f;
 
 public:
-	PhysicsState(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied);
+	PhysicsState(sf::Vector2f pos, float rotRad, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied);
 	~PhysicsState();
 
 	void Update(float dtMilli, float maxMomentum);

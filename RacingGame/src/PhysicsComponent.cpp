@@ -4,14 +4,17 @@
 
 extern std::vector<Entity*> G_STATICOBJECTS;
 
-PhysicsComponent::PhysicsComponent(Entity * entity, 
+PhysicsComponent::PhysicsComponent(sf::Vector2f pos, 
+									float rotRad,
 									const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied, 
 									float maxMomentum, 
 									float rotSpeed, 
 									float acceleration, 
 									float brakeForce, 
 									float frictionForce, 
-									float dbg_slideSpeed) : m_currState(entity, cornersWithoutRotationApplied), m_newState(entity, cornersWithoutRotationApplied)
+									float dbg_slideSpeed) : 
+									m_currState(pos, rotRad, cornersWithoutRotationApplied), 
+									m_newState(pos, rotRad, cornersWithoutRotationApplied)
 {
 	m_maxMomentum = maxMomentum;
 	m_rotationSpeed = rotSpeed;

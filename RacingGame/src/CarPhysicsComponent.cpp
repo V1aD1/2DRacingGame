@@ -9,8 +9,9 @@ const float CarPhysicsComponent::car_frictionForce = 0.1f;
 const float CarPhysicsComponent::car_dbg_slideSpeed = 150.0f;
 const float CarPhysicsComponent::car_maxMomentum = 0.3f;
 
-CarPhysicsComponent::CarPhysicsComponent(Entity* entity, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied) : 
-						PhysicsComponent(entity, 
+CarPhysicsComponent::CarPhysicsComponent(sf::Vector2f pos, float rotRad, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied) :
+						PhysicsComponent(pos, 
+										rotRad, 
 										cornersWithoutRotationApplied, 
 										car_maxMomentum,
 										car_rotationSpeed, 

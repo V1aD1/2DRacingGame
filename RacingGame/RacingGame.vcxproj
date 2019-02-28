@@ -161,8 +161,6 @@
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\InputComponent.cpp" />
     <ClCompile Include="src\MathCommon.cpp" />
-    <ClCompile Include="src\Square.cpp" />
-    <ClCompile Include="src\Car.cpp" />
     <ClCompile Include="src\EventHandler.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Timer.cpp" />
@@ -178,9 +176,7 @@
     <ClInclude Include="src\include\GraphicsComponent.h" />
     <ClInclude Include="src\include\InputComponent.h" />
     <ClInclude Include="src\include\Entity.h" />
-    <ClInclude Include="src\include\Square.h" />
     <ClInclude Include="src\include\MathCommon.h" />
-    <ClInclude Include="src\include\Car.h" />
     <ClInclude Include="src\include\EventHandler.h" />
     <ClInclude Include="src\include\Timer.h" />
     <ClInclude Include="src\include\VariableEntity.h" />
