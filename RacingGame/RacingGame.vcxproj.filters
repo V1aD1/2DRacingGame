@@ -74,9 +74,6 @@
     <ClInclude Include="src\include\InputComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\VariableEntity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\include\GraphicsComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>

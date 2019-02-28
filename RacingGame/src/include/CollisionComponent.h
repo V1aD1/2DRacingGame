@@ -1,7 +1,5 @@
 #pragma once
 
-class Entity;
-
 class CollisionComponent
 {
 private:

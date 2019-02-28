@@ -1,10 +1,9 @@
 #pragma once
-#include "EventHandler.h"
-
 class Car;
 class PhysicsComponent;
 class GraphicsComponent;
 class Entity;
+class EventHandler;
 
 class InputComponent
 {
