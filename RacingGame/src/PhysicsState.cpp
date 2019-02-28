@@ -1,7 +1,6 @@
 #include "include/PhysicsState.h"
 #include "include/MathCommon.h"
 #include "include/Entity.h"
-#include "include/CollisionComponent.h"
 
 PhysicsState::PhysicsState(sf::Vector2f pos, float rotRad, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied) {
 	m_worldPos = pos;

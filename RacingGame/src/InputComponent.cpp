@@ -1,6 +1,5 @@
-#include "include/InputComponent.h"
-#include "include/PhysicsComponent.h"
 #include "include/Entity.h"
+#include "include/InputComponent.h"
 
 InputComponent::InputComponent(){}
 

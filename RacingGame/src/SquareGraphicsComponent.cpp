@@ -1,7 +1,6 @@
 #include "include/SquareGraphicsComponent.h"
 #include "include/Entity.h"
 
-
 SquareGraphicsComponent::SquareGraphicsComponent(sf::Shape* shape) : GraphicsComponent(shape) {}
 
 SquareGraphicsComponent::~SquareGraphicsComponent(){}

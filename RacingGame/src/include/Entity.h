@@ -8,7 +8,7 @@
 
 #include "EventHandler.h"
 
-
+class EventHandler;
 
 #pragma once
 class Entity

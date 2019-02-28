@@ -2,10 +2,6 @@
 
 #include "include/Entity.h"
 #include "include/MathCommon.h"
-#include "include/InputComponent.h"
-#include "include/PhysicsComponent.h"
-#include "include/GraphicsComponent.h"
-#include "include/CollisionComponent.h"
 
 Entity::Entity()
 {

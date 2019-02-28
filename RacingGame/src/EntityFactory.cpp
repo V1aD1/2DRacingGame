@@ -1,9 +1,9 @@
 #include "include/EntityFactory.h"
 #include "include/Entity.h"
 #include "include/SquareGraphicsComponent.h"
-#include "include/MathCommon.h"
 #include "include/CarGraphicsComponent.h"
 #include "include/CarPhysicsComponent.h"
+#include "include/MathCommon.h"
 
 const float EntityFactory::c_car_length = 40.0f;
 const float EntityFactory::c_car_height = 10.0f;
