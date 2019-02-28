@@ -10,6 +10,7 @@ SquareGraphicsComponent::~SquareGraphicsComponent(){}
 void SquareGraphicsComponent::Update(const Entity& entity, sf::RenderWindow& window){
 	if (m_shape) {
 		m_shape->setRotation(entity.GetRotationInDegrees());
+		m_shape->setPosition(entity.GetPosition());
 	}
 
 	float circleRad = 8.0f;

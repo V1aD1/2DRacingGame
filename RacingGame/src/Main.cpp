@@ -8,6 +8,7 @@
 #include "include/Square.h"
 #include "include/Timer.h"
 #include "include/Entity.h"
+#include "include/EntityFactory.h"
 
 static const sf::Int32 fpsRefreshMs = 500;
 static const int screenLen = 1500, screenHeight = 700;
@@ -46,12 +47,13 @@ int main()
 	sf::Clock clock;
 	sf::Int32 timeSinceLastFpsLog = fpsRefreshMs;
 
+	EntityFactory entityFactory = EntityFactory();
 	EventHandler eventHandler = EventHandler();
 	Car car = Car(sf::Vector2f(40.0f, 50.0f));
-	Square square = Square(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f);
+	auto square = entityFactory.CreateSquare(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f);
 
 	G_VARIABLEOBJECTS.push_back(&car);
-	G_STATICOBJECTS.push_back(&square);
+	G_STATICOBJECTS.push_back(square);
 
 	if (!Setup(window, font, fpsText)) {
 		std::cout << "Problems encountered in setup, terminating program!" << std::endl;
