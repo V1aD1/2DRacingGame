@@ -2,7 +2,11 @@
 
 #include "include/Entity.h"
 #include "include/MathCommon.h"
+#include "include/WorldSpaceManager.h"
 
+extern WorldSpaceManager spaceManager;
+
+//todo not sure necessary
 Entity::Entity()
 {
 }
@@ -15,7 +19,7 @@ Entity::Entity(sf::Vector2f position, float rotDeg) : m_position(position)
 Entity::Entity(sf::Vector2f position, float rot, InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics, CollisionComponent* collision) : 
 				m_position(position), m_input(input), m_physics(physics), m_graphics(graphics), m_collision(collision)
 {
-	SetRotation(rot);;
+	SetRotation(rot);
 }
 
 Entity::~Entity()

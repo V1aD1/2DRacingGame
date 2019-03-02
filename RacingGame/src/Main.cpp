@@ -7,13 +7,15 @@
 #include "include/Timer.h"
 #include "include/Entity.h"
 #include "include/EntityFactory.h"
+#include "include/WorldSpaceManager.h"
 
 static const sf::Int32 fpsRefreshMs = 500;
-static const int screenLen = 1500, screenHeight = 700;
 
 //global variables
+extern const int screenLen = 1500, screenHeight = 700;
 std::vector<Entity*> G_STATICOBJECTS;
 std::vector<Entity*> G_VARIABLEOBJECTS;
+WorldSpaceManager worldSpaceManager = WorldSpaceManager();
 
 bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText) {
 	Timer("Setup Function ");
@@ -73,6 +75,8 @@ int main()
 
 		window.clear();
 		
+		worldSpaceManager.PopulateCollisionSpace();
+
 		//update static objects before variable objects
 		for (auto staticObjects : G_STATICOBJECTS) {
 			staticObjects->Update(window, dtMillis, eventHandler);
@@ -89,6 +93,9 @@ int main()
 
 		window.draw(fpsText);
 		window.display();
+		
+		//todo this destorys my performance!!!!
+		worldSpaceManager.ClearWorldSpace();
 	}
 
 	return 0;
