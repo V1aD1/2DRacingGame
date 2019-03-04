@@ -96,7 +96,6 @@ int main()
 		window.draw(fpsText);
 		window.display();
 		
-		//todo this destorys my performance!!!!
 		worldSpaceManager.ClearWorldSpace();
 	}
 

@@ -36,6 +36,13 @@ void WorldSpaceManager::AddEntityToCollisionSpace(const Entity* entity)
 
 	auto worldCorners = *entity->GetWorldCorners();
 	for (auto corner : worldCorners) {
+
+		//no collision detection if outside world space
+		if (corner.x < 0.0f || corner.x > screenLen)
+			continue;
+		if (corner.y < 0.0f || corner.y >screenHeight)
+			continue;
+
 		int xCell = corner.x / cellWidth;
 		int yCell = corner.y / cellHeight;
 		bool alreadyAdded = false;
