@@ -20,6 +20,9 @@ WorldSpaceManager::~WorldSpaceManager()
 
 void WorldSpaceManager::PopulateCollisionSpace()
 {
+	//todo since static objects don't move, 
+	//they shouldn't be added and removed from
+	//collision space every frame
 	for (auto entity : G_STATICOBJECTS) {
 		AddEntityToCollisionSpace(entity);
 	}
@@ -61,6 +64,51 @@ void WorldSpaceManager::AddEntityToCollisionSpace(const Entity* entity)
 			pairs.push_back(sf::Vector2i(xCell, yCell));
 		}
 	}
+}
+
+std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::array<sf::Vector2f, 4>* worldCorners)
+{
+	std::vector<sf::Vector2i> pairs;
+
+	for (auto corner : *worldCorners) {
+		//no collision detection if outside world space
+		if (corner.x < 0.0f || corner.x > screenLen)
+			continue;
+		if (corner.y < 0.0f || corner.y >screenHeight)
+			continue;
+
+		int xCell = corner.x / cellWidth;
+		int yCell = corner.y / cellHeight;
+		bool alreadyAdded = false;
+
+		for (auto pair : pairs)
+		{
+			if (pair.x == xCell && pair.y == yCell) {
+				alreadyAdded = true;
+				break;
+			}
+		}
+
+		//to ensure entity isn't added to the same cell twice
+		if (!alreadyAdded) {
+			pairs.push_back(sf::Vector2i(xCell, yCell));
+		}
+	}
+
+	return pairs;
+}
+
+//todo should return a UNIQUE list of entities
+std::vector<const Entity*> WorldSpaceManager::GetEntitiesAtCoords(const std::vector<sf::Vector2i>* coords)
+{
+	std::vector<const Entity*> entitiesToRet = std::vector<const Entity*>();
+	for (auto coord : *coords) {
+		for (auto entity : worldSpace[coord.x][coord.y]) {
+			entitiesToRet.push_back(entity);
+		}
+	}
+
+	return entitiesToRet;
 }
 
 void WorldSpaceManager::ClearWorldSpace()

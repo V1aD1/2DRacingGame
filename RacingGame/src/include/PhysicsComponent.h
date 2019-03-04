@@ -33,7 +33,7 @@ protected:
 	PhysicsState m_currState;
 
 protected:
-	bool CollisionDetected();
+	bool CollisionDetected(Entity& entity);
 	void ApplySlowDownForce(float forceMag, float dtTimeMilli);
 
 private:	

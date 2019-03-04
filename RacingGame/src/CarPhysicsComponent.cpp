@@ -27,17 +27,18 @@ CarPhysicsComponent::~CarPhysicsComponent()
 {
 }
 
-void CarPhysicsComponent::Update(Entity & entity, float dtMilli)
+void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 {
 	ApplyFriction(dtMilli);
 
 	m_newState.Update(dtMilli, car_maxMomentum);
 
 	//update to new state only if NO collision occured
-	if (!CollisionDetected())
+	if (!CollisionDetected(entity))
 		m_currState = m_newState;
 
 	//if collision occurs then halt all momentum on the car
+	//and do NOT apply new state
 	else {
 		m_currState.SetMomentum(sf::Vector2f(0.0f, 0.0f));
 		m_newState = m_currState;

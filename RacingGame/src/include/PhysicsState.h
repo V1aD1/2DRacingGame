@@ -2,6 +2,7 @@
 #include <array>
 #include <SFML/Graphics.hpp>
 
+
 class Entity;
 class CollisionComponent;
 
@@ -10,8 +11,9 @@ private:
 	sf::Vector2f m_worldPos = sf::Vector2f(0.0f, 0.0f);
 	sf::Vector2f m_forwardDir = sf::Vector2f(1.0f, 0.0f);
 	sf::Vector2f m_momentum = sf::Vector2f(0.0f, 0.0f);
-	CollisionComponent* m_collissionComp;
+	CollisionComponent* m_collisionComp;
 	float m_rotInRad = 0.0f;
+	std::vector<sf::Vector2i> m_collisionSpaceCoords;
 
 public:
 	PhysicsState(sf::Vector2f pos, float rotRad, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied);
@@ -27,6 +29,7 @@ public:
 	void ApplyForce(sf::Vector2f force);
 
 	const std::array<sf::Vector2f, 4>* GetWorldCorners() const;
+	const std::vector<sf::Vector2i>* GetCollisionSpaceCoordinates() const;
 	sf::Vector2f GetWorldPosition();
 	sf::Vector2f GetMomentum();
 	float GetRotInRad();

@@ -1,8 +1,9 @@
 #include "include/PhysicsComponent.h"
 #include "include/Entity.h"
 #include "include/MathCommon.h"
+#include "include/WorldSpaceManager.h"
 
-extern std::vector<Entity*> G_STATICOBJECTS;
+extern WorldSpaceManager worldSpaceManager;
 
 PhysicsComponent::PhysicsComponent(sf::Vector2f pos, 
 									float rotRad,
@@ -12,7 +13,7 @@ PhysicsComponent::PhysicsComponent(sf::Vector2f pos,
 									float acceleration, 
 									float brakeForce, 
 									float frictionForce, 
-									float dbg_slideSpeed) : 
+									float dbg_slideSpeed) :
 									m_currState(pos, rotRad, cornersWithoutRotationApplied), 
 									m_newState(pos, rotRad, cornersWithoutRotationApplied)
 {
@@ -28,10 +29,20 @@ PhysicsComponent::~PhysicsComponent(){}
 
 ///NOTE: function should only be called after computing 
 ///final position of m_newState
-bool PhysicsComponent::CollisionDetected() {
+bool PhysicsComponent::CollisionDetected(Entity& entity) {
+
+	//check every object in same cell(s) as newState
+	//for a collision, using point triangle test method
+
+	auto collisionEntities =  worldSpaceManager.GetEntitiesAtCoords(m_newState.GetCollisionSpaceCoordinates());
+
 	//check every static object for a collision
 	//using point triangle test method
-	for (auto object : G_STATICOBJECTS) {
+	for (auto object : collisionEntities) {
+
+		//to avoid collision detection with same object
+		if (object == &entity)
+			continue;
 
 		auto objCornersPtr = object->GetWorldCorners();
 

@@ -1,11 +1,14 @@
 #include "include/PhysicsState.h"
 #include "include/MathCommon.h"
 #include "include/Entity.h"
+#include "include/WorldSpaceManager.h"
+
+extern WorldSpaceManager worldSpaceManager;
 
 PhysicsState::PhysicsState(sf::Vector2f pos, float rotRad, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied) {
 	m_worldPos = pos;
 	m_rotInRad = rotRad;
-	m_collissionComp = new CollisionComponent(m_worldPos, m_rotInRad, cornersWithoutRotationApplied);
+	m_collisionComp = new CollisionComponent(m_worldPos, m_rotInRad, cornersWithoutRotationApplied);
 }
 
 PhysicsState::~PhysicsState() {}
@@ -20,7 +23,11 @@ void PhysicsState::Update(float dtMilli, float maxMomentum) {
 
 	m_worldPos = m_worldPos + m_momentum * dtMilli;
 
-	m_collissionComp->Update(m_worldPos, m_rotInRad);
+	m_collisionComp->Update(m_worldPos, m_rotInRad);
+
+	//save collision space coords
+	//this step should happen after worldCorners have been updated!
+	m_collisionSpaceCoords = worldSpaceManager.GetCollisionSpaceCoords(m_collisionComp->GetWorldCorners());
 }
 
 PhysicsState::PhysicsState(const PhysicsState & other)
@@ -30,9 +37,9 @@ PhysicsState::PhysicsState(const PhysicsState & other)
 	m_forwardDir = other.m_forwardDir;
 	m_momentum = other.m_momentum;
 
-	//is this right?
-	delete m_collissionComp;
-	m_collissionComp = new CollisionComponent(*other.m_collissionComp);
+	//todo is deletion necessary here?
+	delete m_collisionComp;
+	m_collisionComp = new CollisionComponent(*other.m_collisionComp);
 }
 
 PhysicsState & PhysicsState::operator=(const PhysicsState & other)
@@ -43,8 +50,8 @@ PhysicsState & PhysicsState::operator=(const PhysicsState & other)
 	m_momentum = other.m_momentum;
 	
 	//is this right?
-	delete m_collissionComp;
-	m_collissionComp = new CollisionComponent(*other.m_collissionComp);
+	delete m_collisionComp;
+	m_collisionComp = new CollisionComponent(*other.m_collisionComp);
 
 	return *this;
 }
@@ -70,7 +77,12 @@ void PhysicsState::ApplyForce(sf::Vector2f force)
 
 const std::array<sf::Vector2f, 4>* PhysicsState::GetWorldCorners() const
 {
-	return m_collissionComp->GetWorldCorners();
+	return m_collisionComp->GetWorldCorners();
+}
+
+const std::vector<sf::Vector2i>* PhysicsState::GetCollisionSpaceCoordinates() const
+{
+	return &m_collisionSpaceCoords;
 }
 
 sf::Vector2f PhysicsState::GetWorldPosition()
