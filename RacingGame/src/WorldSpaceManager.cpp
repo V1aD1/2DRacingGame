@@ -49,14 +49,35 @@ void WorldSpaceManager::AddEntityToCollisionSpace(const Entity* entity)
 		}
 
 		//to ensure entity isn't added to the same cell twice
-		if(!alreadyAdded)
+		if (!alreadyAdded) {
 			worldSpace[xCell][yCell].push_back(entity);
+			pairs.push_back(sf::Vector2i(xCell, yCell));
+		}
 	}
 }
 
 void WorldSpaceManager::ClearWorldSpace()
 {
-	for (auto cell : *worldSpace) {
-		cell.clear();
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 10; j++) {
+			worldSpace[i][j].clear();
+		}
+	}
+}
+
+void WorldSpaceManager::DBG_Draw(sf::RenderWindow& window)
+{
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 10; j++) {
+			if (!worldSpace[i][j].empty())
+			{
+				auto shape = sf::RectangleShape(sf::Vector2f(cellWidth, cellHeight));
+				shape.setPosition(sf::Vector2f(i*cellWidth, j*cellHeight));
+				shape.setFillColor(sf::Color(255, 165, 0, 150));
+
+				window.draw(shape);
+			}
+		}
 	}
 }
