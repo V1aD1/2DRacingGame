@@ -81,6 +81,7 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::
 		int yCell = corner.y / cellHeight;
 		bool alreadyAdded = false;
 
+		//todo order so as to avoid this inneficiency?
 		for (auto pair : pairs)
 		{
 			if (pair.x == xCell && pair.y == yCell) {
@@ -103,8 +104,22 @@ std::vector<const Entity*> WorldSpaceManager::GetEntitiesAtCoords(const std::vec
 {
 	std::vector<const Entity*> entitiesToRet = std::vector<const Entity*>();
 	for (auto coord : *coords) {
-		for (auto entity : worldSpace[coord.x][coord.y]) {
-			entitiesToRet.push_back(entity);
+		for (auto entityToAdd : worldSpace[coord.x][coord.y]) {
+
+			bool entityAlreadyInList = false;
+
+			//todo sort so as to avoid this inneficiency!
+			for (auto entity : entitiesToRet)
+			{
+				if (entity == entityToAdd)
+				{
+					entityAlreadyInList = true;
+					break;
+				}
+			}
+
+			if(!entityAlreadyInList)
+				entitiesToRet.push_back(entityToAdd);
 		}
 	}
 

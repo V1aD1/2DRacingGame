@@ -33,14 +33,14 @@ bool PhysicsComponent::CollisionDetected(Entity& entity) {
 
 	//check every object in same cell(s) as newState
 	//for a collision, using point triangle test method
-
-	auto collisionEntities =  worldSpaceManager.GetEntitiesAtCoords(m_newState.GetCollisionSpaceCoordinates());
+	auto potentialCollisionEntities =  worldSpaceManager.GetEntitiesAtCoords(m_newState.GetCollisionSpaceCoordinates());
 
 	//check every static object for a collision
 	//using point triangle test method
-	for (auto object : collisionEntities) {
+	for (auto object : potentialCollisionEntities) {
 
 		//to avoid collision detection with same object
+		//todo change to use ID of objects instead
 		if (object == &entity)
 			continue;
 
@@ -49,14 +49,14 @@ bool PhysicsComponent::CollisionDetected(Entity& entity) {
 		if (objCornersPtr) {
 			std::array<sf::Vector2f, 4> objCorners = *objCornersPtr;
 
-			for (auto &carCorner : *(m_newState.GetWorldCorners())) {
+			for (auto &corner : *(m_newState.GetWorldCorners())) {
 
 				bool collision = true;
 
 				for (size_t i = 0; i < objCorners.size(); i++) {
 
 					//this operation must be performed in this order!!
-					float check = MathCommon::CrossProduct(objCorners[i] - objCorners[(i + 1) % objCorners.size()], objCorners[i] - (carCorner));
+					float check = MathCommon::CrossProduct(objCorners[i] - objCorners[(i + 1) % objCorners.size()], objCorners[i] - (corner));
 
 					if (check <= 0.0f) {
 						collision = false;
@@ -68,8 +68,6 @@ bool PhysicsComponent::CollisionDetected(Entity& entity) {
 			}
 		}
 	}
-
-	//todo add check for variable objects as well?
 
 	return false;
 }
