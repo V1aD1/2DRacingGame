@@ -15,6 +15,7 @@ public:
 	void PopulateCollisionSpace();
 
 	void AddEntityToCollisionSpace(const Entity* entity);
+	std::vector<sf::Vector2i> GetCollisionSpaceCoords2(const std::array<sf::Vector2f, 4>* worldCorners);
 	std::vector<sf::Vector2i> GetCollisionSpaceCoords(const std::array<sf::Vector2f, 4>* worldCorners);
 	std::vector<const Entity*> GetEntitiesAtCoords(const std::vector<sf::Vector2i>* coords);
 	void ClearWorldSpace();

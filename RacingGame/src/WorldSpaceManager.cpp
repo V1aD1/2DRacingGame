@@ -66,6 +66,35 @@ void WorldSpaceManager::AddEntityToCollisionSpace(const Entity* entity)
 	}
 }
 
+std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords2(const std::array<sf::Vector2f, 4>* worldCorners)
+{
+	//as per https://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
+	//vectors will be represented by p + r,
+	//where p = startpoint, r = endpoint - startpoint
+
+	//you'll be comparing vectors connecting every corner to the next,
+	//around the shape, with the 4 sides of each cell that shape is within
+	//vectors are p + r and q + s
+	//t = (q - p) x s / (r x s)
+	//u = (q - p) x r/(r x s)
+	//NOTE: (q - p) and (r x s) used in both equations,
+	//so only compute them once!!
+
+	//cases
+	//Collinear: if r x s = 0 AND (q - p) x r = 0 (we care)
+	//Parallel, non intersecting: r  x s = 0 and (q - p) x r != 0 (don't care)
+	//Intersection: if r x s != 0 and 0 <= t <= 1 and 0 <= u <= 1
+	//Else, lines are not parallel BUT do NOT intersect (don't care)
+	
+
+	//first, determine leftest, highest, rightest, lowest point for entire shape
+	//then determine square of cells that object is encompassed in,
+	//iterate through every cell and determine if a line from shape intersetcs
+	//through the square. If it does, return that square
+
+	//todo once this works, add similar functionality to AddEntityToCollisionSpace()!!
+}
+
 std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::array<sf::Vector2f, 4>* worldCorners)
 {
 	std::vector<sf::Vector2i> pairs;
@@ -95,6 +124,10 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::
 			pairs.push_back(sf::Vector2i(xCell, yCell));
 		}
 	}
+
+	//each pair now corresponds to a given corner
+	//the corners are in a clockwise order
+	// 
 
 	return pairs;
 }

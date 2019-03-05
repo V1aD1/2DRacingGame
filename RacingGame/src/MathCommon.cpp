@@ -38,6 +38,11 @@ float MathCommon::CrossProduct(const sf::Vector2f & a, const sf::Vector2f & b)
 	return (a.x * b.y) - (a.y * b.x);
 }
 
+sf::Vector2f MathCommon::Subtract(const sf::Vector2f & a, const sf::Vector2f & b)
+{
+	return sf::Vector2f(a.x - b.x, a.y - b.y);
+}
+
 int MathCommon::GetOrientation(const sf::Vector2f & p1, sf::Vector2f & p2, sf::Vector2f & p3)
 {
 	return 0;
