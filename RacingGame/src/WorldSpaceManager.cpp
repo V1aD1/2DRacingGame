@@ -93,6 +93,8 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords2(const std:
 	//through the square. If it does, return that square
 
 	//todo once this works, add similar functionality to AddEntityToCollisionSpace()!!
+
+	return std::vector<sf::Vector2i>();
 }
 
 std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::array<sf::Vector2f, 4>* worldCorners)
