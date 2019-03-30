@@ -27,7 +27,7 @@ void PhysicsState::Update(float dtMilli, float maxMomentum) {
 
 	//save collision space coords
 	//this step should happen after worldCorners have been updated!
-	m_collisionSpaceCoords = worldSpaceManager.GetCollisionSpaceCoords(m_collisionComp->GetWorldCorners());
+	m_collisionSpaceCoords = worldSpaceManager.GetCollisionSpaceCoords2(m_collisionComp->GetWorldCorners());
 }
 
 PhysicsState::PhysicsState(const PhysicsState & other)

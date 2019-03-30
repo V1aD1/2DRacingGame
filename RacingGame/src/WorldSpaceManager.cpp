@@ -66,14 +66,79 @@ void WorldSpaceManager::AddEntityToCollisionSpace(const Entity* entity)
 	}
 }
 
+void WorldSpaceManager::AddPairToPairsNoDuplicates(std::vector<sf::Vector2i>& pairs, int x, int y)
+{
+	bool alreadyAdded = false;
+	//todo order so as to avoid this inneficiency?
+	for (auto pair : pairs)
+	{
+		if (pair.x == x && pair.y == y) {
+			alreadyAdded = true;
+			break;
+		}
+	}
+
+	//to ensure entity isn't added to the same cell twice
+	if (!alreadyAdded) {
+		pairs.push_back(sf::Vector2i(x, y));
+	}
+}
+
+
 std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords2(const std::array<sf::Vector2f, 4>* worldCorners)
 {
+	std::vector<sf::Vector2i> pairs;
+
+	//first, determine leftest, highest, rightest, lowest point for entire shape
+	//todo can use float instead of vector2f here
+	//todo ignore collision outside of world space
+	sf::Vector2f leftest = (*worldCorners)[0];
+	sf::Vector2f rightest = (*worldCorners)[0];
+	sf::Vector2f highest = (*worldCorners)[0];
+	sf::Vector2f lowest = (*worldCorners)[0];
+	
+	for (int i = 1; i < worldCorners->size(); i++) {
+		if ((*worldCorners)[i].x < leftest.x)
+			leftest = (*worldCorners)[i];
+		else if ((*worldCorners)[i].x > rightest.x)
+			rightest = (*worldCorners)[i];
+		if ((*worldCorners)[i].y < lowest.y)
+			lowest = (*worldCorners)[i];
+		else if ((*worldCorners)[i].y > highest.y)
+			highest = (*worldCorners)[i];
+	}
+
+	//then determine square of cells that object is encompassed in
+	//iterate through every cell and return cells that shape belongs to
+	//todo create static function that converts point in space to cell location
+	for (int xCell = leftest.x / cellWidth; xCell < rightest.x / cellWidth; xCell++) {
+		for (int yCell = lowest.y / cellHeight; yCell < highest.y / cellHeight; yCell++) {
+			for (auto shapeCorner : *worldCorners)
+			{
+
+				//todo figure out why this doesn't work inline...
+				int x = shapeCorner.x / cellWidth;
+				int y = shapeCorner.y / cellHeight;
+				//corner is within current cell
+				if (xCell == x && yCell == y)
+				{
+					AddPairToPairsNoDuplicates(pairs, xCell, yCell);
+					continue;
+				}
+
+				//corner not within current cell, therefore do line intersection test
+			}
+		}
+	}
+
+
+
 	//as per https://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
 	//vectors will be represented by p + r,
 	//where p = startpoint, r = endpoint - startpoint
 
 	//you'll be comparing vectors connecting every corner to the next,
-	//around the shape, with the 4 sides of each cell that shape is within
+	//around the shape, with the 4 sides of each cell that shape may be within
 	//vectors are p + r and q + s
 	//t = (q - p) x s / (r x s)
 	//u = (q - p) x r/(r x s)
@@ -85,16 +150,10 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords2(const std:
 	//Parallel, non intersecting: r  x s = 0 and (q - p) x r != 0 (don't care)
 	//Intersection: if r x s != 0 and 0 <= t <= 1 and 0 <= u <= 1
 	//Else, lines are not parallel BUT do NOT intersect (don't care)
-	
-
-	//first, determine leftest, highest, rightest, lowest point for entire shape
-	//then determine square of cells that object is encompassed in,
-	//iterate through every cell and determine if a line from shape intersetcs
-	//through the square. If it does, return that square
 
 	//todo once this works, add similar functionality to AddEntityToCollisionSpace()!!
 
-	return std::vector<sf::Vector2i>();
+	return pairs;
 }
 
 std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::array<sf::Vector2f, 4>* worldCorners)
@@ -129,7 +188,6 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::
 
 	//each pair now corresponds to a given corner
 	//the corners are in a clockwise order
-	// 
 
 	return pairs;
 }

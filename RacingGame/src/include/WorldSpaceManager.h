@@ -22,6 +22,9 @@ public:
 	void DBG_Draw(sf::RenderWindow& window);
 
 private:
+	static void AddPairToPairsNoDuplicates(std::vector<sf::Vector2i>& pairs, int x, int y);
+
+
 	//world space will always be divided into 100 cells
 	//todo should be list? or vector? or array?
 	std::list<const Entity*> worldSpace[10][10];
