@@ -23,7 +23,7 @@ public:
 
 private:
 	static void AddPairToPairsNoDuplicates(std::vector<sf::Vector2i>& pairs, int x, int y);
-
+	static bool CheckLineCollission(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f q1, sf::Vector2f q2);
 
 	//world space will always be divided into 100 cells
 	//todo should be list? or vector? or array?

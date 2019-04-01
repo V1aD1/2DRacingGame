@@ -2,6 +2,8 @@
 
 #include "include/WorldSpaceManager.h"
 #include "include/Entity.h"
+#include "include/MathCommon.h"
+
 extern const int screenLen, screenHeight;
 extern std::vector<Entity*> G_STATICOBJECTS;
 extern std::vector<Entity*> G_VARIABLEOBJECTS;
@@ -84,7 +86,51 @@ void WorldSpaceManager::AddPairToPairsNoDuplicates(std::vector<sf::Vector2i>& pa
 	}
 }
 
+bool WorldSpaceManager::CheckLineCollission(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f q1, sf::Vector2f q2)
+{
+	//as per https://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
+	//vectors will be represented by a start point (p, q) and end point (p+r, q+s),
+	//where r or s = endpoint - startpoint
 
+	auto r = p2 - p1;
+	auto s = q2 - q1;
+
+	//you'll be comparing vectors connecting every corner to the next,
+	//around the shape, with the 4 sides of each cell that shape may be within
+	//vectors are p + r and q + s
+	//t = (q - p) x s / (r x s)
+	//u = (q - p) x r/(r x s)
+	//NOTE: (q - p) and (r x s) used in both equations,
+	//so only compute them once!!
+
+	auto QMinP = q1 - p1;
+	auto RCrossS = MathCommon::CrossProduct(r, s);
+
+	//Collinear: if r x s = 0 AND (q - p) x r = 0 (we care)
+	if (RCrossS == 0.0f && MathCommon::CrossProduct(QMinP, r) == 0) {
+		return true;
+	}
+
+	//Intersection: if r x s != 0 and 0 <= t <= 1 and 0 <= u <= 1
+	else if (RCrossS != 0.0f) {
+		auto t = MathCommon::CrossProduct(QMinP, s) / RCrossS;
+		auto u = MathCommon::CrossProduct(QMinP, r) / RCrossS;
+
+		//todo this equality operation doesn't evaluate correctly!!
+		if (0.0f <= t <= 1.0f && 0.0f <= u <= 1.0f)
+		{
+			return true;
+		}
+	}
+
+	//Parallel, non intersecting: r  x s = 0 and (q - p) x r != 0 (don't care)
+	
+	//Else, lines are not parallel BUT do NOT intersect (don't care)
+
+	return false;
+}
+
+//todo change worldCorners to be able to hold 1+ corners, not just 4
 std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords2(const std::array<sf::Vector2f, 4>* worldCorners)
 {
 	std::vector<sf::Vector2i> pairs;
@@ -113,8 +159,10 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords2(const std:
 	//todo create static function that converts point in space to cell location
 	for (int xCell = leftest.x / cellWidth; xCell < rightest.x / cellWidth; xCell++) {
 		for (int yCell = lowest.y / cellHeight; yCell < highest.y / cellHeight; yCell++) {
-			for (auto shapeCorner : *worldCorners)
+
+			for (int i = 0; i < worldCorners->size(); i++)
 			{
+				auto shapeCorner = (*worldCorners)[i];
 
 				//todo figure out why this doesn't work inline...
 				int x = shapeCorner.x / cellWidth;
@@ -123,33 +171,58 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords2(const std:
 				if (xCell == x && yCell == y)
 				{
 					AddPairToPairsNoDuplicates(pairs, xCell, yCell);
-					continue;
+					break;
 				}
 
 				//corner not within current cell, therefore do line intersection test
+				//todo these 4 operations could be done in parallel?
+				if (worldCorners->size() > 1) {
+					auto nextShapeCorner = (i == worldCorners->size()) ? (*worldCorners)[0] : (*worldCorners)[i+1];
+					
+					//checking lines that make up cell in counter clockwise
+					if (CheckLineCollission(sf::Vector2f(xCell*cellWidth, yCell*cellHeight),
+						sf::Vector2f(xCell*cellWidth + cellWidth, yCell*cellHeight),
+						shapeCorner,
+						nextShapeCorner) == true)
+					{
+						//corner is within current cell
+						AddPairToPairsNoDuplicates(pairs, xCell, yCell);
+						break;
+					}
+
+					else if (CheckLineCollission(sf::Vector2f(xCell*cellWidth + cellWidth, yCell*cellHeight),
+						sf::Vector2f(xCell*cellWidth + cellWidth, yCell*cellHeight + cellHeight),
+						shapeCorner,
+						nextShapeCorner) == true)
+					{
+						//corner is within current cell
+						AddPairToPairsNoDuplicates(pairs, xCell, yCell);
+						break;
+					}
+
+					else if (CheckLineCollission(sf::Vector2f(xCell*cellWidth + cellWidth, yCell*cellHeight + cellHeight),
+						sf::Vector2f(xCell*cellWidth, yCell*cellHeight + cellHeight),
+						shapeCorner,
+						nextShapeCorner) == true)
+					{
+						//corner is within current cell
+						AddPairToPairsNoDuplicates(pairs, xCell, yCell);
+						break;
+					}
+
+					else if (CheckLineCollission(sf::Vector2f(xCell*cellWidth, yCell*cellHeight + cellHeight),
+						sf::Vector2f(xCell*cellWidth, yCell*cellHeight),
+						shapeCorner,
+						nextShapeCorner) == true)
+					{
+						//corner is within current cell
+						AddPairToPairsNoDuplicates(pairs, xCell, yCell);
+						break;
+					}
+				}
 			}
 		}
 	}
-
-
-
-	//as per https://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
-	//vectors will be represented by p + r,
-	//where p = startpoint, r = endpoint - startpoint
-
-	//you'll be comparing vectors connecting every corner to the next,
-	//around the shape, with the 4 sides of each cell that shape may be within
-	//vectors are p + r and q + s
-	//t = (q - p) x s / (r x s)
-	//u = (q - p) x r/(r x s)
-	//NOTE: (q - p) and (r x s) used in both equations,
-	//so only compute them once!!
-
-	//cases
-	//Collinear: if r x s = 0 AND (q - p) x r = 0 (we care)
-	//Parallel, non intersecting: r  x s = 0 and (q - p) x r != 0 (don't care)
-	//Intersection: if r x s != 0 and 0 <= t <= 1 and 0 <= u <= 1
-	//Else, lines are not parallel BUT do NOT intersect (don't care)
 
 	//todo once this works, add similar functionality to AddEntityToCollisionSpace()!!
 
