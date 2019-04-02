@@ -19,16 +19,12 @@ void CarGraphicsComponent::Update(const Entity& entity, sf::RenderWindow& window
 
 	auto entityCorners = entity.GetWorldCorners();
 	if (entityCorners) {
-		int i = 0;
 		for (auto corner : *entityCorners)
 		{
 			auto circle = sf::CircleShape(circleRad);
 			circle.setOrigin(circleRad, circleRad);
 			circle.setPosition(corner);
 			window.draw(circle);
-			i++;
-			if (i == 2)
-				break;
 		}
 	}
 }

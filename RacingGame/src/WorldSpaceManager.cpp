@@ -86,7 +86,7 @@ void WorldSpaceManager::AddPairToPairsNoDuplicates(std::vector<sf::Vector2i>& pa
 	}
 }
 
-bool WorldSpaceManager::CheckLineCollission(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f q1, sf::Vector2f q2)
+bool WorldSpaceManager::CheckLineCollision(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f q1, sf::Vector2f q2)
 {
 	//as per https://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
 	//vectors will be represented by a start point (p, q) and end point (p+r, q+s),
@@ -117,7 +117,7 @@ bool WorldSpaceManager::CheckLineCollission(sf::Vector2f p1, sf::Vector2f p2, sf
 		auto u = MathCommon::CrossProduct(QMinP, r) / RCrossS;
 
 		//todo this equality operation doesn't evaluate correctly!!
-		if (0.0f <= t <= 1.0f && 0.0f <= u <= 1.0f)
+		if (0.0f <= t && t <= 1.0f && 0.0f <= u && u <= 1.0f)
 		{
 			return true;
 		}
@@ -164,11 +164,8 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords2(const std:
 			{
 				auto shapeCorner = (*worldCorners)[i];
 
-				//todo figure out why this doesn't work inline...
-				int x = shapeCorner.x / cellWidth;
-				int y = shapeCorner.y / cellHeight;
 				//corner is within current cell
-				if (xCell == x && yCell == y)
+				if (xCell == static_cast<int> (shapeCorner.x / cellWidth) && yCell == static_cast<int> (shapeCorner.y / cellHeight))
 				{
 					AddPairToPairsNoDuplicates(pairs, xCell, yCell);
 					break;
@@ -176,11 +173,13 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords2(const std:
 
 				//corner not within current cell, therefore do line intersection test
 				//todo these 4 operations could be done in parallel?
-				if (worldCorners->size() > 1) {
-					auto nextShapeCorner = (i == worldCorners->size()) ? (*worldCorners)[0] : (*worldCorners)[i+1];
+				if (worldCorners->size() > 1) {				
 					
+					auto nextShapeCorner = (i == (worldCorners->size()-1)) ? (*worldCorners)[0] : (*worldCorners)[i+1];
+					
+
 					//checking lines that make up cell in counter clockwise
-					if (CheckLineCollission(sf::Vector2f(xCell*cellWidth, yCell*cellHeight),
+					if (CheckLineCollision(sf::Vector2f(xCell*cellWidth, yCell*cellHeight),
 						sf::Vector2f(xCell*cellWidth + cellWidth, yCell*cellHeight),
 						shapeCorner,
 						nextShapeCorner) == true)
@@ -190,7 +189,7 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords2(const std:
 						break;
 					}
 
-					else if (CheckLineCollission(sf::Vector2f(xCell*cellWidth + cellWidth, yCell*cellHeight),
+					else if (CheckLineCollision(sf::Vector2f(xCell*cellWidth + cellWidth, yCell*cellHeight),
 						sf::Vector2f(xCell*cellWidth + cellWidth, yCell*cellHeight + cellHeight),
 						shapeCorner,
 						nextShapeCorner) == true)
@@ -200,7 +199,7 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords2(const std:
 						break;
 					}
 
-					else if (CheckLineCollission(sf::Vector2f(xCell*cellWidth + cellWidth, yCell*cellHeight + cellHeight),
+					else if (CheckLineCollision(sf::Vector2f(xCell*cellWidth + cellWidth, yCell*cellHeight + cellHeight),
 						sf::Vector2f(xCell*cellWidth, yCell*cellHeight + cellHeight),
 						shapeCorner,
 						nextShapeCorner) == true)
@@ -210,7 +209,7 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords2(const std:
 						break;
 					}
 
-					else if (CheckLineCollission(sf::Vector2f(xCell*cellWidth, yCell*cellHeight + cellHeight),
+					else if (CheckLineCollision(sf::Vector2f(xCell*cellWidth, yCell*cellHeight + cellHeight),
 						sf::Vector2f(xCell*cellWidth, yCell*cellHeight),
 						shapeCorner,
 						nextShapeCorner) == true)
@@ -225,7 +224,6 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords2(const std:
 	}
 
 	//todo once this works, add similar functionality to AddEntityToCollisionSpace()!!
-
 	return pairs;
 }
 

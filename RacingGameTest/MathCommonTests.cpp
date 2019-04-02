@@ -4,7 +4,6 @@
 #define M_PI       3.14159265358979323846   // pi
 
 #include "../RacingGame/src/MathCommon.cpp"
-#include "../RacingGame/src/include/Car.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
