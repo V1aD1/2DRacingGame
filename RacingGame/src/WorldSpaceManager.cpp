@@ -40,7 +40,14 @@ void WorldSpaceManager::AddEntityToCollisionSpace(const Entity* entity)
 	std::vector<sf::Vector2i> pairs;
 
 	auto worldCorners = *entity->GetWorldCorners();
-	for (auto corner : worldCorners) {
+
+	auto coords = GetCollisionSpaceCoords(&worldCorners);
+
+	for (auto coord : coords) {
+		worldSpace[coord.x][coord.y].push_back(entity);
+	}
+
+	/*for (auto corner : worldCorners) {
 
 		//no collision detection if outside world space
 		if (corner.x < 0.0f || corner.x > screenLen)
@@ -65,7 +72,7 @@ void WorldSpaceManager::AddEntityToCollisionSpace(const Entity* entity)
 			worldSpace[xCell][yCell].push_back(entity);
 			pairs.push_back(sf::Vector2i(xCell, yCell));
 		}
-	}
+	}*/
 }
 
 void WorldSpaceManager::AddPairToPairsNoDuplicates(std::vector<sf::Vector2i>& pairs, int x, int y)
@@ -130,14 +137,16 @@ bool WorldSpaceManager::CheckLineCollision(sf::Vector2f p1, sf::Vector2f p2, sf:
 	return false;
 }
 
+//this function is public because it's used by the new physics state to 
+//determine its location and compute possible collision
 //todo change worldCorners to be able to hold 1+ corners, not just 4
-std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords2(const std::array<sf::Vector2f, 4>* worldCorners)
+//todo change worldCorners to reference, not pointer
+std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::array<sf::Vector2f, 4>* worldCorners)
 {
 	std::vector<sf::Vector2i> pairs;
 
 	//first, determine leftest, highest, rightest, lowest point for entire shape
 	//todo can use float instead of vector2f here
-	//todo ignore collision outside of world space
 	sf::Vector2f leftest = (*worldCorners)[0];
 	sf::Vector2f rightest = (*worldCorners)[0];
 	sf::Vector2f highest = (*worldCorners)[0];
@@ -163,6 +172,12 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords2(const std:
 			for (int i = 0; i < worldCorners->size(); i++)
 			{
 				auto shapeCorner = (*worldCorners)[i];
+
+				//no collision detection if outside world space
+				if (shapeCorner.x < 0.0f || shapeCorner.x > screenLen)
+					continue;
+				if (shapeCorner.y < 0.0f || shapeCorner.y >screenHeight)
+					continue;
 
 				//corner is within current cell
 				if (xCell == static_cast<int> (shapeCorner.x / cellWidth) && yCell == static_cast<int> (shapeCorner.y / cellHeight))
@@ -223,47 +238,9 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords2(const std:
 		}
 	}
 
-	//todo once this works, add similar functionality to AddEntityToCollisionSpace()!!
 	return pairs;
 }
 
-std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::array<sf::Vector2f, 4>* worldCorners)
-{
-	std::vector<sf::Vector2i> pairs;
-
-	for (auto corner : *worldCorners) {
-		//no collision detection if outside world space
-		if (corner.x < 0.0f || corner.x > screenLen)
-			continue;
-		if (corner.y < 0.0f || corner.y >screenHeight)
-			continue;
-
-		int xCell = corner.x / cellWidth;
-		int yCell = corner.y / cellHeight;
-		bool alreadyAdded = false;
-
-		//todo order so as to avoid this inneficiency?
-		for (auto pair : pairs)
-		{
-			if (pair.x == xCell && pair.y == yCell) {
-				alreadyAdded = true;
-				break;
-			}
-		}
-
-		//to ensure entity isn't added to the same cell twice
-		if (!alreadyAdded) {
-			pairs.push_back(sf::Vector2i(xCell, yCell));
-		}
-	}
-
-	//each pair now corresponds to a given corner
-	//the corners are in a clockwise order
-
-	return pairs;
-}
-
-//todo should return a UNIQUE list of entities
 std::vector<const Entity*> WorldSpaceManager::GetEntitiesAtCoords(const std::vector<sf::Vector2i>* coords)
 {
 	std::vector<const Entity*> entitiesToRet = std::vector<const Entity*>();
@@ -282,6 +259,8 @@ std::vector<const Entity*> WorldSpaceManager::GetEntitiesAtCoords(const std::vec
 				}
 			}
 
+			//todo abstract this into static function or custom list object, since
+			//returning a list of unique members is necessary throughout this class
 			if(!entityAlreadyInList)
 				entitiesToRet.push_back(entityToAdd);
 		}
