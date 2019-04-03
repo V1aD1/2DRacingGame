@@ -25,6 +25,10 @@ void WorldSpaceManager::PopulateCollisionSpace()
 	//todo since static objects don't move, 
 	//they shouldn't be added and removed from
 	//collision space every frame
+	//this involves not doing a "worldspace.clear()" every frame in main,
+	//and instead clearing only variable objects from the cells
+	//luckily, every variable object has a list of the cells they occupy,
+	//so only clear the VARIABLE objects from those cells
 	for (auto entity : G_STATICOBJECTS) {
 		AddEntityToCollisionSpace(entity);
 	}
