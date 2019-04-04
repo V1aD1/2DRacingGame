@@ -39,7 +39,6 @@ public:
 	float GetRotationInDegrees() const;
 	float GetRotationInRadians() const;
 
-	//todo shouldn't be 4 corners
 	virtual const std::array<sf::Vector2f, 4>* GetWorldCorners() const;
 	
 	void SetRotation(float degrees);

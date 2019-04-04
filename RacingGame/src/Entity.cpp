@@ -61,7 +61,8 @@ void Entity::SetPosition(sf::Vector2f newPos)
 	m_position = newPos;
 }
 
-//todo change to return reference instead of pointer
+//must be reference since we want to return null of 
+//entity has no collision component
 const std::array<sf::Vector2f, 4>* Entity::GetWorldCorners() const
 {
 	if (m_collision)
