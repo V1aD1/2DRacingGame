@@ -127,7 +127,6 @@ bool WorldSpaceManager::CheckLineCollision(sf::Vector2f p1, sf::Vector2f p2, sf:
 		auto t = MathCommon::CrossProduct(QMinP, s) / RCrossS;
 		auto u = MathCommon::CrossProduct(QMinP, r) / RCrossS;
 
-		//todo this equality operation doesn't evaluate correctly!!
 		if (0.0f <= t && t <= 1.0f && 0.0f <= u && u <= 1.0f)
 		{
 			return true;
@@ -150,28 +149,27 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::
 	std::vector<sf::Vector2i> pairs;
 
 	//first, determine leftest, highest, rightest, lowest point for entire shape
-	//todo can use float instead of vector2f here
-	sf::Vector2f leftest = (*worldCorners)[0];
-	sf::Vector2f rightest = (*worldCorners)[0];
-	sf::Vector2f highest = (*worldCorners)[0];
-	sf::Vector2f lowest = (*worldCorners)[0];
+	float leftest = (*worldCorners)[0].x;
+	float rightest = (*worldCorners)[0].x;
+	float highest = (*worldCorners)[0].y;
+	float lowest = (*worldCorners)[0].y;
 	
 	for (int i = 1; i < worldCorners->size(); i++) {
-		if ((*worldCorners)[i].x < leftest.x)
-			leftest = (*worldCorners)[i];
-		else if ((*worldCorners)[i].x > rightest.x)
-			rightest = (*worldCorners)[i];
-		if ((*worldCorners)[i].y < lowest.y)
-			lowest = (*worldCorners)[i];
-		else if ((*worldCorners)[i].y > highest.y)
-			highest = (*worldCorners)[i];
+		if ((*worldCorners)[i].x < leftest)
+			leftest = (*worldCorners)[i].x;
+		else if ((*worldCorners)[i].x > rightest)
+			rightest = (*worldCorners)[i].x;
+		if ((*worldCorners)[i].y < lowest)
+			lowest = (*worldCorners)[i].y;
+		else if ((*worldCorners)[i].y > highest)
+			highest = (*worldCorners)[i].y;
 	}
 
 	//then determine square of cells that object is encompassed in
 	//iterate through every cell and return cells that shape belongs to
 	//todo create static function that converts point in space to cell location
-	for (int xCell = leftest.x / cellWidth; xCell < rightest.x / cellWidth; xCell++) {
-		for (int yCell = lowest.y / cellHeight; yCell < highest.y / cellHeight; yCell++) {
+	for (int xCell = leftest / cellWidth; xCell < rightest / cellWidth; xCell++) {
+		for (int yCell = lowest / cellHeight; yCell < highest / cellHeight; yCell++) {
 
 			for (int i = 0; i < worldCorners->size(); i++)
 			{
