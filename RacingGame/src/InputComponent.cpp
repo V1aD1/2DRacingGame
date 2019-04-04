@@ -5,8 +5,6 @@ InputComponent::InputComponent(){}
 
 InputComponent::~InputComponent(){}
 
-//todo as it currently stands, everything in here can be done in the physics component, 
-//so maybe this entire component isn't necessary anymore...
 void InputComponent::Update(Entity& entity, const EventHandler& eventHandler, float dtMillis) {
 	PhysicsComponent* physics = entity.m_physics;
 
