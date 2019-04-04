@@ -45,38 +45,11 @@ void WorldSpaceManager::AddEntityToCollisionSpace(const Entity* entity)
 
 	auto worldCorners = *entity->GetWorldCorners();
 
-	auto coords = GetCollisionSpaceCoords(&worldCorners);
+	auto coords = GetCollisionSpaceCoords(worldCorners);
 
 	for (auto coord : coords) {
 		worldSpace[coord.x][coord.y].push_back(entity);
 	}
-
-	/*for (auto corner : worldCorners) {
-
-		//no collision detection if outside world space
-		if (corner.x < 0.0f || corner.x > screenLen)
-			continue;
-		if (corner.y < 0.0f || corner.y >screenHeight)
-			continue;
-
-		int xCell = corner.x / cellWidth;
-		int yCell = corner.y / cellHeight;
-		bool alreadyAdded = false;
-
-		for (auto pair : pairs)
-		{
-			if (pair.x == xCell && pair.y == yCell) {
-				alreadyAdded = true;
-				break;
-			}
-		}
-
-		//to ensure entity isn't added to the same cell twice
-		if (!alreadyAdded) {
-			worldSpace[xCell][yCell].push_back(entity);
-			pairs.push_back(sf::Vector2i(xCell, yCell));
-		}
-	}*/
 }
 
 void WorldSpaceManager::AddPairToPairsNoDuplicates(std::vector<sf::Vector2i>& pairs, int x, int y)
@@ -144,25 +117,25 @@ bool WorldSpaceManager::CheckLineCollision(sf::Vector2f p1, sf::Vector2f p2, sf:
 //determine its location and compute possible collision
 //todo change worldCorners to be able to hold 1+ corners, not just 4
 //todo change worldCorners to reference, not pointer
-std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::array<sf::Vector2f, 4>* worldCorners)
+std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::array<sf::Vector2f, 4>& worldCorners)
 {
 	std::vector<sf::Vector2i> pairs;
 
 	//first, determine leftest, highest, rightest, lowest point for entire shape
-	float leftest = (*worldCorners)[0].x;
-	float rightest = (*worldCorners)[0].x;
-	float highest = (*worldCorners)[0].y;
-	float lowest = (*worldCorners)[0].y;
+	float leftest = worldCorners[0].x;
+	float rightest = worldCorners[0].x;
+	float highest = worldCorners[0].y;
+	float lowest = worldCorners[0].y;
 	
-	for (int i = 1; i < worldCorners->size(); i++) {
-		if ((*worldCorners)[i].x < leftest)
-			leftest = (*worldCorners)[i].x;
-		else if ((*worldCorners)[i].x > rightest)
-			rightest = (*worldCorners)[i].x;
-		if ((*worldCorners)[i].y < lowest)
-			lowest = (*worldCorners)[i].y;
-		else if ((*worldCorners)[i].y > highest)
-			highest = (*worldCorners)[i].y;
+	for (int i = 1; i < worldCorners.size(); i++) {
+		if (worldCorners[i].x < leftest)
+			leftest = worldCorners[i].x;
+		else if (worldCorners[i].x > rightest)
+			rightest = worldCorners[i].x;
+		if (worldCorners[i].y < lowest)
+			lowest = worldCorners[i].y;
+		else if (worldCorners[i].y > highest)
+			highest = worldCorners[i].y;
 	}
 
 	//then determine square of cells that object is encompassed in
@@ -171,9 +144,9 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::
 	for (int xCell = leftest / cellWidth; xCell < rightest / cellWidth; xCell++) {
 		for (int yCell = lowest / cellHeight; yCell < highest / cellHeight; yCell++) {
 
-			for (int i = 0; i < worldCorners->size(); i++)
+			for (int i = 0; i < worldCorners.size(); i++)
 			{
-				auto shapeCorner = (*worldCorners)[i];
+				auto shapeCorner = worldCorners[i];
 
 				//no collision detection if outside world space
 				if (shapeCorner.x < 0.0f || shapeCorner.x > screenLen)
@@ -190,9 +163,9 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::
 
 				//corner not within current cell, therefore do line intersection test
 				//todo these 4 operations could be done in parallel?
-				if (worldCorners->size() > 1) {				
+				if (worldCorners.size() > 1) {				
 					
-					auto nextShapeCorner = (i == (worldCorners->size()-1)) ? (*worldCorners)[0] : (*worldCorners)[i+1];
+					auto nextShapeCorner = (i == (worldCorners.size()-1)) ? worldCorners[0] : worldCorners[i+1];
 					
 
 					//checking lines that make up cell in counter clockwise

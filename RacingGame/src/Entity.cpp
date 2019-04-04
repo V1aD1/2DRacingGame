@@ -61,6 +61,7 @@ void Entity::SetPosition(sf::Vector2f newPos)
 	m_position = newPos;
 }
 
+//todo change to return reference instead of pointer
 const std::array<sf::Vector2f, 4>* Entity::GetWorldCorners() const
 {
 	if (m_collision)
