@@ -6,11 +6,6 @@
 
 extern WorldSpaceManager spaceManager;
 
-//todo not sure necessary
-Entity::Entity()
-{
-}
-
 Entity::Entity(sf::Vector2f position, float rotDeg) : m_position(position) 
 {
 	SetRotation(rotDeg);
