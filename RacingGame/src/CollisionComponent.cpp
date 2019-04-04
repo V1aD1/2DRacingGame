@@ -13,6 +13,13 @@ CollisionComponent::CollisionComponent(sf::Vector2f newPos, float newRotInRad, c
 
 CollisionComponent::~CollisionComponent(){}
 
+CollisionComponent& CollisionComponent::operator=(const CollisionComponent & other)
+{
+	m_localCorners = other.m_localCorners;
+	m_worldCorners = other.m_worldCorners;
+	return *this;
+}
+
 //Updates m_worldCorners to latest positions
 void CollisionComponent::Update(sf::Vector2f newPos, float newRotInRad)
 {

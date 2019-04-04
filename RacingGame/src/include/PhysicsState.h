@@ -17,6 +17,8 @@ private:
 
 public:
 	PhysicsState(sf::Vector2f pos, float rotRad, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied);
+
+	//todo should destructors EVER be private for any class?
 	~PhysicsState();
 
 	void Update(float dtMilli, float maxMomentum);
@@ -28,6 +30,7 @@ public:
 	void Accelerate(float acceleration);
 	void ApplyForce(sf::Vector2f force);
 
+public:
 	const std::array<sf::Vector2f, 4>* GetWorldCorners() const;
 	const std::vector<sf::Vector2i>* GetCollisionSpaceCoordinates() const;
 	sf::Vector2f GetWorldPosition();
@@ -37,5 +40,8 @@ public:
 	//should ONLY be used by DBG_ commands
 	void SetWorldPos(sf::Vector2f newPos);
 	void SetMomentum(sf::Vector2f newMomentum);
+
+private:
+	void UpdateToNewState(const PhysicsState& other);
 };
 

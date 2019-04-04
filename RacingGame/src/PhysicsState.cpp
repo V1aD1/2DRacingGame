@@ -30,7 +30,7 @@ void PhysicsState::Update(float dtMilli, float maxMomentum) {
 	m_collisionSpaceCoords = worldSpaceManager.GetCollisionSpaceCoords(m_collisionComp->GetWorldCorners());
 }
 
-PhysicsState::PhysicsState(const PhysicsState & other)
+void PhysicsState::UpdateToNewState(const PhysicsState& other)
 {
 	m_worldPos = other.m_worldPos;
 	m_rotInRad = other.m_rotInRad;
@@ -38,21 +38,17 @@ PhysicsState::PhysicsState(const PhysicsState & other)
 	m_momentum = other.m_momentum;
 
 	//todo is deletion necessary here?
-	delete m_collisionComp;
-	m_collisionComp = new CollisionComponent(*other.m_collisionComp);
+	*m_collisionComp = *other.m_collisionComp;
 }
 
-PhysicsState & PhysicsState::operator=(const PhysicsState & other)
+PhysicsState::PhysicsState(const PhysicsState& other)
 {
-	m_worldPos = other.m_worldPos;
-	m_rotInRad = other.m_rotInRad;
-	m_forwardDir = other.m_forwardDir;
-	m_momentum = other.m_momentum;
-	
-	//is this right?
-	delete m_collisionComp;
-	m_collisionComp = new CollisionComponent(*other.m_collisionComp);
+	UpdateToNewState(other);
+}
 
+PhysicsState& PhysicsState::operator=(const PhysicsState& other)
+{
+	UpdateToNewState(other);
 	return *this;
 }
 
