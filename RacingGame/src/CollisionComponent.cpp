@@ -40,8 +40,7 @@ void CollisionComponent::Update(sf::Vector2f newPos, float newRotInRad)
 	}
 }
 
-//todo change to reference instead of pointer
-const std::array<sf::Vector2f, 4>* CollisionComponent::GetWorldCorners() const
+const std::array<sf::Vector2f, 4>& CollisionComponent::GetWorldCorners() const
 {
-	return &m_worldCorners;
+	return m_worldCorners;
 }

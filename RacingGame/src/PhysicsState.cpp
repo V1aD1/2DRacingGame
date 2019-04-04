@@ -27,7 +27,7 @@ void PhysicsState::Update(float dtMilli, float maxMomentum) {
 
 	//save collision space coords
 	//this step should happen after worldCorners have been updated!
-	m_collisionSpaceCoords = worldSpaceManager.GetCollisionSpaceCoords(*m_collisionComp->GetWorldCorners());
+	m_collisionSpaceCoords = worldSpaceManager.GetCollisionSpaceCoords(m_collisionComp->GetWorldCorners());
 }
 
 void PhysicsState::UpdateToNewState(const PhysicsState& other)
@@ -71,9 +71,10 @@ void PhysicsState::ApplyForce(sf::Vector2f force)
 	m_momentum += force;
 }
 
+//change to return reference instead of pointer
 const std::array<sf::Vector2f, 4>* PhysicsState::GetWorldCorners() const
 {
-	return m_collisionComp->GetWorldCorners();
+	return &m_collisionComp->GetWorldCorners();
 }
 
 const std::vector<sf::Vector2i>* PhysicsState::GetCollisionSpaceCoordinates() const

@@ -65,7 +65,7 @@ void Entity::SetPosition(sf::Vector2f newPos)
 const std::array<sf::Vector2f, 4>* Entity::GetWorldCorners() const
 {
 	if (m_collision)
-		return m_collision->GetWorldCorners();
+		return &m_collision->GetWorldCorners();
 
 	return nullptr;
 }

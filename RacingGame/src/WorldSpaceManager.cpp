@@ -116,7 +116,6 @@ bool WorldSpaceManager::CheckLineCollision(sf::Vector2f p1, sf::Vector2f p2, sf:
 //this function is public because it's used by the new physics state to 
 //determine its location and compute possible collision
 //todo change worldCorners to be able to hold 1+ corners, not just 4
-//todo change worldCorners to reference, not pointer
 std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::array<sf::Vector2f, 4>& worldCorners)
 {
 	std::vector<sf::Vector2i> pairs;

@@ -14,6 +14,6 @@ public:
 	CollisionComponent& operator=(const CollisionComponent& other);
 
 	void Update(sf::Vector2f newPos, float newRotInRad);
-	const std::array<sf::Vector2f, 4>* GetWorldCorners() const;
+	const std::array<sf::Vector2f, 4>& GetWorldCorners() const;
 };
 
