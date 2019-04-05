@@ -17,8 +17,6 @@ private:
 
 public:
 	PhysicsState(sf::Vector2f pos, float rotRad, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied);
-
-	//todo should destructors EVER be private for any class?
 	~PhysicsState();
 
 	void Update(float dtMilli, float maxMomentum);

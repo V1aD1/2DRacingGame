@@ -27,7 +27,8 @@ void PhysicsState::Update(float dtMilli, float maxMomentum) {
 
 	//save collision space coords
 	//this step should happen after worldCorners have been updated!
-	m_collisionSpaceCoords = worldSpaceManager.GetCollisionSpaceCoords(m_collisionComp->GetWorldCorners());
+	auto worldCorners = m_collisionComp->GetWorldCorners();
+	m_collisionSpaceCoords = worldSpaceManager.GetCollisionSpaceCoords(std::vector<sf::Vector2f>(std::begin(worldCorners), std::end(worldCorners)));
 }
 
 void PhysicsState::UpdateToNewState(const PhysicsState& other)
@@ -37,7 +38,6 @@ void PhysicsState::UpdateToNewState(const PhysicsState& other)
 	m_forwardDir = other.m_forwardDir;
 	m_momentum = other.m_momentum;
 
-	//todo is deletion necessary here?
 	*m_collisionComp = *other.m_collisionComp;
 }
 

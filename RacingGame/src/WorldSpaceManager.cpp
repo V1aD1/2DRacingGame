@@ -45,7 +45,7 @@ void WorldSpaceManager::AddEntityToCollisionSpace(const Entity* entity)
 
 	auto worldCorners = *entity->GetWorldCorners();
 
-	auto coords = GetCollisionSpaceCoords(worldCorners);
+	auto coords = GetCollisionSpaceCoords(std::vector<sf::Vector2f>(std::begin(worldCorners), std::end(worldCorners)));
 
 	for (auto coord : coords) {
 		worldSpace[coord.x][coord.y].push_back(entity);
@@ -107,25 +107,39 @@ bool WorldSpaceManager::CheckLineCollision(sf::Vector2f p1, sf::Vector2f p2, sf:
 	}
 
 	//Parallel, non intersecting: r  x s = 0 and (q - p) x r != 0 (don't care)
-	
+
 	//Else, lines are not parallel BUT do NOT intersect (don't care)
 
 	return false;
 }
 
+sf::Vector2i WorldSpaceManager::ConvertPointToCellCoords(sf::Vector2f point)
+{
+	//yes, this will lose all the decimal points, but that's what I want
+	return sf::Vector2i(point.x/cellWidth, point.y/cellHeight);
+}
+
 //this function is public because it's used by the new physics state to 
 //determine its location and compute possible collision
-//todo change worldCorners to be able to hold 1+ corners, not just 4
-std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::array<sf::Vector2f, 4>& worldCorners)
+std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::vector<sf::Vector2f>& worldCorners)
 {
 	std::vector<sf::Vector2i> pairs;
+
+	if (worldCorners.size() == 0)
+		return pairs;
+
+	if (worldCorners.size() == 1)
+	{
+		pairs.push_back(ConvertPointToCellCoords(worldCorners[0]));
+		return pairs;
+	}
 
 	//first, determine leftest, highest, rightest, lowest point for entire shape
 	float leftest = worldCorners[0].x;
 	float rightest = worldCorners[0].x;
 	float highest = worldCorners[0].y;
 	float lowest = worldCorners[0].y;
-	
+
 	for (int i = 1; i < worldCorners.size(); i++) {
 		if (worldCorners[i].x < leftest)
 			leftest = worldCorners[i].x;
@@ -153,8 +167,10 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::
 				if (shapeCorner.y < 0.0f || shapeCorner.y >screenHeight)
 					continue;
 
+				auto cornerCell = ConvertPointToCellCoords(shapeCorner);
+
 				//corner is within current cell
-				if (xCell == static_cast<int> (shapeCorner.x / cellWidth) && yCell == static_cast<int> (shapeCorner.y / cellHeight))
+				if (xCell == cornerCell.x && yCell == cornerCell.y)
 				{
 					AddPairToPairsNoDuplicates(pairs, xCell, yCell);
 					break;
@@ -162,10 +178,10 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::
 
 				//corner not within current cell, therefore do line intersection test
 				//todo these 4 operations could be done in parallel?
-				if (worldCorners.size() > 1) {				
-					
-					auto nextShapeCorner = (i == (worldCorners.size()-1)) ? worldCorners[0] : worldCorners[i+1];
-					
+				if (worldCorners.size() > 1) {
+
+					auto nextShapeCorner = (i == (worldCorners.size() - 1)) ? worldCorners[0] : worldCorners[i + 1];
+
 
 					//checking lines that make up cell in counter clockwise
 					if (CheckLineCollision(sf::Vector2f(xCell*cellWidth, yCell*cellHeight),
@@ -235,7 +251,7 @@ std::vector<const Entity*> WorldSpaceManager::GetEntitiesAtCoords(const std::vec
 
 			//todo abstract this into static function or custom list object, since
 			//returning a list of unique members is necessary throughout this class
-			if(!entityAlreadyInList)
+			if (!entityAlreadyInList)
 				entitiesToRet.push_back(entityToAdd);
 		}
 	}
