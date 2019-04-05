@@ -136,12 +136,12 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::
 	//iterate through every cell and return cells that shape belongs to
 	for (int xCell = leftest / cellWidth; xCell < rightest / cellWidth; xCell++) {
 		for (int yCell = lowest / cellHeight; yCell < highest / cellHeight; yCell++) {
+			
+			auto currentCell = sf::Vector2i(xCell, yCell);
 
 			for (int i = 0; i < worldCorners.size(); i++)
 			{
-				//todo why am I all 4 corners? I should only be checking the lines of the cell actually
 				auto shapeCorner = worldCorners[i];
-				auto currentCell = sf::Vector2i(xCell, yCell);
 
 				//no collision detection if outside world space
 				if (shapeCorner.x < 0.0f || shapeCorner.x > screenLen)
