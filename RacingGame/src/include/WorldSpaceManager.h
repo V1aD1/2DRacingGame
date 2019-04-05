@@ -21,7 +21,9 @@ public:
 	void DBG_Draw(sf::RenderWindow& window);
 
 private:
-	static void AddPairToPairsNoDuplicates(std::vector<sf::Vector2i>& pairs, int x, int y);
+	template <typename T>
+	static void AddToVectorNoDuplicates(std::vector<T>& vec, T val);
+
 	static bool CheckLineCollision(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f q1, sf::Vector2f q2);
 	sf::Vector2i ConvertPointToCellCoords(sf::Vector2f point);
 
@@ -31,3 +33,22 @@ private:
 	float cellHeight;
 };
 
+template<typename T>
+inline void WorldSpaceManager::AddToVectorNoDuplicates(std::vector<T>& vals, T valToAdd)
+{
+	bool alreadyAdded = false;
+	
+	//todo order so as to avoid this inneficiency?
+	for (auto val : vals)
+	{
+		if (val == valToAdd) {
+			alreadyAdded = true;
+			break;
+		}
+	}
+
+	//to ensure value isn't added twice
+	if (!alreadyAdded) {
+		vals.push_back(valToAdd);
+	}
+}

@@ -36,7 +36,6 @@ void WorldSpaceManager::PopulateCollisionSpace()
 	for (auto entity : G_VARIABLEOBJECTS) {
 		AddEntityToCollisionSpace(entity);
 	}
-
 }
 
 void WorldSpaceManager::AddEntityToCollisionSpace(const Entity* entity)
@@ -49,24 +48,6 @@ void WorldSpaceManager::AddEntityToCollisionSpace(const Entity* entity)
 
 	for (auto coord : coords) {
 		worldSpace[coord.x][coord.y].push_back(entity);
-	}
-}
-
-void WorldSpaceManager::AddPairToPairsNoDuplicates(std::vector<sf::Vector2i>& pairs, int x, int y)
-{
-	bool alreadyAdded = false;
-	//todo order so as to avoid this inneficiency?
-	for (auto pair : pairs)
-	{
-		if (pair.x == x && pair.y == y) {
-			alreadyAdded = true;
-			break;
-		}
-	}
-
-	//to ensure entity isn't added to the same cell twice
-	if (!alreadyAdded) {
-		pairs.push_back(sf::Vector2i(x, y));
 	}
 }
 
@@ -153,13 +134,14 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::
 
 	//then determine square of cells that object is encompassed in
 	//iterate through every cell and return cells that shape belongs to
-	//todo create static function that converts point in space to cell location
 	for (int xCell = leftest / cellWidth; xCell < rightest / cellWidth; xCell++) {
 		for (int yCell = lowest / cellHeight; yCell < highest / cellHeight; yCell++) {
 
 			for (int i = 0; i < worldCorners.size(); i++)
 			{
+				//todo why am I all 4 corners? I should only be checking the lines of the cell actually
 				auto shapeCorner = worldCorners[i];
+				auto currentCell = sf::Vector2i(xCell, yCell);
 
 				//no collision detection if outside world space
 				if (shapeCorner.x < 0.0f || shapeCorner.x > screenLen)
@@ -170,9 +152,9 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::
 				auto cornerCell = ConvertPointToCellCoords(shapeCorner);
 
 				//corner is within current cell
-				if (xCell == cornerCell.x && yCell == cornerCell.y)
+				if (currentCell.x == cornerCell.x && currentCell.y == cornerCell.y)
 				{
-					AddPairToPairsNoDuplicates(pairs, xCell, yCell);
+					AddToVectorNoDuplicates(pairs, currentCell);
 					break;
 				}
 
@@ -184,43 +166,43 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::
 
 
 					//checking lines that make up cell in counter clockwise
-					if (CheckLineCollision(sf::Vector2f(xCell*cellWidth, yCell*cellHeight),
-						sf::Vector2f(xCell*cellWidth + cellWidth, yCell*cellHeight),
+					if (CheckLineCollision(sf::Vector2f(currentCell.x*cellWidth, currentCell.y*cellHeight),
+						sf::Vector2f(currentCell.x*cellWidth + cellWidth, currentCell.y*cellHeight),
 						shapeCorner,
 						nextShapeCorner) == true)
 					{
 						//corner is within current cell
-						AddPairToPairsNoDuplicates(pairs, xCell, yCell);
+						AddToVectorNoDuplicates(pairs, currentCell);
 						break;
 					}
 
-					else if (CheckLineCollision(sf::Vector2f(xCell*cellWidth + cellWidth, yCell*cellHeight),
-						sf::Vector2f(xCell*cellWidth + cellWidth, yCell*cellHeight + cellHeight),
+					else if (CheckLineCollision(sf::Vector2f(currentCell.x*cellWidth + cellWidth, currentCell.y*cellHeight),
+						sf::Vector2f(currentCell.x*cellWidth + cellWidth, currentCell.y*cellHeight + cellHeight),
 						shapeCorner,
 						nextShapeCorner) == true)
 					{
 						//corner is within current cell
-						AddPairToPairsNoDuplicates(pairs, xCell, yCell);
+						AddToVectorNoDuplicates(pairs, currentCell);
 						break;
 					}
 
-					else if (CheckLineCollision(sf::Vector2f(xCell*cellWidth + cellWidth, yCell*cellHeight + cellHeight),
-						sf::Vector2f(xCell*cellWidth, yCell*cellHeight + cellHeight),
+					else if (CheckLineCollision(sf::Vector2f(currentCell.x*cellWidth + cellWidth, currentCell.y*cellHeight + cellHeight),
+						sf::Vector2f(currentCell.x*cellWidth, currentCell.y*cellHeight + cellHeight),
 						shapeCorner,
 						nextShapeCorner) == true)
 					{
 						//corner is within current cell
-						AddPairToPairsNoDuplicates(pairs, xCell, yCell);
+						AddToVectorNoDuplicates(pairs, currentCell);
 						break;
 					}
 
-					else if (CheckLineCollision(sf::Vector2f(xCell*cellWidth, yCell*cellHeight + cellHeight),
-						sf::Vector2f(xCell*cellWidth, yCell*cellHeight),
+					else if (CheckLineCollision(sf::Vector2f(currentCell.x*cellWidth, currentCell.y*cellHeight + cellHeight),
+						sf::Vector2f(currentCell.x*cellWidth, currentCell.y*cellHeight),
 						shapeCorner,
 						nextShapeCorner) == true)
 					{
 						//corner is within current cell
-						AddPairToPairsNoDuplicates(pairs, xCell, yCell);
+						AddToVectorNoDuplicates(pairs, currentCell);
 						break;
 					}
 				}
@@ -236,23 +218,7 @@ std::vector<const Entity*> WorldSpaceManager::GetEntitiesAtCoords(const std::vec
 	std::vector<const Entity*> entitiesToRet = std::vector<const Entity*>();
 	for (auto coord : *coords) {
 		for (auto entityToAdd : worldSpace[coord.x][coord.y]) {
-
-			bool entityAlreadyInList = false;
-
-			//todo sort so as to avoid this inneficiency!
-			for (auto entity : entitiesToRet)
-			{
-				if (entity == entityToAdd)
-				{
-					entityAlreadyInList = true;
-					break;
-				}
-			}
-
-			//todo abstract this into static function or custom list object, since
-			//returning a list of unique members is necessary throughout this class
-			if (!entityAlreadyInList)
-				entitiesToRet.push_back(entityToAdd);
+			AddToVectorNoDuplicates(entitiesToRet, entityToAdd);
 		}
 	}
 
