@@ -14,6 +14,7 @@ PhysicsComponent::PhysicsComponent(sf::Vector2f pos,
 									float brakeForce, 
 									float frictionForce, 
 									float dbg_slideSpeed) :
+									m_prevState(pos, rotRad, cornersWithoutRotationApplied),
 									m_currState(pos, rotRad, cornersWithoutRotationApplied), 
 									m_newState(pos, rotRad, cornersWithoutRotationApplied)
 {
@@ -86,6 +87,11 @@ void PhysicsComponent::ApplyFriction(float dtTimeMilli){
 const std::vector<sf::Vector2i>* PhysicsComponent::GetCollisionSpaceCoords()
 {
 	return m_currState.GetCollisionSpaceCoordinates();
+}
+
+const std::vector<sf::Vector2i>* PhysicsComponent::GetPrevCollisionSpaceCoords()
+{
+	return m_prevState.GetCollisionSpaceCoordinates();
 }
 
 void PhysicsComponent::ApplySlowDownForce(float forceMag, float dtTimeMilli){

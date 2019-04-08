@@ -29,13 +29,16 @@ CarPhysicsComponent::~CarPhysicsComponent()
 
 void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 {
+	m_prevState = m_currState;
+	
 	ApplyFriction(dtMilli);
 
 	m_newState.Update(dtMilli, car_maxMomentum);
 
 	//update to new state only if NO collision occured
-	if (!CollisionDetected(entity))
+	if (!CollisionDetected(entity)) 
 		m_currState = m_newState;
+	
 
 	//if collision occurs then halt all momentum on the car
 	//and do NOT apply new state
@@ -60,6 +63,6 @@ void CarPhysicsComponent::DBG_Slide(Entity & entity, const sf::Vector2f & dir, f
 	m_newState.SetWorldPos(m_newState.GetWorldPosition() + dir * dtMilli / 1000.0f * car_dbg_slideSpeed);
 	m_newState.Update(dtMilli, car_maxMomentum);
 
-	//ensuring current state matches new state
+	m_prevState = m_currState;
 	m_currState = m_newState;
 }

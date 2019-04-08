@@ -29,8 +29,11 @@ public:
 	virtual void DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli) = 0;
 	
 	const std::vector<sf::Vector2i>* GetCollisionSpaceCoords();
+	const std::vector<sf::Vector2i>* GetPrevCollisionSpaceCoords();
+
 
 protected:
+	PhysicsState m_prevState;
 	PhysicsState m_newState;
 	PhysicsState m_currState;
 
