@@ -234,6 +234,12 @@ void WorldSpaceManager::ClearWorldSpace()
 	}
 }
 
+void WorldSpaceManager::ClearVariableEntities() {
+	for (auto entity : G_VARIABLEOBJECTS) {
+		//entity.
+	}
+}
+
 void WorldSpaceManager::DBG_Draw(sf::RenderWindow& window)
 {
 	for (int i = 0; i < 10; i++)

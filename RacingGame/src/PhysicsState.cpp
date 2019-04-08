@@ -37,6 +37,7 @@ void PhysicsState::UpdateToNewState(const PhysicsState& other)
 	m_rotInRad = other.m_rotInRad;
 	m_forwardDir = other.m_forwardDir;
 	m_momentum = other.m_momentum;
+	m_collisionSpaceCoords = other.m_collisionSpaceCoords;
 
 	*m_collisionComp = *other.m_collisionComp;
 }
@@ -71,12 +72,13 @@ void PhysicsState::ApplyForce(sf::Vector2f force)
 	m_momentum += force;
 }
 
-//change to return reference instead of pointer
+//todo change to return reference instead of pointer
 const std::array<sf::Vector2f, 4>* PhysicsState::GetWorldCorners() const
 {
 	return &m_collisionComp->GetWorldCorners();
 }
 
+//todo change to return reference instead of pointer
 const std::vector<sf::Vector2i>* PhysicsState::GetCollisionSpaceCoordinates() const
 {
 	return &m_collisionSpaceCoords;

@@ -13,7 +13,7 @@ CollisionComponent::CollisionComponent(sf::Vector2f newPos, float newRotInRad, c
 
 CollisionComponent::~CollisionComponent(){}
 
-CollisionComponent& CollisionComponent::operator=(const CollisionComponent & other)
+CollisionComponent& CollisionComponent::operator=(const CollisionComponent& other)
 {
 	m_localCorners = other.m_localCorners;
 	m_worldCorners = other.m_worldCorners;

@@ -39,8 +39,8 @@ public:
 	float GetRotationInDegrees() const;
 	float GetRotationInRadians() const;
 
-	virtual const std::array<sf::Vector2f, 4>* GetWorldCorners() const;
-	
+	const std::array<sf::Vector2f, 4>* GetWorldCorners() const;
+	const std::vector<sf::Vector2i>* GetCollisionSpaceCoords() const;
 	void SetRotation(float degrees);
 	void SetPosition(sf::Vector2f newPos);
 

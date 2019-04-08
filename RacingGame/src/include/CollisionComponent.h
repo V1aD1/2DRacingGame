@@ -3,6 +3,7 @@
 class CollisionComponent
 {
 private:
+	//todo make to variable corner length
 	std::array<sf::Vector2f, 4> m_localCorners;
 	std::array<sf::Vector2f, 4> m_worldCorners;
 

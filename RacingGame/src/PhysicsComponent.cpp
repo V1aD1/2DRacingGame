@@ -83,6 +83,11 @@ void PhysicsComponent::ApplyFriction(float dtTimeMilli){
 	ApplySlowDownForce(m_frictionForce, dtTimeMilli);
 }
 
+const std::vector<sf::Vector2i>* PhysicsComponent::GetCollisionSpaceCoords()
+{
+	return m_currState.GetCollisionSpaceCoordinates();
+}
+
 void PhysicsComponent::ApplySlowDownForce(float forceMag, float dtTimeMilli){
 
 	auto newStateMomentum = m_newState.GetMomentum();

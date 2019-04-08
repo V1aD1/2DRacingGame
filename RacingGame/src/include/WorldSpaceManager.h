@@ -8,6 +8,10 @@ class Entity;
 
 class WorldSpaceManager
 {
+private:
+	float cellWidth;
+	float cellHeight;
+
 public:
 	WorldSpaceManager();
 	~WorldSpaceManager();
@@ -18,6 +22,7 @@ public:
 	std::vector<sf::Vector2i> GetCollisionSpaceCoords(const std::vector<sf::Vector2f>& worldCorners);
 	std::vector<const Entity*> GetEntitiesAtCoords(const std::vector<sf::Vector2i>* coords);
 	void ClearWorldSpace();
+	void ClearVariableEntities();
 	void DBG_Draw(sf::RenderWindow& window);
 
 private:
@@ -29,8 +34,6 @@ private:
 
 	//world space will always be divided into 100 cells
 	std::list<const Entity*> worldSpace[10][10];
-	float cellWidth;
-	float cellHeight;
 };
 
 template<typename T>

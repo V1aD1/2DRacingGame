@@ -27,6 +27,8 @@ public:
 	virtual void Update(Entity& entity, float dtMilli) = 0;
 	virtual void Brake(float dtTimeMilli) = 0;
 	virtual void DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli) = 0;
+	
+	const std::vector<sf::Vector2i>* GetCollisionSpaceCoords();
 
 protected:
 	PhysicsState m_newState;

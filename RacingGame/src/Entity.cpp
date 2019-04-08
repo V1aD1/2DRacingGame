@@ -61,8 +61,6 @@ void Entity::SetPosition(sf::Vector2f newPos)
 	m_position = newPos;
 }
 
-//must be reference since we want to return null of 
-//entity has no collision component
 const std::array<sf::Vector2f, 4>* Entity::GetWorldCorners() const
 {
 	if (m_collision)
@@ -70,6 +68,15 @@ const std::array<sf::Vector2f, 4>* Entity::GetWorldCorners() const
 
 	return nullptr;
 }
+
+const std::vector<sf::Vector2i>* Entity::GetCollisionSpaceCoords() const
+{
+	if (m_physics)
+		return m_physics->GetCollisionSpaceCoords();
+	
+	return nullptr;
+}
+
 
 void Entity::SetRotation(float newRotInDegrees)
 {
