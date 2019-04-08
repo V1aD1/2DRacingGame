@@ -20,7 +20,7 @@ WorldSpaceManager::~WorldSpaceManager()
 {
 }
 
-void WorldSpaceManager::PopulateCollisionSpace()
+void WorldSpaceManager::UpdateAllEntitiesInCollSpace()
 {
 	//todo since static objects don't move, 
 	//they shouldn't be added and removed from
@@ -33,6 +33,13 @@ void WorldSpaceManager::PopulateCollisionSpace()
 		AddEntityToCollisionSpace(entity);
 	}
 
+	for (auto entity : G_VARIABLEOBJECTS) {
+		AddEntityToCollisionSpace(entity);
+	}
+}
+
+void WorldSpaceManager::UpdateVariableEntitiesInCollSpace()
+{
 	for (auto entity : G_VARIABLEOBJECTS) {
 		AddEntityToCollisionSpace(entity);
 	}
@@ -236,7 +243,11 @@ void WorldSpaceManager::ClearWorldSpace()
 
 void WorldSpaceManager::ClearVariableEntities() {
 	for (auto entity : G_VARIABLEOBJECTS) {
-		//entity.
+		auto coords = entity->GetPrevCollisionSpaceCoords();
+
+		for (auto coord : *coords) {
+			worldSpace[coord.x][coord.y].remove(entity);
+		}
 	}
 }
 

@@ -62,6 +62,8 @@ int main()
 		return 0;
 	}
 
+	worldSpaceManager.UpdateAllEntitiesInCollSpace();
+
 	while (window.isOpen())
 	{
 		sf::Time timePassed = clock.restart();
@@ -77,7 +79,7 @@ int main()
 
 		window.clear();
 		
-		worldSpaceManager.PopulateCollisionSpace();
+		worldSpaceManager.UpdateVariableEntitiesInCollSpace();
 
 		//update static objects before variable objects
 		for (auto staticObjects : G_STATICOBJECTS) {
@@ -98,7 +100,8 @@ int main()
 		window.draw(fpsText);
 		window.display();
 		
-		worldSpaceManager.ClearWorldSpace();
+		worldSpaceManager.ClearVariableEntities();
+		//worldSpaceManager.ClearWorldSpace();
 	}
 
 	return 0;

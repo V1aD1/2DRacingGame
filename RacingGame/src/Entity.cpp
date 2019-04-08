@@ -69,7 +69,7 @@ const std::array<sf::Vector2f, 4>* Entity::GetWorldCorners() const
 	return nullptr;
 }
 
-const std::vector<sf::Vector2i>* Entity::GetCollisionSpaceCoords() const
+const std::vector<sf::Vector2i>* Entity::GetPrevCollisionSpaceCoords() const
 {
 	if (m_physics)
 		return m_physics->GetCollisionSpaceCoords();

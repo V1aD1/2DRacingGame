@@ -16,7 +16,8 @@ public:
 	WorldSpaceManager();
 	~WorldSpaceManager();
 
-	void PopulateCollisionSpace();
+	void UpdateAllEntitiesInCollSpace();
+	void UpdateVariableEntitiesInCollSpace();
 
 	void AddEntityToCollisionSpace(const Entity* entity);
 	std::vector<sf::Vector2i> GetCollisionSpaceCoords(const std::vector<sf::Vector2f>& worldCorners);
