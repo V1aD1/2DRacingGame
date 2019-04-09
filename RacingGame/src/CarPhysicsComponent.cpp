@@ -56,7 +56,8 @@ void CarPhysicsComponent::Brake(float dtTimeMilli)
 	ApplySlowDownForce(car_brakeForce, dtTimeMilli);
 }
 
-void CarPhysicsComponent::DBG_Slide(Entity & entity, const sf::Vector2f & dir, float dtMilli)
+//todo doesn't clear cells correctly when used
+void CarPhysicsComponent::DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli)
 {
 	//halting all movement on the car
 	m_newState.SetMomentum(sf::Vector2f(0.0f, 0.0f));

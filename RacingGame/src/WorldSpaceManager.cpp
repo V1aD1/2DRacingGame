@@ -171,6 +171,11 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::
 
 					auto nextShapeCorner = (i == (worldCorners.size() - 1)) ? worldCorners[0] : worldCorners[i + 1];
 
+					//no collision detection if outside world space
+					if (nextShapeCorner.x < 0.0f || nextShapeCorner.x > screenLen)
+						continue;
+					if (nextShapeCorner.y < 0.0f || nextShapeCorner.y >screenHeight)
+						continue;
 
 					//checking lines that make up cell in counter clockwise
 					if (CheckLineCollision(sf::Vector2f(currentCell.x*cellWidth, currentCell.y*cellHeight),
