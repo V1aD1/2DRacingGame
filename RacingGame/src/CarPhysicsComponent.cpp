@@ -56,34 +56,10 @@ void CarPhysicsComponent::Brake(float dtTimeMilli)
 	ApplySlowDownForce(car_brakeForce, dtTimeMilli);
 }
 
-//todo doesn't clear cells correctly when used
 void CarPhysicsComponent::DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli)
 {
 	//halting all movement on the car
 	m_newState.SetMomentum(sf::Vector2f(0.0f, 0.0f));
 	m_newState.SetWorldPos(m_newState.GetWorldPosition() + dir * dtMilli / 1000.0f * car_dbg_slideSpeed);
-	m_newState.Update(dtMilli, car_maxMomentum);
-
-	m_prevState = m_currState;
-	m_currState = m_newState;
-
-	/////////DEBUG///////////////////////////
-	auto pCorners = m_prevState.GetWorldCorners();
-	auto cCorners = m_currState.GetWorldCorners();
-
-	auto pcoords = std::vector<sf::Vector2i>();
-	auto ccoords = std::vector<sf::Vector2i>();
-	
-	for (auto corner : *pCorners)
-		pcoords.push_back(sf::Vector2i(corner.x / 150, corner.y / 70));
-	for (auto corner : *cCorners)
-		ccoords.push_back(sf::Vector2i(corner.x / 150, corner.y / 70));
-
-	if (pcoords != ccoords)
-	{
-		int a = 0;
-		a++;
-	}
-	//////////////////////////////////////////
-		
+	m_newState.Update(dtMilli, car_maxMomentum);		
 }
