@@ -84,14 +84,14 @@ void PhysicsComponent::ApplyFriction(float dtTimeMilli){
 	ApplySlowDownForce(m_frictionForce, dtTimeMilli);
 }
 
-const std::vector<sf::Vector2i>* PhysicsComponent::GetCollisionSpaceCoords()
+const std::vector<sf::Vector2i>& PhysicsComponent::GetCollisionSpaceCoords()
 {
-	return &m_currState.GetCollisionSpaceCoordinates();
+	return m_currState.GetCollisionSpaceCoordinates();
 }
 
-const std::vector<sf::Vector2i>* PhysicsComponent::GetPrevCollisionSpaceCoords()
+const std::vector<sf::Vector2i>& PhysicsComponent::GetPrevCollisionSpaceCoords()
 {
-	return &m_prevState.GetCollisionSpaceCoordinates();
+	return m_prevState.GetCollisionSpaceCoordinates();
 }
 
 void PhysicsComponent::ApplySlowDownForce(float forceMag, float dtTimeMilli){
