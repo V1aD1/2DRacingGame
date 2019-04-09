@@ -72,16 +72,14 @@ void PhysicsState::ApplyForce(sf::Vector2f force)
 	m_momentum += force;
 }
 
-//todo change to return reference instead of pointer
-const std::array<sf::Vector2f, 4>* PhysicsState::GetWorldCorners() const
+const std::array<sf::Vector2f, 4>& PhysicsState::GetWorldCorners() const
 {
-	return &m_collisionComp->GetWorldCorners();
+	return m_collisionComp->GetWorldCorners();
 }
 
-//todo change to return reference instead of pointer
-const std::vector<sf::Vector2i>* PhysicsState::GetCollisionSpaceCoordinates() const
+const std::vector<sf::Vector2i>& PhysicsState::GetCollisionSpaceCoordinates() const
 {
-	return &m_collisionSpaceCoords;
+	return m_collisionSpaceCoords;
 }
 
 sf::Vector2f PhysicsState::GetWorldPosition()

@@ -28,7 +28,6 @@ public:
 	CollisionComponent* m_collision;
 
 public:
-	Entity();
 	Entity(sf::Vector2f position, float rotDeg);
 	Entity(sf::Vector2f position, float rotDeg, InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics, CollisionComponent* collision);
 	~Entity();

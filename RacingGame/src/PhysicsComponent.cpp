@@ -50,7 +50,7 @@ bool PhysicsComponent::CollisionDetected(Entity& entity) {
 		if (objCornersPtr) {
 			std::array<sf::Vector2f, 4> objCorners = *objCornersPtr;
 
-			for (auto &corner : *(m_newState.GetWorldCorners())) {
+			for (auto corner : m_newState.GetWorldCorners()) {
 
 				bool collision = true;
 
@@ -86,12 +86,12 @@ void PhysicsComponent::ApplyFriction(float dtTimeMilli){
 
 const std::vector<sf::Vector2i>* PhysicsComponent::GetCollisionSpaceCoords()
 {
-	return m_currState.GetCollisionSpaceCoordinates();
+	return &m_currState.GetCollisionSpaceCoordinates();
 }
 
 const std::vector<sf::Vector2i>* PhysicsComponent::GetPrevCollisionSpaceCoords()
 {
-	return m_prevState.GetCollisionSpaceCoordinates();
+	return &m_prevState.GetCollisionSpaceCoordinates();
 }
 
 void PhysicsComponent::ApplySlowDownForce(float forceMag, float dtTimeMilli){

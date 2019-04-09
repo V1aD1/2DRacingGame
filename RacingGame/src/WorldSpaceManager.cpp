@@ -218,10 +218,10 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::
 	return pairs;
 }
 
-std::vector<const Entity*> WorldSpaceManager::GetEntitiesAtCoords(const std::vector<sf::Vector2i>* coords)
+std::vector<const Entity*> WorldSpaceManager::GetEntitiesAtCoords(const std::vector<sf::Vector2i>& coords)
 {
 	std::vector<const Entity*> entitiesToRet = std::vector<const Entity*>();
-	for (auto coord : *coords) {
+	for (auto coord : coords) {
 		for (auto entityToAdd : worldSpace[coord.x][coord.y]) {
 			AddToVectorNoDuplicates(entitiesToRet, entityToAdd);
 		}

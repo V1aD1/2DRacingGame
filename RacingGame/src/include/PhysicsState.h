@@ -29,8 +29,8 @@ public:
 	void ApplyForce(sf::Vector2f force);
 
 public:
-	const std::array<sf::Vector2f, 4>* GetWorldCorners() const;
-	const std::vector<sf::Vector2i>* GetCollisionSpaceCoordinates() const;
+	const std::array<sf::Vector2f, 4>& GetWorldCorners() const;
+	const std::vector<sf::Vector2i>& GetCollisionSpaceCoordinates() const;
 	sf::Vector2f GetWorldPosition();
 	sf::Vector2f GetMomentum();
 	float GetRotInRad();

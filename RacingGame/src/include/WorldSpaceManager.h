@@ -21,7 +21,7 @@ public:
 
 	void AddEntityToCollisionSpace(const Entity* entity);
 	std::vector<sf::Vector2i> GetCollisionSpaceCoords(const std::vector<sf::Vector2f>& worldCorners);
-	std::vector<const Entity*> GetEntitiesAtCoords(const std::vector<sf::Vector2i>* coords);
+	std::vector<const Entity*> GetEntitiesAtCoords(const std::vector<sf::Vector2i>& coords);
 	void ClearWorldSpace();
 	void ClearVariableEntities();
 	void DBG_Draw(sf::RenderWindow& window);
