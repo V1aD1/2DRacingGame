@@ -66,4 +66,24 @@ void CarPhysicsComponent::DBG_Slide(Entity& entity, const sf::Vector2f& dir, flo
 
 	m_prevState = m_currState;
 	m_currState = m_newState;
+
+	/////////DEBUG///////////////////////////
+	auto pCorners = m_prevState.GetWorldCorners();
+	auto cCorners = m_currState.GetWorldCorners();
+
+	auto pcoords = std::vector<sf::Vector2i>();
+	auto ccoords = std::vector<sf::Vector2i>();
+	
+	for (auto corner : *pCorners)
+		pcoords.push_back(sf::Vector2i(corner.x / 150, corner.y / 70));
+	for (auto corner : *cCorners)
+		ccoords.push_back(sf::Vector2i(corner.x / 150, corner.y / 70));
+
+	if (pcoords != ccoords)
+	{
+		int a = 0;
+		a++;
+	}
+	//////////////////////////////////////////
+		
 }
