@@ -48,10 +48,17 @@ int main()
 
 	EventHandler eventHandler = EventHandler();
 	Car car = Car(sf::Vector2f(40.0f, 50.0f));
-	Square square = Square(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f);
+	//Square square = Square(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f);
 
 	G_VARIABLEOBJECTS.push_back(&car);
-	G_STATICOBJECTS.push_back(&square);
+	//G_STATICOBJECTS.push_back(&square);
+
+	for (int j = 1; j < 6; j++) {
+		for (int i = 1; i < 6; i++) {
+			auto square1 = new Square(50, sf::Vector2f(300 * j + 75, 140 * i + 35), 0.0f);
+			G_STATICOBJECTS.push_back(square1);
+		}
+	}
 
 	if (!Setup(window, font, fpsText)) {
 		std::cout << "Problems encountered in setup, terminating program!" << std::endl;
