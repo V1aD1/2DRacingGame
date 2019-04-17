@@ -14,9 +14,9 @@ static const sf::Int32 fpsRefreshMs = 500;
 //global variables
 extern const int screenLen = 1500, screenHeight = 700;
 
-//todo shouldn't objects vectors be in WorldSpaceManager?
-std::vector<Entity*> G_STATICOBJECTS;
-std::vector<Entity*> G_VARIABLEOBJECTS;
+extern std::vector<Entity*> G_STATICOBJECTS;
+extern std::vector<Entity*> G_VARIABLEOBJECTS;
+
 WorldSpaceManager worldSpaceManager = WorldSpaceManager();
 
 bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText) {

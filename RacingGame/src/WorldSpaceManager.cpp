@@ -5,8 +5,8 @@
 #include "include/MathCommon.h"
 
 extern const int screenLen, screenHeight;
-extern std::vector<Entity*> G_STATICOBJECTS;
-extern std::vector<Entity*> G_VARIABLEOBJECTS;
+std::vector<Entity*> G_STATICOBJECTS;
+std::vector<Entity*> G_VARIABLEOBJECTS;
 
 WorldSpaceManager::WorldSpaceManager()
 {
