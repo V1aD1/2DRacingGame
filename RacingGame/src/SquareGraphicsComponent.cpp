@@ -12,7 +12,7 @@ void SquareGraphicsComponent::Update(const Entity& entity, sf::RenderWindow& win
 		m_shape->setPosition(entity.GetPosition());
 	}
 
-	float circleRad = 8.0f;
+	float circleRad = 4.0f;
 
 	window.draw(*m_shape);
 
