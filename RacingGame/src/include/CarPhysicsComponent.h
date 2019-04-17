@@ -12,7 +12,7 @@ public:
 	static const float car_maxMomentum;
 
 public:
-	CarPhysicsComponent(sf::Vector2f pos, float rotRad, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied);
+	CarPhysicsComponent(sf::Vector2f pos, float rotRad, const std::vector<sf::Vector2f>& cornersWithoutRotationApplied);
 	~CarPhysicsComponent();
 
 	void Update(Entity& entity, float dtMilli);

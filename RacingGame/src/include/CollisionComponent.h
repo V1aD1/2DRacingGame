@@ -4,11 +4,11 @@ class CollisionComponent
 {
 private:
 	//todo make to variable corner length
-	std::array<sf::Vector2f, 4> m_localCorners;
+	std::vector<sf::Vector2f> m_localCorners;
 	std::array<sf::Vector2f, 4> m_worldCorners;
 
 public:
-	CollisionComponent(sf::Vector2f newPos, float newRotInRad, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied);
+	CollisionComponent(sf::Vector2f newPos, float newRotInRad, const std::vector<sf::Vector2f>& cornersWithoutRotationApplied);
 	~CollisionComponent();
 
 	CollisionComponent& operator=(const CollisionComponent& other);

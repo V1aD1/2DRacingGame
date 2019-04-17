@@ -9,7 +9,7 @@ const float CarPhysicsComponent::car_frictionForce = 0.1f;
 const float CarPhysicsComponent::car_dbg_slideSpeed = 150.0f;
 const float CarPhysicsComponent::car_maxMomentum = 0.3f;
 
-CarPhysicsComponent::CarPhysicsComponent(sf::Vector2f pos, float rotRad, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied) :
+CarPhysicsComponent::CarPhysicsComponent(sf::Vector2f pos, float rotRad, const std::vector<sf::Vector2f>& cornersWithoutRotationApplied) :
 						PhysicsComponent(pos, 
 										rotRad, 
 										cornersWithoutRotationApplied, 

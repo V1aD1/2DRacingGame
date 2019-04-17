@@ -5,7 +5,7 @@
 
 extern WorldSpaceManager worldSpaceManager;
 
-PhysicsState::PhysicsState(sf::Vector2f pos, float rotRad, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied) {
+PhysicsState::PhysicsState(sf::Vector2f pos, float rotRad, const std::vector<sf::Vector2f>& cornersWithoutRotationApplied) {
 	m_worldPos = pos;
 	m_rotInRad = rotRad;
 	m_collisionComp = new CollisionComponent(m_worldPos, m_rotInRad, cornersWithoutRotationApplied);

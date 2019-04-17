@@ -24,14 +24,14 @@ Entity* EntityFactory::CreateSquare(float sideLen, sf::Vector2f pos, float rotDe
 	shape->setOrigin(halfSideLen, halfSideLen);
 	shape->setFillColor(sf::Color::Red);
 
-	std::array<sf::Vector2f, 4> localCorners;
+	std::vector<sf::Vector2f> localCorners;
 	std::array<sf::Vector2f, 4> worldCorners;
 
 
-	localCorners[0] = sf::Vector2f(-halfSideLen, -halfSideLen);
-	localCorners[1] = sf::Vector2f(halfSideLen, -halfSideLen);
-	localCorners[2] = sf::Vector2f(halfSideLen, halfSideLen);
-	localCorners[3] = sf::Vector2f(-halfSideLen, halfSideLen);
+	localCorners.push_back(sf::Vector2f(-halfSideLen, -halfSideLen));
+	localCorners.push_back(sf::Vector2f(halfSideLen, -halfSideLen));
+	localCorners.push_back(sf::Vector2f(halfSideLen, halfSideLen));
+	localCorners.push_back(sf::Vector2f(-halfSideLen, halfSideLen));
 
 	auto graphics = new SquareGraphicsComponent(shape);
 	auto collision = new CollisionComponent(pos, MathCommon::DegreesToRadians(rotDeg), localCorners);
@@ -53,11 +53,11 @@ Entity * EntityFactory::CreateCar(sf::Vector2f startPos)
 
 
 	//create corners for physics component
-	std::array<sf::Vector2f, 4> corners = std::array<sf::Vector2f, 4>();
-	corners[0] = sf::Vector2f(-size.x / 2.0f, -size.y / 2.0f);
-	corners[1] = sf::Vector2f(size.x / 2.0f, -size.y / 2.0f);
-	corners[2] = sf::Vector2f(size.x / 2.0f, size.y / 2.0f);
-	corners[3] = sf::Vector2f(-size.x / 2.0f, size.y / 2.0f);
+	std::vector<sf::Vector2f> corners = std::vector<sf::Vector2f>();
+	corners.push_back(sf::Vector2f(-size.x / 2.0f, -size.y / 2.0f));
+	corners.push_back(sf::Vector2f(size.x / 2.0f, -size.y / 2.0f));
+	corners.push_back(sf::Vector2f(size.x / 2.0f, size.y / 2.0f));
+	corners.push_back(sf::Vector2f(-size.x / 2.0f, size.y / 2.0f));
 
 	auto input = new InputComponent();
 	auto physics = new CarPhysicsComponent(startPos, MathCommon::DegreesToRadians(0.0f), corners);

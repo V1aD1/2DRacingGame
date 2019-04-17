@@ -4,7 +4,7 @@
 #include "include/CollisionComponent.h"
 #include "include/Entity.h"
 
-CollisionComponent::CollisionComponent(sf::Vector2f newPos, float newRotInRad, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied)
+CollisionComponent::CollisionComponent(sf::Vector2f newPos, float newRotInRad, const std::vector<sf::Vector2f>& cornersWithoutRotationApplied)
 {
 	m_localCorners = cornersWithoutRotationApplied;
 	Update(newPos, newRotInRad);

@@ -10,7 +10,7 @@ class PhysicsComponent
 public:
 	PhysicsComponent(sf::Vector2f pos, 
 					float rotRad,
-					const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied,
+					const std::vector<sf::Vector2f>& cornersWithoutRotationApplied,
 					float maxMomentum,
 					float rotSpeed,
 					float acceleration,

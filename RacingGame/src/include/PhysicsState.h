@@ -16,7 +16,7 @@ private:
 	std::vector<sf::Vector2i> m_collisionSpaceCoords;
 
 public:
-	PhysicsState(sf::Vector2f pos, float rotRad, const std::array<sf::Vector2f, 4>& cornersWithoutRotationApplied);
+	PhysicsState(sf::Vector2f pos, float rotRad, const std::vector<sf::Vector2f>& cornersWithoutRotationApplied);
 	~PhysicsState();
 
 	void Update(float dtMilli, float maxMomentum);
