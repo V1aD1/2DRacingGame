@@ -72,7 +72,7 @@ void PhysicsState::ApplyForce(sf::Vector2f force)
 	m_momentum += force;
 }
 
-const std::array<sf::Vector2f, 4>& PhysicsState::GetWorldCorners() const
+const std::vector<sf::Vector2f>& PhysicsState::GetWorldCorners() const
 {
 	return m_collisionComp->GetWorldCorners();
 }

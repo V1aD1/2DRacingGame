@@ -23,6 +23,9 @@ CollisionComponent& CollisionComponent::operator=(const CollisionComponent& othe
 //Updates m_worldCorners to latest positions
 void CollisionComponent::Update(sf::Vector2f newPos, float newRotInRad)
 {
+	if(m_worldCorners.size() != m_localCorners.size())
+		m_worldCorners.resize(m_localCorners.size());
+
 	//update m_worldCoords
 	for (int i = 0; i < m_localCorners.size(); i++) {
 		m_worldCorners[i] = m_localCorners[i] + newPos;
@@ -40,7 +43,7 @@ void CollisionComponent::Update(sf::Vector2f newPos, float newRotInRad)
 	}
 }
 
-const std::array<sf::Vector2f, 4>& CollisionComponent::GetWorldCorners() const
+const std::vector<sf::Vector2f>& CollisionComponent::GetWorldCorners() const
 {
 	return m_worldCorners;
 }

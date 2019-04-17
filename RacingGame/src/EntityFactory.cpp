@@ -25,7 +25,7 @@ Entity* EntityFactory::CreateSquare(float sideLen, sf::Vector2f pos, float rotDe
 	shape->setFillColor(sf::Color::Red);
 
 	std::vector<sf::Vector2f> localCorners;
-	std::array<sf::Vector2f, 4> worldCorners;
+	std::vector<sf::Vector2f> worldCorners;
 
 
 	localCorners.push_back(sf::Vector2f(-halfSideLen, -halfSideLen));

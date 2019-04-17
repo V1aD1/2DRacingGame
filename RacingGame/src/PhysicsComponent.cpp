@@ -48,7 +48,7 @@ bool PhysicsComponent::CollisionDetected(Entity& entity) {
 		auto objCornersPtr = object->GetWorldCorners();
 
 		if (objCornersPtr) {
-			std::array<sf::Vector2f, 4> objCorners = *objCornersPtr;
+			std::vector<sf::Vector2f> objCorners = *objCornersPtr;
 
 			for (auto corner : m_newState.GetWorldCorners()) {
 
