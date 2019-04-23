@@ -58,12 +58,19 @@ int main()
 	//G_STATICOBJECTS.push_back(square);
 
 
-	for (int j = 1; j < 70; j++) {
+	for (int j = 1; j < 50; j++) {
 		for (int i = 1; i < 30; i++) {
 			auto square1 = entityFactory.CreateSquare(10, sf::Vector2f(20 * j + 50, 20 * i + 50), 0.0f);
 			G_STATICOBJECTS.push_back(square1);
 		}
 	}
+
+	/*for (int j = 1; j < 6; j++) {
+		for (int i = 1; i < 6; i++) {
+			auto square1 = entityFactory.CreateSquare(10, sf::Vector2f(20 * j + 50, 20 * i + 50), 0.0f);
+			G_STATICOBJECTS.push_back(square1);
+		}
+	}*/
 
 	if (!Setup(window, font, fpsText)) {
 		std::cout << "Problems encountered in setup, terminating program!" << std::endl;
@@ -98,7 +105,7 @@ int main()
 			variableObjects->Update(window, dtMillis, eventHandler);
 		}
 
-		//worldSpaceManager.DBG_Draw(window);
+		worldSpaceManager.DBG_Draw(window);
 
 		if ((timeSinceLastFpsLog += dtMillis) > fpsRefreshMs) {
 			fpsText.setString(std::to_string(static_cast<int>(1000000.0f / dtMicros)));
