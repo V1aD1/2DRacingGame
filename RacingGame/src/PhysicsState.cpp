@@ -1,3 +1,4 @@
+#pragma once
 #include "include/PhysicsState.h"
 #include "include/MathCommon.h"
 #include "include/Entity.h"
