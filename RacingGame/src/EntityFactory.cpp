@@ -4,6 +4,7 @@
 #include "include/CarGraphicsComponent.h"
 #include "include/CarPhysicsComponent.h"
 #include "include/StaticCollisionComponent.h"
+#include "include/VariableCollisionComponent.h"
 #include "include/MathCommon.h"
 
 const float EntityFactory::c_car_length = 40.0f;
@@ -63,7 +64,7 @@ Entity * EntityFactory::CreateCar(sf::Vector2f startPos)
 	auto input = new InputComponent();
 	auto physics = new CarPhysicsComponent(startPos, MathCommon::DegreesToRadians(0.0f), corners);
 	auto graphics = new CarGraphicsComponent(shape);
-	auto collision = new CollisionComponent(startPos, 0.0f, corners);
+	auto collision = new VariableCollisionComponent(startPos, 0.0f, corners);
 
 	return new Entity(startPos, 0.0f, input, physics, graphics, collision);
 }

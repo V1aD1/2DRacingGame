@@ -2,13 +2,14 @@
 #include "include/MathCommon.h"
 #include "include/Entity.h"
 #include "include/WorldSpaceManager.h"
+#include "include/VariableCollisionComponent.h"
 
 extern WorldSpaceManager worldSpaceManager;
 
 PhysicsState::PhysicsState(sf::Vector2f pos, float rotRad, const std::vector<sf::Vector2f>& cornersWithoutRotationApplied) {
 	m_worldPos = pos;
 	m_rotInRad = rotRad;
-	m_collisionComp = new CollisionComponent(m_worldPos, m_rotInRad, cornersWithoutRotationApplied);
+	m_collisionComp = new VariableCollisionComponent(m_worldPos, m_rotInRad, cornersWithoutRotationApplied);
 }
 
 PhysicsState::~PhysicsState() {}
