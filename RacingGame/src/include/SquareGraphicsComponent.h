@@ -9,6 +9,6 @@ class SquareGraphicsComponent : public GraphicsComponent
 public:
 	SquareGraphicsComponent(sf::Shape* shape);
 	virtual ~SquareGraphicsComponent();
-	virtual void Update(const Entity& entity, sf::RenderWindow & window);
+	virtual void Update(const Entity& entity, sf::RenderWindow & window) override;
 };
 

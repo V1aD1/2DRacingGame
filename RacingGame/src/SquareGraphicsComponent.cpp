@@ -18,6 +18,7 @@ void SquareGraphicsComponent::Update(const Entity& entity, sf::RenderWindow& win
 
 	for (auto corner : *(entity.GetWorldCorners()))
 	{
+		//todo make these squares not get allocated every frame
 		/*auto circle = sf::CircleShape(circleRad);
 		circle.setOrigin(circleRad, circleRad);
 		circle.setPosition(corner);

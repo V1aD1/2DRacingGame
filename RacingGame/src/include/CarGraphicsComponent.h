@@ -9,6 +9,6 @@ public:
 	CarGraphicsComponent(sf::Shape* shape);
 	virtual ~CarGraphicsComponent();
 
-	virtual void Update(const Entity& entity, sf::RenderWindow & window);
+	virtual void Update(const Entity& entity, sf::RenderWindow & window) override;
 };
 

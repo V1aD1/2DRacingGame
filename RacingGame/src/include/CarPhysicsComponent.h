@@ -15,8 +15,8 @@ public:
 	CarPhysicsComponent(sf::Vector2f pos, float rotRad, const std::vector<sf::Vector2f>& cornersWithoutRotationApplied);
 	~CarPhysicsComponent();
 
-	void Update(Entity& entity, float dtMilli);
-	void Brake(float dtTimeMilli);
-	void DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli);
+	void Update(Entity& entity, float dtMilli) override;
+	void Brake(float dtTimeMilli) override;
+	void DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli) override;
 };
 
