@@ -182,6 +182,7 @@
     <ClInclude Include="src\include\EventHandler.h" />
     <ClInclude Include="src\include\Timer.h" />
     <ClInclude Include="src\include\WorldSpaceManager.h" />
+    <ClInclude Include="src\include\StaticCollisionComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

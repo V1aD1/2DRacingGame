@@ -3,6 +3,7 @@
 #include "include/SquareGraphicsComponent.h"
 #include "include/CarGraphicsComponent.h"
 #include "include/CarPhysicsComponent.h"
+#include "include/StaticCollisionComponent.h"
 #include "include/MathCommon.h"
 
 const float EntityFactory::c_car_length = 40.0f;
@@ -34,7 +35,7 @@ Entity* EntityFactory::CreateSquare(float sideLen, sf::Vector2f pos, float rotDe
 	localCorners.push_back(sf::Vector2f(-halfSideLen, halfSideLen));
 
 	auto graphics = new SquareGraphicsComponent(shape);
-	auto collision = new CollisionComponent(pos, MathCommon::DegreesToRadians(rotDeg), localCorners);
+	auto collision = new StaticCollisionComponent(pos, MathCommon::DegreesToRadians(rotDeg), localCorners);
 
 	return new Entity(pos, rotDeg, nullptr, nullptr, graphics, collision);
 }

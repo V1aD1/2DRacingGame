@@ -107,5 +107,8 @@
     <ClInclude Include="src\include\WorldSpaceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\include\StaticCollisionComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

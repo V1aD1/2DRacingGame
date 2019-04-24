@@ -1,4 +1,5 @@
 #pragma once
+#include <SFML/Graphics.hpp>
 
 class CollisionComponent
 {
@@ -10,9 +11,9 @@ public:
 	CollisionComponent(sf::Vector2f newPos, float newRotInRad, const std::vector<sf::Vector2f>& cornersWithoutRotationApplied);
 	~CollisionComponent();
 
-	CollisionComponent& operator=(const CollisionComponent& other);
+	virtual CollisionComponent& operator=(const CollisionComponent& other);
 
-	void Update(sf::Vector2f newPos, float newRotInRad);
-	const std::vector<sf::Vector2f>& GetWorldCorners() const;
+	virtual void Update(sf::Vector2f newPos, float newRotInRad);
+	virtual const std::vector<sf::Vector2f>& GetWorldCorners() const;
 };
 
