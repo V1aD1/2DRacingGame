@@ -12,16 +12,16 @@ void SquareGraphicsComponent::Update(const Entity& entity, sf::RenderWindow& win
 		m_shape->setPosition(entity.GetPosition());
 	}
 
-	float circleRad = 4.0f;
+	float circleRad = 8.0f;
 
 	window.draw(*m_shape);
 
 	for (auto corner : *(entity.GetWorldCorners()))
 	{
 		//todo make these squares not get allocated every frame
-		/*auto circle = sf::CircleShape(circleRad);
+		auto circle = sf::CircleShape(circleRad);
 		circle.setOrigin(circleRad, circleRad);
 		circle.setPosition(corner);
-		window.draw(circle);*/
+		window.draw(circle);
 	}
 }

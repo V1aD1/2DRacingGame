@@ -3,7 +3,13 @@
 #include "include/CarGraphicsComponent.h"
 #include "include/Entity.h"
 
-CarGraphicsComponent::CarGraphicsComponent(sf::Shape* shape) : GraphicsComponent(shape){}
+CarGraphicsComponent::CarGraphicsComponent(sf::Shape* shape) : GraphicsComponent(shape){
+	for (int i = 0; i < 4; i++) {
+		auto circle = sf::CircleShape(circleRad);
+		circle.setOrigin(circleRad, circleRad);
+		cornerCircles.push_back(circle);
+	}
+}
 
 CarGraphicsComponent::~CarGraphicsComponent(){}
 
@@ -15,16 +21,11 @@ void CarGraphicsComponent::Update(const Entity& entity, sf::RenderWindow& window
 		window.draw(*m_shape);
 	}
 
-	float circleRad = 2.0f;
-
 	auto entityCorners = entity.GetWorldCorners();
-	if (entityCorners) {
-		for (auto corner : *entityCorners)
-		{
-			auto circle = sf::CircleShape(circleRad);
-			circle.setOrigin(circleRad, circleRad);
-			circle.setPosition(corner);
-			window.draw(circle);
+	if (entityCorners && entityCorners->size() == 4) {
+		for (int i = 0; i < 4; i++) {
+			cornerCircles[i].setPosition((*entityCorners)[i]);
+			window.draw(cornerCircles[i]);
 		}
 	}
 }
