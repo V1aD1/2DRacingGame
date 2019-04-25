@@ -52,21 +52,14 @@ int main()
 	EntityFactory entityFactory = EntityFactory();
 	EventHandler eventHandler = EventHandler();
 	auto car = entityFactory.CreateCar(sf::Vector2f(40.0f, 50.0f));
-	//auto square = entityFactory.CreateSquare(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f);
+	auto square = entityFactory.CreateSquare(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f);
 
 	G_VARIABLEOBJECTS.push_back(car);
-	//G_STATICOBJECTS.push_back(square);
+	G_STATICOBJECTS.push_back(square);
 
 
-	for (int j = 1; j < 50; j++) {
+	/*for (int j = 1; j < 50; j++) {
 		for (int i = 1; i < 30; i++) {
-			auto square1 = entityFactory.CreateSquare(10, sf::Vector2f(20 * j + 50, 20 * i + 50), 0.0f);
-			G_STATICOBJECTS.push_back(square1);
-		}
-	}
-
-	/*for (int j = 1; j < 6; j++) {
-		for (int i = 1; i < 6; i++) {
 			auto square1 = entityFactory.CreateSquare(10, sf::Vector2f(20 * j + 50, 20 * i + 50), 0.0f);
 			G_STATICOBJECTS.push_back(square1);
 		}
@@ -116,7 +109,6 @@ int main()
 		window.display();
 		
 		worldSpaceManager.ClearVariableEntities();
-		//worldSpaceManager.ClearWorldSpace();
 	}
 
 	return 0;
