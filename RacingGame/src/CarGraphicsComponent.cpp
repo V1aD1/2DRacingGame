@@ -21,6 +21,10 @@ void CarGraphicsComponent::Update(const Entity& entity, sf::RenderWindow& window
 		window.draw(*m_shape);
 	}
 
+	DBG_DrawCorners(entity, window);
+}
+
+void CarGraphicsComponent::DBG_DrawCorners(const Entity& entity, sf::RenderWindow& window) {
 	auto entityCorners = entity.GetWorldCorners();
 	if (entityCorners && entityCorners->size() == 4) {
 		for (int i = 0; i < 4; i++) {
