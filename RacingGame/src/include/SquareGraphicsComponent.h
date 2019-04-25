@@ -6,6 +6,10 @@
 
 class SquareGraphicsComponent : public GraphicsComponent
 {
+private:
+	float circleRad = 8.0f;
+	std::vector<sf::CircleShape> cornerCircles;
+
 public:
 	SquareGraphicsComponent(sf::Shape* shape);
 	virtual ~SquareGraphicsComponent();

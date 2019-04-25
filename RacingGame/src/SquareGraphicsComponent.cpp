@@ -1,7 +1,13 @@
 #include "include/SquareGraphicsComponent.h"
 #include "include/Entity.h"
 
-SquareGraphicsComponent::SquareGraphicsComponent(sf::Shape* shape) : GraphicsComponent(shape) {}
+SquareGraphicsComponent::SquareGraphicsComponent(sf::Shape* shape) : GraphicsComponent(shape) {
+	for (int i = 0; i < 4; i++) {
+		auto circle = sf::CircleShape(circleRad);
+		circle.setOrigin(circleRad, circleRad);
+		cornerCircles.push_back(circle);
+	}
+}
 
 SquareGraphicsComponent::~SquareGraphicsComponent(){}
 
@@ -12,16 +18,14 @@ void SquareGraphicsComponent::Update(const Entity& entity, sf::RenderWindow& win
 		m_shape->setPosition(entity.GetPosition());
 	}
 
-	float circleRad = 8.0f;
-
 	window.draw(*m_shape);
 
-	for (auto corner : *(entity.GetWorldCorners()))
-	{
-		//todo make these squares not get allocated every frame
-		auto circle = sf::CircleShape(circleRad);
-		circle.setOrigin(circleRad, circleRad);
-		circle.setPosition(corner);
-		window.draw(circle);
+	auto entityCorners = entity.GetWorldCorners();
+
+	if (entityCorners && entityCorners->size() == 4) {
+		for (int i = 0; i < 4;i++) {
+			cornerCircles[i].setPosition((*entityCorners)[i]);
+			window.draw(cornerCircles[i]);
+		}
 	}
 }
