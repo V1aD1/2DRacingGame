@@ -53,7 +53,7 @@ int main()
 	G_VARIABLEOBJECTS.push_back(&car);
 	//G_STATICOBJECTS.push_back(&square);
 
-	for (int j = 1; j < 70; j++) {
+	for (int j = 1; j < 50; j++) {
 		for (int i = 1; i < 30; i++) {
 			auto square1 = new Square(10, sf::Vector2f(20 * j + 50, 20 * i + 50), 0.0f);
 			G_STATICOBJECTS.push_back(square1);
