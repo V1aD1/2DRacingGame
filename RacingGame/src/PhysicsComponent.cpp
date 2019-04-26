@@ -30,6 +30,7 @@ PhysicsComponent::~PhysicsComponent(){}
 
 ///NOTE: function should only be called after computing 
 ///final position of m_newState
+//todo should really do the line collision here, point collision doesn't quite carry us far enough
 bool PhysicsComponent::CollisionDetected(Entity& entity) {
 
 	//check every object in same cell(s) as newState
