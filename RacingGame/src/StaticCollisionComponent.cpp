@@ -9,7 +9,3 @@ StaticCollisionComponent::~StaticCollisionComponent(){}
 void StaticCollisionComponent::Update(sf::Vector2f newPos, float newRotInRad) {
 	return;
 }
-
-/*const std::vector<sf::Vector2f>& StaticCollisionComponent::GetWorldCorners() const {
-
-}*/

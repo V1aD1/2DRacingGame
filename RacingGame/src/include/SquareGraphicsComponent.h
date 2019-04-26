@@ -7,7 +7,7 @@
 class SquareGraphicsComponent : public GraphicsComponent
 {
 private:
-	float circleRad = 8.0f;
+	float circleRad = 1.0f;
 	std::vector<sf::CircleShape> cornerCircles;
 
 private:

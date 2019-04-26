@@ -20,7 +20,7 @@ void SquareGraphicsComponent::Update(const Entity& entity, sf::RenderWindow& win
 
 	window.draw(*m_shape);
 
-	DBG_DrawCorners(entity, window);
+	//DBG_DrawCorners(entity, window);
 }
 
 void SquareGraphicsComponent::DBG_DrawCorners(const Entity& entity, sf::RenderWindow& window)

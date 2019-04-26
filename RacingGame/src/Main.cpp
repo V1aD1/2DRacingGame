@@ -58,18 +58,18 @@ int main()
 	EntityFactory entityFactory = EntityFactory();
 	EventHandler eventHandler = EventHandler();
 	auto car = entityFactory.CreateCar(sf::Vector2f(40.0f, 50.0f));
-	auto square = entityFactory.CreateSquare(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f);
+	//auto square = entityFactory.CreateSquare(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f);
 
 	G_VARIABLEOBJECTS.push_back(car);
-	G_STATICOBJECTS.push_back(square);
+	//G_STATICOBJECTS.push_back(square);
 
 
-	/*for (int j = 1; j < 50; j++) {
+	for (int j = 1; j < 50; j++) {
 		for (int i = 1; i < 30; i++) {
 			auto square1 = entityFactory.CreateSquare(10, sf::Vector2f(20 * j + 50, 20 * i + 50), 0.0f);
 			G_STATICOBJECTS.push_back(square1);
 		}
-	}*/
+	}
 
 	if (!Setup(window, font, fpsText)) {
 		std::cout << "Problems encountered in setup, terminating program!" << std::endl;
@@ -104,7 +104,7 @@ int main()
 			variableObjects->Update(window, dtMillis, eventHandler);
 		}
 
-		worldSpaceManager.DBG_Draw(window);
+		//worldSpaceManager.DBG_Draw(window);
 
 		if ((timeSinceLastFpsLog += dtMillis) > fpsRefreshMs) {
 			fpsText.setString(std::to_string(static_cast<int>(1000000.0f / dtMicros)));
