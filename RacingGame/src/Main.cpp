@@ -104,7 +104,7 @@ int main()
 			variableObjects->Update(window, dtMillis, eventHandler);
 		}
 
-		//worldSpaceManager.DBG_Draw(window);
+		worldSpaceManager.DBG_Draw(window);
 
 		if ((timeSinceLastFpsLog += dtMillis) > fpsRefreshMs) {
 			fpsText.setString(std::to_string(static_cast<int>(1000000.0f / dtMicros)));

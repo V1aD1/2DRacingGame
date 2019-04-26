@@ -32,8 +32,10 @@ private:
 	static bool CheckLineCollision(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f q1, sf::Vector2f q2);
 	sf::Vector2i ConvertPointToCellCoords(sf::Vector2f point);
 
+private:
 	//world space will always be divided into 100 cells
 	std::list<const Entity*> worldSpace[10][10];
+	sf::RectangleShape cells [10][10];
 };
 
 template<typename T>

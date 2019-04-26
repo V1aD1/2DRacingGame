@@ -13,6 +13,21 @@ WorldSpaceManager::WorldSpaceManager()
 	//determine cell width and height
 	cellWidth = screenLen / 10.0f;
 	cellHeight = screenHeight / 10.0f;
+
+	//there will always be 100 cells in the world
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 10; j++) {
+			cells[i][j] = sf::RectangleShape(sf::Vector2f(cellWidth, cellHeight));
+			cells[i][j].setFillColor(sf::Color(255, 165, 0, 150));
+			cells[i][j].setPosition(sf::Vector2f(i*cellWidth, j*cellHeight));			
+		}
+	}
+
+
+	for (int i = 0; i < 100; i++) {
+
+	}
 }
 
 
@@ -255,12 +270,8 @@ void WorldSpaceManager::DBG_Draw(sf::RenderWindow& window)
 	{
 		for (int j = 0; j < 10; j++) {
 			if (!worldSpace[i][j].empty())
-			{
-				auto shape = sf::RectangleShape(sf::Vector2f(cellWidth, cellHeight));
-				shape.setPosition(sf::Vector2f(i*cellWidth, j*cellHeight));
-				shape.setFillColor(sf::Color(255, 165, 0, 150));
-
-				window.draw(shape);
+			{				
+				window.draw(cells[i][j]);
 			}
 		}
 	}
