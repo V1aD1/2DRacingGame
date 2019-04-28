@@ -3,6 +3,8 @@
 #include "include/SquareGraphicsComponent.h"
 #include "include/CarGraphicsComponent.h"
 #include "include/CarPhysicsComponent.h"
+#include "include/InputComponentP1.h"
+#include "include/InputComponentP2.h"
 #include "include/StaticCollisionComponent.h"
 #include "include/VariableCollisionComponent.h"
 #include "include/MathCommon.h"
@@ -41,13 +43,23 @@ Entity* EntityFactory::CreateSquare(float sideLen, sf::Vector2f pos, float rotDe
 	return new Entity(pos, rotDeg, nullptr, nullptr, graphics, collision);
 }
 
-Entity * EntityFactory::CreateCar(sf::Vector2f startPos)
+Entity * EntityFactory::CreatePlayer1(sf::Vector2f pos)
+{
+	return CreateCar(pos, sf::Color::Blue, new InputComponentP1());
+}
+
+Entity * EntityFactory::CreatePlayer2(sf::Vector2f pos)
+{
+	return CreateCar(pos, sf::Color::Yellow, new InputComponentP2());
+}
+
+Entity * EntityFactory::CreateCar(sf::Vector2f startPos, sf::Color color, InputComponent* inputCom)
 {
 	auto size = sf::Vector2f(c_car_length, c_car_height);
 
 	//create shape for graphics component
 	sf::RectangleShape* shape = new sf::RectangleShape(size);
-	shape->setFillColor(sf::Color::Blue);
+	shape->setFillColor(color);
 	shape->setOutlineThickness(1.0f);
 	shape->setOutlineColor(sf::Color(250, 150, 100));
 	shape->setOrigin(size.x / 2.0f, size.y / 2.0f);
@@ -61,7 +73,7 @@ Entity * EntityFactory::CreateCar(sf::Vector2f startPos)
 	corners.push_back(sf::Vector2f(size.x / 2.0f, size.y / 2.0f));
 	corners.push_back(sf::Vector2f(-size.x / 2.0f, size.y / 2.0f));
 
-	auto input = new InputComponent();
+	auto input = inputCom;
 	auto physics = new CarPhysicsComponent(startPos, MathCommon::DegreesToRadians(0.0f), corners);
 	auto graphics = new CarGraphicsComponent(shape);
 	auto collision = new VariableCollisionComponent(startPos, 0.0f, corners);

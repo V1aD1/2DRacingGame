@@ -26,20 +26,37 @@ void EventHandler::HandleEvent(sf::RenderWindow& window, sf::Event& event) {
 		case sf::Keyboard::Escape:
 			window.close();
 			break;
+		
 		case sf::Keyboard::Up:
-			upFlag = true;
+			upFlagP1 = true;
 			break;
 		case sf::Keyboard::Down:
-			downFlag = true;
+			downFlagP1 = true;
 			break;
 		case sf::Keyboard::Left:
-			leftFlag = true;
+			leftFlagP1 = true;
 			break;
 		case sf::Keyboard::Right:
-			rightFlag = true;
+			rightFlagP1 = true;
 			break;
 		case sf::Keyboard::Space:
-			spaceFlag = true;
+			brakeFlagP1 = true;
+			break;
+
+		case sf::Keyboard::Numpad8:
+			upFlagP2 = true;
+			break;
+		case sf::Keyboard::Numpad5:
+			downFlagP2 = true;
+			break;
+		case sf::Keyboard::Numpad4:
+			leftFlagP2 = true;
+			break;
+		case sf::Keyboard::Numpad6:
+			rightFlagP2 = true;
+			break;
+		case sf::Keyboard::Numpad0:
+			brakeFlagP2 = true;
 			break;
 
 		case sf::Keyboard::W:
@@ -54,25 +71,54 @@ void EventHandler::HandleEvent(sf::RenderWindow& window, sf::Event& event) {
 		case sf::Keyboard::D:
 			dFlag = true;
 			break;
+
+		case sf::Keyboard::T:
+			tFlag = true;
+			break;
+		case sf::Keyboard::G:
+			gFlag = true;
+			break;
+		case sf::Keyboard::F:
+			fFlag = true;
+			break;
+		case sf::Keyboard::H:
+			hFlag = true;
+			break;
 		}
 		break;
 
 	case sf::Event::KeyReleased:
 		switch (event.key.code) {
 		case sf::Keyboard::Up:
-			upFlag = false;
+			upFlagP1 = false;
 			break;
 		case sf::Keyboard::Down:
-			downFlag = false;
+			downFlagP1 = false;
 			break;
 		case sf::Keyboard::Left:
-			leftFlag = false;
+			leftFlagP1 = false;
 			break;
 		case sf::Keyboard::Right:
-			rightFlag = false;
+			rightFlagP1 = false;
 			break;
 		case sf::Keyboard::Space:
-			spaceFlag = false;
+			brakeFlagP1 = false;
+			break;
+
+		case sf::Keyboard::Numpad8:
+			upFlagP2 = false;
+			break;
+		case sf::Keyboard::Numpad5:
+			downFlagP2 = false;
+			break;
+		case sf::Keyboard::Numpad4:
+			leftFlagP2 = false;
+			break;
+		case sf::Keyboard::Numpad6:
+			rightFlagP2 = false;
+			break;
+		case sf::Keyboard::Numpad0:
+			brakeFlagP2 = false;
 			break;
 
 		case sf::Keyboard::W:
@@ -86,6 +132,19 @@ void EventHandler::HandleEvent(sf::RenderWindow& window, sf::Event& event) {
 			break;
 		case sf::Keyboard::D:
 			dFlag = false;
+			break;
+
+		case sf::Keyboard::T:
+			tFlag = false;
+			break;
+		case sf::Keyboard::G:
+			gFlag = false;
+			break;
+		case sf::Keyboard::F:
+			fFlag = false;
+			break;
+		case sf::Keyboard::H:
+			hFlag = false;
 			break;
 		}
 		break;
