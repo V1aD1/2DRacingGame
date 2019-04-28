@@ -19,6 +19,8 @@ public:
 	PhysicsState(sf::Vector2f pos, float rotRad, const std::vector<sf::Vector2f>& cornersWithoutRotationApplied);
 	~PhysicsState();
 
+public:
+
 	void Update(float dtMilli, float maxMomentum);
 
 	PhysicsState(const PhysicsState& other);
@@ -28,7 +30,6 @@ public:
 	void Accelerate(float acceleration);
 	void ApplyForce(sf::Vector2f force);
 
-public:
 	const std::vector<sf::Vector2f>& GetWorldCorners() const;
 	const std::vector<sf::Vector2i>& GetCollisionSpaceCoordinates() const;
 	sf::Vector2f GetWorldPosition();

@@ -23,6 +23,11 @@ void SquareGraphicsComponent::Update(const Entity& entity, sf::RenderWindow& win
 	DBG_DrawCorners(entity, window);
 }
 
+void SquareGraphicsComponent::HandleCollision(sf::Vector2f otherEntityMomentum)
+{
+	;
+}
+
 void SquareGraphicsComponent::DBG_DrawCorners(const Entity& entity, sf::RenderWindow& window)
 {
 	auto entityCorners = entity.GetWorldCorners();

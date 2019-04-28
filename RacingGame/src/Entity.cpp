@@ -6,7 +6,11 @@
 
 extern WorldSpaceManager spaceManager;
 
-Entity::Entity(sf::Vector2f position, float rotDeg) : m_position(position) 
+Entity::Entity()
+{
+}
+
+Entity::Entity(sf::Vector2f position, float rotDeg) : m_position(position)
 {
 	SetRotation(rotDeg);
 }
@@ -91,4 +95,15 @@ void Entity::SetRotation(float newRotInDegrees)
 void Entity::Rotate(float degrees)
 {
 	SetRotation(m_rotation + degrees);
+}
+
+void Entity::HandleCollision(sf::Vector2f otherEntityMomentum)
+{
+	if (m_physics) {
+		m_physics->HandleCollision(otherEntityMomentum);
+	}
+
+	if (m_graphics) {
+		m_graphics->HandleCollision(otherEntityMomentum);
+	}
 }

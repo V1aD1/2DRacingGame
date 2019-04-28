@@ -53,7 +53,7 @@ void WorldSpaceManager::UpdateVariableEntitiesInCollSpace()
 	}
 }
 
-void WorldSpaceManager::AddEntityToCollisionSpace(const Entity* entity)
+void WorldSpaceManager::AddEntityToCollisionSpace(Entity* entity)
 {
 	std::vector<sf::Vector2i> pairs;
 
@@ -233,9 +233,9 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::
 	return pairs;
 }
 
-std::vector<const Entity*> WorldSpaceManager::GetEntitiesAtCoords(const std::vector<sf::Vector2i>& coords)
+std::vector<Entity*> WorldSpaceManager::GetEntitiesAtCoords(const std::vector<sf::Vector2i>& coords)
 {
-	std::vector<const Entity*> entitiesToRet = std::vector<const Entity*>();
+	std::vector<Entity*> entitiesToRet = std::vector<Entity*>();
 	for (auto coord : coords) {
 		for (auto entityToAdd : worldSpace[coord.x][coord.y]) {
 			AddToVectorNoDuplicates(entitiesToRet, entityToAdd);

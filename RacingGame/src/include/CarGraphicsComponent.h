@@ -17,5 +17,6 @@ public:
 	virtual ~CarGraphicsComponent();
 
 	virtual void Update(const Entity& entity, sf::RenderWindow & window) override;
+	virtual void HandleCollision(sf::Vector2f otherEntityMomentum) override;
 };
 

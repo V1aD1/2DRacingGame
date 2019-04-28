@@ -35,14 +35,21 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 
 	m_newState.Update(dtMilli, car_maxMomentum);
 
+	//this is bad!
+	Entity collisionEntity;
+
 	//update to new state only if NO collision occured
-	if (!CollisionDetected(entity)) 
+	if (!CollisionDetected(entity, collisionEntity)) 
 		m_currState = m_newState;
 	
-
 	//if collision occurs then halt all momentum on the car
 	//and do NOT apply new state
 	else {
+
+		//alert other entity of collision
+		collisionEntity.HandleCollision(m_currState.GetMomentum());
+		
+
 		m_currState.SetMomentum(sf::Vector2f(0.0f, 0.0f));
 		m_newState = m_currState;
 	}
@@ -62,4 +69,9 @@ void CarPhysicsComponent::DBG_Slide(Entity& entity, const sf::Vector2f& dir, flo
 	m_newState.SetMomentum(sf::Vector2f(0.0f, 0.0f));
 	m_newState.SetWorldPos(m_newState.GetWorldPosition() + dir * dtMilli / 1000.0f * car_dbg_slideSpeed);
 	m_newState.Update(dtMilli, car_maxMomentum);		
+}
+
+void CarPhysicsComponent::HandleCollision(sf::Vector2f otherEntityMomentum)
+{
+	m_newState.ApplyForce(otherEntityMomentum);
 }

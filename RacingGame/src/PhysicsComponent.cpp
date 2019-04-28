@@ -31,7 +31,7 @@ PhysicsComponent::~PhysicsComponent(){}
 ///NOTE: function should only be called after computing 
 ///final position of m_newState
 //todo should really do the line collision here, point collision doesn't quite carry us far enough
-bool PhysicsComponent::CollisionDetected(Entity& entity) {
+bool PhysicsComponent::CollisionDetected(Entity& entity, Entity& collisionEntity) {
 
 	//check every object in same cell(s) as newState
 	//for a collision, using point triangle test method
@@ -39,17 +39,17 @@ bool PhysicsComponent::CollisionDetected(Entity& entity) {
 
 	//check every static object for a collision
 	//using point triangle test method
-	for (auto object : potentialCollisionEntities) {
+	for (auto otherEntity : potentialCollisionEntities) {
 
-		//to avoid collision detection with same object
+		//to avoid collision detection with itself
 		//todo change to use ID of objects instead
-		if (object == &entity)
+		if (otherEntity == &entity)
 			continue;
 
-		auto objCornersPtr = object->GetWorldCorners();
+		auto otherEntityCornersPtr = otherEntity->GetWorldCorners();
 
-		if (objCornersPtr) {
-			std::vector<sf::Vector2f> objCorners = *objCornersPtr;
+		if (otherEntityCornersPtr) {
+			std::vector<sf::Vector2f> objCorners = *otherEntityCornersPtr;
 
 			for (auto corner : m_newState.GetWorldCorners()) {
 
@@ -65,8 +65,10 @@ bool PhysicsComponent::CollisionDetected(Entity& entity) {
 						break;
 					}
 				}
-				if (collision)
+				if (collision) {
+					collisionEntity = *otherEntity;
 					return true;
+				}
 			}
 		}
 	}

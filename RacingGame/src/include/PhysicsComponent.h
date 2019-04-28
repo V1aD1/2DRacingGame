@@ -31,6 +31,8 @@ public:
 	const std::vector<sf::Vector2i>& GetCollisionSpaceCoords();
 	const std::vector<sf::Vector2i>& GetPrevCollisionSpaceCoords();
 
+	virtual void HandleCollision(sf::Vector2f otherEntityMomentum) = 0;
+
 
 protected:
 	PhysicsState m_prevState;
@@ -38,7 +40,7 @@ protected:
 	PhysicsState m_currState;
 
 protected:
-	bool CollisionDetected(Entity& entity);
+	bool CollisionDetected(Entity& entity, Entity& collisionEntity);
 	void ApplySlowDownForce(float forceMag, float dtTimeMilli);
 
 private:	

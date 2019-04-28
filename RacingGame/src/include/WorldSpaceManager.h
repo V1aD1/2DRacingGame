@@ -19,9 +19,9 @@ public:
 	void UpdateAllEntitiesInCollSpace();
 	void UpdateVariableEntitiesInCollSpace();
 
-	void AddEntityToCollisionSpace(const Entity* entity);
+	void AddEntityToCollisionSpace(Entity* entity);
 	std::vector<sf::Vector2i> GetCollisionSpaceCoords(const std::vector<sf::Vector2f>& worldCorners);
-	std::vector<const Entity*> GetEntitiesAtCoords(const std::vector<sf::Vector2i>& coords);
+	std::vector<Entity*> GetEntitiesAtCoords(const std::vector<sf::Vector2i>& coords);
 	void ClearWorldSpace();
 	void ClearVariableEntities();
 	void DBG_Draw(sf::RenderWindow& window);
@@ -34,7 +34,7 @@ private:
 
 private:
 	//world space will always be divided into 100 cells
-	std::list<const Entity*> worldSpace[10][10];
+	std::list<Entity*> worldSpace[10][10];
 	sf::RectangleShape cells [10][10];
 };
 

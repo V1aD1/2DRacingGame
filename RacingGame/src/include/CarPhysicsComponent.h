@@ -18,5 +18,7 @@ public:
 	void Update(Entity& entity, float dtMilli) override;
 	void Brake(float dtTimeMilli) override;
 	void DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli) override;
+	virtual void HandleCollision(sf::Vector2f otherEntityMomentum) override;
+
 };
 
