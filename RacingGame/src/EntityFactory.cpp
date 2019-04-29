@@ -12,14 +12,6 @@
 const float EntityFactory::c_car_length = 40.0f;
 const float EntityFactory::c_car_height = 10.0f;
 
-EntityFactory::EntityFactory()
-{
-}
-
-
-EntityFactory::~EntityFactory()
-{
-}
 
 Entity* EntityFactory::CreateSquare(float sideLen, sf::Vector2f pos, float rotDeg) {
 	float halfSideLen = sideLen / 2;
@@ -80,6 +72,8 @@ Entity * EntityFactory::CreateCar(sf::Vector2f startPos, sf::Color color, InputC
 
 	return new Entity(startPos, 0.0f, input, physics, graphics, collision);
 }
+
+
 
 
 

@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\ParticleEmitter.cpp" />
     <ClCompile Include="src\InputComponentP2.cpp" />
     <ClCompile Include="src\InputComponentP1.cpp" />
     <ClCompile Include="src\EntityFactory.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="src\VariableCollisionComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\include\ParticleEmitter.h" />
     <ClInclude Include="src\include\InputComponentP2.h" />
     <ClInclude Include="src\include\InputComponentP1.h" />
     <ClInclude Include="src\include\EntityFactory.h" />

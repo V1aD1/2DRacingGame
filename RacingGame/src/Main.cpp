@@ -55,11 +55,11 @@ int main()
 	sf::Clock clock;
 	sf::Int32 timeSinceLastFpsLog = fpsRefreshMs;
 
-	EntityFactory entityFactory = EntityFactory();
+	//EntityFactory entityFactory = EntityFactory();
 	EventHandler eventHandler = EventHandler();
-	auto player1 = entityFactory.CreatePlayer1(sf::Vector2f(40.0f, 50.0f));
-	auto player2 = entityFactory.CreatePlayer2(sf::Vector2f(40.0f, 90.0f));
-	auto square = entityFactory.CreateSquare(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f);
+	auto player1 = EntityFactory::CreatePlayer1(sf::Vector2f(40.0f, 50.0f));
+	auto player2 = EntityFactory::CreatePlayer2(sf::Vector2f(40.0f, 90.0f));
+	auto square = EntityFactory::CreateSquare(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f);
 
 	G_VARIABLEOBJECTS.push_back(player1);
 	G_VARIABLEOBJECTS.push_back(player2);
