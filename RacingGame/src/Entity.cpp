@@ -97,13 +97,18 @@ void Entity::Rotate(float degrees)
 	SetRotation(m_rotation + degrees);
 }
 
-void Entity::HandleCollision(sf::Vector2f otherEntityMomentum)
+sf::Vector2f Entity::HandleCollision(sf::Vector2f otherEntityMomentum)
 {
+	sf::Vector2f absorbedMomentum = otherEntityMomentum;
+
 	if (m_physics) {
-		m_physics->HandleCollision(otherEntityMomentum);
+		absorbedMomentum = m_physics->HandleCollision(otherEntityMomentum);
 	}
 
+	//used to start potential particle effects
 	if (m_graphics) {
 		m_graphics->HandleCollision(otherEntityMomentum);
 	}
+
+	return absorbedMomentum;
 }

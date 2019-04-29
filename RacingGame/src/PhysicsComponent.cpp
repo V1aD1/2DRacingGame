@@ -31,7 +31,7 @@ PhysicsComponent::~PhysicsComponent(){}
 ///NOTE: function should only be called after computing 
 ///final position of m_newState
 //todo should really do the line collision here, point collision doesn't quite carry us far enough
-bool PhysicsComponent::CollisionDetected(Entity& entity, Entity& collisionEntity) {
+Entity* PhysicsComponent::CollisionDetected(Entity& entity) {
 
 	//check every object in same cell(s) as newState
 	//for a collision, using point triangle test method
@@ -66,14 +66,13 @@ bool PhysicsComponent::CollisionDetected(Entity& entity, Entity& collisionEntity
 					}
 				}
 				if (collision) {
-					collisionEntity = *otherEntity;
-					return true;
+					return otherEntity;
 				}
 			}
 		}
 	}
 
-	return false;
+	return nullptr;
 }
 
 void PhysicsComponent::Accelerate(float dtTimeMilli, bool forward){

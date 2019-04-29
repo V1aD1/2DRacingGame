@@ -46,6 +46,6 @@ public:
 
 	void Rotate(float degrees);
 
-	void HandleCollision(sf::Vector2f otherEntityMomentum);
+	sf::Vector2f HandleCollision(sf::Vector2f otherEntityMomentum);
 };
 
