@@ -13,3 +13,11 @@ ParticleEmitter::ParticleEmitter()
 ParticleEmitter::~ParticleEmitter()
 {
 }
+
+void ParticleEmitter::EmitCircle(sf::Vector2f pos, int numParticles)
+{
+}
+
+void ParticleEmitter::EmitCone(sf::Vector2f pos, sf::Vector2f dir, int numParticles)
+{
+}
