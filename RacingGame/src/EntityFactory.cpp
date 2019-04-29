@@ -1,12 +1,18 @@
 #include "include/EntityFactory.h"
 #include "include/Entity.h"
+
 #include "include/SquareGraphicsComponent.h"
 #include "include/CarGraphicsComponent.h"
+#include "include/ParticleGraphicsComponent.h"
+
 #include "include/CarPhysicsComponent.h"
+
 #include "include/InputComponentP1.h"
 #include "include/InputComponentP2.h"
+
 #include "include/StaticCollisionComponent.h"
 #include "include/VariableCollisionComponent.h"
+
 #include "include/MathCommon.h"
 
 const float EntityFactory::c_car_length = 40.0f;
@@ -65,14 +71,17 @@ Entity * EntityFactory::CreateCar(sf::Vector2f startPos, sf::Color color, InputC
 	corners.push_back(sf::Vector2f(size.x / 2.0f, size.y / 2.0f));
 	corners.push_back(sf::Vector2f(-size.x / 2.0f, size.y / 2.0f));
 
-	auto input = inputCom;
 	auto physics = new CarPhysicsComponent(startPos, MathCommon::DegreesToRadians(0.0f), corners);
 	auto graphics = new CarGraphicsComponent(shape);
 	auto collision = new VariableCollisionComponent(startPos, 0.0f, corners);
 
-	return new Entity(startPos, 0.0f, input, physics, graphics, collision);
+	return new Entity(startPos, 0.0f, inputCom, physics, graphics, collision);
 }
 
+Entity * EntityFactory::CreateParticle()
+{
+	return new Entity(sf::Vector2f(50, 500), 0, nullptr, nullptr, new ParticleGraphicsComponent(), nullptr);
+}
 
 
 

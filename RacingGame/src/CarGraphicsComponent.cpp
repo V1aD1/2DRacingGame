@@ -5,7 +5,7 @@
 
 CarGraphicsComponent::CarGraphicsComponent(sf::Shape* shape) : GraphicsComponent(shape){
 	for (int i = 0; i < 4; i++) {
-		auto circle = sf::CircleShape(circleRad);
+		auto circle = sf::CircleShape(circleRad, 4);
 		circle.setOrigin(circleRad, circleRad);
 		cornerCircles.push_back(circle);
 	}

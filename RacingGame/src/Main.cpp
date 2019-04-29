@@ -14,6 +14,7 @@
 #include "include/Entity.h"
 #include "include/EntityFactory.h"
 #include "include/WorldSpaceManager.h"
+#include "include/ParticleEmitter.h"
 
 static const sf::Int32 fpsRefreshMs = 500;
 
@@ -22,6 +23,7 @@ extern const int screenLen = 1500, screenHeight = 700;
 
 extern std::vector<Entity*> G_STATICOBJECTS;
 extern std::vector<Entity*> G_VARIABLEOBJECTS;
+extern std::vector<Entity*> G_PARTICLES;
 
 WorldSpaceManager worldSpaceManager = WorldSpaceManager();
 
@@ -60,6 +62,8 @@ int main()
 	auto player1 = EntityFactory::CreatePlayer1(sf::Vector2f(40.0f, 50.0f));
 	auto player2 = EntityFactory::CreatePlayer2(sf::Vector2f(40.0f, 90.0f));
 	auto square = EntityFactory::CreateSquare(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f);
+	auto emitter = ParticleEmitter();
+
 
 	G_VARIABLEOBJECTS.push_back(player1);
 	G_VARIABLEOBJECTS.push_back(player2);
@@ -98,12 +102,16 @@ int main()
 		worldSpaceManager.UpdateVariableEntitiesInCollSpace();
 
 		//update static objects before variable objects
-		for (auto staticObjects : G_STATICOBJECTS) {
-			staticObjects->Update(window, dtMillis, eventHandler);
+		for (auto staticObject : G_STATICOBJECTS) {
+			staticObject->Update(window, dtMillis, eventHandler);
 		}
 
-		for (auto variableObjects : G_VARIABLEOBJECTS) {
-			variableObjects->Update(window, dtMillis, eventHandler);
+		for (auto variableObject : G_VARIABLEOBJECTS) {
+			variableObject->Update(window, dtMillis, eventHandler);
+		}
+
+		for (auto particle : G_PARTICLES) {
+			particle->Update(window, dtMillis, eventHandler);
 		}
 
 		worldSpaceManager.DBG_Draw(window);

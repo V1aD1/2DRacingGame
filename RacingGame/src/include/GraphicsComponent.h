@@ -6,6 +6,7 @@ class Entity;
 class GraphicsComponent
 {
 public:
+	GraphicsComponent();
 	GraphicsComponent(sf::Shape* shape);
 
 	//todo figure out virtual destructors and whether they should exist
