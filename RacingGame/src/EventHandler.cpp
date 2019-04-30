@@ -84,6 +84,9 @@ void EventHandler::HandleEvent(sf::RenderWindow& window, sf::Event& event) {
 		case sf::Keyboard::H:
 			hFlag = true;
 			break;
+		case sf::Keyboard::Q:
+			qFlag = true;
+			break;
 		}
 		break;
 
@@ -145,6 +148,9 @@ void EventHandler::HandleEvent(sf::RenderWindow& window, sf::Event& event) {
 			break;
 		case sf::Keyboard::H:
 			hFlag = false;
+			break;
+		case sf::Keyboard::Q:
+			qFlag = false;
 			break;
 		}
 		break;

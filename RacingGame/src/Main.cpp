@@ -114,6 +114,11 @@ int main()
 			particle->Update(window, dtMillis, eventHandler);
 		}
 
+		if (eventHandler.qFlag)
+		{
+			emitter.EmitCircle(sf::Vector2f(200, 400), 10);
+		}
+
 		worldSpaceManager.DBG_Draw(window);
 
 		if ((timeSinceLastFpsLog += dtMillis) > fpsRefreshMs) {

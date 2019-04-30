@@ -34,6 +34,9 @@ public:
 	bool fFlag = false;
 	bool hFlag = false;
 
+	//general debug key
+	bool qFlag = false;
+
 	~EventHandler();
 };
 

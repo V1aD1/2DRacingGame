@@ -6,6 +6,7 @@
 #include "include/ParticleGraphicsComponent.h"
 
 #include "include/CarPhysicsComponent.h"
+#include "include/ParticlePhysicsComponent.h"
 
 #include "include/InputComponentP1.h"
 #include "include/InputComponentP2.h"
@@ -80,7 +81,7 @@ Entity * EntityFactory::CreateCar(sf::Vector2f startPos, sf::Color color, InputC
 
 Entity * EntityFactory::CreateParticle()
 {
-	return new Entity(sf::Vector2f(50, 500), 0, nullptr, nullptr, new ParticleGraphicsComponent(), nullptr);
+	return new Entity(sf::Vector2f(50, 500), 0, nullptr, new ParticlePhysicsComponent(), new ParticleGraphicsComponent(), nullptr);
 }
 
 

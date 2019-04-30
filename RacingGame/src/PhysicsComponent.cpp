@@ -118,3 +118,8 @@ void PhysicsComponent::Rotate(float dtTimeMilli, bool left){
 	float rotAmount = direction * m_rotationSpeed * (dtTimeMilli / 1000.0f);
 	m_newState.Rotate(MathCommon::DegreesToRadians(rotAmount));
 }
+
+void PhysicsComponent::SetSpeed(float newSpeed)
+{
+	m_newState.SetMomentum(m_newState.GetForwardDir() * newSpeed);
+}

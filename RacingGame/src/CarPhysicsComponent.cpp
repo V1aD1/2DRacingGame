@@ -2,6 +2,7 @@
 #include "include/Entity.h"
 #include "include/MathCommon.h"
 
+//todo shouldn't these be private members of CarPhysicsComponent??
 const float CarPhysicsComponent::car_rotationSpeed = 180.0f;
 const float CarPhysicsComponent::car_acceleration = 0.25f;
 const float CarPhysicsComponent::car_brakeForce = 0.1f;

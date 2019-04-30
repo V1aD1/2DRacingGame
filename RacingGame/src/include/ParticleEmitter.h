@@ -2,6 +2,7 @@
 
 #include "Entity.h"
 
+//todo make static?
 class ParticleEmitter
 {
 private:

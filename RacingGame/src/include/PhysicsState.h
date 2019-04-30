@@ -27,6 +27,7 @@ public:
 	PhysicsState& operator=(const PhysicsState& other);
 
 	void Rotate(float radsToTurn);
+	void SetRotation(float newRotInRad);
 	void Accelerate(float acceleration);
 	void ApplyForce(sf::Vector2f force);
 
@@ -34,6 +35,7 @@ public:
 	const std::vector<sf::Vector2i>& GetCollisionSpaceCoordinates() const;
 	sf::Vector2f GetWorldPosition();
 	sf::Vector2f GetMomentum();
+	sf::Vector2f GetForwardDir();
 	float GetRotInRad();
 
 	//should ONLY be used by DBG_ commands

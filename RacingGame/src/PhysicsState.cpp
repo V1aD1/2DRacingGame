@@ -64,6 +64,11 @@ void PhysicsState::Rotate(float radsToTurn) {
 	m_forwardDir = sf::Vector2f(std::cos(m_rotInRad), std::sin(m_rotInRad));
 }
 
+void PhysicsState::SetRotation(float newRotInRad)
+{
+	m_rotInRad = newRotInRad;
+}
+
 void PhysicsState::Accelerate(float acceleration)
 {
 	m_momentum += m_forwardDir * acceleration;
@@ -92,6 +97,11 @@ sf::Vector2f PhysicsState::GetWorldPosition()
 sf::Vector2f PhysicsState::GetMomentum()
 {
 	return m_momentum;
+}
+
+sf::Vector2f PhysicsState::GetForwardDir()
+{
+	return m_forwardDir;
 }
 
 float PhysicsState::GetRotInRad()
