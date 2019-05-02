@@ -116,7 +116,8 @@ int main()
 
 		if (eventHandler.qFlag)
 		{
-			emitter.EmitCircle(sf::Vector2f(200, 400), 25);
+			//emitter.EmitCircle(sf::Vector2f(200, 400), 25);
+			emitter.EmitCone(sf::Vector2f(200, 400), sf::Vector2f(1, -1), 25);
 		}
 
 		worldSpaceManager.DBG_Draw(window);
