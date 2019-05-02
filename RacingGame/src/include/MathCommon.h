@@ -12,7 +12,7 @@ public:
 	static float CrossProduct(const sf::Vector2f& a, const sf::Vector2f& b);
 	static float Multiply(const sf::Vector2f& a, const sf::Vector2f& b);
 	static sf::Vector2f Subtract(const sf::Vector2f& a, const sf::Vector2f& b);
-	static float GetAngleBetweenVectors(const sf::Vector2f& a, const sf::Vector2f& b);
+	static float GetAngleBetweenVectorsInRads(const sf::Vector2f& a, const sf::Vector2f& b);
 
 private:
 	///returns 0 if points are clockwise, 1 if counter clockwise, and 2 if collinear

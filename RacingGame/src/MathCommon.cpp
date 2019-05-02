@@ -37,7 +37,7 @@ float MathCommon::CrossProduct(const sf::Vector2f& a, const sf::Vector2f& b)
 
 float MathCommon::Multiply(const sf::Vector2f& a, const sf::Vector2f& b)
 {
-	return a.x * b.x + a.y + b.y;
+	return a.x * b.x + a.y * b.y;
 }
 
 sf::Vector2f MathCommon::Subtract(const sf::Vector2f& a, const sf::Vector2f& b)
@@ -45,7 +45,7 @@ sf::Vector2f MathCommon::Subtract(const sf::Vector2f& a, const sf::Vector2f& b)
 	return sf::Vector2f(a.x - b.x, a.y - b.y);
 }
 
-float MathCommon::GetAngleBetweenVectors(const sf::Vector2f& a, const sf::Vector2f& b)
+float MathCommon::GetAngleBetweenVectorsInRads(const sf::Vector2f& a, const sf::Vector2f& b)
 {
 	return acos(Multiply(Normalize(a), Normalize(b)));
 }
