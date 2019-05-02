@@ -8,12 +8,14 @@ class CollisionComponent;
 
 class PhysicsState {
 private:
+	
 	sf::Vector2f m_worldPos = sf::Vector2f(0.0f, 0.0f);
 	sf::Vector2f m_forwardDir = sf::Vector2f(1.0f, 0.0f);
 	sf::Vector2f m_momentum = sf::Vector2f(0.0f, 0.0f);
+	
 	CollisionComponent* m_collisionComp;
-	float m_rotInRad = 0.0f;
 	std::vector<sf::Vector2i> m_collisionSpaceCoords;
+	float m_rotInRad = 0.0f;
 
 public:
 	PhysicsState(sf::Vector2f pos, float rotRad, const std::vector<sf::Vector2f>& cornersWithoutRotationApplied);

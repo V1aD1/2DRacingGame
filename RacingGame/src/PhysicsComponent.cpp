@@ -123,3 +123,15 @@ void PhysicsComponent::SetSpeed(float newSpeed)
 {
 	m_newState.SetMomentum(m_newState.GetForwardDir() * newSpeed);
 }
+
+void PhysicsComponent::SetPosition(sf::Vector2f newPos)
+{
+	m_currState.SetWorldPos(newPos);
+	m_newState.SetWorldPos(newPos);
+}
+
+void PhysicsComponent::SetRotation(float newRotInRad)
+{
+	m_currState.SetRotation(newRotInRad);
+	m_newState.SetRotation(newRotInRad);
+}

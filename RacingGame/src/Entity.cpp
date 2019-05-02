@@ -63,6 +63,13 @@ float Entity::GetRotationInRadians() const
 void Entity::SetPosition(sf::Vector2f newPos)
 {
 	m_position = newPos;
+
+	//todo really don't like this, maybe physics component should have pointer
+	//to its parent entity. That would mean creating an empty entity object first,
+	//the creating it's physics component by passing the entity in, then setting the
+	//physics component of the newly created entity to the physics component you just created
+	if(m_physics)
+		m_physics->SetPosition(newPos);
 }
 
 const std::vector<sf::Vector2f>* Entity::GetWorldCorners() const
@@ -90,6 +97,11 @@ void Entity::SetRotation(float newRotInDegrees)
 		m_rotation -= 360.0f;
 
 	m_rotationInRad = MathCommon::DegreesToRadians(m_rotation);
+
+	//todo again, maybe physicsComponent should hold a pointer to its parent entity
+	//to avoid doing this
+	if(m_physics)
+		m_physics->SetRotation(m_rotationInRad);
 }
 
 void Entity::Rotate(float degrees)

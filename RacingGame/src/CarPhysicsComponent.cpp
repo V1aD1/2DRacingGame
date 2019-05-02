@@ -30,10 +30,8 @@ CarPhysicsComponent::~CarPhysicsComponent()
 
 void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 {
-	m_prevState = m_currState;
-	
+	m_prevState = m_currState;	
 	ApplyFriction(dtMilli);
-
 	m_newState.Update(dtMilli, car_maxMomentum);
 
 	
@@ -54,6 +52,7 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 		m_newState = m_currState;
 	}
 
+	//todo this should be in the PhysicsComponent.Update() function
 	entity.SetPosition(m_currState.GetWorldPosition());
 	entity.SetRotation(MathCommon::RadiansToDegrees(m_currState.GetRotInRad()));
 }

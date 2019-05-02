@@ -25,6 +25,8 @@ public:
 	virtual void ApplyFriction(float dtTimeMilli);
 
 	virtual void SetSpeed(float newSpeed);
+	virtual void SetPosition(sf::Vector2f newPos);
+	virtual void SetRotation(float newRotInRad);
 
 	virtual void Update(Entity& entity, float dtMilli) = 0;
 	virtual void Brake(float dtTimeMilli) = 0;

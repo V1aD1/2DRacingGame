@@ -25,10 +25,13 @@ void ParticleEmitter::EmitCircle(sf::Vector2f pos, int numParticles)
 		particle->SetRotation(rot);
 		particle->m_physics->SetSpeed(0.3f);
 		rot += 20.0f;
+		
+		count++;
 
 		if (count >= numParticles)
 			break;
 	}
+
 }
 
 void ParticleEmitter::EmitCone(sf::Vector2f pos, sf::Vector2f dir, int numParticles)
