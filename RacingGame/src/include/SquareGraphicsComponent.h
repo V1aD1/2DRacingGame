@@ -16,7 +16,7 @@ private:
 public:
 	SquareGraphicsComponent(sf::Shape* shape);
 	virtual ~SquareGraphicsComponent();
-	virtual void Update(const Entity& entity, sf::RenderWindow & window) override;
+	virtual void Update(const Entity& entity, sf::RenderWindow & window, float dtTimeMilli) override;
 	virtual void HandleCollision(sf::Vector2f otherEntityMomentum) override;
 };
 

@@ -42,7 +42,7 @@ void Entity::Update(sf::RenderWindow& window, float dtTimeMilli, const EventHand
 	if (m_collision)
 		m_collision->Update(m_position, m_rotationInRad);
 	if (m_graphics)
-		m_graphics->Update(*this, window);
+		m_graphics->Update(*this, window, dtTimeMilli);
 }
 
 sf::Vector2f Entity::GetPosition() const

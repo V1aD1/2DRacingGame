@@ -15,7 +15,7 @@ public:
 	CarGraphicsComponent(sf::Shape* shape);
 	virtual ~CarGraphicsComponent();
 
-	virtual void Update(const Entity& entity, sf::RenderWindow & window) override;
+	virtual void Update(const Entity& entity, sf::RenderWindow & window, float dtTimeMilli) override;
 	virtual void HandleCollision(sf::Vector2f otherEntityMomentum) override;
 };
 

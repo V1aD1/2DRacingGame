@@ -7,7 +7,7 @@ std::vector<Entity*> G_PARTICLES;
 ParticleEmitter::ParticleEmitter()
 {
 	for (int i = 0; i < c_pool_size; i++) {
-		G_PARTICLES.push_back(EntityFactory::CreateParticle());
+		G_PARTICLES.push_back(EntityFactory::CreateParticle(0.2f));
 	}
 }
 
@@ -21,14 +21,20 @@ void ParticleEmitter::EmitCircle(sf::Vector2f pos, int numParticles)
 
 	int count = 0;
 	for (auto particle : G_PARTICLES) {
-		particle->SetPosition(pos);
-		particle->SetRotation(rand() % 361);
-		particle->m_physics->SetSpeed(0.3f);
-		
-		count++;
 
-		if (count >= numParticles)
-			break;
+		auto shape = particle->m_graphics->GetShape();
+			
+		if (shape->getFillColor().a == 0) {
+			particle->SetPosition(pos);
+			particle->SetRotation(rand() % 361);
+			particle->m_physics->SetSpeed(0.3f);
+			particle->m_graphics->Enable();
+
+			count++;
+
+			if (count >= numParticles)
+				break;
+		}
 	}
 
 }

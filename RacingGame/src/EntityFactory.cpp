@@ -79,9 +79,9 @@ Entity * EntityFactory::CreateCar(sf::Vector2f startPos, sf::Color color, InputC
 	return new Entity(startPos, 0.0f, inputCom, physics, graphics, collision);
 }
 
-Entity * EntityFactory::CreateParticle()
+Entity * EntityFactory::CreateParticle(float alphaReductionRate)
 {
-	return new Entity(sf::Vector2f(50, 500), 0, nullptr, new ParticlePhysicsComponent(), new ParticleGraphicsComponent(), nullptr);
+	return new Entity(sf::Vector2f(50, 500), 0, nullptr, new ParticlePhysicsComponent(), new ParticleGraphicsComponent(alphaReductionRate), nullptr);
 }
 
 
