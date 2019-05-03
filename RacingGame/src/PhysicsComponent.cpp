@@ -98,6 +98,11 @@ const std::vector<sf::Vector2i>& PhysicsComponent::GetPrevCollisionSpaceCoords()
 	return m_prevState.GetCollisionSpaceCoordinates();
 }
 
+sf::Vector2f PhysicsComponent::GetForwardDir()
+{
+	return m_currState.GetForwardDir();
+}
+
 void PhysicsComponent::ApplySlowDownForce(float forceMag, float dtTimeMilli){
 
 	auto newStateMomentum = m_newState.GetMomentum();

@@ -35,6 +35,7 @@ public:
 	
 	const std::vector<sf::Vector2i>& GetCollisionSpaceCoords();
 	const std::vector<sf::Vector2i>& GetPrevCollisionSpaceCoords();
+	sf::Vector2f GetForwardDir();
 
 	virtual sf::Vector2f HandleCollision(sf::Vector2f otherEntityMomentum) = 0;
 

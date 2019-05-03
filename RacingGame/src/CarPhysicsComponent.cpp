@@ -53,10 +53,9 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 		
 		G_EMITTER.EmitCone(
 			collisionLocation,
-			//should only the y be flipped?
-			absorbedMomentum,
-			10,
-			MathCommon::GetMagnitude(absorbedMomentum) / car_maxMomentum * 10);
+			-absorbedMomentum,
+			60,
+			MathCommon::GetMagnitude(absorbedMomentum) / car_maxMomentum * 5);
 
 			m_currState.SetMomentum(m_newState.GetMomentum() - absorbedMomentum);
 			m_newState = m_currState;
