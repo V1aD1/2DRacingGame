@@ -13,5 +13,5 @@ public:
 	virtual ~ParticleEmitter();
 
 	void EmitCircle(sf::Vector2f pos, int numParticles);
-	void EmitCone(sf::Vector2f pos, sf::Vector2f dir, int numParticles);
+	void EmitCone(sf::Vector2f pos, sf::Vector2f dir, int coneWidth, int numParticles);
 };

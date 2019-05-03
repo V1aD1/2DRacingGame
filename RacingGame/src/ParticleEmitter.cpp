@@ -23,7 +23,7 @@ void ParticleEmitter::EmitCircle(sf::Vector2f pos, int numParticles)
 	for (auto particle : G_PARTICLES) {
 
 		auto shape = particle->m_graphics->GetShape();
-			
+
 		if (shape->getFillColor().a == 0) {
 			particle->SetPosition(pos);
 			particle->SetRotation(rand() % 361);
@@ -38,8 +38,10 @@ void ParticleEmitter::EmitCircle(sf::Vector2f pos, int numParticles)
 	}
 }
 
-void ParticleEmitter::EmitCone(sf::Vector2f pos, sf::Vector2f dir, int numParticles)
+void ParticleEmitter::EmitCone(sf::Vector2f pos, sf::Vector2f dir, int coneWidth, int numParticles)
 {
+	if (coneWidth < 2) { coneWidth = 2; }
+
 	float angleInDegrees = MathCommon::RadiansToDegrees(MathCommon::GetAngleBetweenVectorsInRads(dir, sf::Vector2f(1, 0)));
 
 	int count = 0;
@@ -47,11 +49,10 @@ void ParticleEmitter::EmitCone(sf::Vector2f pos, sf::Vector2f dir, int numPartic
 
 		auto shape = particle->m_graphics->GetShape();
 
-
 		//todo remove the code repetition between the Emit...() functions
 		if (shape->getFillColor().a == 0) {
 			particle->SetPosition(pos);
-			particle->SetRotation(rand() % 10 + angleInDegrees);
+			particle->SetRotation(rand() % (coneWidth) - (coneWidth/2) + angleInDegrees);
 			particle->m_physics->SetSpeed(0.3f);
 			particle->m_graphics->Enable();
 
