@@ -24,6 +24,7 @@ extern const int screenLen = 1500, screenHeight = 700;
 extern std::vector<Entity*> G_STATICOBJECTS;
 extern std::vector<Entity*> G_VARIABLEOBJECTS;
 extern std::vector<Entity*> G_PARTICLES;
+extern ParticleEmitter G_EMITTER;
 
 WorldSpaceManager worldSpaceManager = WorldSpaceManager();
 
@@ -35,6 +36,7 @@ bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText) {
 	window.create(sf::VideoMode(screenLen, screenHeight), "Racing Game!", sf::Style::Default, settings);
 
 	//never use both setVerticalSyncEnabled and setFramerateLimit at the same time!
+	
 	//window.setFramerateLimit(60);
 
 	if (!font.loadFromFile("Resources/fonts/MotorolaScreentype.ttf")) {
@@ -45,6 +47,8 @@ bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText) {
 	fpsText.setFont(font);
 	fpsText.setCharacterSize(24);
 	fpsText.setFillColor(sf::Color::White);
+
+	G_EMITTER.Init();
 
 	return true;
 }

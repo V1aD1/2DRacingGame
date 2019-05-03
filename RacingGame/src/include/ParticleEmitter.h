@@ -9,9 +9,7 @@ private:
 	static const int c_pool_size = 100;
 
 public:
-	ParticleEmitter();
-	virtual ~ParticleEmitter();
-
-	void EmitCircle(sf::Vector2f pos, int numParticles);
-	void EmitCone(sf::Vector2f pos, sf::Vector2f dir, int coneWidth, int numParticles);
+	static void Init();
+	static void EmitCircle(sf::Vector2f pos, int numParticles);
+	static void EmitCone(sf::Vector2f pos, sf::Vector2f dir, int coneWidth, int numParticles);
 };

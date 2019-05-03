@@ -6,15 +6,11 @@
 
 std::vector<Entity*> G_PARTICLES;
 
-ParticleEmitter::ParticleEmitter()
+void ParticleEmitter::Init()
 {
 	for (int i = 0; i < c_pool_size; i++) {
 		G_PARTICLES.push_back(EntityFactory::CreateParticle(0.2f));
 	}
-}
-
-ParticleEmitter::~ParticleEmitter()
-{
 }
 
 void ParticleEmitter::EmitCircle(sf::Vector2f pos, int numParticles)
