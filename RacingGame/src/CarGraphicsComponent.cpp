@@ -24,11 +24,6 @@ void CarGraphicsComponent::Update(const Entity& entity, sf::RenderWindow& window
 	DBG_DrawCorners(entity, window);
 }
 
-void CarGraphicsComponent::HandleCollision(sf::Vector2f otherEntityMomentum)
-{
-	;
-}
-
 void CarGraphicsComponent::DBG_DrawCorners(const Entity& entity, sf::RenderWindow& window) {
 	auto entityCorners = entity.GetWorldCorners();
 	if (entityCorners && entityCorners->size() == 4) {

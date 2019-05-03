@@ -105,6 +105,10 @@ int main()
 		
 		worldSpaceManager.UpdateVariableEntitiesInCollSpace();
 
+		for (auto particle : G_PARTICLES) {
+			particle->Update(window, dtMillis, eventHandler);
+		}
+
 		//update static objects before variable objects
 		for (auto staticObject : G_STATICOBJECTS) {
 			staticObject->Update(window, dtMillis, eventHandler);
@@ -112,10 +116,6 @@ int main()
 
 		for (auto variableObject : G_VARIABLEOBJECTS) {
 			variableObject->Update(window, dtMillis, eventHandler);
-		}
-
-		for (auto particle : G_PARTICLES) {
-			particle->Update(window, dtMillis, eventHandler);
 		}
 
 		if (eventHandler.qFlag)

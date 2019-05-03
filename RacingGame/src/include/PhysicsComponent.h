@@ -1,5 +1,6 @@
 #pragma once
 
+#include <tuple>
 #include <SFML/Graphics.hpp>
 #include "PhysicsState.h"
 
@@ -44,7 +45,7 @@ protected:
 	PhysicsState m_currState;
 
 protected:
-	Entity* CollisionDetected(Entity& entity);
+	std::tuple<Entity*, sf::Vector2f> CollisionDetected(Entity& entity);
 	void ApplySlowDownForce(float forceMag, float dtTimeMilli);
 
 private:	

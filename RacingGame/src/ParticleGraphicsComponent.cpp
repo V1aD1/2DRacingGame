@@ -33,11 +33,6 @@ void ParticleGraphicsComponent::Update(const Entity& entity, sf::RenderWindow& w
 	}
 }
 
-void ParticleGraphicsComponent::HandleCollision(sf::Vector2f otherEntityMomentum)
-{
-	;
-}
-
 void ParticleGraphicsComponent::Enable()
 {
 	UpdateColorAlpha(255);

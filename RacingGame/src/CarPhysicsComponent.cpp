@@ -37,12 +37,12 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 	ApplyFriction(dtMilli);
 	m_newState.Update(dtMilli, car_maxMomentum);
 
-
-	auto collisionEntity = CollisionDetected(entity);
+	auto collisionInfo = CollisionDetected(entity);
+	auto collisionEntity = std::get<0>(collisionInfo);
+	auto collisionLocation = std::get<1>(collisionInfo);
 
 	//update to new state only if NO collision occured
-	if (collisionEntity == nullptr)
-		m_currState = m_newState;
+	if (collisionEntity == nullptr) { m_currState = m_newState; }
 
 	//if collision occurs then halt all momentum on the car
 	//and do NOT apply new state
@@ -50,12 +50,13 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 
 		//alert other entity of collision
 		auto absorbedMomentum = collisionEntity->HandleCollision(m_newState.GetMomentum());
-
+		
 		G_EMITTER.EmitCone(
-			sf::Vector2f(200, 400),
-			-absorbedMomentum,
-			25,
-			MathCommon::GetMagnitude(absorbedMomentum) / car_maxMomentum * 25);
+			collisionLocation,
+			//should only the y be flipped?
+			absorbedMomentum,
+			10,
+			MathCommon::GetMagnitude(absorbedMomentum) / car_maxMomentum * 10);
 
 			m_currState.SetMomentum(m_newState.GetMomentum() - absorbedMomentum);
 			m_newState = m_currState;

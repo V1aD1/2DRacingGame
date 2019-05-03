@@ -11,6 +11,8 @@ private:
 	
 	sf::Vector2f m_worldPos = sf::Vector2f(0.0f, 0.0f);
 	sf::Vector2f m_forwardDir = sf::Vector2f(1.0f, 0.0f);
+	
+	//todo m_momentum is currently speed, need to add m_acceleration
 	sf::Vector2f m_momentum = sf::Vector2f(0.0f, 0.0f);
 	
 	CollisionComponent* m_collisionComp;

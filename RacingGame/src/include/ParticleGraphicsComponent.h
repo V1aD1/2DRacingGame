@@ -14,7 +14,6 @@ public:
 
 public:
 	void Update(const Entity& entity, sf::RenderWindow & window, float dtTimeMilli) override;
-	void HandleCollision(sf::Vector2f otherEntityMomentum) override;
 	void Enable() override;
 
 private:

@@ -21,7 +21,7 @@ void ParticlePhysicsComponent::Update(Entity& entity, float dtMilli)
 	entity.SetRotation(MathCommon::RadiansToDegrees(m_currState.GetRotInRad()));
 }
 
-//not handline any collision on particles... FOR NOW
+//not handling any collision on particles... FOR NOW
 sf::Vector2f ParticlePhysicsComponent::HandleCollision(sf::Vector2f otherEntityMomentum)
 {
 	return sf::Vector2f(0,0);

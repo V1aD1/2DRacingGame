@@ -117,10 +117,5 @@ sf::Vector2f Entity::HandleCollision(sf::Vector2f otherEntityMomentum)
 		absorbedMomentum = m_physics->HandleCollision(otherEntityMomentum);
 	}
 
-	//used to start potential particle effects
-	if (m_graphics) {
-		m_graphics->HandleCollision(otherEntityMomentum);
-	}
-
 	return absorbedMomentum;
 }

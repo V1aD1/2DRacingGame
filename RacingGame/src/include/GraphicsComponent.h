@@ -13,7 +13,6 @@ public:
 	virtual ~GraphicsComponent();
 
 	virtual void Update(const Entity& entity, sf::RenderWindow& window, float dtTimeMilli) = 0;
-	virtual void HandleCollision(sf::Vector2f otherEntityMomentum) = 0;
 	
 	//todo make functions that don't need to be virtual as not virtual!
 	virtual sf::Shape* GetShape();

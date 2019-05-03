@@ -1,3 +1,5 @@
+#include <tuple>
+
 #include "include/PhysicsComponent.h"
 #include "include/Entity.h"
 #include "include/MathCommon.h"
@@ -30,8 +32,8 @@ PhysicsComponent::~PhysicsComponent(){}
 
 ///NOTE: function should only be called after computing 
 ///final position of m_newState
-//todo should really do the line collision here, point collision doesn't quite carry us far enough
-Entity* PhysicsComponent::CollisionDetected(Entity& entity) {
+//todo should make static objects also do point in line test!
+std::tuple<Entity*, sf::Vector2f> PhysicsComponent::CollisionDetected(Entity& entity) {
 
 	//check every object in same cell(s) as newState
 	//for a collision, using point triangle test method
@@ -66,13 +68,13 @@ Entity* PhysicsComponent::CollisionDetected(Entity& entity) {
 					}
 				}
 				if (collision) {
-					return otherEntity;
+					return std::make_tuple(otherEntity, corner);
 				}
 			}
 		}
 	}
 
-	return nullptr;
+	return std::make_tuple(nullptr, sf::Vector2f());
 }
 
 void PhysicsComponent::Accelerate(float dtTimeMilli, bool forward){
