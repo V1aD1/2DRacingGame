@@ -6,9 +6,8 @@
 //todo shouldn't these be private members of CarPhysicsComponent??
 const float CarPhysicsComponent::car_rotationSpeed = 180.0f;
 const float CarPhysicsComponent::car_acceleration = 0.25f;
-const float CarPhysicsComponent::car_brakeForce = 0.1f;
 const float CarPhysicsComponent::car_frictionForce = 0.1f;
-const float CarPhysicsComponent::car_dbg_slideSpeed = 150.0f;
+const float CarPhysicsComponent::car_brakeForce = 0.1f;
 const float CarPhysicsComponent::car_maxMomentum = 0.3f;
 
 ParticleEmitter G_EMITTER;
@@ -20,9 +19,7 @@ CarPhysicsComponent::CarPhysicsComponent(sf::Vector2f pos, float rotRad, const s
 		car_maxMomentum,
 		car_rotationSpeed,
 		car_acceleration,
-		car_brakeForce,
-		car_frictionForce,
-		car_dbg_slideSpeed)
+		car_frictionForce)
 {
 }
 
@@ -75,7 +72,7 @@ void CarPhysicsComponent::DBG_Slide(Entity& entity, const sf::Vector2f& dir, flo
 {
 	//halting all movement on the car
 	m_newState.SetMomentum(sf::Vector2f(0.0f, 0.0f));
-	m_newState.SetWorldPos(m_newState.GetWorldPosition() + dir * dtMilli / 1000.0f * car_dbg_slideSpeed);
+	m_newState.SetWorldPos(m_newState.GetWorldPosition() + dir * dtMilli / 1000.0f * m_dbg_slideSpeed);
 	m_newState.Update(dtMilli, car_maxMomentum);
 }
 

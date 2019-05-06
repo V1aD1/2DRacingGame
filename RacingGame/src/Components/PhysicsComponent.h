@@ -15,9 +15,7 @@ public:
 					float maxMomentum,
 					float rotSpeed,
 					float acceleration,
-					float brakeForce,
-					float frictionForce,
-					float dbg_slideSpeed);
+					float frictionForce);
 	~PhysicsComponent();
 
 public:
@@ -49,12 +47,11 @@ protected:
 	std::tuple<Entity*, sf::Vector2f> CollisionDetected(Entity& entity);
 	void ApplySlowDownForce(float forceMag, float dtTimeMilli);
 
-private:	
+protected:	
 	float m_maxMomentum;
 	float m_rotationSpeed;
 	float m_acceleration;
-	float m_brakeForce;
 	float m_frictionForce;
-	float m_dbg_slideSpeed;
+	float m_dbg_slideSpeed = 150.0f;
 };
 

@@ -13,9 +13,7 @@ PhysicsComponent::PhysicsComponent(sf::Vector2f pos,
 									float maxMomentum, 
 									float rotSpeed, 
 									float acceleration, 
-									float brakeForce, 
-									float frictionForce, 
-									float dbg_slideSpeed) :
+									float frictionForce) :
 									m_prevState(pos, rotRad, cornersWithoutRotationApplied),
 									m_currState(pos, rotRad, cornersWithoutRotationApplied), 
 									m_newState(pos, rotRad, cornersWithoutRotationApplied)
@@ -23,9 +21,7 @@ PhysicsComponent::PhysicsComponent(sf::Vector2f pos,
 	m_maxMomentum = maxMomentum;
 	m_rotationSpeed = rotSpeed;
 	m_acceleration = acceleration;
-	m_brakeForce = brakeForce;
 	m_frictionForce = frictionForce;
-	m_dbg_slideSpeed = dbg_slideSpeed;
 }
 
 PhysicsComponent::~PhysicsComponent(){}

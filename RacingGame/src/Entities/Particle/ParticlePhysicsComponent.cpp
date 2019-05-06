@@ -3,7 +3,7 @@
 #include "../../Other/MathCommon.h"
 
 ParticlePhysicsComponent::ParticlePhysicsComponent() : 
-	PhysicsComponent(sf::Vector2f(), 0, std::vector<sf::Vector2f>(), 0.3f, 180.0f, 0.5f, 0, 0, 150.0f)
+	PhysicsComponent(sf::Vector2f(), 0, std::vector<sf::Vector2f>(), 0.3f, 180.0f, 0.5f, 0)
 {
 }
 
