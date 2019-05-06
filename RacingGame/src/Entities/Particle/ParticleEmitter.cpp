@@ -15,7 +15,7 @@ void ParticleEmitter::Init()
 	}
 }
 
-void ParticleEmitter::EmitCircle(sf::Vector2f pos, int numParticles)
+void ParticleEmitter::EmitCircle(sf::Vector2f pos, float speed, float alphaReductionRate, int numParticles)
 {
 	for (auto particle : G_PARTICLES) {
 		if (numParticles == 0)
@@ -26,7 +26,8 @@ void ParticleEmitter::EmitCircle(sf::Vector2f pos, int numParticles)
 		if (shape->getFillColor().a == 0) {
 			particle->SetPosition(pos);
 			particle->SetRotation(rand() % 361);
-			particle->m_physics->SetSpeed(0.3f);
+			particle->m_physics->SetSpeed(speed);
+			particle->m_graphics->SetAlphaReductionRate(alphaReductionRate);
 			particle->m_graphics->Enable();
 
 			numParticles--;
@@ -34,7 +35,8 @@ void ParticleEmitter::EmitCircle(sf::Vector2f pos, int numParticles)
 	}
 }
 
-void ParticleEmitter::EmitCone(sf::Vector2f pos, sf::Vector2f dir, int coneWidth, int numParticles)
+///Note, for alphaReductionRate, short life = 1, long life = 0.1
+void ParticleEmitter::EmitCone(sf::Vector2f pos, sf::Vector2f dir, float speed, float alphaReductionRate, int coneWidth, int numParticles)
 {
 	float angleBetweenVecs = MathCommon::GetAngleBetweenVectorsInRads(dir, sf::Vector2f(1, 0));
 	if (dir.y < 0) { angleBetweenVecs = -angleBetweenVecs; }
@@ -53,7 +55,8 @@ void ParticleEmitter::EmitCone(sf::Vector2f pos, sf::Vector2f dir, int coneWidth
 		if (shape->getFillColor().a == 0) {
 			particle->SetPosition(pos);
 			particle->SetRotation(rand() % (coneWidth)-(coneWidth / 2) + angleInDegrees);
-			particle->m_physics->SetSpeed(0.3f);
+			particle->m_graphics->SetAlphaReductionRate(alphaReductionRate);
+			particle->m_physics->SetSpeed(speed);
 			particle->m_graphics->Enable();
 
 			numParticles--;

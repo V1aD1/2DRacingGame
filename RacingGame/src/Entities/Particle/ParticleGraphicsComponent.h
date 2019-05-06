@@ -4,10 +4,6 @@
 
 class ParticleGraphicsComponent : public GraphicsComponent
 {
-private:
-	float m_alphaReductionRate = 0;
-
-
 public:
 	ParticleGraphicsComponent(float alphaReductionRate);
 	~ParticleGraphicsComponent();

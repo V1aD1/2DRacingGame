@@ -18,7 +18,10 @@ public:
 	virtual sf::Shape* GetShape();
 	virtual void Enable();
 
+	void SetAlphaReductionRate(float newAlphaReductionRate);
+
 protected:
 	sf::Shape* m_shape;
+	float m_alphaReductionRate = 0;
 };
 

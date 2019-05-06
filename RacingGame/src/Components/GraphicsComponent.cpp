@@ -26,3 +26,8 @@ void GraphicsComponent::Enable()
 {
 }
 
+void GraphicsComponent::SetAlphaReductionRate(float newAlphaReductionRate)
+{
+	m_alphaReductionRate = newAlphaReductionRate;
+}
+

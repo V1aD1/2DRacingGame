@@ -51,6 +51,8 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 		G_EMITTER.EmitCone(
 			collisionLocation,
 			-absorbedMomentum,
+			1.0f,
+			1.0f,
 			60,
 			MathCommon::GetMagnitude(absorbedMomentum) / car_maxMomentum * 5);
 
