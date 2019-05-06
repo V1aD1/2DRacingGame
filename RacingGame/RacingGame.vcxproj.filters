@@ -18,132 +18,132 @@
     <ClCompile Include="src\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\EventHandler.cpp">
+    <ClCompile Include="src\Entities\Car\CarGraphicsComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Timer.cpp">
+    <ClCompile Include="src\Entities\Car\CarPhysicsComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Entity.cpp">
+    <ClCompile Include="src\Components\GraphicsComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\InputComponent.cpp">
+    <ClCompile Include="src\Entities\Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\MathCommon.cpp">
+    <ClCompile Include="src\Entities\EntityFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\PhysicsComponent.cpp">
+    <ClCompile Include="src\Components\InputComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\SquareGraphicsComponent.cpp">
+    <ClCompile Include="src\Entities\Car\InputComponentP1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\CarGraphicsComponent.cpp">
+    <ClCompile Include="src\Entities\Car\InputComponentP2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GraphicsComponent.cpp">
+    <ClCompile Include="src\Entities\Particle\ParticlePhysicsComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\PhysicsState.cpp">
+    <ClCompile Include="src\Components\CollisionComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\CarPhysicsComponent.cpp">
+    <ClCompile Include="src\Other\EventHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\CollisionComponent.cpp">
+    <ClCompile Include="src\Other\MathCommon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\EntityFactory.cpp">
+    <ClCompile Include="src\Entities\Particle\ParticleGraphicsComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\WorldSpaceManager.cpp">
+    <ClCompile Include="src\Components\PhysicsComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\StaticCollisionComponent.cpp">
+    <ClCompile Include="src\Entities\Static\SquareGraphicsComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\VariableCollisionComponent.cpp">
+    <ClCompile Include="src\Components\StaticCollisionComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\InputComponentP1.cpp">
+    <ClCompile Include="src\Other\Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\InputComponentP2.cpp">
+    <ClCompile Include="src\Components\VariableCollisionComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ParticleEmitter.cpp">
+    <ClCompile Include="src\Other\WorldSpaceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ParticleGraphicsComponent.cpp">
+    <ClCompile Include="src\Components\PhysicsState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ParticlePhysicsComponent.cpp">
+    <ClCompile Include="src\Entities\Particle\ParticleEmitter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\include\EventHandler.h">
+    <ClInclude Include="src\Entities\Car\CarGraphicsComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\MathCommon.h">
+    <ClInclude Include="src\Entities\Car\CarPhysicsComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\Timer.h">
+    <ClInclude Include="src\Entities\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\Entity.h">
+    <ClInclude Include="src\Entities\EntityFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\InputComponent.h">
+    <ClInclude Include="src\Components\GraphicsComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\GraphicsComponent.h">
+    <ClInclude Include="src\Components\InputComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\PhysicsComponent.h">
+    <ClInclude Include="src\Entities\Car\InputComponentP1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\SquareGraphicsComponent.h">
+    <ClInclude Include="src\Entities\Car\InputComponentP2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\CarGraphicsComponent.h">
+    <ClInclude Include="src\Entities\Particle\ParticleGraphicsComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\PhysicsState.h">
+    <ClInclude Include="src\Entities\Particle\ParticlePhysicsComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\CarPhysicsComponent.h">
+    <ClInclude Include="src\Entities\Static\SquareGraphicsComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\CollisionComponent.h">
+    <ClInclude Include="src\Components\VariableCollisionComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\EntityFactory.h">
+    <ClInclude Include="src\Components\StaticCollisionComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\WorldSpaceManager.h">
+    <ClInclude Include="src\Components\PhysicsComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\StaticCollisionComponent.h">
+    <ClInclude Include="src\Entities\Particle\ParticleEmitter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\VariableCollisionComponent.h">
+    <ClInclude Include="src\Components\PhysicsState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\InputComponentP1.h">
+    <ClInclude Include="src\Other\EventHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\InputComponentP2.h">
+    <ClInclude Include="src\Other\MathCommon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\ParticleEmitter.h">
+    <ClInclude Include="src\Other\Timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\ParticleGraphicsComponent.h">
+    <ClInclude Include="src\Other\WorldSpaceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\include\ParticlePhysicsComponent.h">
+    <ClInclude Include="src\Components\CollisionComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

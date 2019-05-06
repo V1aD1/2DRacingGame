@@ -9,12 +9,12 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/OpenGL.hpp>
 
-#include "include/EventHandler.h"
-#include "include/Timer.h"
-#include "include/Entity.h"
-#include "include/EntityFactory.h"
-#include "include/WorldSpaceManager.h"
-#include "include/ParticleEmitter.h"
+#include "Other/EventHandler.h"
+#include "Other/Timer.h"
+#include "Entities/Entity.h"
+#include "Entities/EntityFactory.h"
+#include "Other/WorldSpaceManager.h"
+#include "Entities/Particle/ParticleEmitter.h"
 
 static const sf::Int32 fpsRefreshMs = 500;
 
