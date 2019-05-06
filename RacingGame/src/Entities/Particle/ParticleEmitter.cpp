@@ -1,5 +1,3 @@
-#include <stdlib.h>
-
 #include "ParticleEmitter.h"
 #include "../EntityFactory.h"
 #include "../../Other/MathCommon.h"
@@ -25,7 +23,7 @@ void ParticleEmitter::EmitCircle(sf::Vector2f pos, float speed, float alphaReduc
 
 		if (shape->getFillColor().a == 0) {
 			particle->SetPosition(pos);
-			particle->SetRotation(rand() % 361);
+			particle->SetRotation(std::rand() % 361);
 			particle->m_physics->SetSpeed(speed);
 			particle->m_graphics->SetAlphaReductionRate(alphaReductionRate);
 			particle->m_graphics->Enable();
@@ -54,7 +52,7 @@ void ParticleEmitter::EmitCone(sf::Vector2f pos, sf::Vector2f dir, float speed, 
 		//todo remove the code repetition between the Emit...() functions
 		if (shape->getFillColor().a == 0) {
 			particle->SetPosition(pos);
-			particle->SetRotation(rand() % (coneWidth)-(coneWidth / 2) + angleInDegrees);
+			particle->SetRotation(std::rand() % (coneWidth)-(coneWidth / 2) + angleInDegrees);
 			particle->m_graphics->SetAlphaReductionRate(alphaReductionRate);
 			particle->m_physics->SetSpeed(speed);
 			particle->m_graphics->Enable();

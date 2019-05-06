@@ -10,7 +10,12 @@ extern WorldSpaceManager worldSpaceManager;
 PhysicsState::PhysicsState(sf::Vector2f pos, float rotRad, const std::vector<sf::Vector2f>& cornersWithoutRotationApplied) {
 	m_worldPos = pos;
 	m_rotInRad = rotRad;
-	m_collisionComp = new VariableCollisionComponent(m_worldPos, m_rotInRad, cornersWithoutRotationApplied);
+
+	if (cornersWithoutRotationApplied.size() > 0) {
+		m_collisionComp = new VariableCollisionComponent(m_worldPos, m_rotInRad, cornersWithoutRotationApplied);
+	}
+
+	else { m_collisionComp == nullptr; }
 }
 
 PhysicsState::~PhysicsState() {}
@@ -25,12 +30,14 @@ void PhysicsState::Update(float dtMilli, float maxMomentum) {
 
 	m_worldPos = m_worldPos + m_momentum * dtMilli;
 
-	m_collisionComp->Update(m_worldPos, m_rotInRad);
+	if (m_collisionComp) { m_collisionComp->Update(m_worldPos, m_rotInRad); }
 
 	//save collision space coords
 	//this step should happen after worldCorners have been updated!
-	auto worldCorners = m_collisionComp->GetWorldCorners();
-	m_collisionSpaceCoords = worldSpaceManager.GetCollisionSpaceCoords(std::vector<sf::Vector2f>(std::begin(worldCorners), std::end(worldCorners)));
+	if (m_collisionComp) {
+		auto worldCorners = m_collisionComp->GetWorldCorners();
+		m_collisionSpaceCoords = worldSpaceManager.GetCollisionSpaceCoords(std::vector<sf::Vector2f>(std::begin(worldCorners), std::end(worldCorners)));
+	}
 }
 
 void PhysicsState::UpdateToNewState(const PhysicsState& other)
@@ -84,7 +91,8 @@ void PhysicsState::ApplyForce(sf::Vector2f force)
 
 const std::vector<sf::Vector2f>& PhysicsState::GetWorldCorners() const
 {
-	return m_collisionComp->GetWorldCorners();
+	if (m_collisionComp) { return m_collisionComp->GetWorldCorners(); }
+	else { return std::vector<sf::Vector2f>(); }
 }
 
 const std::vector<sf::Vector2i>& PhysicsState::GetCollisionSpaceCoordinates() const

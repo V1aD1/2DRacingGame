@@ -13,6 +13,15 @@ ParticlePhysicsComponent::~ParticlePhysicsComponent()
 
 void ParticlePhysicsComponent::Update(Entity& entity, float dtMilli)
 {
+	//todo this is only temp testing for making particles look more random
+	//todo will implement properly once proper physics is finished
+	m_newState.Rotate(std::rand() % 4);
+
+	sf::Vector2f newMomentum = m_newState.GetForwardDir();
+	MathCommon::ChangeLength(newMomentum, MathCommon::GetMagnitude(m_newState.GetMomentum()));
+	m_newState.SetMomentum(newMomentum);
+	//////////////////////////////////////////////////////////////////////
+
 	m_prevState = m_currState;
 	m_newState.Update(dtMilli, particle_maxMomentum);
 	m_currState = m_newState;
