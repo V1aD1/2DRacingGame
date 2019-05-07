@@ -32,11 +32,10 @@ public:
 	PhysicsStateV2& operator=(const PhysicsStateV2& other);
 
 	void Rotate(float radsToTurn);
-	void Accelerate(float acceleration);
 	void SetRotation(float newRotInRad);
 	void SetAcceleration(float newAcc);
 
-	void ApplyForce(sf::Vector2f force);
+	void ApplyVelocity(sf::Vector2f force);
 
 	const std::vector<sf::Vector2f>& GetWorldCorners() const;
 	const std::vector<sf::Vector2i>& GetCollisionSpaceCoordinates() const;

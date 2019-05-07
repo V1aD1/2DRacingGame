@@ -24,7 +24,7 @@ void PhysicsStateV2::Update(float dtMilli, float maxVelocity) {
 	//update forward dir
 	m_forwardDir = sf::Vector2f(std::cos(m_rotInRad), std::sin(m_rotInRad));
 
-	m_velocity += m_acceleration * m_forwardDir;
+	m_velocity += m_acceleration * m_forwardDir * (dtMilli / 1000.0f);
 
 	//update world position
 	if (MathCommon::GetMagnitude(m_velocity) > maxVelocity)
@@ -79,12 +79,7 @@ void PhysicsStateV2::SetAcceleration(float newAcc)
 	m_acceleration = newAcc;
 }
 
-void PhysicsStateV2::Accelerate(float acceleration)
-{
-	m_acceleration += acceleration;
-}
-
-void PhysicsStateV2::ApplyForce(sf::Vector2f velocity)
+void PhysicsStateV2::ApplyVelocity(sf::Vector2f velocity)
 {
 	m_velocity += velocity;
 }

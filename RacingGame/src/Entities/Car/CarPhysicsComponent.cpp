@@ -31,7 +31,7 @@ CarPhysicsComponent::~CarPhysicsComponent()
 void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 {
 	m_prevState = m_currState;
-	ApplyFriction(dtMilli);
+	//ApplyFriction(dtMilli);
 	m_newState.Update(dtMilli, car_maxVel);
 
 	auto collisionInfo = CollisionDetected(entity);
@@ -64,6 +64,9 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 	//todo this should be in the PhysicsComponent.Update() function
 	entity.SetPosition(m_currState.GetWorldPosition());
 	entity.SetRotation(MathCommon::RadiansToDegrees(m_currState.GetRotInRad()));
+	
+	//todo don't like doing this here, should be done somewhere else, automatically?
+	m_newState.SetAcceleration(0);
 }
 
 void CarPhysicsComponent::Brake(float dtTimeMilli)
@@ -82,6 +85,6 @@ void CarPhysicsComponent::DBG_Slide(Entity& entity, const sf::Vector2f& dir, flo
 sf::Vector2f CarPhysicsComponent::HandleCollision(sf::Vector2f otherEntityVel)
 {
 	auto absorbedVel = otherEntityVel / 2.0f;
-	m_newState.ApplyForce(absorbedVel);
+	m_newState.ApplyVelocity(absorbedVel);
 	return absorbedVel;
 }
