@@ -26,7 +26,7 @@ public:
 
 public:
 
-	void Update(float dtMilli, float maxMomentum);
+	void Update(float dtMilli, float maxVelocity);
 
 	PhysicsStateV2(const PhysicsStateV2& other);
 	PhysicsStateV2& operator=(const PhysicsStateV2& other);
@@ -48,7 +48,7 @@ public:
 
 	//should ONLY be used by DBG_ commands
 	void SetWorldPos(sf::Vector2f newPos);
-	void SetVelocity(sf::Vector2f newMomentum);
+	void SetVelocity(sf::Vector2f newVelocity);
 
 private:
 	void UpdateToNewState(const PhysicsStateV2& other);

@@ -8,7 +8,7 @@ const float CarPhysicsComponent::car_rotationSpeed = 180.0f;
 const float CarPhysicsComponent::car_acceleration = 0.25f;
 const float CarPhysicsComponent::car_frictionForce = 0.1f;
 const float CarPhysicsComponent::car_brakeDeceleration = 0.1f;
-const float CarPhysicsComponent::car_maxMomentum = 0.3f;
+const float CarPhysicsComponent::car_maxVel = 0.3f;
 
 ParticleEmitter G_EMITTER;
 
@@ -16,7 +16,7 @@ CarPhysicsComponent::CarPhysicsComponent(sf::Vector2f pos, float rotRad, const s
 	PhysicsComponentV2(pos,
 		rotRad,
 		cornersWithoutRotationApplied,
-		car_maxMomentum,
+		car_maxVel,
 		car_rotationSpeed,
 		car_acceleration,
 		car_frictionForce)
@@ -32,7 +32,7 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 {
 	m_prevState = m_currState;
 	ApplyFriction(dtMilli);
-	m_newState.Update(dtMilli, car_maxMomentum);
+	m_newState.Update(dtMilli, car_maxVel);
 
 	auto collisionInfo = CollisionDetected(entity);
 	auto collisionEntity = std::get<0>(collisionInfo);
@@ -41,22 +41,22 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 	//update to new state only if NO collision occured
 	if (collisionEntity == nullptr) { m_currState = m_newState; }
 
-	//if collision occurs then halt all momentum on the car
+	//if collision occurs then halt all velocity on the car
 	//and do NOT apply new state
 	else {
 
 		//alert other entity of collision
-		auto absorbedMomentum = collisionEntity->HandleCollision(m_newState.GetVelocity());
+		auto absorbedVel = collisionEntity->HandleCollision(m_newState.GetVelocity());
 		
 		G_EMITTER.EmitCone(
 			collisionLocation,
-			-absorbedMomentum,
+			-absorbedVel,
 			1.0f,
 			1.0f,
 			60,
-			MathCommon::GetMagnitude(absorbedMomentum) / car_maxMomentum * 5);
+			MathCommon::GetMagnitude(absorbedVel) / car_maxVel * 5);
 
-			m_currState.SetVelocity(m_newState.GetVelocity() - absorbedMomentum);
+			m_currState.SetVelocity(m_newState.GetVelocity() - absorbedVel);
 			m_currState.SetAcceleration(0);
 			m_newState = m_currState;
 	}
@@ -76,12 +76,12 @@ void CarPhysicsComponent::DBG_Slide(Entity& entity, const sf::Vector2f& dir, flo
 	//halting all movement on the car
 	m_newState.SetVelocity(sf::Vector2f(0.0f, 0.0f));
 	m_newState.SetWorldPos(m_newState.GetWorldPosition() + dir * dtMilli / 1000.0f * m_dbg_slideSpeed);
-	m_newState.Update(dtMilli, car_maxMomentum);
+	m_newState.Update(dtMilli, car_maxVel);
 }
 
-sf::Vector2f CarPhysicsComponent::HandleCollision(sf::Vector2f otherEntityMomentum)
+sf::Vector2f CarPhysicsComponent::HandleCollision(sf::Vector2f otherEntityVel)
 {
-	auto absorbedMomentum = otherEntityMomentum / 2.0f;
-	m_newState.ApplyForce(absorbedMomentum);
-	return absorbedMomentum;
+	auto absorbedVel = otherEntityVel / 2.0f;
+	m_newState.ApplyForce(absorbedVel);
+	return absorbedVel;
 }

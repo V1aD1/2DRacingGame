@@ -109,13 +109,13 @@ void Entity::Rotate(float degrees)
 	SetRotation(m_rotation + degrees);
 }
 
-sf::Vector2f Entity::HandleCollision(sf::Vector2f otherEntityMomentum)
+sf::Vector2f Entity::HandleCollision(sf::Vector2f otherEntityVel)
 {
-	sf::Vector2f absorbedMomentum = otherEntityMomentum;
+	sf::Vector2f absorbedVel = otherEntityVel;
 
 	if (m_physics) {
-		absorbedMomentum = m_physics->HandleCollision(otherEntityMomentum);
+		absorbedVel = m_physics->HandleCollision(otherEntityVel);
 	}
 
-	return absorbedMomentum;
+	return absorbedVel;
 }

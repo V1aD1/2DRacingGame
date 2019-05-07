@@ -10,7 +10,7 @@ public:
 	~ParticlePhysicsComponent();
 
 	void Update(Entity& entity, float dtMilli) override;
-	sf::Vector2f HandleCollision(sf::Vector2f otherEntityMomentum) override;
+	sf::Vector2f HandleCollision(sf::Vector2f otherEntityVel) override;
 	void DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli) override;
 	
 	//todo particles don't need a "brake" function
@@ -19,6 +19,6 @@ public:
 private:
 
 	//todo yeah this shouldn't be necessary, gotta fixup physics system...
-	float particle_maxMomentum = 1.0f;
+	float particle_maxSpeed = 1.0f;
 };
 

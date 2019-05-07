@@ -17,13 +17,13 @@ void ParticlePhysicsComponent::Update(Entity& entity, float dtMilli)
 	//todo will implement properly once proper physics is finished
 	m_newState.Rotate(std::rand() % 4);
 
-	sf::Vector2f newMomentum = m_newState.GetForwardDir();
-	MathCommon::ChangeLength(newMomentum, MathCommon::GetMagnitude(m_newState.GetVelocity()));
-	m_newState.SetVelocity(newMomentum);
+	sf::Vector2f newVel = m_newState.GetForwardDir();
+	MathCommon::ChangeLength(newVel, MathCommon::GetMagnitude(m_newState.GetVelocity()));
+	m_newState.SetVelocity(newVel);
 	//////////////////////////////////////////////////////////////////////
 
 	m_prevState = m_currState;
-	m_newState.Update(dtMilli, particle_maxMomentum);
+	m_newState.Update(dtMilli, particle_maxSpeed);
 	m_currState = m_newState;
 	
 	entity.SetPosition(m_currState.GetWorldPosition());
@@ -31,7 +31,7 @@ void ParticlePhysicsComponent::Update(Entity& entity, float dtMilli)
 }
 
 //not handling any collision on particles... FOR NOW
-sf::Vector2f ParticlePhysicsComponent::HandleCollision(sf::Vector2f otherEntityMomentum)
+sf::Vector2f ParticlePhysicsComponent::HandleCollision(sf::Vector2f otherEntityVel)
 {
 	return sf::Vector2f(0,0);
 }
