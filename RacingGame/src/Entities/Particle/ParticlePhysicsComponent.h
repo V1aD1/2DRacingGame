@@ -1,9 +1,9 @@
 #pragma once
-#include "../../Components/PhysicsComponent.h"
+#include "../../Components/PhysicsComponentV2.h"
 
 class Entity;
 
-class ParticlePhysicsComponent : public PhysicsComponent
+class ParticlePhysicsComponent : public PhysicsComponentV2
 {
 public:
 	ParticlePhysicsComponent();

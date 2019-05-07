@@ -67,16 +67,16 @@ PhysicsStateV2& PhysicsStateV2::operator=(const PhysicsStateV2& other)
 
 void PhysicsStateV2::Rotate(float radsToTurn) {
 	m_rotInRad += radsToTurn;
-
-	//m_forwardDir should be updated in Update() function exclusively,
-	//but the driving feels too floaty then, so I'll also update it
-	//while turning the car
-	m_forwardDir = sf::Vector2f(std::cos(m_rotInRad), std::sin(m_rotInRad));
 }
 
 void PhysicsStateV2::SetRotation(float newRotInRad)
 {
 	m_rotInRad = newRotInRad;
+}
+
+void PhysicsStateV2::SetAcceleration(float newAcc)
+{
+	m_acceleration = newAcc;
 }
 
 void PhysicsStateV2::Accelerate(float acceleration)
@@ -118,6 +118,11 @@ sf::Vector2f PhysicsStateV2::GetForwardDir()
 float PhysicsStateV2::GetRotInRad()
 {
 	return m_rotInRad;
+}
+
+float PhysicsStateV2::GetAcceleration()
+{
+	return m_acceleration;
 }
 
 void PhysicsStateV2::SetWorldPos(sf::Vector2f newPos)

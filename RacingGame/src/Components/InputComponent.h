@@ -1,6 +1,6 @@
 #pragma once
 class Car;
-class PhysicsComponent;
+class PhysicsComponentV2;
 class GraphicsComponent;
 class Entity;
 class EventHandler;

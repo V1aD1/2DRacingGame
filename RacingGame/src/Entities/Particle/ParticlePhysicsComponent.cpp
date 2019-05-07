@@ -3,7 +3,7 @@
 #include "../../Other/MathCommon.h"
 
 ParticlePhysicsComponent::ParticlePhysicsComponent() : 
-	PhysicsComponent(sf::Vector2f(), 0, std::vector<sf::Vector2f>(), 0.3f, 180.0f, 0.5f, 0)
+	PhysicsComponentV2(sf::Vector2f(), 0, std::vector<sf::Vector2f>(), 0.3f, 180.0f, 0.5f, 0)
 {
 }
 
@@ -18,8 +18,8 @@ void ParticlePhysicsComponent::Update(Entity& entity, float dtMilli)
 	m_newState.Rotate(std::rand() % 4);
 
 	sf::Vector2f newMomentum = m_newState.GetForwardDir();
-	MathCommon::ChangeLength(newMomentum, MathCommon::GetMagnitude(m_newState.GetMomentum()));
-	m_newState.SetMomentum(newMomentum);
+	MathCommon::ChangeLength(newMomentum, MathCommon::GetMagnitude(m_newState.GetVelocity()));
+	m_newState.SetVelocity(newMomentum);
 	//////////////////////////////////////////////////////////////////////
 
 	m_prevState = m_currState;

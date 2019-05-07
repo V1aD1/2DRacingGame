@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "../Components/InputComponent.h"
-#include "../Components/PhysicsComponent.h"
+#include "../Components/PhysicsComponentV2.h"
 #include "../Components/GraphicsComponent.h"
 #include "../Components/CollisionComponent.h"
 
@@ -23,14 +23,14 @@ protected:
 
 public: 
 	InputComponent* m_input;
-	PhysicsComponent* m_physics;
+	PhysicsComponentV2* m_physics;
 	GraphicsComponent* m_graphics;
 	CollisionComponent* m_collision;
 
 public:
 	Entity();
 	Entity(sf::Vector2f position, float rotDeg);
-	Entity(sf::Vector2f position, float rotDeg, InputComponent* input, PhysicsComponent* physics, GraphicsComponent* graphics, CollisionComponent* collision);
+	Entity(sf::Vector2f position, float rotDeg, InputComponent* input, PhysicsComponentV2* physics, GraphicsComponent* graphics, CollisionComponent* collision);
 	~Entity();
 
 	void Update(sf::RenderWindow& window, float dtTimeMilli, const EventHandler& handler);

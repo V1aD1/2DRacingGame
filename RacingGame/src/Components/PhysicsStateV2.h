@@ -32,8 +32,10 @@ public:
 	PhysicsStateV2& operator=(const PhysicsStateV2& other);
 
 	void Rotate(float radsToTurn);
-	void SetRotation(float newRotInRad);
 	void Accelerate(float acceleration);
+	void SetRotation(float newRotInRad);
+	void SetAcceleration(float newAcc);
+
 	void ApplyForce(sf::Vector2f force);
 
 	const std::vector<sf::Vector2f>& GetWorldCorners() const;
@@ -42,6 +44,7 @@ public:
 	sf::Vector2f GetVelocity();
 	sf::Vector2f GetForwardDir();
 	float GetRotInRad();
+	float GetAcceleration();
 
 	//should ONLY be used by DBG_ commands
 	void SetWorldPos(sf::Vector2f newPos);

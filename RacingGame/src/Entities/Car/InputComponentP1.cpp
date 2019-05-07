@@ -11,7 +11,7 @@ InputComponentP1::~InputComponentP1()
 }
 
 void InputComponentP1::Update(Entity& entity, const EventHandler& eventHandler, float dtMillis) {
-	PhysicsComponent* physics = entity.m_physics;
+	PhysicsComponentV2* physics = entity.m_physics;
 
 	if (eventHandler.upFlagP1)
 		physics->Accelerate(dtMillis, true);

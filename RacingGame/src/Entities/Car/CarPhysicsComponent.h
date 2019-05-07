@@ -1,13 +1,13 @@
 #pragma once
-#include "../../Components/PhysicsComponent.h"
+#include "../../Components/PhysicsComponentV2.h"
 
-class CarPhysicsComponent :public PhysicsComponent
+class CarPhysicsComponent :public PhysicsComponentV2
 {
 public:
 	static const float car_rotationSpeed;
 	static const float car_acceleration;
 	static const float car_frictionForce;
-	static const float car_brakeForce;
+	static const float car_brakeDeceleration;
 	static const float car_dbg_slideSpeed;
 	static const float car_maxMomentum;
 

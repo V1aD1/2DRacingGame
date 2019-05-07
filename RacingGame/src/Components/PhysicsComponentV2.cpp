@@ -13,7 +13,7 @@ PhysicsComponentV2::PhysicsComponentV2(sf::Vector2f pos,
 	float maxSpeed,
 	float rotSpeed,
 	float acceleration,
-	float frictionVelocity) :
+	float frictionDeceleration) :
 	m_prevState(pos, rotRad, cornersWithoutRotationApplied),
 	m_currState(pos, rotRad, cornersWithoutRotationApplied),
 	m_newState(pos, rotRad, cornersWithoutRotationApplied)
@@ -21,7 +21,7 @@ PhysicsComponentV2::PhysicsComponentV2(sf::Vector2f pos,
 	m_maxSpeed = maxSpeed;
 	m_rotationSpeed = rotSpeed;
 	m_acceleration = acceleration;
-	m_frictionVelocity = frictionVelocity;
+	m_frictionDeceleration = frictionDeceleration;
 }
 
 PhysicsComponentV2::~PhysicsComponentV2() {}
@@ -81,7 +81,12 @@ void PhysicsComponentV2::Accelerate(float dtTimeMilli, bool forward) {
 }
 
 void PhysicsComponentV2::ApplyFriction(float dtTimeMilli) {
-	ApplySlowDownVelocity(m_frictionVelocity, dtTimeMilli);
+	auto deceleration = m_frictionDeceleration * dtTimeMilli / 1000.0f;
+
+	if (m_newState.GetAcceleration() < deceleration )
+		m_newState.SetAcceleration(0);
+	else
+		m_newState.Accelerate(-deceleration);
 }
 
 const std::vector<sf::Vector2i>& PhysicsComponentV2::GetCollisionSpaceCoords()
@@ -99,12 +104,12 @@ sf::Vector2f PhysicsComponentV2::GetForwardDir()
 	return m_currState.GetForwardDir();
 }
 
-void PhysicsComponentV2::ApplySlowDownVelocity(float velocityMag, float dtTimeMilli) {
+void PhysicsComponentV2::SlowDown(float deceleration, float dtTimeMilli) {
 
 	auto newStateVelocity = m_newState.GetVelocity();
 
 	sf::Vector2f velocityDir = MathCommon::Normalize(newStateVelocity);
-	sf::Vector2f stoppingVelocityToApply = MathCommon::Normalize(newStateVelocity) * velocityMag * (dtTimeMilli / 1000.0f) * -1.0f;
+	sf::Vector2f stoppingVelocityToApply = MathCommon::Normalize(newStateVelocity) * deceleration * (dtTimeMilli / 1000.0f) * -1.0f;
 
 	float vMag = MathCommon::GetMagnitude(newStateVelocity);
 	float stoppingVelocityMag = MathCommon::GetMagnitude(stoppingVelocityToApply);
