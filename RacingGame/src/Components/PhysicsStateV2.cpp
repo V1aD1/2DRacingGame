@@ -77,9 +77,6 @@ void PhysicsStateV2::Rotate(float radsToTurn) {
 void PhysicsStateV2::SetRotation(float newRotInRad)
 {
 	m_rotInRad = newRotInRad;
-
-	//todo this is necessary since I don't use acceleration and speed correctly yet
-	m_forwardDir = sf::Vector2f(std::cos(m_rotInRad), std::sin(m_rotInRad));
 }
 
 void PhysicsStateV2::Accelerate(float acceleration)
