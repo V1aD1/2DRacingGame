@@ -84,6 +84,11 @@ void PhysicsComponent::ApplyFriction(float dtTimeMilli) {
 	SlowDown(m_frictionDeceleration, dtTimeMilli);
 }
 
+void PhysicsComponent::Brake(float dtTimeMilli)
+{
+	;
+}
+
 const std::vector<sf::Vector2i>& PhysicsComponent::GetCollisionSpaceCoords()
 {
 	return m_currState.GetCollisionSpaceCoordinates();

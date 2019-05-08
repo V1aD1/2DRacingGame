@@ -23,12 +23,15 @@ public:
 	virtual void Accelerate(float dtTimeMilli, bool forward);
 	virtual void ApplyFriction(float dtTimeMilli);
 
+	//todo this should only be in the car physics component,
+	//but that'd require a new CarEntity object....
+	virtual void Brake(float dtTimeMilli);
+
 	virtual void SetSpeed(float newSpeed);
 	virtual void SetPosition(sf::Vector2f newPos);
 	virtual void SetRotation(float newRotInRad);
 
 	virtual void Update(Entity& entity, float dtMilli) = 0;
-	virtual void Brake(float dtTimeMilli) = 0;
 	virtual void DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli) = 0;
 
 	const std::vector<sf::Vector2i>& GetCollisionSpaceCoords();

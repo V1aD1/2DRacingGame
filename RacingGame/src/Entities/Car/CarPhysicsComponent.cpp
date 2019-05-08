@@ -71,7 +71,7 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 
 void CarPhysicsComponent::Brake(float dtTimeMilli)
 {
-	//SlowDown(car_brakeDeceleration, dtTimeMilli);
+	SlowDown(car_brakeDeceleration, dtTimeMilli);
 }
 
 void CarPhysicsComponent::DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli)

@@ -15,7 +15,7 @@ void ParticlePhysicsComponent::Update(Entity& entity, float dtMilli)
 {
 	//todo this is only temp testing for making particles look more random
 	//todo will implement properly once proper physics is finished
-	//m_newState.Rotate(std::rand() % 4);
+	m_newState.Rotate(std::rand() % 10);
 
 	//////////////////////////////////////////////////////////////////////
 
@@ -35,9 +35,5 @@ sf::Vector2f ParticlePhysicsComponent::HandleCollision(sf::Vector2f otherEntityV
 
 //unnecessary functionality for particles
 void ParticlePhysicsComponent::DBG_Slide(Entity& entity, const sf::Vector2f & dir, float dtMilli)
-{
-}
-
-void ParticlePhysicsComponent::Brake(float dtTimeMilli)
 {
 }
