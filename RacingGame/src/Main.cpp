@@ -128,7 +128,7 @@ int main()
 			//emitter.EmitCircle(sf::Vector2f(200, 400), 25);
 			emitter.EmitCone(sf::Vector2f(200, 400), player1->m_physics->GetForwardDir(), 0.3f, 0.1f, 60, 1);
 		}
-
+		 
 		worldSpaceManager.DBG_Draw(window);
 
 		if ((timeSinceLastFpsLog += dtMillis) > fpsRefreshMs) {
