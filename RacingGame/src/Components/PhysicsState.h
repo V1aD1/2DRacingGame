@@ -51,5 +51,6 @@ public:
 
 private:
 	void UpdateToNewState(const PhysicsState& other);
+	void UpdateForwardDir();
 };
 

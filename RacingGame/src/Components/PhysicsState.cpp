@@ -9,7 +9,7 @@ extern WorldSpaceManager worldSpaceManager;
 
 PhysicsState::PhysicsState(sf::Vector2f pos, float rotRad, const std::vector<sf::Vector2f>& cornersWithoutRotationApplied) {
 	m_worldPos = pos;
-	m_rotInRad = rotRad;
+	SetRotation(rotRad);
 
 	if (cornersWithoutRotationApplied.size() > 0) {
 		m_collisionComp = new VariableCollisionComponent(m_worldPos, m_rotInRad, cornersWithoutRotationApplied);
@@ -21,12 +21,10 @@ PhysicsState::PhysicsState(sf::Vector2f pos, float rotRad, const std::vector<sf:
 PhysicsState::~PhysicsState() {}
 
 void PhysicsState::Update(float dtMilli, float maxVelocity) {
-	//update forward dir
-	m_forwardDir = sf::Vector2f(std::cos(m_rotInRad), std::sin(m_rotInRad));
-
+	
+	//update world position
 	m_velocity += m_acceleration * m_forwardDir * (dtMilli / 1000.0f);
 
-	//update world position
 	if (MathCommon::GetMagnitude(m_velocity) > maxVelocity)
 		m_velocity = MathCommon::ChangeLength(m_velocity, maxVelocity);
 
@@ -54,6 +52,10 @@ void PhysicsState::UpdateToNewState(const PhysicsState& other)
 	*m_collisionComp = *other.m_collisionComp;
 }
 
+void PhysicsState::UpdateForwardDir() {
+	m_forwardDir = sf::Vector2f(std::cos(m_rotInRad), std::sin(m_rotInRad));
+}
+
 PhysicsState::PhysicsState(const PhysicsState& other)
 {
 	UpdateToNewState(other);
@@ -66,12 +68,13 @@ PhysicsState& PhysicsState::operator=(const PhysicsState& other)
 }
 
 void PhysicsState::Rotate(float radsToTurn) {
-	m_rotInRad += radsToTurn;
+	SetRotation(m_rotInRad + radsToTurn);
 }
 
 void PhysicsState::SetRotation(float newRotInRad)
 {
 	m_rotInRad = newRotInRad;
+	UpdateForwardDir();
 }
 
 void PhysicsState::SetAcceleration(float newAcc)

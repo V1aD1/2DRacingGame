@@ -15,11 +15,8 @@ void ParticlePhysicsComponent::Update(Entity& entity, float dtMilli)
 {
 	//todo this is only temp testing for making particles look more random
 	//todo will implement properly once proper physics is finished
-	m_newState.Rotate(std::rand() % 4);
+	//m_newState.Rotate(std::rand() % 4);
 
-	sf::Vector2f newVel = m_newState.GetForwardDir();
-	MathCommon::ChangeLength(newVel, MathCommon::GetMagnitude(m_newState.GetVelocity()));
-	m_newState.SetVelocity(newVel);
 	//////////////////////////////////////////////////////////////////////
 
 	m_prevState = m_currState;
