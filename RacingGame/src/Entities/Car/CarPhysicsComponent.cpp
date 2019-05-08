@@ -52,6 +52,7 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 			collisionLocation,
 			-absorbedVel,
 			1.0f,
+			0.0f,
 			1.0f,
 			60,
 			MathCommon::GetMagnitude(absorbedVel) / car_maxVel * 5);
@@ -71,6 +72,8 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 
 void CarPhysicsComponent::Brake(float dtTimeMilli)
 {
+	//todo add dus effect for braking if car moving
+
 	SlowDown(car_brakeDeceleration, dtTimeMilli);
 }
 

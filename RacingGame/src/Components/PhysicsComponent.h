@@ -19,17 +19,18 @@ public:
 	~PhysicsComponent();
 
 public:
-	virtual void Rotate(float degrees, bool left);
-	virtual void Accelerate(float dtTimeMilli, bool forward);
-	virtual void ApplyFriction(float dtTimeMilli);
+	void Rotate(float degrees, bool left);
+	void Accelerate(float dtTimeMilli, bool forward);
+	void ApplyFriction(float dtTimeMilli);
 
 	//todo this should only be in the car physics component,
 	//but that'd require a new CarEntity object....
 	virtual void Brake(float dtTimeMilli);
 
-	virtual void SetSpeed(float newSpeed);
-	virtual void SetPosition(sf::Vector2f newPos);
-	virtual void SetRotation(float newRotInRad);
+	void SetSpeed(float newSpeed);
+	void SetPosition(sf::Vector2f newPos);
+	void SetRotation(float newRotInRad);
+	void SetAcceleration(float newAcc);
 
 	virtual void Update(Entity& entity, float dtMilli) = 0;
 	virtual void DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli) = 0;
@@ -48,15 +49,11 @@ protected:
 
 protected:
 	std::tuple<Entity*, sf::Vector2f> CollisionDetected(Entity& entity);
-
-	//todo correctly implement this function once acceleration is figured out
 	void SlowDown(float deceleration, float dtTimeMilli);
 
 protected:
 	float m_maxSpeed;
 	float m_rotationSpeed;
-
-	//todo make acceleration a vector2f
 	float m_acceleration;
 	float m_frictionDeceleration;
 	float m_dbg_slideSpeed = 150.0f;

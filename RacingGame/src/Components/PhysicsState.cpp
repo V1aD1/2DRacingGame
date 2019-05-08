@@ -20,6 +20,14 @@ PhysicsState::PhysicsState(sf::Vector2f pos, float rotRad, const std::vector<sf:
 
 PhysicsState::~PhysicsState() {}
 
+//todo currently the only way to change velocity is thorugh acceleration
+//but if the entity is turning, shouldn't it's velocity also kinda turn?
+//right now it's more like rockets in space instead of cars
+//some thoughts, make the car drift if the brake is being applied
+//that means that friction on the wheels is smaller, so that's why the car slides
+//in which case, the braking is actually dependant on the velocity and direction
+//of the car. Braking is more effective the smaller the angle is between
+//those two vectors
 void PhysicsState::Update(float dtMilli, float maxVelocity) {
 	
 	//update world position

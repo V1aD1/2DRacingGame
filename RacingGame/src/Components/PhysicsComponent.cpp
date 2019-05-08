@@ -73,6 +73,7 @@ std::tuple<Entity*, sf::Vector2f> PhysicsComponent::CollisionDetected(Entity& en
 	return std::make_tuple(nullptr, sf::Vector2f());
 }
 
+//todo should be pure and implemented in carphysicscomponent?
 void PhysicsComponent::Accelerate(float dtTimeMilli, bool forward) {
 	if (forward)
 		m_newState.SetAcceleration(m_acceleration);
@@ -86,7 +87,6 @@ void PhysicsComponent::ApplyFriction(float dtTimeMilli) {
 
 void PhysicsComponent::Brake(float dtTimeMilli)
 {
-	;
 }
 
 const std::vector<sf::Vector2i>& PhysicsComponent::GetCollisionSpaceCoords()
@@ -148,4 +148,13 @@ void PhysicsComponent::SetRotation(float newRotInRad)
 {
 	m_currState.SetRotation(newRotInRad);
 	m_newState.SetRotation(newRotInRad);
+}
+
+//todo the relationship between m_acceleration and the 
+//acceleration of the various physicsStates is unclear
+void PhysicsComponent::SetAcceleration(float newAcc)
+{
+	m_acceleration = newAcc;
+	m_currState.SetAcceleration(newAcc);
+	m_newState.SetAcceleration(newAcc);
 }
