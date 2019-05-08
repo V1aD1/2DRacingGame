@@ -31,7 +31,7 @@ CarPhysicsComponent::~CarPhysicsComponent()
 void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 {
 	m_prevState = m_currState;
-	//ApplyFriction(dtMilli);
+	ApplyFriction(dtMilli);
 	m_newState.Update(dtMilli, car_maxVel);
 
 	auto collisionInfo = CollisionDetected(entity);

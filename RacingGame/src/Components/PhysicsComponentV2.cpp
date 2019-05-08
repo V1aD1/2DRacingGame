@@ -81,20 +81,7 @@ void PhysicsComponentV2::Accelerate(float dtTimeMilli, bool forward) {
 }
 
 void PhysicsComponentV2::ApplyFriction(float dtTimeMilli) {
-	auto vel = m_newState.GetVelocity();
-	auto acc = m_newState.GetAcceleration();
-
-	//apply friction only if entity moving
-	if (MathCommon::GetMagnitude(vel) > 0)
-	{
-		auto newVel = MathCommon::Subtract(vel, vel * 0.5f * (dtTimeMilli / 1000.0f));
-		auto newAcc = acc - acc * 0.5f * (dtTimeMilli / 1000.0f);
-
-		m_newState.SetVelocity(newVel);
-		m_newState.SetAcceleration(newAcc);
-	}
-	
-	//SlowDown(m_frictionDeceleration, dtTimeMilli);
+	SlowDown(m_frictionDeceleration, dtTimeMilli);
 }
 
 const std::vector<sf::Vector2i>& PhysicsComponentV2::GetCollisionSpaceCoords()
@@ -116,6 +103,9 @@ void PhysicsComponentV2::SlowDown(float deceleration, float dtTimeMilli) {
 
 	auto newStateVelocity = m_newState.GetVelocity();
 
+	if (MathCommon::GetMagnitude(newStateVelocity) == 0)
+		return;
+
 	sf::Vector2f velocityDir = MathCommon::Normalize(newStateVelocity);
 	sf::Vector2f stoppingVelocityToApply = MathCommon::Normalize(newStateVelocity) * deceleration * (dtTimeMilli / 1000.0f) * -1.0f;
 
@@ -125,7 +115,6 @@ void PhysicsComponentV2::SlowDown(float deceleration, float dtTimeMilli) {
 	//to ensure stopping force doesn't cause car to move backwards
 	if (vMag > stoppingVelocityMag) {
 		m_newState.ApplyVelocity(stoppingVelocityToApply);
-		//m_newState.Accelerate(-deceleration);
 	}
 	else {
 		m_newState.SetVelocity(sf::Vector2f(0.0f, 0.0f));
