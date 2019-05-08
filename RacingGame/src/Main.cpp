@@ -70,7 +70,7 @@ int main()
 
 
 	G_VARIABLEOBJECTS.push_back(player1);
-	//G_VARIABLEOBJECTS.push_back(player2);
+	G_VARIABLEOBJECTS.push_back(player2);
 	G_STATICOBJECTS.push_back(square);
 
 
