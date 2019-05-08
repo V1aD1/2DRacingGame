@@ -9,13 +9,13 @@ class Entity;
 class PhysicsComponent
 {
 public:
-	PhysicsComponent(sf::Vector2f pos, 
-					float rotRad,
-					const std::vector<sf::Vector2f>& cornersWithoutRotationApplied,
-					float maxMomentum,
-					float rotSpeed,
-					float acceleration,
-					float frictionForce);
+	PhysicsComponent(sf::Vector2f pos,
+		float rotRad,
+		const std::vector<sf::Vector2f>& cornersWithoutRotationApplied,
+		float maxSpeed,
+		float rotSpeed,
+		float acceleration,
+		float frictionDeceleration);
 	~PhysicsComponent();
 
 public:
@@ -30,12 +30,12 @@ public:
 	virtual void Update(Entity& entity, float dtMilli) = 0;
 	virtual void Brake(float dtTimeMilli) = 0;
 	virtual void DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli) = 0;
-	
+
 	const std::vector<sf::Vector2i>& GetCollisionSpaceCoords();
 	const std::vector<sf::Vector2i>& GetPrevCollisionSpaceCoords();
 	sf::Vector2f GetForwardDir();
 
-	virtual sf::Vector2f HandleCollision(sf::Vector2f otherEntityMomentum) = 0;
+	virtual sf::Vector2f HandleCollision(sf::Vector2f otherEntityVelocity) = 0;
 
 
 protected:
@@ -45,13 +45,17 @@ protected:
 
 protected:
 	std::tuple<Entity*, sf::Vector2f> CollisionDetected(Entity& entity);
-	void ApplySlowDownForce(float forceMag, float dtTimeMilli);
 
-protected:	
-	float m_maxMomentum;
+	//todo correctly implement this function once acceleration is figured out
+	void SlowDown(float deceleration, float dtTimeMilli);
+
+protected:
+	float m_maxSpeed;
 	float m_rotationSpeed;
+
+	//todo make acceleration a vector2f
 	float m_acceleration;
-	float m_frictionForce;
+	float m_frictionDeceleration;
 	float m_dbg_slideSpeed = 150.0f;
 };
 

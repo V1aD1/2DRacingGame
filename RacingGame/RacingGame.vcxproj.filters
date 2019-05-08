@@ -57,9 +57,6 @@
     <ClCompile Include="src\Entities\Particle\ParticleGraphicsComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\PhysicsComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Entities\Static\SquareGraphicsComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -75,16 +72,13 @@
     <ClCompile Include="src\Other\WorldSpaceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\PhysicsState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Entities\Particle\ParticleEmitter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\PhysicsComponentV2.cpp">
+    <ClCompile Include="src\Components\PhysicsState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\PhysicsStateV2.cpp">
+    <ClCompile Include="src\Components\PhysicsComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -128,13 +122,7 @@
     <ClInclude Include="src\Components\StaticCollisionComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\PhysicsComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Entities\Particle\ParticleEmitter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Components\PhysicsState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Other\EventHandler.h">
@@ -152,10 +140,10 @@
     <ClInclude Include="src\Components\CollisionComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\PhysicsComponentV2.h">
+    <ClInclude Include="src\Components\PhysicsState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\PhysicsStateV2.h">
+    <ClInclude Include="src\Components\PhysicsComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

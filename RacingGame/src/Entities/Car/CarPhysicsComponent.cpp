@@ -13,7 +13,7 @@ const float CarPhysicsComponent::car_maxVel = 0.3f;
 ParticleEmitter G_EMITTER;
 
 CarPhysicsComponent::CarPhysicsComponent(sf::Vector2f pos, float rotRad, const std::vector<sf::Vector2f>& cornersWithoutRotationApplied) :
-	PhysicsComponentV2(pos,
+	PhysicsComponent(pos,
 		rotRad,
 		cornersWithoutRotationApplied,
 		car_maxVel,

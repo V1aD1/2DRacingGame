@@ -1,7 +1,7 @@
 #pragma once
-#include "../../Components/PhysicsComponentV2.h"
+#include "../../Components/PhysicsComponent.h"
 
-class CarPhysicsComponent :public PhysicsComponentV2
+class CarPhysicsComponent :public PhysicsComponent
 {
 public:
 	static const float car_rotationSpeed;

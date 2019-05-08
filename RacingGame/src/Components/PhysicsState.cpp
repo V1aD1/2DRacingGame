@@ -20,15 +20,17 @@ PhysicsState::PhysicsState(sf::Vector2f pos, float rotRad, const std::vector<sf:
 
 PhysicsState::~PhysicsState() {}
 
-void PhysicsState::Update(float dtMilli, float maxMomentum) {
+void PhysicsState::Update(float dtMilli, float maxVelocity) {
 	//update forward dir
 	m_forwardDir = sf::Vector2f(std::cos(m_rotInRad), std::sin(m_rotInRad));
 
-	//update world position
-	if (MathCommon::GetMagnitude(m_momentum) > maxMomentum)
-		m_momentum = MathCommon::ChangeLength(m_momentum, maxMomentum);
+	m_velocity += m_acceleration * m_forwardDir * (dtMilli / 1000.0f);
 
-	m_worldPos = m_worldPos + m_momentum * dtMilli;
+	//update world position
+	if (MathCommon::GetMagnitude(m_velocity) > maxVelocity)
+		m_velocity = MathCommon::ChangeLength(m_velocity, maxVelocity);
+
+	m_worldPos = m_worldPos + m_velocity * dtMilli;
 
 	if (m_collisionComp) { m_collisionComp->Update(m_worldPos, m_rotInRad); }
 
@@ -45,8 +47,9 @@ void PhysicsState::UpdateToNewState(const PhysicsState& other)
 	m_worldPos = other.m_worldPos;
 	m_rotInRad = other.m_rotInRad;
 	m_forwardDir = other.m_forwardDir;
-	m_momentum = other.m_momentum;
 	m_collisionSpaceCoords = other.m_collisionSpaceCoords;
+	m_velocity = other.m_velocity;
+	m_acceleration = other.m_acceleration;
 
 	*m_collisionComp = *other.m_collisionComp;
 }
@@ -64,29 +67,21 @@ PhysicsState& PhysicsState::operator=(const PhysicsState& other)
 
 void PhysicsState::Rotate(float radsToTurn) {
 	m_rotInRad += radsToTurn;
-
-	//m_forwardDir should be updated in Update() function exclusively,
-	//but the driving feels too floaty then, so I'll also update it
-	//while turning the car
-	m_forwardDir = sf::Vector2f(std::cos(m_rotInRad), std::sin(m_rotInRad));
 }
 
 void PhysicsState::SetRotation(float newRotInRad)
 {
 	m_rotInRad = newRotInRad;
-
-	//todo this is necessary since I don't use acceleration and speed correctly yet
-	m_forwardDir = sf::Vector2f(std::cos(m_rotInRad), std::sin(m_rotInRad));
 }
 
-void PhysicsState::Accelerate(float acceleration)
+void PhysicsState::SetAcceleration(float newAcc)
 {
-	m_momentum += m_forwardDir * acceleration;
+	m_acceleration = newAcc;
 }
 
-void PhysicsState::ApplyForce(sf::Vector2f force)
+void PhysicsState::ApplyVelocity(sf::Vector2f velocity)
 {
-	m_momentum += force;
+	m_velocity += velocity;
 }
 
 const std::vector<sf::Vector2f>& PhysicsState::GetWorldCorners() const
@@ -105,9 +100,9 @@ sf::Vector2f PhysicsState::GetWorldPosition()
 	return m_worldPos;
 }
 
-sf::Vector2f PhysicsState::GetMomentum()
+sf::Vector2f PhysicsState::GetVelocity()
 {
-	return m_momentum;
+	return m_velocity;
 }
 
 sf::Vector2f PhysicsState::GetForwardDir()
@@ -120,12 +115,17 @@ float PhysicsState::GetRotInRad()
 	return m_rotInRad;
 }
 
+float PhysicsState::GetAcceleration()
+{
+	return m_acceleration;
+}
+
 void PhysicsState::SetWorldPos(sf::Vector2f newPos)
 {
 	m_worldPos = newPos;
 }
 
-void PhysicsState::SetMomentum(sf::Vector2f newMomentum)
+void PhysicsState::SetVelocity(sf::Vector2f newVelocity)
 {
-	m_momentum = newMomentum;
+	m_velocity = newVelocity;
 }

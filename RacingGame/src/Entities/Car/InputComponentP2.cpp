@@ -12,7 +12,7 @@ InputComponentP2::~InputComponentP2()
 
 
 void InputComponentP2::Update(Entity& entity, const EventHandler& eventHandler, float dtMillis) {
-	PhysicsComponentV2* physics = entity.m_physics;
+	PhysicsComponent* physics = entity.m_physics;
 
 	if (eventHandler.upFlagP2)
 		physics->Accelerate(dtMillis, true);

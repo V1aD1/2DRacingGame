@@ -7,24 +7,24 @@
 
 extern WorldSpaceManager worldSpaceManager;
 
-PhysicsComponent::PhysicsComponent(sf::Vector2f pos, 
-									float rotRad,
-									const std::vector<sf::Vector2f>& cornersWithoutRotationApplied, 
-									float maxMomentum, 
-									float rotSpeed, 
-									float acceleration, 
-									float frictionForce) :
-									m_prevState(pos, rotRad, cornersWithoutRotationApplied),
-									m_currState(pos, rotRad, cornersWithoutRotationApplied), 
-									m_newState(pos, rotRad, cornersWithoutRotationApplied)
+PhysicsComponent::PhysicsComponent(sf::Vector2f pos,
+	float rotRad,
+	const std::vector<sf::Vector2f>& cornersWithoutRotationApplied,
+	float maxSpeed,
+	float rotSpeed,
+	float acceleration,
+	float frictionDeceleration) :
+	m_prevState(pos, rotRad, cornersWithoutRotationApplied),
+	m_currState(pos, rotRad, cornersWithoutRotationApplied),
+	m_newState(pos, rotRad, cornersWithoutRotationApplied)
 {
-	m_maxMomentum = maxMomentum;
+	m_maxSpeed = maxSpeed;
 	m_rotationSpeed = rotSpeed;
 	m_acceleration = acceleration;
-	m_frictionForce = frictionForce;
+	m_frictionDeceleration = frictionDeceleration;
 }
 
-PhysicsComponent::~PhysicsComponent(){}
+PhysicsComponent::~PhysicsComponent() {}
 
 ///NOTE: function should only be called after computing 
 ///final position of m_newState
@@ -33,7 +33,7 @@ std::tuple<Entity*, sf::Vector2f> PhysicsComponent::CollisionDetected(Entity& en
 
 	//check every object in same cell(s) as newState
 	//for a collision, using point triangle test method
-	auto potentialCollisionEntities =  worldSpaceManager.GetEntitiesAtCoords(m_newState.GetCollisionSpaceCoordinates());
+	auto potentialCollisionEntities = worldSpaceManager.GetEntitiesAtCoords(m_newState.GetCollisionSpaceCoordinates());
 
 	//check every static object for a collision
 	//using point triangle test method
@@ -73,15 +73,15 @@ std::tuple<Entity*, sf::Vector2f> PhysicsComponent::CollisionDetected(Entity& en
 	return std::make_tuple(nullptr, sf::Vector2f());
 }
 
-void PhysicsComponent::Accelerate(float dtTimeMilli, bool forward){
+void PhysicsComponent::Accelerate(float dtTimeMilli, bool forward) {
 	if (forward)
-		m_newState.Accelerate(m_acceleration * (dtTimeMilli / 1000.0f));
+		m_newState.SetAcceleration(m_acceleration);
 	else
-		m_newState.Accelerate(-m_acceleration * (dtTimeMilli / 1000.0f));
+		m_newState.SetAcceleration(-m_acceleration);
 }
 
-void PhysicsComponent::ApplyFriction(float dtTimeMilli){
-	ApplySlowDownForce(m_frictionForce, dtTimeMilli);
+void PhysicsComponent::ApplyFriction(float dtTimeMilli) {
+	SlowDown(m_frictionDeceleration, dtTimeMilli);
 }
 
 const std::vector<sf::Vector2i>& PhysicsComponent::GetCollisionSpaceCoords()
@@ -99,24 +99,30 @@ sf::Vector2f PhysicsComponent::GetForwardDir()
 	return m_currState.GetForwardDir();
 }
 
-void PhysicsComponent::ApplySlowDownForce(float forceMag, float dtTimeMilli){
+void PhysicsComponent::SlowDown(float deceleration, float dtTimeMilli) {
 
-	auto newStateMomentum = m_newState.GetMomentum();
+	auto newStateVelocity = m_newState.GetVelocity();
 
-	sf::Vector2f momentumDir = MathCommon::Normalize(newStateMomentum);
-	sf::Vector2f stoppingForceToApply = MathCommon::Normalize(newStateMomentum) * forceMag * (dtTimeMilli / 1000.0f) * -1.0f;
+	if (MathCommon::GetMagnitude(newStateVelocity) == 0)
+		return;
 
-	float momentumMag = MathCommon::GetMagnitude(newStateMomentum);
-	float stoppingForceMag = MathCommon::GetMagnitude(stoppingForceToApply);
+	sf::Vector2f velocityDir = MathCommon::Normalize(newStateVelocity);
+	sf::Vector2f stoppingVelocityToApply = MathCommon::Normalize(newStateVelocity) * deceleration * (dtTimeMilli / 1000.0f) * -1.0f;
+
+	float vMag = MathCommon::GetMagnitude(newStateVelocity);
+	float stoppingVelocityMag = MathCommon::GetMagnitude(stoppingVelocityToApply);
 
 	//to ensure stopping force doesn't cause car to move backwards
-	if (momentumMag > stoppingForceMag)
-		m_newState.ApplyForce(stoppingForceToApply);
-	else
-		m_newState.SetMomentum(sf::Vector2f(0.0f, 0.0f));
+	if (vMag > stoppingVelocityMag) {
+		m_newState.ApplyVelocity(stoppingVelocityToApply);
+	}
+	else {
+		m_newState.SetVelocity(sf::Vector2f(0.0f, 0.0f));
+		m_newState.SetAcceleration(0);
+	}
 }
 
-void PhysicsComponent::Rotate(float dtTimeMilli, bool left){
+void PhysicsComponent::Rotate(float dtTimeMilli, bool left) {
 	int direction = left ? -1 : 1;
 	float rotAmount = direction * m_rotationSpeed * (dtTimeMilli / 1000.0f);
 	m_newState.Rotate(MathCommon::DegreesToRadians(rotAmount));
@@ -124,7 +130,7 @@ void PhysicsComponent::Rotate(float dtTimeMilli, bool left){
 
 void PhysicsComponent::SetSpeed(float newSpeed)
 {
-	m_newState.SetMomentum(m_newState.GetForwardDir() * newSpeed);
+	m_newState.SetVelocity(m_newState.GetForwardDir() * newSpeed);
 }
 
 void PhysicsComponent::SetPosition(sf::Vector2f newPos)
