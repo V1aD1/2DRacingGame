@@ -138,6 +138,11 @@ void PhysicsComponent::SetSpeed(float newSpeed)
 	m_newState.SetVelocity(m_newState.GetForwardDir() * newSpeed);
 }
 
+void PhysicsComponent::SetMaxSpeed(float newMaxSpeed)
+{
+	m_maxSpeed = newMaxSpeed;
+}
+
 void PhysicsComponent::SetPosition(sf::Vector2f newPos)
 {
 	m_currState.SetWorldPos(newPos);

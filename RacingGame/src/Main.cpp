@@ -105,15 +105,6 @@ int main()
 		
 		worldSpaceManager.UpdateVariableEntitiesInCollSpace();
 
-		for (auto particle : G_PARTICLES) {
-			
-			//todo not sure if this if statement, with all its dereferences
-			//is better or WORSE for performance
-			if (particle->m_graphics->GetShape()->getFillColor().a > 0) {
-				particle->Update(window, dtMillis, eventHandler);
-			}
-		}
-
 		//update static objects before variable objects
 		for (auto staticObject : G_STATICOBJECTS) {
 			staticObject->Update(window, dtMillis, eventHandler);
@@ -121,6 +112,15 @@ int main()
 
 		for (auto variableObject : G_VARIABLEOBJECTS) {
 			variableObject->Update(window, dtMillis, eventHandler);
+		}
+
+		for (auto particle : G_PARTICLES) {
+
+			//todo not sure if this if statement, with all its dereferences
+			//is better or WORSE for performance
+			if (particle->m_graphics->GetShape()->getFillColor().a > 0) {
+				particle->Update(window, dtMillis, eventHandler);
+			}
 		}
 
 		if (eventHandler.qFlag)

@@ -55,6 +55,7 @@ void ParticleEmitter::EmitCone(sf::Vector2f pos, sf::Vector2f dir, float speed, 
 			particle->SetRotation(std::rand() % (coneWidth)-(coneWidth / 2) + angleInDegrees);
 			particle->m_graphics->SetAlphaReductionRate(alphaReductionRate);
 			particle->m_physics->SetSpeed(speed);
+			particle->m_physics->SetMaxSpeed(speed);
 			particle->m_physics->SetAcceleration(acc);
 			particle->m_graphics->Enable();
 

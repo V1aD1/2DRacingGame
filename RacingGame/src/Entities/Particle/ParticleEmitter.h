@@ -5,7 +5,7 @@
 class ParticleEmitter
 {
 private:
-	static const int c_pool_size = 100;
+	static const int c_pool_size = 1000;
 
 public:
 	static void Init();

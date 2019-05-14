@@ -14,8 +14,5 @@ public:
 	void DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli) override;
 
 private:
-
-	//todo yeah this shouldn't be necessary, gotta fixup physics system...
-	float particle_maxSpeed = 1.0f;
 };
 

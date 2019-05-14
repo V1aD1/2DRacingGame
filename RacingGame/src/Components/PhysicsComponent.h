@@ -28,6 +28,7 @@ public:
 	virtual void Brake(float dtTimeMilli);
 
 	void SetSpeed(float newSpeed);
+	void SetMaxSpeed(float newMaxSpeed);
 	void SetPosition(sf::Vector2f newPos);
 	void SetRotation(float newRotInRad);
 	void SetAcceleration(float newAcc);
