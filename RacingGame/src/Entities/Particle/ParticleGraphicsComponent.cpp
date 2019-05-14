@@ -27,18 +27,21 @@ void ParticleGraphicsComponent::Update(const Entity& entity, sf::RenderWindow& w
 		if (alpha > 0) {
 			m_shape->setPosition(entity.GetPosition());
 			window.draw(*m_shape);
-			alpha += dtTimeMilli * m_alphaChangeRate;
+			alpha += dtTimeMilli/1000.0f * m_alphaChangeRate;
 			UpdateColorAlpha(alpha);
 		}
 
 		auto scale = m_shape->getScale();
-		m_shape->setScale(scale.x + m_scaleChangeRate * dtTimeMilli, scale.y + m_scaleChangeRate * dtTimeMilli);
+		if (scale.x > 0.0f || scale.y > 0.0f) {
+			m_shape->setScale(scale.x + m_scaleChangeRate * dtTimeMilli / 1000.0f, scale.y + m_scaleChangeRate * dtTimeMilli / 1000.0f);
+		}
 	}
 }
 
 void ParticleGraphicsComponent::Enable()
 {
 	UpdateColorAlpha(255);
+	m_shape->setScale(1, 1);
 }
 
 void ParticleGraphicsComponent::UpdateColorAlpha(int newAlpha)
