@@ -26,8 +26,13 @@ void GraphicsComponent::Enable()
 {
 }
 
-void GraphicsComponent::SetAlphaReductionRate(float newAlphaReductionRate)
+void GraphicsComponent::SetAlphaChangeRate(float newAlphaChangeRate)
 {
-	m_alphaReductionRate = newAlphaReductionRate;
+	m_alphaChangeRate = newAlphaChangeRate;
+}
+
+void GraphicsComponent::SetScaleChangeRate(float newScaleChangeRate)
+{
+	m_scaleChangeRate = newScaleChangeRate;
 }
 

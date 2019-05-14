@@ -5,7 +5,7 @@
 class ParticleGraphicsComponent : public GraphicsComponent
 {
 public:
-	ParticleGraphicsComponent(float alphaReductionRate);
+	ParticleGraphicsComponent(float alphaChangeRate);
 	~ParticleGraphicsComponent();
 
 public:

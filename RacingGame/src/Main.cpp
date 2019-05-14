@@ -126,7 +126,7 @@ int main()
 		if (eventHandler.qFlag)
 		{
 			//emitter.EmitCircle(sf::Vector2f(200, 400), 25);
-			emitter.EmitCone(sf::Vector2f(200, 400), player1->m_physics->GetForwardDir(), 0.3f, 1.25f, 0.01f, 60, 1);
+			emitter.EmitCone(sf::Vector2f(200, 400), player1->m_physics->GetForwardDir(), 0.3f, 1.25f, -0.01f, 60, 1);
 		}
 		 
 		worldSpaceManager.DBG_Draw(window);

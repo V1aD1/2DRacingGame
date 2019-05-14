@@ -1,9 +1,9 @@
 #include "ParticleGraphicsComponent.h"
 #include "../Entity.h"
 
-ParticleGraphicsComponent::ParticleGraphicsComponent(float alphaReductionRate) : GraphicsComponent()
+ParticleGraphicsComponent::ParticleGraphicsComponent(float alphaChangeRate) : GraphicsComponent()
 {
-	m_alphaReductionRate = alphaReductionRate;
+	m_alphaChangeRate = alphaChangeRate;
 
 	//creating a simple pixel for particles
 	auto shape = new sf::CircleShape(5.0f, 4);
@@ -27,9 +27,12 @@ void ParticleGraphicsComponent::Update(const Entity& entity, sf::RenderWindow& w
 		if (alpha > 0) {
 			m_shape->setPosition(entity.GetPosition());
 			window.draw(*m_shape);
-			alpha -= dtTimeMilli * m_alphaReductionRate;
+			alpha += dtTimeMilli * m_alphaChangeRate;
 			UpdateColorAlpha(alpha);
 		}
+
+		auto scale = m_shape->getScale();
+		m_shape->setScale(scale.x + m_scaleChangeRate * dtTimeMilli, scale.y + m_scaleChangeRate * dtTimeMilli);
 	}
 }
 

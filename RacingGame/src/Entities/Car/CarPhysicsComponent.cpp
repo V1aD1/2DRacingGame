@@ -53,7 +53,7 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 			-absorbedVel,
 			0.5f,
 			0.0f,
-			1.0f,
+			-1.0f,
 			60,
 			MathCommon::GetMagnitude(absorbedVel) / car_maxVel * 5);
 
