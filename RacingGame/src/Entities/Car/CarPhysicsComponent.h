@@ -20,8 +20,11 @@ public:
 	~CarPhysicsComponent();
 
 	void Update(Entity& entity, float dtMilli) override;
-	void Brake(float dtTimeMilli) override;
+	void Brake(Entity& entity, float dtTimeMilli) override;
 	void DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli) override;
 	virtual sf::Vector2f HandleCollision(sf::Vector2f otherEntityVel) override;
+
+private:
+	void CreateDustClouds(Entity& entity, std::vector<int> wheels);
 };
 

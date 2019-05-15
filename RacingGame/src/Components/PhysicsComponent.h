@@ -25,7 +25,7 @@ public:
 
 	//todo this should only be in the car physics component,
 	//but that'd require a new CarEntity object....
-	virtual void Brake(float dtTimeMilli);
+	virtual void Brake(Entity& entity, float dtTimeMilli);
 
 	void SetSpeed(float newSpeed);
 	void SetMaxSpeed(float newMaxSpeed);

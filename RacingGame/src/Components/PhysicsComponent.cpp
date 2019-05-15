@@ -85,7 +85,7 @@ void PhysicsComponent::ApplyFriction(float dtTimeMilli) {
 	SlowDown(m_frictionDeceleration, dtTimeMilli);
 }
 
-void PhysicsComponent::Brake(float dtTimeMilli)
+void PhysicsComponent::Brake(Entity& entity, float dtTimeMilli)
 {
 }
 

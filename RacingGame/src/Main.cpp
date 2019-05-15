@@ -110,10 +110,6 @@ int main()
 			staticObject->Update(window, dtMillis, eventHandler);
 		}
 
-		for (auto variableObject : G_VARIABLEOBJECTS) {
-			variableObject->Update(window, dtMillis, eventHandler);
-		}
-
 		for (auto particle : G_PARTICLES) {
 
 			//todo not sure if this if statement, with all its dereferences
@@ -121,6 +117,10 @@ int main()
 			if (particle->m_graphics->GetShape()->getFillColor().a > 0) {
 				particle->Update(window, dtMillis, eventHandler);
 			}
+		}
+
+		for (auto variableObject : G_VARIABLEOBJECTS) {
+			variableObject->Update(window, dtMillis, eventHandler);
 		}
 
 		if (eventHandler.qFlag)

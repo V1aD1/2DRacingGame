@@ -27,7 +27,7 @@ void InputComponentP2::Update(Entity& entity, const EventHandler& eventHandler, 
 		physics->Rotate(dtMillis, false);
 
 	if (eventHandler.brakeFlagP2)
-		physics->Brake(dtMillis);
+		physics->Brake(entity, dtMillis);
 
 	//debug commands
 	if (eventHandler.tFlag)
