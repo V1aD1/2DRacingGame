@@ -9,6 +9,7 @@ const float CarPhysicsComponent::car_acceleration = 0.25f;
 const float CarPhysicsComponent::car_frictionForce = 0.1f;
 const float CarPhysicsComponent::car_brakeDeceleration = 0.1f;
 const float CarPhysicsComponent::car_maxVel = 0.3f;
+const float CarPhysicsComponent::car_skidEffectFrequencyMs = 200.0f;
 
 ParticleEmitter G_EMITTER;
 
@@ -21,6 +22,7 @@ CarPhysicsComponent::CarPhysicsComponent(sf::Vector2f pos, float rotRad, const s
 		car_acceleration,
 		car_frictionForce)
 {
+	car_timeSinceLastSkidEffect = car_skidEffectFrequencyMs;
 }
 
 
@@ -63,12 +65,25 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 			m_newState = m_currState;
 	}
 
+	//skidding effect 
+	if (m_currState.GetAcceleration() != 0 && MathCommon::GetMagnitude(m_currState.GetVelocity()) < m_maxSpeed / 2) {
+
+		if (car_timeSinceLastSkidEffect > car_skidEffectFrequencyMs) {
+			auto wheelPositions = entity.GetWorldCorners();
+
+			G_EMITTER.EmitCircle(wheelPositions->at(3), 0, 0, -0.05f, 2.0f, 1);
+			G_EMITTER.EmitCircle(wheelPositions->at(0), 0, 0, -0.05f, 2.0f, 1);
+			car_timeSinceLastSkidEffect = 0;
+		}
+	}
+	
 	//todo this should be in the PhysicsComponent.Update() function
 	entity.SetPosition(m_currState.GetWorldPosition());
 	entity.SetRotation(MathCommon::RadiansToDegrees(m_currState.GetRotInRad()));
 	
 	//todo don't like doing this here, should be done somewhere else, automatically?
 	m_newState.SetAcceleration(0);
+	car_timeSinceLastSkidEffect += dtMilli;
 }
 
 void CarPhysicsComponent::Brake(float dtTimeMilli)

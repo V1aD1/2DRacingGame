@@ -3,13 +3,17 @@
 
 class CarPhysicsComponent :public PhysicsComponent
 {
-public:
+private:
 	static const float car_rotationSpeed;
 	static const float car_acceleration;
 	static const float car_frictionForce;
 	static const float car_brakeDeceleration;
 	static const float car_dbg_slideSpeed;
 	static const float car_maxVel;
+	static const float car_skidEffectFrequencyMs;
+
+private:
+	float car_timeSinceLastSkidEffect;
 
 public:
 	CarPhysicsComponent(sf::Vector2f pos, float rotRad, const std::vector<sf::Vector2f>& cornersWithoutRotationApplied);

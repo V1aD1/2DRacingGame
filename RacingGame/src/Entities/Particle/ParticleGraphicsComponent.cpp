@@ -3,11 +3,12 @@
 
 ParticleGraphicsComponent::ParticleGraphicsComponent(float alphaChangeRate) : GraphicsComponent()
 {
+	auto radius = 5.0f;
 	m_alphaChangeRate = alphaChangeRate;
 
 	//creating a simple pixel for particles
-	auto shape = new sf::CircleShape(5.0f, 4);
-	shape->setOrigin(0.5f, 0.5f);
+	auto shape = new sf::CircleShape(radius, 4);
+	shape->setOrigin(radius, radius);
 	shape->setFillColor(sf::Color(255,255,255,0));
 
 	m_shape = shape;

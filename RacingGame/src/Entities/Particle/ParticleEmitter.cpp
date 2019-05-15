@@ -13,7 +13,7 @@ void ParticleEmitter::Init()
 	}
 }
 
-void ParticleEmitter::EmitCircle(sf::Vector2f pos, float speed, float alphaChangeRate, int numParticles)
+void ParticleEmitter::EmitCircle(sf::Vector2f pos, float speed, float acc, float alphaChangeRate, float scaleRateChange, int numParticles)
 {
 	for (auto particle : G_PARTICLES) {
 		if (numParticles == 0)
@@ -25,7 +25,9 @@ void ParticleEmitter::EmitCircle(sf::Vector2f pos, float speed, float alphaChang
 			particle->SetPosition(pos);
 			particle->SetRotation(std::rand() % 361);
 			particle->m_physics->SetSpeed(speed);
+			particle->m_physics->SetAcceleration(acc);
 			particle->m_graphics->SetAlphaChangeRate(alphaChangeRate);
+			particle->m_graphics->SetScaleChangeRate(scaleRateChange);
 			particle->m_graphics->Enable();
 
 			numParticles--;
