@@ -13,6 +13,7 @@ ParticlePhysicsComponent::~ParticlePhysicsComponent()
 
 void ParticlePhysicsComponent::Update(Entity& entity, float dtMilli)
 {
+	Accelerate(dtMilli, true);
 	//todo this is only temp testing for making particles look more random
 	//todo will implement properly once proper physics is finished
 	m_newState.Rotate(std::rand() % 10);

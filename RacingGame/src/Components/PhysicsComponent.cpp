@@ -76,9 +76,15 @@ std::tuple<Entity*, sf::Vector2f> PhysicsComponent::CollisionDetected(Entity& en
 //todo should be pure and implemented in carphysicscomponent?
 void PhysicsComponent::Accelerate(float dtTimeMilli, bool forward) {
 	if (forward)
-		m_newState.SetAcceleration(m_acceleration);
+		m_newState.SetCurrentAcceleration(m_acceleration);
 	else
-		m_newState.SetAcceleration(-m_acceleration);
+		m_newState.SetCurrentAcceleration(-m_acceleration);
+}
+
+//turns off acceleration for this object, if it is accelerating
+void PhysicsComponent::Decelerate(float dtTimeMilli)
+{
+	m_newState.SetCurrentAcceleration(0);
 }
 
 void PhysicsComponent::ApplyFriction(float dtTimeMilli) {
@@ -123,7 +129,7 @@ void PhysicsComponent::SlowDown(float deceleration, float dtTimeMilli) {
 	}
 	else {
 		m_newState.SetVelocity(sf::Vector2f(0.0f, 0.0f));
-		m_newState.SetAcceleration(0);
+		m_newState.SetCurrentAcceleration(0);
 	}
 }
 
@@ -155,13 +161,11 @@ void PhysicsComponent::SetRotation(float newRotInRad)
 	m_newState.SetRotation(newRotInRad);
 }
 
-//todo the relationship between m_acceleration and the 
-//acceleration of the various physicsStates is unclear
+//this function sets the acceleration of this object,
+//use the Accelerate() function to actually APPLY the acceleration
 void PhysicsComponent::SetAcceleration(float newAcc)
 {
 	m_acceleration = newAcc;
-	m_currState.SetAcceleration(newAcc);
-	m_newState.SetAcceleration(newAcc);
 }
 
 void PhysicsComponent::DBG_Slide(Entity & entity, const sf::Vector2f & dir, float dtMilli)

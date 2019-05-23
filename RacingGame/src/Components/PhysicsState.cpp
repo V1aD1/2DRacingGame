@@ -31,7 +31,7 @@ PhysicsState::~PhysicsState() {}
 void PhysicsState::Update(float dtMilli, float maxVelocity) {
 	
 	//update world position
-	m_velocity += m_acceleration * m_forwardDir * (dtMilli / 1000.0f);
+	m_velocity += m_currentAcceleration * m_forwardDir * (dtMilli / 1000.0f);
 
 	if (MathCommon::GetMagnitude(m_velocity) > maxVelocity)
 		m_velocity = MathCommon::ChangeLength(m_velocity, maxVelocity);
@@ -55,7 +55,7 @@ void PhysicsState::UpdateToNewState(const PhysicsState& other)
 	m_forwardDir = other.m_forwardDir;
 	m_collisionSpaceCoords = other.m_collisionSpaceCoords;
 	m_velocity = other.m_velocity;
-	m_acceleration = other.m_acceleration;
+	m_currentAcceleration = other.m_currentAcceleration;
 
 	*m_collisionComp = *other.m_collisionComp;
 }
@@ -85,9 +85,9 @@ void PhysicsState::SetRotation(float newRotInRad)
 	UpdateForwardDir();
 }
 
-void PhysicsState::SetAcceleration(float newAcc)
+void PhysicsState::SetCurrentAcceleration(float newAcc)
 {
-	m_acceleration = newAcc;
+	m_currentAcceleration = newAcc;
 }
 
 void PhysicsState::ApplyVelocity(sf::Vector2f velocity)
@@ -126,9 +126,9 @@ float PhysicsState::GetRotInRad()
 	return m_rotInRad;
 }
 
-float PhysicsState::GetAcceleration()
+float PhysicsState::GetCurrentAcceleration()
 {
-	return m_acceleration;
+	return m_currentAcceleration;
 }
 
 void PhysicsState::SetWorldPos(sf::Vector2f newPos)

@@ -35,9 +35,9 @@ bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText) {
 
 	window.create(sf::VideoMode(screenLen, screenHeight), "Racing Game!", sf::Style::Default, settings);
 
+	//todo frame rate effects particles, and more importantly, game doesn't really run anymore at high fps...
 	//never use both setVerticalSyncEnabled and setFramerateLimit at the same time!
-	
-	//window.setFramerateLimit(60);
+	window.setFramerateLimit(200);
 
 	if (!font.loadFromFile("Resources/fonts/MotorolaScreentype.ttf")) {
 		std::cout << "Problems opening font file!" << std::endl;
@@ -126,7 +126,7 @@ int main()
 		if (eventHandler.qFlag)
 		{
 			//emitter.EmitCircle(sf::Vector2f(200, 400), 25);
-			emitter.EmitCone(sf::Vector2f(200, 400), player1->m_physics->GetForwardDir(), 0.3f, 1.25f, -0.01f, -1.0f, 60, 1);
+			emitter.EmitCone(sf::Vector2f(200, 400), player1->m_physics->GetForwardDir(), 0.2f, 0.3f, 1.25f, -0.01f, -1.0f, 60, 1);
 		}
 		 
 		worldSpaceManager.DBG_Draw(window);

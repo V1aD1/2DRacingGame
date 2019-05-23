@@ -16,8 +16,11 @@ void InputComponentP1::Update(Entity& entity, const EventHandler& eventHandler, 
 	if (eventHandler.upFlagP1)
 		physics->Accelerate(dtMillis, true);
 
-	if (eventHandler.downFlagP1)
+	else if (eventHandler.downFlagP1)
 		physics->Accelerate(dtMillis, false);
+
+	else
+		physics->Decelerate(dtMillis);
 
 	if (eventHandler.leftFlagP1)
 		physics->Rotate(dtMillis, true);

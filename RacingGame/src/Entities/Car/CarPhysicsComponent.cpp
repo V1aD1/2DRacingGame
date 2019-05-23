@@ -50,9 +50,11 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 		//alert other entity of collision
 		auto absorbedVel = collisionEntity->HandleCollision(m_newState.GetVelocity());
 
+		//emit collision spark
 		G_EMITTER.EmitCone(
 			collisionLocation,
 			-absorbedVel,
+			0.2f,
 			0.2f,
 			-3.0f,
 			-2.0f,
@@ -61,21 +63,18 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 			MathCommon::GetMagnitude(absorbedVel) / car_maxVel * 5);
 
 		m_currState.SetVelocity(m_newState.GetVelocity() - absorbedVel);
-		m_currState.SetAcceleration(0);
+		m_currState.SetCurrentAcceleration(0);
 		m_newState = m_currState;
 	}
 
 	//skidding effect 
-	if (m_currState.GetAcceleration() != 0 && MathCommon::GetMagnitude(m_currState.GetVelocity()) < m_maxSpeed / 2) {
+	if (m_currState.GetCurrentAcceleration() != 0 && MathCommon::GetMagnitude(m_currState.GetVelocity()) < m_maxSpeed / 2) {
 		CreateDustClouds(entity, { 0, 3 });
 	}
 
 	//todo this should be in the PhysicsComponent.Update() function
 	entity.SetPosition(m_currState.GetWorldPosition());
 	entity.SetRotation(MathCommon::RadiansToDegrees(m_currState.GetRotInRad()));
-
-	//todo don't like doing this here, should be done somewhere else, automatically?
-	m_newState.SetAcceleration(0);
 
 	car_timeSinceLastSkidEffect += dtMilli;
 }
@@ -107,7 +106,7 @@ void CarPhysicsComponent::CreateDustClouds(Entity& entity, std::vector<int> whee
 		auto wheelPositions = entity.GetWorldCorners();
 
 		for (auto wheel : wheels) {
-			G_EMITTER.EmitCircle(wheelPositions->at(wheel), 0, 0, -0.05f, 2.0f, 1);
+			G_EMITTER.EmitCircle(wheelPositions->at(wheel), 0, 0, 0, -0.05f, 2.0f, 1);
 		}
 		car_timeSinceLastSkidEffect = 0;
 	}

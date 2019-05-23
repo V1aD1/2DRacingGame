@@ -14,7 +14,7 @@ private:
 	sf::Vector2f m_forwardDir = sf::Vector2f(1.0f, 0.0f);
 	sf::Vector2f m_velocity;
 	
-	float m_acceleration;
+	float m_currentAcceleration;
 	float m_rotInRad = 0.0f;
 
 	CollisionComponent* m_collisionComp;
@@ -33,7 +33,7 @@ public:
 
 	void Rotate(float radsToTurn);
 	void SetRotation(float newRotInRad);
-	void SetAcceleration(float newAcc);
+	void SetCurrentAcceleration(float newAcc);
 
 	void ApplyVelocity(sf::Vector2f force);
 
@@ -43,7 +43,7 @@ public:
 	sf::Vector2f GetVelocity();
 	sf::Vector2f GetForwardDir();
 	float GetRotInRad();
-	float GetAcceleration();
+	float GetCurrentAcceleration();
 
 	//should ONLY be used by DBG_ commands
 	void SetWorldPos(sf::Vector2f newPos);

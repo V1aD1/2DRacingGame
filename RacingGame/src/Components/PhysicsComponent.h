@@ -21,6 +21,7 @@ public:
 public:
 	void Rotate(float degrees, bool left);
 	void Accelerate(float dtTimeMilli, bool forward);
+	void Decelerate(float dtTimeMilli);
 	void ApplyFriction(float dtTimeMilli);
 
 	//only needed in CarPhysics but that's the composition pattern for you!
