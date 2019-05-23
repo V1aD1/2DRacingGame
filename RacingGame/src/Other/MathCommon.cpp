@@ -98,3 +98,27 @@ bool MathCommon::CheckLineCollision(sf::Vector2f p1, sf::Vector2f p2, sf::Vector
 	return false;
 }
 
+bool MathCommon::AreColliding(std::vector<sf::Vector2f> firstShapeCorners, std::vector<sf::Vector2f> secondShapeCorners)
+{
+	//line intersection test
+	for (int i = 0; i < firstShapeCorners.size(); i++) {
+		auto firstShapeCurrCorner = firstShapeCorners[i];
+		auto firstShapeNextCorner = (i == (firstShapeCorners.size() - 1)) ? firstShapeCorners[0] : firstShapeCorners[i + 1];
+
+		for (int i = 0; i < secondShapeCorners.size(); i++) {
+			auto secondShapeCurrCorner = secondShapeCorners[i];
+			auto secondShapeNextCorner = (i == (secondShapeCorners.size() - 1)) ? secondShapeCorners[0] : secondShapeCorners[i + 1];
+
+			if (MathCommon::CheckLineCollision(firstShapeCurrCorner,
+				firstShapeNextCorner,
+				secondShapeCurrCorner,
+				secondShapeNextCorner) == true)
+			{
+				return true;
+			}
+
+		}
+	}
+	return false;
+}
+

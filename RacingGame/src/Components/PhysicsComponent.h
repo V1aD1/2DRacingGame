@@ -49,7 +49,7 @@ protected:
 
 protected:
 	std::tuple<Entity*, sf::Vector2f> DetectCollision(Entity& entity);
-	std::tuple<Entity*, sf::Vector2f> DetectCollision2(Entity& entity);
+	std::tuple<Entity*, sf::Vector2f> DetectCollisionLineTest(Entity& entity);
 
 	void SlowDown(float deceleration, float dtTimeMilli);
 

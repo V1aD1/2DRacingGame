@@ -130,58 +130,21 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::
 					break;
 				}
 
+				std::vector<sf::Vector2f> currentCellCorners = {
+					sf::Vector2f(currentCell.x*cellWidth, currentCell.y*cellHeight),
+					sf::Vector2f(currentCell.x*cellWidth + cellWidth, currentCell.y*cellHeight),
+					sf::Vector2f(currentCell.x*cellWidth + cellWidth, currentCell.y*cellHeight + cellHeight),
+					sf::Vector2f(currentCell.x*cellWidth, currentCell.y*cellHeight + cellHeight)
+				};
+
 				//corner not within current cell, therefore do line intersection test
-				//todo these 4 operations could be done in parallel?
 				if (worldCorners.size() > 1) {
 
-					auto nextShapeCorner = (i == (worldCorners.size() - 1)) ? worldCorners[0] : worldCorners[i + 1];
-
-					//no collision detection if outside world space
-					if (nextShapeCorner.x < 0.0f || nextShapeCorner.x > screenLen)
-						continue;
-					if (nextShapeCorner.y < 0.0f || nextShapeCorner.y >screenHeight)
-						continue;
-
-					//checking lines that make up cell in counter clockwise
-					if (MathCommon::CheckLineCollision(sf::Vector2f(currentCell.x*cellWidth, currentCell.y*cellHeight),
-						sf::Vector2f(currentCell.x*cellWidth + cellWidth, currentCell.y*cellHeight),
-						shapeCorner,
-						nextShapeCorner) == true)
+					if (MathCommon::AreColliding(worldCorners, currentCellCorners))
 					{
-						//corner is within current cell
 						AddToVectorNoDuplicates(pairs, currentCell);
 						break;
-					}
-
-					else if (MathCommon::CheckLineCollision(sf::Vector2f(currentCell.x*cellWidth + cellWidth, currentCell.y*cellHeight),
-						sf::Vector2f(currentCell.x*cellWidth + cellWidth, currentCell.y*cellHeight + cellHeight),
-						shapeCorner,
-						nextShapeCorner) == true)
-					{
-						//corner is within current cell
-						AddToVectorNoDuplicates(pairs, currentCell);
-						break;
-					}
-
-					else if (MathCommon::CheckLineCollision(sf::Vector2f(currentCell.x*cellWidth + cellWidth, currentCell.y*cellHeight + cellHeight),
-						sf::Vector2f(currentCell.x*cellWidth, currentCell.y*cellHeight + cellHeight),
-						shapeCorner,
-						nextShapeCorner) == true)
-					{
-						//corner is within current cell
-						AddToVectorNoDuplicates(pairs, currentCell);
-						break;
-					}
-
-					else if (MathCommon::CheckLineCollision(sf::Vector2f(currentCell.x*cellWidth, currentCell.y*cellHeight + cellHeight),
-						sf::Vector2f(currentCell.x*cellWidth, currentCell.y*cellHeight),
-						shapeCorner,
-						nextShapeCorner) == true)
-					{
-						//corner is within current cell
-						AddToVectorNoDuplicates(pairs, currentCell);
-						break;
-					}
+					}					
 				}
 			}
 		}
