@@ -167,13 +167,13 @@ void PhysicsComponent::SetAcceleration(float newAcc)
 	m_acceleration = newAcc;
 }
 
-void PhysicsComponent::Update(Entity & entity, float dtMilli)
+void PhysicsComponent::Update(Entity& entity, float dtMilli)
 {
 	entity.SetPosition(m_currState.GetWorldPosition());
 	entity.SetRotation(MathCommon::RadiansToDegrees(m_currState.GetRotInRad()));
 }
 
-void PhysicsComponent::DBG_Slide(Entity & entity, const sf::Vector2f & dir, float dtMilli)
+void PhysicsComponent::DBG_Slide(Entity& entity, const sf::Vector2f & dir, float dtMilli)
 {
 }
 

@@ -28,14 +28,19 @@ extern ParticleEmitter G_EMITTER;
 
 WorldSpaceManager worldSpaceManager = WorldSpaceManager();
 
+//a function I'll be using to do performance testing
+void PerfTest(sf::RenderWindow& window, EventHandler& eventHandler) {
+	Timer("Perf Task");
+}
+
 bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText) {
-	Timer("Setup Function ");
+	Timer("Setup Function");
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
 
 	window.create(sf::VideoMode(screenLen, screenHeight), "Racing Game!", sf::Style::Default, settings);
 
-	//todo frame rate effects particles, and more importantly, game doesn't really run anymore at high fps...
+	//todo frame rate affects particles, and more importantly, game doesn't really run anymore at high fps...
 	//never use both setVerticalSyncEnabled and setFramerateLimit at the same time!
 	window.setFramerateLimit(200);
 
@@ -88,6 +93,8 @@ int main()
 
 	worldSpaceManager.UpdateAllEntitiesInCollSpace();
 
+	PerfTest(window, eventHandler);
+
 	while (window.isOpen())
 	{
 		sf::Time timePassed = clock.restart();
@@ -102,7 +109,7 @@ int main()
 		}
 
 		window.clear();
-		
+
 		worldSpaceManager.UpdateVariableEntitiesInCollSpace();
 
 		//update static objects before variable objects
@@ -111,9 +118,6 @@ int main()
 		}
 
 		for (auto particle : G_PARTICLES) {
-
-			//todo not sure if this if statement, with all its dereferences
-			//is better or WORSE for performance
 			if (particle->m_graphics->GetShape()->getFillColor().a > 0) {
 				particle->Update(window, dtMillis, eventHandler);
 			}
@@ -125,10 +129,9 @@ int main()
 
 		if (eventHandler.qFlag)
 		{
-			//emitter.EmitCircle(sf::Vector2f(200, 400), 25);
 			emitter.EmitCone(sf::Vector2f(200, 400), player1->m_physics->GetForwardDir(), 0.2f, 0.3f, 1.25f, -0.01f, -1.0f, 60, 1);
 		}
-		 
+
 		worldSpaceManager.DBG_Draw(window);
 
 		if ((timeSinceLastFpsLog += dtMillis) > fpsRefreshMs) {
@@ -138,7 +141,7 @@ int main()
 
 		window.draw(fpsText);
 		window.display();
-		
+
 		worldSpaceManager.ClearVariableEntities();
 	}
 
