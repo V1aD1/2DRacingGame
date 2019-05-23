@@ -54,3 +54,47 @@ int MathCommon::GetOrientation(const sf::Vector2f& p1, sf::Vector2f& p2, sf::Vec
 {
 	return 0;
 }
+
+bool MathCommon::CheckLineCollision(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f q1, sf::Vector2f q2)
+{
+	//as per https://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
+	//vectors will be represented by a start point (p, q) and end point (p+r, q+s),
+	//where r or s = endpoint - startpoint
+
+	auto r = p2 - p1;
+	auto s = q2 - q1;
+
+	//you'll be comparing vectors connecting every corner to the next,
+	//around the shape, with the 4 sides of each cell that shape may be within
+	//vectors are p + r and q + s
+	//t = (q - p) x s / (r x s)
+	//u = (q - p) x r/(r x s)
+	//NOTE: (q - p) and (r x s) used in both equations,
+	//so only compute them once!!
+
+	auto QMinP = q1 - p1;
+	auto RCrossS = MathCommon::CrossProduct(r, s);
+
+	//Collinear: if r x s = 0 AND (q - p) x r = 0 (we care)
+	if (RCrossS == 0.0f && MathCommon::CrossProduct(QMinP, r) == 0) {
+		return true;
+	}
+
+	//Intersection: if r x s != 0 and 0 <= t <= 1 and 0 <= u <= 1
+	else if (RCrossS != 0.0f) {
+		auto t = MathCommon::CrossProduct(QMinP, s) / RCrossS;
+		auto u = MathCommon::CrossProduct(QMinP, r) / RCrossS;
+
+		if (0.0f <= t && t <= 1.0f && 0.0f <= u && u <= 1.0f)
+		{
+			return true;
+		}
+	}
+
+	//Parallel, non intersecting: r  x s = 0 and (q - p) x r != 0 (don't care)
+
+	//Else, lines are not parallel BUT do NOT intersect (don't care)
+
+	return false;
+}
+

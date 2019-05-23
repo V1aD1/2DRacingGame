@@ -26,10 +26,56 @@ PhysicsComponent::PhysicsComponent(sf::Vector2f pos,
 
 PhysicsComponent::~PhysicsComponent() {}
 
-///NOTE: function should only be called after computing 
-///final position of m_newState
+//NOTE: function should only be called after computing 
+//final position of m_newState
 //todo should make static objects also do point in line test!
-std::tuple<Entity*, sf::Vector2f> PhysicsComponent::CollisionDetected(Entity& entity) {
+//todo should rename to DetectCollisionPointInTriangle()
+std::tuple<Entity*, sf::Vector2f> PhysicsComponent::DetectCollision(Entity& entity) {
+
+	//check every object in same cell(s) as newState
+	//for a collision, using point triangle test method
+	auto potentialCollisionEntities = worldSpaceManager.GetEntitiesAtCoords(m_newState.GetCollisionSpaceCoordinates());
+
+	//check every static object for a collision
+	//using point triangle test method
+	for (auto otherEntity : potentialCollisionEntities) {
+
+		//to avoid collision detection with itself
+		//todo change to use ID of objects instead
+		if (otherEntity == &entity)
+			continue;
+
+		auto otherEntityWorldCorners = otherEntity->GetWorldCorners();
+
+		if (otherEntityWorldCorners) {
+			std::vector<sf::Vector2f> objCorners = *otherEntityWorldCorners;
+
+			for (auto corner : m_newState.GetWorldCorners()) {
+
+				bool collision = true;
+
+				for (size_t i = 0; i < objCorners.size(); i++) {
+
+					//this operation must be performed in this order!!
+					float check = MathCommon::CrossProduct(objCorners[i] - objCorners[(i + 1) % objCorners.size()], objCorners[i] - (corner));
+
+					if (check <= 0.0f) {
+						collision = false;
+						break;
+					}
+				}
+				if (collision) {
+					return std::make_tuple(otherEntity, corner);
+				}
+			}
+		}
+	}
+
+	return std::make_tuple(nullptr, sf::Vector2f());
+}
+
+std::tuple<Entity*, sf::Vector2f> PhysicsComponent::DetectCollision2(Entity & entity)
+{
 
 	//check every object in same cell(s) as newState
 	//for a collision, using point triangle test method
@@ -47,16 +93,16 @@ std::tuple<Entity*, sf::Vector2f> PhysicsComponent::CollisionDetected(Entity& en
 		auto otherEntityCornersPtr = otherEntity->GetWorldCorners();
 
 		if (otherEntityCornersPtr) {
-			std::vector<sf::Vector2f> objCorners = *otherEntityCornersPtr;
+			std::vector<sf::Vector2f> otherEntityWorldCorners = *otherEntityCornersPtr;
 
 			for (auto corner : m_newState.GetWorldCorners()) {
 
 				bool collision = true;
 
-				for (size_t i = 0; i < objCorners.size(); i++) {
+				for (size_t i = 0; i < otherEntityWorldCorners.size(); i++) {
 
 					//this operation must be performed in this order!!
-					float check = MathCommon::CrossProduct(objCorners[i] - objCorners[(i + 1) % objCorners.size()], objCorners[i] - (corner));
+					float check = MathCommon::CrossProduct(otherEntityWorldCorners[i] - otherEntityWorldCorners[(i + 1) % otherEntityWorldCorners.size()], otherEntityWorldCorners[i] - (corner));
 
 					if (check <= 0.0f) {
 						collision = false;

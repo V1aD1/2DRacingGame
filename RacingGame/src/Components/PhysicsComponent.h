@@ -48,7 +48,9 @@ protected:
 	PhysicsState m_currState;
 
 protected:
-	std::tuple<Entity*, sf::Vector2f> CollisionDetected(Entity& entity);
+	std::tuple<Entity*, sf::Vector2f> DetectCollision(Entity& entity);
+	std::tuple<Entity*, sf::Vector2f> DetectCollision2(Entity& entity);
+
 	void SlowDown(float deceleration, float dtTimeMilli);
 
 protected:

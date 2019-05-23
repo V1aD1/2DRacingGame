@@ -13,6 +13,7 @@ public:
 	static float Multiply(const sf::Vector2f& a, const sf::Vector2f& b);
 	static sf::Vector2f Subtract(const sf::Vector2f& a, const sf::Vector2f& b);
 	static float GetAngleBetweenVectorsInRads(const sf::Vector2f& a, const sf::Vector2f& b);
+	static bool CheckLineCollision(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f q1, sf::Vector2f q2);
 
 private:
 	///returns 0 if points are clockwise, 1 if counter clockwise, and 2 if collinear

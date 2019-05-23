@@ -106,6 +106,9 @@ void Entity::Rotate(float degrees)
 	SetRotation(m_rotation + degrees);
 }
 
+//if no physics component present, then the object is assumed to
+//be static, and therefore absorbs all the momentum from the
+//colliding entity
 sf::Vector2f Entity::HandleCollision(sf::Vector2f otherEntityVel)
 {
 	sf::Vector2f absorbedVel = otherEntityVel;
