@@ -22,13 +22,7 @@ void ParticleEmitter::EmitCircle(sf::Vector2f pos, float startSpeed, float maxSp
 		auto shape = particle->m_graphics->GetShape();
 
 		if (shape->getFillColor().a == 0) {
-			particle->SetPosition(pos);
-			particle->SetRotation(std::rand() % 361);
-			particle->m_physics->SetSpeed(startSpeed);
-			particle->m_physics->SetMaxSpeed(maxSpeed);
-			particle->m_physics->SetAcceleration(acc);
-			particle->m_graphics->SetAlphaChangeRate(alphaChangeRate);
-			particle->m_graphics->SetScaleChangeRate(scaleRateChange);
+			SetParticleAttributesExceptRotation(particle, std::rand() % 361, pos, startSpeed, maxSpeed, acc, alphaChangeRate, scaleRateChange);
 			particle->m_graphics->Enable();
 
 			numParticles--;
@@ -52,21 +46,26 @@ void ParticleEmitter::EmitCone(sf::Vector2f pos, sf::Vector2f dir, float startSp
 
 		auto shape = particle->m_graphics->GetShape();
 
-		//todo remove the code repetition between the Emit...() functions
 		//todo add two lists for the particles, one for free particles, another for in use particles
 		//	probably graphics component would have to add the particles to the free list once their
 		//	alpha reaches 0
 		if (shape->getFillColor().a == 0) {
-			particle->SetPosition(pos);
-			particle->SetRotation(std::rand() % (coneWidth)-(coneWidth / 2) + angleInDegrees);
-			particle->m_graphics->SetAlphaChangeRate(alphaChangeRate);
-			particle->m_graphics->SetScaleChangeRate(scaleRateChange);
-			particle->m_physics->SetSpeed(startSpeed);
-			particle->m_physics->SetMaxSpeed(maxSpeed);
-			particle->m_physics->SetAcceleration(acc);
+			SetParticleAttributesExceptRotation(particle, std::rand() % (coneWidth)-(coneWidth / 2) + angleInDegrees, pos, startSpeed, maxSpeed, acc, alphaChangeRate, scaleRateChange);
 			particle->m_graphics->Enable();
 
 			numParticles--;
 		}
 	}
+}
+
+void ParticleEmitter::SetParticleAttributesExceptRotation(Entity* particle, float rotDegrees, sf::Vector2f pos, float startSpeed, float maxSpeed, float acc, float alphaChangeRate, float scaleRateChange)
+{
+	//rotation must be set before speed!
+	particle->SetRotation(rotDegrees);
+	particle->SetPosition(pos);
+	particle->m_physics->SetSpeed(startSpeed);
+	particle->m_physics->SetMaxSpeed(maxSpeed);
+	particle->m_physics->SetAcceleration(acc);
+	particle->m_graphics->SetAlphaChangeRate(alphaChangeRate);
+	particle->m_graphics->SetScaleChangeRate(scaleRateChange);
 }

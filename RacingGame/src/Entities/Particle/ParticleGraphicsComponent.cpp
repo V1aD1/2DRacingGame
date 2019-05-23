@@ -53,7 +53,6 @@ void ParticleGraphicsComponent::UpdateColorAlpha(int newAlpha)
 		newAlpha = 0;
 
 	auto color = m_shape->getFillColor();
-
-	//todo this may slow things down alot since I'm creating a color object here?
-	m_shape->setFillColor(sf::Color(color.r, color.g, color.b, newAlpha));
+	color.a = newAlpha;
+	m_shape->setFillColor(color);
 }
