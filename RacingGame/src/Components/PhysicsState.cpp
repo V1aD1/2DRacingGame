@@ -15,7 +15,7 @@ PhysicsState::PhysicsState(sf::Vector2f pos, float rotRad, const std::vector<sf:
 		m_collisionComp = new VariableCollisionComponent(m_worldPos, m_rotInRad, cornersWithoutRotationApplied);
 	}
 
-	else { m_collisionComp == nullptr; }
+	else { m_collisionComp = nullptr; }
 }
 
 PhysicsState::~PhysicsState() {}
@@ -95,7 +95,7 @@ void PhysicsState::ApplyVelocity(sf::Vector2f velocity)
 	m_velocity += velocity;
 }
 
-const std::vector<sf::Vector2f>& PhysicsState::GetWorldCorners() const
+const std::vector<sf::Vector2f> PhysicsState::GetWorldCorners() const
 {
 	if (m_collisionComp) { return m_collisionComp->GetWorldCorners(); }
 	else { return std::vector<sf::Vector2f>(); }

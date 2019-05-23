@@ -15,7 +15,7 @@ private:
 
 public:
 	SquareGraphicsComponent(sf::Shape* shape);
-	virtual ~SquareGraphicsComponent();
-	virtual void Update(const Entity& entity, sf::RenderWindow & window, float dtTimeMilli) override;
+	~SquareGraphicsComponent();
+	void Update(const Entity& entity, sf::RenderWindow & window, float dtTimeMilli) override;
 };
 

@@ -37,7 +37,7 @@ public:
 
 	void ApplyVelocity(sf::Vector2f force);
 
-	const std::vector<sf::Vector2f>& GetWorldCorners() const;
+	const std::vector<sf::Vector2f> GetWorldCorners() const;
 	const std::vector<sf::Vector2i>& GetCollisionSpaceCoordinates() const;
 	sf::Vector2f GetWorldPosition();
 	sf::Vector2f GetVelocity();

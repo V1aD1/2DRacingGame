@@ -13,8 +13,8 @@ private:
 
 public:
 	CarGraphicsComponent(sf::Shape* shape);
-	virtual ~CarGraphicsComponent();
+	~CarGraphicsComponent();
 
-	virtual void Update(const Entity& entity, sf::RenderWindow & window, float dtTimeMilli) override;
+	void Update(const Entity& entity, sf::RenderWindow & window, float dtTimeMilli) override;
 };
 

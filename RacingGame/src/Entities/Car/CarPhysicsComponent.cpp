@@ -82,8 +82,6 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 
 void CarPhysicsComponent::Brake(Entity& entity, float dtTimeMilli)
 {
-	//todo add dus effect for braking if car moving
-
 	SlowDown(car_brakeDeceleration, dtTimeMilli);
 	CreateDustClouds(entity, { 0,1,2,3 });
 }

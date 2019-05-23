@@ -52,6 +52,9 @@ void ParticleEmitter::EmitCone(sf::Vector2f pos, sf::Vector2f dir, float speed, 
 		auto shape = particle->m_graphics->GetShape();
 
 		//todo remove the code repetition between the Emit...() functions
+		//todo add two lists for the particles, one for free particles, another for in use particles
+		//	probably graphics component would have to add the particles to the free list once their
+		//	alpha reaches 0
 		if (shape->getFillColor().a == 0) {
 			particle->SetPosition(pos);
 			particle->SetRotation(std::rand() % (coneWidth)-(coneWidth / 2) + angleInDegrees);

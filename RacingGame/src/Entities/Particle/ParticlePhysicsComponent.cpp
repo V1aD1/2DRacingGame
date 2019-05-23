@@ -27,14 +27,3 @@ void ParticlePhysicsComponent::Update(Entity& entity, float dtMilli)
 	entity.SetPosition(m_currState.GetWorldPosition());
 	entity.SetRotation(MathCommon::RadiansToDegrees(m_currState.GetRotInRad()));
 }
-
-//not handling any collision on particles... FOR NOW
-sf::Vector2f ParticlePhysicsComponent::HandleCollision(sf::Vector2f otherEntityVel)
-{
-	return sf::Vector2f(0,0);
-}
-
-//unnecessary functionality for particles
-void ParticlePhysicsComponent::DBG_Slide(Entity& entity, const sf::Vector2f & dir, float dtMilli)
-{
-}

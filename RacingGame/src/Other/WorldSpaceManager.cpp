@@ -131,6 +131,7 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::
 	}
 
 	//first, determine leftest, highest, rightest, lowest point for entire shape
+	//then determine square of cells that object is encompassed in
 	float leftest = worldCorners[0].x;
 	float rightest = worldCorners[0].x;
 	float highest = worldCorners[0].y;
@@ -147,7 +148,6 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::
 			highest = worldCorners[i].y;
 	}
 
-	//then determine square of cells that object is encompassed in
 	//iterate through every cell and return cells that shape belongs to
 	for (int xCell = leftest / cellWidth; xCell < rightest / cellWidth; xCell++) {
 		for (int yCell = lowest / cellHeight; yCell < highest / cellHeight; yCell++) {

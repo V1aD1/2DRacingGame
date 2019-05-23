@@ -91,8 +91,8 @@ int main()
 	while (window.isOpen())
 	{
 		sf::Time timePassed = clock.restart();
-		sf::Int32 dtMicros = timePassed.asMicroseconds();
-		float dtMillis = dtMicros / 1000.0f;
+		sf::Int64 dtMicros = timePassed.asMicroseconds();
+		sf::Int64 dtMillis = dtMicros / 1000.0f;
 		sf::Event event;
 
 		//pollEvent() or waitEvent() MUST be called in the same thread that created the window!!

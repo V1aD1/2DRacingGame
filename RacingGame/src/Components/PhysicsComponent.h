@@ -23,8 +23,7 @@ public:
 	void Accelerate(float dtTimeMilli, bool forward);
 	void ApplyFriction(float dtTimeMilli);
 
-	//todo this should only be in the car physics component,
-	//but that'd require a new CarEntity object....
+	//only needed in CarPhysics but that's the composition pattern for you!
 	virtual void Brake(Entity& entity, float dtTimeMilli);
 
 	void SetSpeed(float newSpeed);
@@ -34,13 +33,12 @@ public:
 	void SetAcceleration(float newAcc);
 
 	virtual void Update(Entity& entity, float dtMilli) = 0;
-	virtual void DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli) = 0;
+	virtual void DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli);
+	virtual sf::Vector2f HandleCollision(sf::Vector2f otherEntityVelocity);
 
 	const std::vector<sf::Vector2i>& GetCollisionSpaceCoords();
 	const std::vector<sf::Vector2i>& GetPrevCollisionSpaceCoords();
 	sf::Vector2f GetForwardDir();
-
-	virtual sf::Vector2f HandleCollision(sf::Vector2f otherEntityVelocity) = 0;
 
 
 protected:

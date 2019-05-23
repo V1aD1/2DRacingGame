@@ -163,3 +163,12 @@ void PhysicsComponent::SetAcceleration(float newAcc)
 	m_currState.SetAcceleration(newAcc);
 	m_newState.SetAcceleration(newAcc);
 }
+
+void PhysicsComponent::DBG_Slide(Entity & entity, const sf::Vector2f & dir, float dtMilli)
+{
+}
+
+sf::Vector2f PhysicsComponent::HandleCollision(sf::Vector2f otherEntityVelocity)
+{
+	return sf::Vector2f();
+}
