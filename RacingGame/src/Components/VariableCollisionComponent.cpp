@@ -11,10 +11,6 @@ VariableCollisionComponent::~VariableCollisionComponent()
 
 void VariableCollisionComponent::Update(sf::Vector2f newPos, float newRotInRad)
 {
-	//todo not sure why this step is neccessary
-	if (m_worldCorners.size() != m_localCorners.size())
-		m_worldCorners.resize(m_localCorners.size());
-
 	//update m_worldCoords
 	for (int i = 0; i < m_localCorners.size(); i++) {
 		m_worldCorners[i] = m_localCorners[i] + newPos;

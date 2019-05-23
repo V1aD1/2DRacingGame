@@ -33,7 +33,7 @@ public:
 	void SetRotation(float newRotInRad);
 	void SetAcceleration(float newAcc);
 
-	virtual void Update(Entity& entity, float dtMilli) = 0;
+	virtual void Update(Entity& entity, float dtMilli);
 	virtual void DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli);
 	virtual sf::Vector2f HandleCollision(sf::Vector2f otherEntityVelocity);
 

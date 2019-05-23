@@ -25,6 +25,5 @@ void ParticlePhysicsComponent::Update(Entity& entity, float dtMilli)
 	m_newState.Update(dtMilli, m_maxSpeed);
 	m_currState = m_newState;
 	
-	entity.SetPosition(m_currState.GetWorldPosition());
-	entity.SetRotation(MathCommon::RadiansToDegrees(m_currState.GetRotInRad()));
+	PhysicsComponent::Update(entity, dtMilli);
 }

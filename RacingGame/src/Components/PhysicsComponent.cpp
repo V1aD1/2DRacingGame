@@ -73,7 +73,6 @@ std::tuple<Entity*, sf::Vector2f> PhysicsComponent::CollisionDetected(Entity& en
 	return std::make_tuple(nullptr, sf::Vector2f());
 }
 
-//todo should be pure and implemented in carphysicscomponent?
 void PhysicsComponent::Accelerate(float dtTimeMilli, bool forward) {
 	if (forward)
 		m_newState.SetCurrentAcceleration(m_acceleration);
@@ -166,6 +165,12 @@ void PhysicsComponent::SetRotation(float newRotInRad)
 void PhysicsComponent::SetAcceleration(float newAcc)
 {
 	m_acceleration = newAcc;
+}
+
+void PhysicsComponent::Update(Entity & entity, float dtMilli)
+{
+	entity.SetPosition(m_currState.GetWorldPosition());
+	entity.SetRotation(MathCommon::RadiansToDegrees(m_currState.GetRotInRad()));
 }
 
 void PhysicsComponent::DBG_Slide(Entity & entity, const sf::Vector2f & dir, float dtMilli)

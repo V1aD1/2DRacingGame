@@ -3,7 +3,6 @@
 #include "../../Other/MathCommon.h"
 #include "../Particle/ParticleEmitter.h"
 
-//todo shouldn't these be private members of CarPhysicsComponent??
 const float CarPhysicsComponent::car_rotationSpeed = 180.0f;
 const float CarPhysicsComponent::car_acceleration = 0.25f;
 const float CarPhysicsComponent::car_frictionForce = 0.1f;
@@ -72,11 +71,9 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 		CreateDustClouds(entity, { 0, 3 });
 	}
 
-	//todo this should be in the PhysicsComponent.Update() function
-	entity.SetPosition(m_currState.GetWorldPosition());
-	entity.SetRotation(MathCommon::RadiansToDegrees(m_currState.GetRotInRad()));
-
 	car_timeSinceLastSkidEffect += dtMilli;
+
+	PhysicsComponent::Update(entity, dtMilli);
 }
 
 void CarPhysicsComponent::Brake(Entity& entity, float dtTimeMilli)
