@@ -66,7 +66,7 @@ void WorldSpaceManager::AddEntityToCollisionSpace(Entity* entity)
 	}
 }
 
-sf::Vector2i WorldSpaceManager::ConvertPointToCellCoords(sf::Vector2f point)
+sf::Vector2i WorldSpaceManager::ConvertPointToCellCoords(sf::Vector2f point) const
 {
 	//yes, this will lose all the decimal points, but that's what I want
 	return sf::Vector2i(point.x/cellWidth, point.y/cellHeight);
@@ -74,7 +74,7 @@ sf::Vector2i WorldSpaceManager::ConvertPointToCellCoords(sf::Vector2f point)
 
 //this function is public because it's used by the new physics state to 
 //determine its location and compute possible collision
-std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::vector<sf::Vector2f>& worldCorners)
+std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::vector<sf::Vector2f>& worldCorners) const
 {
 	std::vector<sf::Vector2i> pairs;
 
@@ -153,7 +153,7 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::
 	return pairs;
 }
 
-std::vector<Entity*> WorldSpaceManager::GetEntitiesAtCoords(const std::vector<sf::Vector2i>& coords)
+std::vector<Entity*> WorldSpaceManager::GetEntitiesAtCoords(const std::vector<sf::Vector2i>& coords) const
 {
 	std::vector<Entity*> entitiesToRet = std::vector<Entity*>();
 	for (auto coord : coords) {
@@ -184,7 +184,7 @@ void WorldSpaceManager::ClearVariableEntities() {
 	}
 }
 
-void WorldSpaceManager::DBG_Draw(sf::RenderWindow& window)
+void WorldSpaceManager::DBG_Draw(sf::RenderWindow& window) const
 {
 	for (int i = 0; i < 10; i++)
 	{

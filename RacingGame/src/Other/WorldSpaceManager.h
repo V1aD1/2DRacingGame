@@ -20,16 +20,16 @@ public:
 	void UpdateVariableEntitiesInCollSpace();
 
 	void AddEntityToCollisionSpace(Entity* entity);
-	std::vector<sf::Vector2i> GetCollisionSpaceCoords(const std::vector<sf::Vector2f>& worldCorners);
-	std::vector<Entity*> GetEntitiesAtCoords(const std::vector<sf::Vector2i>& coords);
+	std::vector<sf::Vector2i> GetCollisionSpaceCoords(const std::vector<sf::Vector2f>& worldCorners) const;
+	std::vector<Entity*> GetEntitiesAtCoords(const std::vector<sf::Vector2i>& coords) const;
 	void ClearWorldSpace();
 	void ClearVariableEntities();
-	void DBG_Draw(sf::RenderWindow& window);
+	void DBG_Draw(sf::RenderWindow& window) const;
 
 private:
 	template <typename T>
 	static void AddToVectorNoDuplicates(std::vector<T>& vec, T val);
-	sf::Vector2i ConvertPointToCellCoords(sf::Vector2f point);
+	sf::Vector2i ConvertPointToCellCoords(sf::Vector2f point) const;
 
 private:
 	//world space will always be divided into 100 cells

@@ -12,7 +12,7 @@ public:
 
 	virtual void Update(const Entity& entity, sf::RenderWindow& window, float dtTimeMilli) = 0;
 	
-	sf::Shape* GetShape();
+	sf::Shape* GetShape() const;
 	virtual void Enable();
 
 	void SetAlphaChangeRate(float newAlphaChangeRate);

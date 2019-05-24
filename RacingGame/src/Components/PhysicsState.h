@@ -39,11 +39,11 @@ public:
 
 	const std::vector<sf::Vector2f> GetWorldCorners() const;
 	const std::vector<sf::Vector2i>& GetCollisionSpaceCoordinates() const;
-	sf::Vector2f GetWorldPosition();
-	sf::Vector2f GetVelocity();
-	sf::Vector2f GetForwardDir();
-	float GetRotInRad();
-	float GetCurrentAcceleration();
+	sf::Vector2f GetWorldPosition() const;
+	sf::Vector2f GetVelocity() const;
+	sf::Vector2f GetForwardDir() const;
+	float GetRotInRad() const;
+	float GetCurrentAcceleration() const;
 
 	//should ONLY be used by DBG_ commands
 	void SetWorldPos(sf::Vector2f newPos);

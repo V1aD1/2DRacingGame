@@ -106,27 +106,27 @@ const std::vector<sf::Vector2i>& PhysicsState::GetCollisionSpaceCoordinates() co
 	return m_collisionSpaceCoords;
 }
 
-sf::Vector2f PhysicsState::GetWorldPosition()
+sf::Vector2f PhysicsState::GetWorldPosition() const
 {
 	return m_worldPos;
 }
 
-sf::Vector2f PhysicsState::GetVelocity()
+sf::Vector2f PhysicsState::GetVelocity() const
 {
 	return m_velocity;
 }
 
-sf::Vector2f PhysicsState::GetForwardDir()
+sf::Vector2f PhysicsState::GetForwardDir() const
 {
 	return m_forwardDir;
 }
 
-float PhysicsState::GetRotInRad()
+float PhysicsState::GetRotInRad() const
 {
 	return m_rotInRad;
 }
 
-float PhysicsState::GetCurrentAcceleration()
+float PhysicsState::GetCurrentAcceleration() const
 {
 	return m_currentAcceleration;
 }

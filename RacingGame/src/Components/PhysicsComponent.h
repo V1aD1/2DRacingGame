@@ -38,8 +38,8 @@ public:
 	virtual void DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli);
 	virtual sf::Vector2f HandleCollision(sf::Vector2f otherEntityVelocity);
 
-	const std::vector<sf::Vector2i>& GetCollisionSpaceCoords();
-	const std::vector<sf::Vector2i>& GetPrevCollisionSpaceCoords();
+	const std::vector<sf::Vector2i>& GetCollisionSpaceCoords() const;
+	const std::vector<sf::Vector2i>& GetPrevCollisionSpaceCoords() const;
 
 	//todo make ALL getters/ functions that don't change contents as const
 	sf::Vector2f GetForwardDir();

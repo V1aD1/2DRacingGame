@@ -17,7 +17,7 @@ GraphicsComponent::~GraphicsComponent()
 	delete m_shape;
 }
 
-sf::Shape* GraphicsComponent::GetShape()
+sf::Shape* GraphicsComponent::GetShape() const
 {
 	return m_shape;
 }

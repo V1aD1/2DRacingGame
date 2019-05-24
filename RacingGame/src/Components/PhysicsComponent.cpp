@@ -107,12 +107,12 @@ void PhysicsComponent::Brake(Entity& entity, float dtTimeMilli)
 {
 }
 
-const std::vector<sf::Vector2i>& PhysicsComponent::GetCollisionSpaceCoords()
+const std::vector<sf::Vector2i>& PhysicsComponent::GetCollisionSpaceCoords() const
 {
 	return m_currState.GetCollisionSpaceCoordinates();
 }
 
-const std::vector<sf::Vector2i>& PhysicsComponent::GetPrevCollisionSpaceCoords()
+const std::vector<sf::Vector2i>& PhysicsComponent::GetPrevCollisionSpaceCoords() const
 {
 	return m_prevState.GetCollisionSpaceCoordinates();
 }
