@@ -10,7 +10,7 @@ public:
 	GraphicsComponent(sf::Shape* shape);
 	virtual ~GraphicsComponent();
 
-	virtual void Update(const Entity& entity, sf::RenderWindow& window, float dtTimeMilli) = 0;
+	virtual void Update(Entity& entity, sf::RenderWindow& window, float dtTimeMilli) = 0;
 	
 	sf::Shape* GetShape() const;
 	virtual void Enable();

@@ -1,5 +1,10 @@
+#include <stack>
+
 #include "ParticleGraphicsComponent.h"
 #include "../Entity.h"
+
+
+extern std::stack<Entity*> G_FREEPARTICLES;
 
 ParticleGraphicsComponent::ParticleGraphicsComponent(float alphaChangeRate) : GraphicsComponent()
 {
@@ -19,7 +24,7 @@ ParticleGraphicsComponent::~ParticleGraphicsComponent()
 {
 }
 
-void ParticleGraphicsComponent::Update(const Entity& entity, sf::RenderWindow& window, float dtTimeMilli)
+void ParticleGraphicsComponent::Update(Entity& entity, sf::RenderWindow& window, float dtTimeMilli)
 {
 	//simple particle, so only update position, NOT rotation
 	if (m_shape) {
@@ -30,6 +35,10 @@ void ParticleGraphicsComponent::Update(const Entity& entity, sf::RenderWindow& w
 			window.draw(*m_shape);
 			alpha += dtTimeMilli/1000.0f * m_alphaChangeRate;
 			UpdateColorAlpha(alpha);
+
+			if (m_shape->getFillColor().a == 0) {
+				G_FREEPARTICLES.push(&entity);
+			}
 		}
 
 		auto scale = m_shape->getScale();
@@ -49,8 +58,9 @@ void ParticleGraphicsComponent::UpdateColorAlpha(int newAlpha)
 {
 	if (newAlpha > 255)
 		newAlpha = 255;
-	else if (newAlpha < 0)
+	else if (newAlpha < 0) 
 		newAlpha = 0;
+	
 
 	auto color = m_shape->getFillColor();
 	color.a = newAlpha;

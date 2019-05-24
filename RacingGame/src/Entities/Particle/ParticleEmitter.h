@@ -24,7 +24,7 @@ public:
 		int randRotRange);
 
 private:
-	static void SetParticleAttributesExceptRotation(
+	static void SetParticleAttributes(
 		Entity* particle,
 		float rotDegrees,
 		sf::Vector2f pos, 

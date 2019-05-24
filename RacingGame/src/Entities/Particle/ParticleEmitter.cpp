@@ -1,3 +1,5 @@
+#include <stack>
+
 #include "ParticleEmitter.h"
 #include "../EntityFactory.h"
 #include "../../Other/MathCommon.h"
@@ -5,42 +7,47 @@
 #include "../Entity.h"
 
 std::vector<Entity*> G_PARTICLES;
+std::stack<Entity*> G_FREEPARTICLES;
 
 void ParticleEmitter::Init()
 {
+	G_PARTICLES.reserve(c_pool_size);
+
 	for (int i = 0; i < c_pool_size; i++) {
-		G_PARTICLES.push_back(EntityFactory::CreateParticle(0.2f));
+		auto newParticle = EntityFactory::CreateParticle(0.2f);
+		G_PARTICLES.push_back(newParticle);
+		G_FREEPARTICLES.push(newParticle);
 	}
 }
 
 void ParticleEmitter::EmitCircle(sf::Vector2f pos, float startSpeed, float maxSpeed, float acc, float alphaChangeRate, float scaleRateChange, int numParticles, int randRotRange)
 {
-	for (auto particle : G_PARTICLES) {
-		if (numParticles == 0)
-			break;
-
+	while (numParticles > 0 && !G_FREEPARTICLES.empty()) {
+		auto particle = G_FREEPARTICLES.top();
 		auto shape = particle->m_graphics->GetShape();
 
-		if (shape->getFillColor().a == 0) {
-			SetParticleAttributesExceptRotation(particle, std::rand() % 361, pos, startSpeed, maxSpeed, acc, alphaChangeRate, scaleRateChange, randRotRange);
-			particle->m_graphics->Enable();
+		SetParticleAttributes(particle, std::rand() % 361, pos, startSpeed, maxSpeed, acc, alphaChangeRate, scaleRateChange, randRotRange);
+		particle->m_graphics->Enable();
+		
+		//remove in-use particle from the stack
+		G_FREEPARTICLES.pop();
 
-			numParticles--;
-		}
+		numParticles--;
 	}
+	
 }
 
-///Note, for alphaReductionRate, short life = 1, long life = 0.1
+///NOTE: for alphaReductionRate, short life = 1, long life = 0.1
 void ParticleEmitter::EmitCone(
-	sf::Vector2f pos, 
-	sf::Vector2f dir, 
-	float startSpeed, 
-	float maxSpeed, 
-	float acc, 
-	float alphaChangeRate, 
-	float scaleRateChange, 
-	int coneWidth, 
-	int numParticles, 
+	sf::Vector2f pos,
+	sf::Vector2f dir,
+	float startSpeed,
+	float maxSpeed,
+	float acc,
+	float alphaChangeRate,
+	float scaleRateChange,
+	int coneWidth,
+	int numParticles,
 	int randRotRange)
 {
 	float angleBetweenVecs = MathCommon::GetAngleBetweenVectorsInRads(dir, sf::Vector2f(1, 0));
@@ -50,33 +57,29 @@ void ParticleEmitter::EmitCone(
 
 	float angleInDegrees = MathCommon::RadiansToDegrees(angleBetweenVecs);
 
-	for (auto particle : G_PARTICLES) {
-		if (numParticles == 0)
-			break;
-
+	while(numParticles > 0 && !G_FREEPARTICLES.empty()) {
+		auto particle = G_FREEPARTICLES.top();
 		auto shape = particle->m_graphics->GetShape();
 
-		//todo add two lists for the particles, one for free particles, another for in use particles
-		//	probably graphics component would have to add the particles to the free list once their
-		//	alpha reaches 0
-		if (shape->getFillColor().a == 0) {
-			SetParticleAttributesExceptRotation(particle, std::rand() % (coneWidth)-(coneWidth / 2) + angleInDegrees, pos, startSpeed, maxSpeed, acc, alphaChangeRate, scaleRateChange, randRotRange);
-			particle->m_graphics->Enable();
+		SetParticleAttributes(particle, std::rand() % (coneWidth)-(coneWidth / 2) + angleInDegrees, pos, startSpeed, maxSpeed, acc, alphaChangeRate, scaleRateChange, randRotRange);
+		particle->m_graphics->Enable();
 
-			numParticles--;
-		}
+		//remove in-use particle from the stack
+		G_FREEPARTICLES.pop();
+
+		numParticles--;
 	}
 }
 
-void ParticleEmitter::SetParticleAttributesExceptRotation(
-	Entity* particle, 
-	float rotDegrees, 
-	sf::Vector2f pos, 
-	float startSpeed, 
-	float maxSpeed, 
-	float acc, 
-	float alphaChangeRate, 
-	float scaleRateChange, 
+void ParticleEmitter::SetParticleAttributes(
+	Entity* particle,
+	float rotDegrees,
+	sf::Vector2f pos,
+	float startSpeed,
+	float maxSpeed,
+	float acc,
+	float alphaChangeRate,
+	float scaleRateChange,
 	int randRotRange)
 {
 	//rotation must be set before speed!

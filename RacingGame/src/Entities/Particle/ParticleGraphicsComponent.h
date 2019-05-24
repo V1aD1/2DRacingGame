@@ -9,7 +9,7 @@ public:
 	~ParticleGraphicsComponent();
 
 public:
-	void Update(const Entity& entity, sf::RenderWindow & window, float dtTimeMilli) override;
+	void Update(Entity& entity, sf::RenderWindow & window, float dtTimeMilli) override;
 	void Enable() override;
 
 private:

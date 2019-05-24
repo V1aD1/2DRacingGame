@@ -5,6 +5,7 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////////
 #include <iostream>
+#include <stack>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/OpenGL.hpp>
@@ -24,6 +25,7 @@ extern const int screenLen = 1500, screenHeight = 700;
 extern std::vector<Entity*> G_STATICOBJECTS;
 extern std::vector<Entity*> G_VARIABLEOBJECTS;
 extern std::vector<Entity*> G_PARTICLES;
+extern std::stack<Entity*> G_FREEPARTICLES;
 extern ParticleEmitter G_EMITTER;
 
 WorldSpaceManager worldSpaceManager = WorldSpaceManager();
@@ -41,6 +43,7 @@ bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText) {
 	window.create(sf::VideoMode(screenLen, screenHeight), "Racing Game!", sf::Style::Default, settings);
 
 	//todo frame rate affects particles, and more importantly, game doesn't really run anymore at high fps...
+
 	//never use both setVerticalSyncEnabled and setFramerateLimit at the same time!
 	window.setFramerateLimit(200);
 

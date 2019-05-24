@@ -12,7 +12,7 @@ SquareGraphicsComponent::SquareGraphicsComponent(sf::Shape* shape) : GraphicsCom
 SquareGraphicsComponent::~SquareGraphicsComponent(){}
 
 //overridden Update() method from GraphicsComponent
-void SquareGraphicsComponent::Update(const Entity& entity, sf::RenderWindow& window, float dtTimeMilli){
+void SquareGraphicsComponent::Update(Entity& entity, sf::RenderWindow& window, float dtTimeMilli){
 	if (m_shape) {
 		m_shape->setRotation(entity.GetRotationInDegrees());
 		m_shape->setPosition(entity.GetPosition());

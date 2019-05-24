@@ -13,7 +13,7 @@ CarGraphicsComponent::CarGraphicsComponent(sf::Shape* shape) : GraphicsComponent
 
 CarGraphicsComponent::~CarGraphicsComponent(){}
 
-void CarGraphicsComponent::Update(const Entity& entity, sf::RenderWindow& window, float dtTimeMilli)
+void CarGraphicsComponent::Update(Entity& entity, sf::RenderWindow& window, float dtTimeMilli)
 {
 	if (m_shape) {
 		m_shape->setRotation(entity.GetRotationInDegrees());
