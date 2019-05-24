@@ -10,7 +10,9 @@ public:
 	~ParticlePhysicsComponent();
 
 	void Update(Entity& entity, float dtMilli) override;
+	void SetRandomness(int newRand) override;
 
 private:
+	int m_randRotRange;
 };
 

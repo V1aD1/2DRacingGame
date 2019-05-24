@@ -180,6 +180,11 @@ void PhysicsComponent::SetAcceleration(float newAcc)
 	m_acceleration = newAcc;
 }
 
+void PhysicsComponent::SetRandomness(int newRand)
+{
+	;
+}
+
 void PhysicsComponent::Update(Entity& entity, float dtMilli)
 {
 	entity.SetPosition(m_currState.GetWorldPosition());

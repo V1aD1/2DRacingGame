@@ -32,6 +32,7 @@ public:
 	void SetPosition(sf::Vector2f newPos);
 	void SetRotation(float newRotInRad);
 	void SetAcceleration(float newAcc);
+	virtual void SetRandomness(int newRand);
 
 	virtual void Update(Entity& entity, float dtMilli);
 	virtual void DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli);
