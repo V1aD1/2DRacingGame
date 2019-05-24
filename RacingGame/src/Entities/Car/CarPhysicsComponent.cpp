@@ -100,7 +100,7 @@ sf::Vector2f CarPhysicsComponent::HandleCollision(sf::Vector2f otherEntityVel)
 
 void CarPhysicsComponent::CreateDustClouds(Entity& entity, std::vector<int> wheels)
 {
-	if (car_timeSinceLastSkidEffect > car_skidEffectFrequencyMs) {
+	if (car_timeSinceLastSkidEffect > car_skidEffectFrequencyMs && m_currState.GetVelocity() != sf::Vector2f(0,0)) {
 		auto wheelPositions = entity.GetWorldCorners();
 
 		for (auto wheel : wheels) {
