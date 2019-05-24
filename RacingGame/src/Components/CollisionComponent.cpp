@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "CollisionComponent.h"
+#include "../Other/MathCommon.h"
 
 CollisionComponent::CollisionComponent(sf::Vector2f newPos, float newRotInRad, const std::vector<sf::Vector2f>& cornersWithoutRotationApplied)
 {
@@ -40,4 +41,32 @@ CollisionComponent& CollisionComponent::operator=(const CollisionComponent& othe
 const std::vector<sf::Vector2f>& CollisionComponent::GetWorldCorners() const
 {
 	return m_worldCorners;
+}
+
+std::tuple<bool, sf::Vector2f> CollisionComponent::IsColliding(const std::vector<sf::Vector2f>* otherEntityWorldCornersPtr) const
+{
+	if (otherEntityWorldCornersPtr) {
+		std::vector<sf::Vector2f> otherEntityWorldCorners = *otherEntityWorldCornersPtr;
+
+		for (auto corner : m_worldCorners) {
+
+			bool collision = true;
+
+			for (size_t i = 0; i < otherEntityWorldCorners.size(); i++) {
+
+				//this operation must be performed in this order!!
+				float check = MathCommon::CrossProduct(otherEntityWorldCorners[i] - otherEntityWorldCorners[(i + 1) % otherEntityWorldCorners.size()], otherEntityWorldCorners[i] - (corner));
+
+				if (check <= 0.0f) {
+					collision = false;
+					break;
+				}
+			}
+			if (collision) {
+				return std::make_tuple(true, corner);
+			}
+		}
+	}
+
+	return std::make_tuple(false, sf::Vector2f());
 }

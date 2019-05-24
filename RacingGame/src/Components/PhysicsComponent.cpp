@@ -26,15 +26,9 @@ PhysicsComponent::PhysicsComponent(sf::Vector2f pos,
 
 PhysicsComponent::~PhysicsComponent() {}
 
-//NOTE: function should only be called after computing 
-//final position of m_newState
-//todo should make static objects also do point in line test!
-//this way we're guaranteed to detect collisions, and can also pinpoint
-//location of coollision for spark effect! Need to abstract point in
-//triangle collision check to the MathCommon class tho
-
-//todo should rename to DetectCollisionPointInTriangle()
-std::tuple<Entity*, sf::Vector2f> PhysicsComponent::DetectCollision(Entity& entity) {
+//IMPORTANT: function should only be called after computing 
+//final position of m_newState!!
+std::tuple<Entity*, sf::Vector2f> PhysicsComponent::DetectCollision(Entity& self) {
 
 	//check every object in same cell(s) as newState
 	//for a collision, using point triangle test method
@@ -46,45 +40,28 @@ std::tuple<Entity*, sf::Vector2f> PhysicsComponent::DetectCollision(Entity& enti
 
 		//to avoid collision detection with itself
 		//todo change to use ID of objects instead
-		if (otherEntity == &entity)
+		if (otherEntity == &self)
 			continue;
 
-		auto otherEntityCornersPtr = otherEntity->GetWorldCorners();
+		//first check collision from this entity's perspective
+		std::tuple<bool, sf::Vector2f> collisionData = m_newState.IsColliding(otherEntity->GetWorldCorners());
 
-		if (otherEntityCornersPtr) {
-			std::vector<sf::Vector2f> otherEntityWorldCorners = *otherEntityCornersPtr;
+		//if no collision, also check from the other entity's perspective
+		if (std::get<0>(collisionData) == false) {
+			collisionData = otherEntity->IsColliding(&m_newState.GetWorldCorners());
+		}
 
-			for (auto corner : m_newState.GetWorldCorners()) {
-
-				bool collision = true;
-
-				for (size_t i = 0; i < otherEntityWorldCorners.size(); i++) {
-
-					//this operation must be performed in this order!!
-					float check = MathCommon::CrossProduct(otherEntityWorldCorners[i] - otherEntityWorldCorners[(i + 1) % otherEntityWorldCorners.size()], otherEntityWorldCorners[i] - (corner));
-
-					if (check <= 0.0f) {
-						collision = false;
-						break;
-					}
-				}
-				if (collision) {
-					return std::make_tuple(otherEntity, corner);
-				}
-			}
+		if (std::get<0>(collisionData) == true) {
+			return std::make_tuple(otherEntity, std::get<1>(collisionData));
 		}
 	}
 
 	return std::make_tuple(nullptr, sf::Vector2f());
 }
 
-//todo nice and eloquent, but unfortunately doesn't determine point of collision,
-//so can't do the spark effect. Instead, continue to use point in triangle method,
-//but if no collision is detected, run it from the other entity's point of view,
-//and broadcast the results back
-std::tuple<Entity*, sf::Vector2f> PhysicsComponent::DetectCollisionLineTest(Entity& entity)
+//nice and eloquent, but unfortunately doesn't determine point of collision
+Entity* PhysicsComponent::DetectCollisionLineTest(Entity& self)
 {
-
 	//check every object in same cell(s) as newState
 	//for a collision, using point triangle test method
 	auto potentialCollisionEntities = worldSpaceManager.GetEntitiesAtCoords(m_newState.GetCollisionSpaceCoordinates());
@@ -95,18 +72,18 @@ std::tuple<Entity*, sf::Vector2f> PhysicsComponent::DetectCollisionLineTest(Enti
 
 		//to avoid collision detection with itself
 		//todo change to use ID of objects instead
-		if (otherEntity == &entity)
+		if (otherEntity == &self)
 			continue;
 
 		auto otherEntityCornersPtr = otherEntity->GetWorldCorners();
 
-		if (otherEntityCornersPtr) {		
+		if (otherEntityCornersPtr) {
 			if (MathCommon::AreColliding(*otherEntityCornersPtr, m_newState.GetWorldCorners()))
-				return std::make_tuple(otherEntity, sf::Vector2f());			
+				return otherEntity;
 		}
 	}
 
-	return std::make_tuple(nullptr, sf::Vector2f());
+	return nullptr;
 }
 
 void PhysicsComponent::Accelerate(float dtTimeMilli, bool forward) {

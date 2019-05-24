@@ -49,6 +49,8 @@ public:
 	void SetWorldPos(sf::Vector2f newPos);
 	void SetVelocity(sf::Vector2f newVelocity);
 
+	std::tuple<bool, sf::Vector2f> IsColliding(const std::vector<sf::Vector2f>* otherEntityWorldCornersPtr) const;
+
 private:
 	void UpdateToNewState(const PhysicsState& other);
 	void UpdateForwardDir();

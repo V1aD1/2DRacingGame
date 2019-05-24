@@ -13,6 +13,7 @@ public:
 
 	CollisionComponent& operator=(const CollisionComponent& other);
 	const std::vector<sf::Vector2f>& GetWorldCorners() const;
+	std::tuple<bool, sf::Vector2f> IsColliding(const std::vector<sf::Vector2f>* otherEntityWorldCornersPtr) const;
 
 	virtual void Update(sf::Vector2f newPos, float newRotInRad) = 0;
 };

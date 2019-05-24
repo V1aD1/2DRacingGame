@@ -39,6 +39,8 @@ public:
 
 	const std::vector<sf::Vector2i>& GetCollisionSpaceCoords();
 	const std::vector<sf::Vector2i>& GetPrevCollisionSpaceCoords();
+
+	//todo make ALL getters/ functions that don't change contents as const
 	sf::Vector2f GetForwardDir();
 
 
@@ -48,9 +50,8 @@ protected:
 	PhysicsState m_currState;
 
 protected:
-	std::tuple<Entity*, sf::Vector2f> DetectCollision(Entity& entity);
-	std::tuple<Entity*, sf::Vector2f> DetectCollisionLineTest(Entity& entity);
-
+	std::tuple<Entity*, sf::Vector2f> DetectCollision(Entity& self);
+	Entity* DetectCollisionLineTest(Entity& self);
 	void SlowDown(float deceleration, float dtTimeMilli);
 
 protected:

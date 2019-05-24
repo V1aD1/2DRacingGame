@@ -119,3 +119,11 @@ sf::Vector2f Entity::HandleCollision(sf::Vector2f otherEntityVel)
 
 	return absorbedVel;
 }
+
+std::tuple<bool, sf::Vector2f> Entity::IsColliding(const std::vector<sf::Vector2f>* otherEntityWorldCornersPtr) const
+{
+	if (m_collision)
+		return m_collision->IsColliding(otherEntityWorldCornersPtr);
+
+	return std::make_tuple(false, sf::Vector2f());
+}

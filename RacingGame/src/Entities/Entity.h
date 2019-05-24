@@ -47,5 +47,6 @@ public:
 	void Rotate(float degrees);
 
 	sf::Vector2f HandleCollision(sf::Vector2f otherEntityVel);
+	std::tuple<bool, sf::Vector2f> IsColliding(const std::vector<sf::Vector2f>* otherEntityWorldCornersPtr) const;
 };
 

@@ -140,3 +140,8 @@ void PhysicsState::SetVelocity(sf::Vector2f newVelocity)
 {
 	m_velocity = newVelocity;
 }
+
+std::tuple<bool, sf::Vector2f> PhysicsState::IsColliding(const std::vector<sf::Vector2f>* otherEntityWorldCornersPtr) const
+{
+	return m_collisionComp->IsColliding(otherEntityWorldCornersPtr);
+}
