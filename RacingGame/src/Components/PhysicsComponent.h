@@ -41,7 +41,6 @@ public:
 	const std::vector<sf::Vector2i>& GetCollisionSpaceCoords() const;
 	const std::vector<sf::Vector2i>& GetPrevCollisionSpaceCoords() const;
 
-	//todo make ALL getters/ functions that don't change contents as const
 	sf::Vector2f GetForwardDir();
 
 
