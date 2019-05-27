@@ -111,6 +111,20 @@ void CarPhysicsComponent::Rotate(float dtTimeMilli, bool left)
 
 	//no turning if car isn't moving
 	if (newStateSpeed > 0.0f) {
+		
+		//braking AND accelerating, so potentially drifting
+		if (m_newState.GetCurrentAcceleration() != 0.0f && m_braking_flag) {
+
+		}
+
+		//braking, but not accelerating, so drifting
+		//really fast turn, velocity slowly turning towards direction facing
+		//this is done in order to simulate drifting
+		if (m_newState.GetCurrentAcceleration() == 0.0f && m_braking_flag) {
+			rotAmount = direction * m_rotationSpeed * (dtTimeMilli / 1000.0f);
+			m_newState.Rotate(MathCommon::DegreesToRadians(rotAmount));
+		}
+		
 		//accelerating
 		//so slow turn, always move in direction facing
 		if (m_newState.GetCurrentAcceleration() != 0.0f) {
@@ -121,15 +135,13 @@ void CarPhysicsComponent::Rotate(float dtTimeMilli, bool left)
 
 			rotAmount = direction * (m_rotationSpeed / rotSlowDownFactor) * (dtTimeMilli / 1000.0f);
 			m_newState.Rotate(MathCommon::DegreesToRadians(rotAmount));
-			SetVelocityToFaceCurrDirection(newStateSpeed);
-		}
+			
+			if(MathCommon::RadiansToDegrees(MathCommon::GetAngleBetweenVectorsInRads(m_newState.GetVelocity(), m_newState.GetForwardDir())) < 45.0f)
+				SetVelocityToFaceCurrDirection(newStateSpeed);
 
-		//braking, but not accelerating, so drifting
-		//really fast turn, velocity slowly turning towards direction facing
-		//this is done in order to simulate drifting
-		else if (m_braking_flag) {
-			rotAmount = direction * m_rotationSpeed * (dtTimeMilli / 1000.0f);
-			m_newState.Rotate(MathCommon::DegreesToRadians(rotAmount));
+			else {
+				SetVelocityToFaceOppositeCurrDirection(newStateSpeed);
+			}
 		}
 
 		//neither
@@ -167,4 +179,9 @@ void CarPhysicsComponent::CreateDustClouds(Entity& entity, std::vector<int> whee
 void CarPhysicsComponent::SetVelocityToFaceCurrDirection(float speed)
 {
 	m_newState.SetVelocity(MathCommon::ChangeLength(m_newState.GetForwardDir(), speed));
+}
+
+void CarPhysicsComponent::SetVelocityToFaceOppositeCurrDirection(float speed)
+{
+	m_newState.SetVelocity(MathCommon::ChangeLength(-m_newState.GetForwardDir(), speed));
 }
