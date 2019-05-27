@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "CarPhysicsComponent.h"
 #include "../../Entities/Entity.h"
 #include "../../Other/MathCommon.h"
@@ -79,6 +81,7 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 
 void CarPhysicsComponent::Brake(Entity& entity, float dtTimeMilli)
 {
+	m_braking_flag = true;
 	SlowDown(car_brakeDeceleration, dtTimeMilli);
 	CreateDustClouds(entity, { 0,1,2,3 });
 }
@@ -98,6 +101,57 @@ sf::Vector2f CarPhysicsComponent::HandleCollision(sf::Vector2f otherEntityVel)
 	return absorbedVel;
 }
 
+void CarPhysicsComponent::Rotate(float dtTimeMilli, bool left)
+{
+	int direction = left ? -1 : 1;
+
+	float rotAmount = 0;
+
+	auto newStateSpeed = MathCommon::GetMagnitude(m_newState.GetVelocity());
+
+	//no turning if car isn't moving
+	if (newStateSpeed > 0.0f) {
+		//accelerating
+		//so slow turn, always move in direction facing
+		if (m_newState.GetCurrentAcceleration() != 0.0f) {
+			auto rotSlowDownFactor = 2.0f * newStateSpeed / m_maxSpeed;
+
+			if (rotSlowDownFactor < 1.0f)
+				rotSlowDownFactor = 1.0f;
+
+			rotAmount = direction * (m_rotationSpeed / rotSlowDownFactor) * (dtTimeMilli / 1000.0f);
+			m_newState.Rotate(MathCommon::DegreesToRadians(rotAmount));
+			SetVelocityToFaceCurrDirection(newStateSpeed);
+		}
+
+		//braking, but not accelerating, so drifting
+		//really fast turn, velocity slowly turning towards direction facing
+		//this is done in order to simulate drifting
+		else if (m_braking_flag) {
+			rotAmount = direction * m_rotationSpeed * (dtTimeMilli / 1000.0f);
+			m_newState.Rotate(MathCommon::DegreesToRadians(rotAmount));
+		}
+
+		//neither
+		//normal speed turn, always move in direction facing
+		else {
+			auto rotSlowDownFactor = 1.5f * newStateSpeed / m_maxSpeed;
+
+			if (rotSlowDownFactor < 1.0f)
+				rotSlowDownFactor = 1.0f;
+
+			rotAmount = direction * (m_rotationSpeed / rotSlowDownFactor) * (dtTimeMilli / 1000.0f);
+			m_newState.Rotate(MathCommon::DegreesToRadians(rotAmount));
+			SetVelocityToFaceCurrDirection(newStateSpeed);
+		}
+	}
+}
+
+void CarPhysicsComponent::SetBrakingFlag(bool newFlag)
+{
+	m_braking_flag = newFlag;
+}
+
 void CarPhysicsComponent::CreateDustClouds(Entity& entity, std::vector<int> wheels)
 {
 	if (car_timeSinceLastSkidEffect > car_skidEffectFrequencyMs && m_currState.GetVelocity() != sf::Vector2f(0,0)) {
@@ -108,4 +162,9 @@ void CarPhysicsComponent::CreateDustClouds(Entity& entity, std::vector<int> whee
 		}
 		car_timeSinceLastSkidEffect = 0;
 	}
+}
+
+void CarPhysicsComponent::SetVelocityToFaceCurrDirection(float speed)
+{
+	m_newState.SetVelocity(MathCommon::ChangeLength(m_newState.GetForwardDir(), speed));
 }

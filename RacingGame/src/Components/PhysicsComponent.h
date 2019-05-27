@@ -19,10 +19,10 @@ public:
 	~PhysicsComponent();
 
 public:
-	void Rotate(float degrees, bool left);
 	void Accelerate(float dtTimeMilli, bool forward);
 	void Decelerate(float dtTimeMilli);
 	void ApplyFriction(float dtTimeMilli);
+	virtual void Rotate(float dtTimeMilli, bool left);
 
 	//only needed in CarPhysics but that's the composition pattern for you!
 	virtual void Brake(Entity& entity, float dtTimeMilli);
@@ -33,6 +33,7 @@ public:
 	void SetRotation(float newRotInRad);
 	void SetAcceleration(float newAcc);
 	virtual void SetRandomness(int newRand);
+	virtual void SetBrakingFlag(bool newFlag);
 
 	virtual void Update(Entity& entity, float dtMilli);
 	virtual void DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli);

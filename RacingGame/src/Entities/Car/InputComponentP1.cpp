@@ -19,7 +19,7 @@ void InputComponentP1::Update(Entity& entity, const EventHandler& eventHandler, 
 	else if (eventHandler.downFlagP1)
 		physics->Accelerate(dtMillis, false);
 
-	else
+	if(!eventHandler.upFlagP1 && !eventHandler.downFlagP1)
 		physics->Decelerate(dtMillis);
 
 	if (eventHandler.leftFlagP1)
@@ -28,8 +28,13 @@ void InputComponentP1::Update(Entity& entity, const EventHandler& eventHandler, 
 	if (eventHandler.rightFlagP1)
 		physics->Rotate(dtMillis, false);
 
-	if (eventHandler.brakeFlagP1)
+	if (eventHandler.brakeFlagP1) {
+		physics->SetBrakingFlag(true);
 		physics->Brake(entity, dtMillis);
+	}
+
+	if (!eventHandler.brakeFlagP1)
+		physics->SetBrakingFlag(false);
 
 	//debug commands
 	if (eventHandler.wFlag)

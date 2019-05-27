@@ -153,7 +153,7 @@ void PhysicsComponent::Rotate(float dtTimeMilli, bool left) {
 
 void PhysicsComponent::SetSpeed(float newSpeed)
 {
-	m_newState.SetVelocity(m_newState.GetForwardDir() * newSpeed);
+	m_newState.SetVelocity(MathCommon::ChangeLength(m_newState.GetForwardDir(), newSpeed));
 }
 
 void PhysicsComponent::SetMaxSpeed(float newMaxSpeed)
@@ -183,6 +183,10 @@ void PhysicsComponent::SetAcceleration(float newAcc)
 void PhysicsComponent::SetRandomness(int newRand)
 {
 	;
+}
+
+void PhysicsComponent::SetBrakingFlag(bool newFlag)
+{
 }
 
 void PhysicsComponent::Update(Entity& entity, float dtMilli)
