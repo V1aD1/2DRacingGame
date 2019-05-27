@@ -29,12 +29,11 @@ void ParticleGraphicsComponent::Update(Entity& entity, sf::RenderWindow& window,
 	//simple particle, so only update position, NOT rotation
 	if (m_shape) {
 
-		int alpha = m_shape->getFillColor().a;
-		if (alpha > 0) {
+		if (m_shape->getFillColor().a > 0) {
 			m_shape->setPosition(entity.GetPosition());
 			window.draw(*m_shape);
-			alpha += dtTimeMilli/1000.0f * m_alphaChangeRate;
-			UpdateColorAlpha(alpha);
+			m_currAlpha += dtTimeMilli/1000.0f * m_alphaChangeRate;
+			UpdateColorAlphaToCurrAlpha();
 
 			if (m_shape->getFillColor().a == 0) {
 				G_FREEPARTICLES.push(&entity);
@@ -50,19 +49,20 @@ void ParticleGraphicsComponent::Update(Entity& entity, sf::RenderWindow& window,
 
 void ParticleGraphicsComponent::Enable()
 {
-	UpdateColorAlpha(255);
+	m_currAlpha = 255;
+	UpdateColorAlphaToCurrAlpha();
 	m_shape->setScale(1, 1);
 }
 
-void ParticleGraphicsComponent::UpdateColorAlpha(int newAlpha)
+void ParticleGraphicsComponent::UpdateColorAlphaToCurrAlpha()
 {
-	if (newAlpha > 255)
-		newAlpha = 255;
-	else if (newAlpha < 0) 
-		newAlpha = 0;
+	if (m_currAlpha > 255)
+		m_currAlpha = 255;
+	else if (m_currAlpha < 0)
+		m_currAlpha = 0;
 	
 
 	auto color = m_shape->getFillColor();
-	color.a = newAlpha;
+	color.a = m_currAlpha;
 	m_shape->setFillColor(color);
 }

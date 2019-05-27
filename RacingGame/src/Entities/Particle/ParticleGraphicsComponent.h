@@ -13,6 +13,9 @@ public:
 	void Enable() override;
 
 private:
-	void UpdateColorAlpha(int newAlpha);
+	void UpdateColorAlphaToCurrAlpha();
+
+private:
+	float m_currAlpha = 0;
 };
 

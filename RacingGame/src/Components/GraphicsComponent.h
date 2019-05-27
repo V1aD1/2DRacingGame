@@ -20,6 +20,8 @@ public:
 
 protected:
 	sf::Shape* m_shape;
+
+	//todo change to visible_time and make particle effects visibility be time based
 	float m_alphaChangeRate = 0;
 	float m_scaleChangeRate = 0;
 };

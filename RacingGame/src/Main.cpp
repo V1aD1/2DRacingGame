@@ -42,7 +42,7 @@ bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText) {
 
 	window.create(sf::VideoMode(screenLen, screenHeight), "Racing Game!", sf::Style::Default, settings);
 
-	//todo frame rate affects particles, and more importantly, game doesn't really run anymore at high fps...
+	//todo frame rate affects particles...
 
 	//never use both setVerticalSyncEnabled and setFramerateLimit at the same time!
 	//window.setFramerateLimit(200);
@@ -132,7 +132,7 @@ int main()
 
 		if (eventHandler.qFlag)
 		{
-			emitter.EmitCone(sf::Vector2f(200, 400), player1->m_physics->GetForwardDir(), 0.2f, 0.3f, 1.25f, -0.01f, -1.0f, 60, 1, 90);
+			emitter.EmitCone(sf::Vector2f(200, 400), player1->m_physics->GetForwardDir(), 0.2f, 0.3f, 1.25f, -200.0f, -1.0f, 60, 1, 90);
 		}
 
 		worldSpaceManager.DBG_Draw(window);
