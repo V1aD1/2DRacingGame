@@ -20,8 +20,10 @@ void ParticleEmitter::Init()
 	}
 }
 
-void ParticleEmitter::EmitCircle(sf::Vector2f pos, float startSpeed, float maxSpeed, float acc, float alphaChangeRate, float scaleRateChange, int numParticles, int randRotRange)
+void ParticleEmitter::EmitCircle(sf::Vector2f pos, float startSpeed, float maxSpeed, float acc, float timeToLiveInSeconds, float scaleRateChange, int numParticles, int randRotRange)
 {
+	float alphaChangeRate = -(255 / timeToLiveInSeconds);
+
 	while (numParticles > 0 && !G_FREEPARTICLES.empty()) {
 		auto particle = G_FREEPARTICLES.top();
 		auto shape = particle->m_graphics->GetShape();
@@ -44,7 +46,7 @@ void ParticleEmitter::EmitCone(
 	float startSpeed,
 	float maxSpeed,
 	float acc,
-	float alphaChangeRate,
+	float timeToLiveInSeconds,
 	float scaleRateChange,
 	int coneWidth,
 	int numParticles,
@@ -56,7 +58,7 @@ void ParticleEmitter::EmitCone(
 	if (coneWidth < 2) { coneWidth = 2; }
 
 	float angleInDegrees = MathCommon::RadiansToDegrees(angleBetweenVecs);
-
+	float alphaChangeRate = -(255 / timeToLiveInSeconds);
 	while(numParticles > 0 && !G_FREEPARTICLES.empty()) {
 		auto particle = G_FREEPARTICLES.top();
 		auto shape = particle->m_graphics->GetShape();

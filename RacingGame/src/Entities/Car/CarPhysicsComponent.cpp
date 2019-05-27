@@ -56,7 +56,7 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 			0.2f,
 			0.2f,
 			-3.0f,
-			-400.0f,
+			0.5f,
 			-2.0f,
 			60,
 			MathCommon::GetMagnitude(absorbedVel) / car_maxVel * 5,
@@ -104,7 +104,7 @@ void CarPhysicsComponent::CreateDustClouds(Entity& entity, std::vector<int> whee
 		auto wheelPositions = entity.GetWorldCorners();
 
 		for (auto wheel : wheels) {
-			G_EMITTER.EmitCircle(wheelPositions->at(wheel), 0, 0, 0, -180.0f, 2.0f, 1, 0);
+			G_EMITTER.EmitCircle(wheelPositions->at(wheel), 0, 0, 0, 1.0f, 2.0f, 1, 0);
 		}
 		car_timeSinceLastSkidEffect = 0;
 	}
