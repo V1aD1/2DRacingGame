@@ -45,7 +45,7 @@ bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText) {
 	//todo frame rate affects particles, and more importantly, game doesn't really run anymore at high fps...
 
 	//never use both setVerticalSyncEnabled and setFramerateLimit at the same time!
-	window.setFramerateLimit(200);
+	//window.setFramerateLimit(200);
 
 	if (!font.loadFromFile("Resources/fonts/MotorolaScreentype.ttf")) {
 		std::cout << "Problems opening font file!" << std::endl;
@@ -102,7 +102,7 @@ int main()
 	{
 		sf::Time timePassed = clock.restart();
 		sf::Int64 dtMicros = timePassed.asMicroseconds();
-		sf::Int64 dtMillis = dtMicros / 1000.0f;
+		float dtMillis = dtMicros / 1000.0f;
 		sf::Event event;
 
 		//pollEvent() or waitEvent() MUST be called in the same thread that created the window!!
