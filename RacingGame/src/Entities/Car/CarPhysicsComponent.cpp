@@ -81,7 +81,7 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 		CreateDustClouds(entity, { 0, 3 });
 	}
 
-	else if (MathCommon::RadiansToDegrees(MathCommon::GetAngleBetweenVectorsInRads(m_currState.GetForwardDir(), m_currState.GetVelocity())) > 45.0f){
+	else if (abs(MathCommon::RadiansToDegrees(MathCommon::GetAngleBetweenVectorsInRads(m_currState.GetForwardDir(), m_currState.GetVelocity()))) > 45.0f){
 		CreateDustClouds(entity, { 0, 1, 2, 3 });
 	}
 
