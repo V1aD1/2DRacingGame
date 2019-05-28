@@ -21,7 +21,7 @@ public:
 
 	void AddEntityToCollisionSpace(Entity* entity);
 
-	//todo bug is backwherein if going off edge of screen, cells at top of game world are returned
+	//todo bug is back wherein if going off edge of screen, cells at top of game world are returned
 	std::vector<sf::Vector2i> GetCollisionSpaceCoords(const std::vector<sf::Vector2f>& worldCorners) const;
 	std::vector<Entity*> GetEntitiesAtCoords(const std::vector<sf::Vector2i>& coords) const;
 	void ClearWorldSpace();
