@@ -129,7 +129,6 @@ void PhysicsComponent::SlowDown(float deceleration, float dtTimeMilli) {
 	if (MathCommon::GetMagnitude(newStateVelocity) == 0)
 		return;
 
-	sf::Vector2f velocityDir = MathCommon::Normalize(newStateVelocity);
 	sf::Vector2f stoppingVelocityToApply = MathCommon::Normalize(newStateVelocity) * deceleration * (dtTimeMilli / 1000.0f) * -1.0f;
 
 	float vMag = MathCommon::GetMagnitude(newStateVelocity);

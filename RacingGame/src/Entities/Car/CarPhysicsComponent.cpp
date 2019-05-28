@@ -35,6 +35,13 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 {
 	m_prevState = m_currState;
 	ApplyFriction(dtMilli);
+
+	//if braking, car will skid, in order to simulate drifting
+	//todo shouldn't allign velocity with direction if car 
+	//momentum transferred to it from another collision
+	if (!m_braking_flag)
+		AllignVelocityWithCurrDirection(dtMilli);
+
 	m_newState.Update(dtMilli, car_maxVel);
 
 	auto collisionInfo = DetectCollision(entity);
@@ -74,6 +81,10 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 		CreateDustClouds(entity, { 0, 3 });
 	}
 
+	else if (MathCommon::RadiansToDegrees(MathCommon::GetAngleBetweenVectorsInRads(m_currState.GetForwardDir(), m_currState.GetVelocity())) > 45.0f){
+		CreateDustClouds(entity, { 0, 1, 2, 3 });
+	}
+
 	car_timeSinceLastSkidEffect += dtMilli;
 
 	PhysicsComponent::Update(entity, dtMilli);
@@ -111,51 +122,9 @@ void CarPhysicsComponent::Rotate(float dtTimeMilli, bool left)
 
 	//no turning if car isn't moving
 	if (newStateSpeed > 0.0f) {
-		
-		//braking AND accelerating, so potentially drifting
-		if (m_newState.GetCurrentAcceleration() != 0.0f && m_braking_flag) {
 
-		}
-
-		//braking, but not accelerating, so drifting
-		//really fast turn, velocity slowly turning towards direction facing
-		//this is done in order to simulate drifting
-		if (m_newState.GetCurrentAcceleration() == 0.0f && m_braking_flag) {
-			rotAmount = direction * m_rotationSpeed * (dtTimeMilli / 1000.0f);
-			m_newState.Rotate(MathCommon::DegreesToRadians(rotAmount));
-		}
-		
-		//accelerating
-		//so slow turn, always move in direction facing
-		if (m_newState.GetCurrentAcceleration() != 0.0f) {
-			auto rotSlowDownFactor = 2.0f * newStateSpeed / m_maxSpeed;
-
-			if (rotSlowDownFactor < 1.0f)
-				rotSlowDownFactor = 1.0f;
-
-			rotAmount = direction * (m_rotationSpeed / rotSlowDownFactor) * (dtTimeMilli / 1000.0f);
-			m_newState.Rotate(MathCommon::DegreesToRadians(rotAmount));
-			
-			if(MathCommon::RadiansToDegrees(MathCommon::GetAngleBetweenVectorsInRads(m_newState.GetVelocity(), m_newState.GetForwardDir())) < 45.0f)
-				SetVelocityToFaceCurrDirection(newStateSpeed);
-
-			else {
-				SetVelocityToFaceOppositeCurrDirection(newStateSpeed);
-			}
-		}
-
-		//neither
-		//normal speed turn, always move in direction facing
-		else {
-			auto rotSlowDownFactor = 1.5f * newStateSpeed / m_maxSpeed;
-
-			if (rotSlowDownFactor < 1.0f)
-				rotSlowDownFactor = 1.0f;
-
-			rotAmount = direction * (m_rotationSpeed / rotSlowDownFactor) * (dtTimeMilli / 1000.0f);
-			m_newState.Rotate(MathCommon::DegreesToRadians(rotAmount));
-			SetVelocityToFaceCurrDirection(newStateSpeed);
-		}
+		rotAmount = direction * m_rotationSpeed * (dtTimeMilli / 1000.0f);
+		m_newState.Rotate(MathCommon::DegreesToRadians(rotAmount));
 	}
 }
 
@@ -176,12 +145,22 @@ void CarPhysicsComponent::CreateDustClouds(Entity& entity, std::vector<int> whee
 	}
 }
 
-void CarPhysicsComponent::SetVelocityToFaceCurrDirection(float speed)
+//todo doesn't work if reversing
+void CarPhysicsComponent::AllignVelocityWithCurrDirection(float dtTimeMilli)
 {
-	m_newState.SetVelocity(MathCommon::ChangeLength(m_newState.GetForwardDir(), speed));
-}
+	if (MathCommon::GetMagnitude(m_newState.GetVelocity()) == 0.0f)
+		return;
 
-void CarPhysicsComponent::SetVelocityToFaceOppositeCurrDirection(float speed)
-{
-	m_newState.SetVelocity(MathCommon::ChangeLength(-m_newState.GetForwardDir(), speed));
+	auto angle = MathCommon::RadiansToDegrees(MathCommon::GetAngleBetweenVectorsInRads(m_newState.GetForwardDir(), m_newState.GetVelocity()));
+	float correctionAngle = (car_rotationSpeed / 3.0f) *(dtTimeMilli / 1000.0f);
+
+	if (abs(angle) < abs(correctionAngle))
+		correctionAngle = angle;
+
+	if (angle < 0.0f)
+		correctionAngle = -correctionAngle;
+
+	sf::Vector2f newSpeedDir = MathCommon::Rotate(m_newState.GetVelocity(), MathCommon::DegreesToRadians(correctionAngle));
+
+	m_newState.SetVelocity(MathCommon::ChangeLength(newSpeedDir, MathCommon::GetMagnitude(m_newState.GetVelocity())));
 }

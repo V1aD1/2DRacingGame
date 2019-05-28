@@ -34,5 +34,6 @@ private:
 	void CreateDustClouds(Entity& entity, std::vector<int> wheels);
 	void SetVelocityToFaceCurrDirection(float speed);
 	void SetVelocityToFaceOppositeCurrDirection(float speed);
+	void AllignVelocityWithCurrDirection(float dtTimeMilli);
 };
 

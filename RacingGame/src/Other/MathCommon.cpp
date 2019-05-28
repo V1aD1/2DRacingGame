@@ -47,7 +47,12 @@ sf::Vector2f MathCommon::Subtract(const sf::Vector2f& a, const sf::Vector2f& b)
 
 float MathCommon::GetAngleBetweenVectorsInRads(const sf::Vector2f& a, const sf::Vector2f& b)
 {
-	return acos(Multiply(Normalize(a), Normalize(b)));
+	auto retVal = acos(Multiply(Normalize(a), Normalize(b)));
+	
+	if (MathCommon::CrossProduct(a, b) > 0.0f)
+		retVal = -retVal;
+	
+	return retVal;
 }
 
 int MathCommon::GetOrientation(const sf::Vector2f& p1, sf::Vector2f& p2, sf::Vector2f& p3)
@@ -55,7 +60,7 @@ int MathCommon::GetOrientation(const sf::Vector2f& p1, sf::Vector2f& p2, sf::Vec
 	return 0;
 }
 
-bool MathCommon::CheckLineCollision(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f q1, sf::Vector2f q2)
+bool MathCommon::CheckLineCollision(const sf::Vector2f& p1, const sf::Vector2f& p2, const sf::Vector2f& q1, const sf::Vector2f& q2)
 {
 	//as per https://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
 	//vectors will be represented by a start point (p, q) and end point (p+r, q+s),
@@ -98,7 +103,7 @@ bool MathCommon::CheckLineCollision(sf::Vector2f p1, sf::Vector2f p2, sf::Vector
 	return false;
 }
 
-bool MathCommon::AreColliding(std::vector<sf::Vector2f> firstShapeCorners, std::vector<sf::Vector2f> secondShapeCorners)
+bool MathCommon::AreColliding(const std::vector<sf::Vector2f>& firstShapeCorners, const std::vector<sf::Vector2f>& secondShapeCorners)
 {
 	//line intersection test
 	for (int i = 0; i < firstShapeCorners.size(); i++) {
@@ -120,5 +125,10 @@ bool MathCommon::AreColliding(std::vector<sf::Vector2f> firstShapeCorners, std::
 		}
 	}
 	return false;
+}
+
+sf::Vector2f MathCommon::Rotate(const sf::Vector2f& vec, float rads)
+{
+	return sf::Vector2f(cos(rads) * vec.x - sin(rads)* vec.y, sin(rads) * vec.x + cos(rads) * vec.y);
 }
 

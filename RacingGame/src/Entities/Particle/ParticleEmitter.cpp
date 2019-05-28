@@ -53,7 +53,6 @@ void ParticleEmitter::EmitCone(
 	int randRotRange)
 {
 	float angleBetweenVecs = MathCommon::GetAngleBetweenVectorsInRads(dir, sf::Vector2f(1, 0));
-	if (dir.y < 0) { angleBetweenVecs = -angleBetweenVecs; }
 
 	if (coneWidth < 2) { coneWidth = 2; }
 
