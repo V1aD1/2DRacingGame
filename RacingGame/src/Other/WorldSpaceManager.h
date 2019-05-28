@@ -31,7 +31,7 @@ public:
 private:
 	template <typename T>
 	static void AddToVectorNoDuplicates(std::vector<T>& vec, T val);
-	sf::Vector2i ConvertPointToCellCoords(sf::Vector2f point) const;
+	sf::Vector2i ConvertPointToCellCoords(const sf::Vector2f& point) const;
 
 private:
 	//world space will always be divided into 100 cells

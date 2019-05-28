@@ -66,7 +66,7 @@ void WorldSpaceManager::AddEntityToCollisionSpace(Entity* entity)
 	}
 }
 
-sf::Vector2i WorldSpaceManager::ConvertPointToCellCoords(sf::Vector2f point) const
+sf::Vector2i WorldSpaceManager::ConvertPointToCellCoords(const sf::Vector2f& point) const
 {
 	//yes, this will lose all the decimal points, but that's what I want
 	return sf::Vector2i(point.x/cellWidth, point.y/cellHeight);
@@ -153,6 +153,7 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::
 	return pairs;
 }
 
+//todo exception thrown when exiting bounds of world
 std::vector<Entity*> WorldSpaceManager::GetEntitiesAtCoords(const std::vector<sf::Vector2i>& coords) const
 {
 	std::vector<Entity*> entitiesToRet = std::vector<Entity*>();
