@@ -34,6 +34,6 @@ public:
 
 private:
 	void CreateDustClouds(Entity& entity, std::vector<int> wheels);
-	void AllignVelocityWithForwardDir(float dtTimeMilli);
+	void AllignVelocityWithNewDir(float dtTimeMilli, sf::Vector2f dirToAllignTo);
 };
 

@@ -37,30 +37,27 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 	ApplyFriction(dtMilli);
 
 	//determining if moving forward or backward
-
+	bool movingForward = false, movingBackward = false;
 	if (MathCommon::GetMagnitude(m_newState.GetVelocity()) > 0) {
-		bool movingForward = false, movingBackward = false;
+		
 		auto angleVelAndDir = MathCommon::RadiansToDegrees(MathCommon::GetAngleBetweenVectorsInRads(m_newState.GetVelocity(), m_newState.GetForwardDir()));
-
-		std::cout << "angle vel and dir: " << angleVelAndDir << std::endl;
 
 		if (angleVelAndDir < 45 && angleVelAndDir > -45)
 			movingForward = true;
 
 		else if (abs(angleVelAndDir) > 135)
 			movingBackward = true;
-
-		//std::cout << "moving forward: " << movingForward << std::endl;
-		//std::cout << "moving backward: " << movingBackward << std::endl;
 	}
+
 	//if braking, car will skid, in order to simulate drifting
-	//todo shouldn't allign velocity with direction if car 
-	//momentum transferred to it from another collision
 	if (!m_braking_flag)
-		//if moving forward
-		AllignVelocityWithForwardDir(dtMilli);
-		//else if moving backwards, allign velocity with backward dir
-		//else vel dir too perpendicular car to have to re-allign vel
+	{
+		if (movingForward)
+			AllignVelocityWithNewDir(dtMilli, m_newState.GetForwardDir());
+		else if(movingBackward)
+			AllignVelocityWithNewDir(dtMilli, -m_newState.GetForwardDir());
+		//if moving perpendicularly then don't realign velocity
+	}
 
 	m_newState.Update(dtMilli, car_maxVel);
 
@@ -171,12 +168,12 @@ void CarPhysicsComponent::CreateDustClouds(Entity& entity, std::vector<int> whee
 }
 
 //todo doesn't work if reversing or transferring momentum
-void CarPhysicsComponent::AllignVelocityWithForwardDir(float dtTimeMilli)
+void CarPhysicsComponent::AllignVelocityWithNewDir(float dtTimeMilli, sf::Vector2f dirToAllignTo)
 {
 	if (MathCommon::GetMagnitude(m_newState.GetVelocity()) == 0.0f)
 		return;
 
-	auto angle = MathCommon::RadiansToDegrees(MathCommon::GetAngleBetweenVectorsInRads(m_newState.GetForwardDir(), m_newState.GetVelocity()));
+	auto angle = MathCommon::RadiansToDegrees(MathCommon::GetAngleBetweenVectorsInRads(dirToAllignTo, m_newState.GetVelocity()));
 	float correctionAngle = (car_rotationSpeed / 3.0f) *(dtTimeMilli / 1000.0f);
 
 	if (abs(angle) < abs(correctionAngle))
