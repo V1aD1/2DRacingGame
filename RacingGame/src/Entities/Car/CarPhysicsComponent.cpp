@@ -36,11 +36,31 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 	m_prevState = m_currState;
 	ApplyFriction(dtMilli);
 
+	//determining if moving forward or backward
+
+	if (MathCommon::GetMagnitude(m_newState.GetVelocity()) > 0) {
+		bool movingForward = false, movingBackward = false;
+		auto angleVelAndDir = MathCommon::RadiansToDegrees(MathCommon::GetAngleBetweenVectorsInRads(m_newState.GetVelocity(), m_newState.GetForwardDir()));
+
+		std::cout << "angle vel and dir: " << angleVelAndDir << std::endl;
+
+		if (angleVelAndDir < 45 && angleVelAndDir > -45)
+			movingForward = true;
+
+		else if (abs(angleVelAndDir) > 135)
+			movingBackward = true;
+
+		//std::cout << "moving forward: " << movingForward << std::endl;
+		//std::cout << "moving backward: " << movingBackward << std::endl;
+	}
 	//if braking, car will skid, in order to simulate drifting
 	//todo shouldn't allign velocity with direction if car 
 	//momentum transferred to it from another collision
 	if (!m_braking_flag)
-		AllignVelocityWithCurrDirection(dtMilli);
+		//if moving forward
+		AllignVelocityWithForwardDir(dtMilli);
+		//else if moving backwards, allign velocity with backward dir
+		//else vel dir too perpendicular car to have to re-allign vel
 
 	m_newState.Update(dtMilli, car_maxVel);
 
@@ -133,6 +153,11 @@ void CarPhysicsComponent::SetBrakingFlag(bool newFlag)
 	m_braking_flag = newFlag;
 }
 
+void CarPhysicsComponent::SetReversingFlag(bool newFlag)
+{
+	m_reversing_flag = newFlag;
+}
+
 void CarPhysicsComponent::CreateDustClouds(Entity& entity, std::vector<int> wheels)
 {
 	if (car_timeSinceLastSkidEffect > car_skidEffectFrequencyMs && m_currState.GetVelocity() != sf::Vector2f(0,0)) {
@@ -145,8 +170,8 @@ void CarPhysicsComponent::CreateDustClouds(Entity& entity, std::vector<int> whee
 	}
 }
 
-//todo doesn't work if reversing
-void CarPhysicsComponent::AllignVelocityWithCurrDirection(float dtTimeMilli)
+//todo doesn't work if reversing or transferring momentum
+void CarPhysicsComponent::AllignVelocityWithForwardDir(float dtTimeMilli)
 {
 	if (MathCommon::GetMagnitude(m_newState.GetVelocity()) == 0.0f)
 		return;

@@ -15,6 +15,7 @@ private:
 	//flags
 	//todo read up on flags...
 	bool m_braking_flag;
+	bool m_reversing_flag;
 
 private:
 	float car_timeSinceLastSkidEffect;
@@ -29,9 +30,10 @@ public:
 	sf::Vector2f HandleCollision(sf::Vector2f otherEntityVel) override;
 	void Rotate(float dtTimeMilli, bool left) override;
 	void SetBrakingFlag(bool newFlag) override;
+	void SetReversingFlag(bool newFlag) override;
 
 private:
 	void CreateDustClouds(Entity& entity, std::vector<int> wheels);
-	void AllignVelocityWithCurrDirection(float dtTimeMilli);
+	void AllignVelocityWithForwardDir(float dtTimeMilli);
 };
 

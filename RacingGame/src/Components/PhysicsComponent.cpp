@@ -188,6 +188,10 @@ void PhysicsComponent::SetBrakingFlag(bool newFlag)
 {
 }
 
+void PhysicsComponent::SetReversingFlag(bool newFlag)
+{
+}
+
 void PhysicsComponent::Update(Entity& entity, float dtMilli)
 {
 	entity.SetPosition(m_currState.GetWorldPosition());
