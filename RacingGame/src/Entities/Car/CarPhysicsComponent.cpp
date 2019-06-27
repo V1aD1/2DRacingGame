@@ -43,7 +43,7 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 		
 		auto angleVelAndDir = MathCommon::RadiansToDegrees(MathCommon::GetAngleBetweenVectorsInRads(m_newState.GetVelocity(), m_newState.GetForwardDir()));
 
-		if (angleVelAndDir < 45 && angleVelAndDir > -45)
+		if (angleVelAndDir < 65 && angleVelAndDir > -65)
 			movingForward = true;
 
 		else if (abs(angleVelAndDir) > 135)

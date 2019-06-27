@@ -97,7 +97,7 @@ int main()
 	EventHandler eventHandler = EventHandler();
 	//auto player1 = EntityFactory::CreatePlayer1(sf::Vector2f(40.0f, 50.0f));
 
-	auto player1 = EntityFactory::CreatePlayer1V2(sf::Vector2f(40.0f, 50.0f), car1Text);
+	auto player1 = EntityFactory::CreatePlayer1V2(sf::Vector2f(40.0f, 50.0f), 90.0f, car1Text);
 	
 	auto player2 = EntityFactory::CreatePlayer2(sf::Vector2f(40.0f, 90.0f));
 	auto square = EntityFactory::CreateSquare(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f);

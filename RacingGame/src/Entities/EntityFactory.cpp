@@ -85,7 +85,7 @@ Entity * EntityFactory::CreateParticle(float alphaChangeRate)
 	return new Entity(sf::Vector2f(50, 500), 0, nullptr, new ParticlePhysicsComponent(), new ParticleGraphicsComponent(alphaChangeRate), nullptr);
 }
 
-Entity * EntityFactory::CreatePlayer1V2(sf::Vector2f startPos, sf::Texture& carText)
+Entity * EntityFactory::CreatePlayer1V2(sf::Vector2f startPos, float startRotInDeg, sf::Texture& carText)
 {
 	auto inputCom = new InputComponentP1();
 
@@ -112,7 +112,7 @@ Entity * EntityFactory::CreatePlayer1V2(sf::Vector2f startPos, sf::Texture& carT
 	auto graphics = new CarGraphicsComponentV2(sprite);
 	auto collision = new VariableCollisionComponent(startPos, 0.0f, corners);
 
-	return new Entity(startPos, 90.0f, inputCom, physics, graphics, collision);
+	return new Entity(startPos, startRotInDeg, inputCom, physics, graphics, collision);
 }
 
 

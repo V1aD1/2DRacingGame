@@ -13,7 +13,7 @@ public:
 	static Entity* CreatePlayer2(sf::Vector2f pos);
 	static Entity* CreateParticle(float alphaReductionRate);
 
-	static Entity* CreatePlayer1V2(sf::Vector2f startPos, sf::Texture& carText);
+	static Entity* CreatePlayer1V2(sf::Vector2f startPos, float startRotInDeg, sf::Texture& carText);
 
 private:
 	static Entity* CreateCar(sf::Vector2f pos, sf::Color color, InputComponent* inputCom);
