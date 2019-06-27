@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Entities\Car\CarGraphicsComponentV2.cpp" />
     <ClCompile Include="src\Components\PhysicsState.cpp" />
     <ClCompile Include="src\Components\PhysicsComponent.cpp" />
     <ClCompile Include="src\Entities\Particle\ParticlePhysicsComponent.cpp" />
@@ -174,6 +175,7 @@
     <ClCompile Include="src\Components\VariableCollisionComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Entities\Car\CarGraphicsComponentV2.h" />
     <ClInclude Include="src\Components\PhysicsState.h" />
     <ClInclude Include="src\Components\PhysicsComponent.h" />
     <ClInclude Include="src\Entities\Particle\ParticlePhysicsComponent.h" />

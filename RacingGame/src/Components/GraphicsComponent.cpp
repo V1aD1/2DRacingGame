@@ -12,9 +12,18 @@ GraphicsComponent::GraphicsComponent(sf::Shape* shape)
 	m_shape = shape;
 }
 
+GraphicsComponent::GraphicsComponent(sf::Sprite* sprite)
+{
+	m_sprite = sprite;
+}
+
 GraphicsComponent::~GraphicsComponent()
 {
-	delete m_shape;
+	if(m_shape)
+		delete m_shape;
+	
+	if(m_sprite)
+		delete m_sprite;
 }
 
 sf::Shape* GraphicsComponent::GetShape() const

@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "../../Entities/Car/CarGraphicsComponent.h"
+#include "CarGraphicsComponent.h"
 #include "../Entity.h"
 
 CarGraphicsComponent::CarGraphicsComponent(sf::Shape* shape) : GraphicsComponent(shape){

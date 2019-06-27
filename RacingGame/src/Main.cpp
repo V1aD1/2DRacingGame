@@ -35,7 +35,7 @@ void PerfTest(sf::RenderWindow& window, EventHandler& eventHandler) {
 	Timer("Perf Task");
 }
 
-bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText) {
+bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText, sf::Texture& car1Text, sf::Texture& car2Text) {
 	Timer("Setup Function");
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
@@ -49,6 +49,19 @@ bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText) {
 		std::cout << "Problems opening font file!" << std::endl;
 		return false;
 	}
+
+	if (!car1Text.loadFromFile("Resources/textures/Topdown_vehicle_sprites_pack/Car.png")) {
+		std::cout << "Problems opening car 1 texture!" << std::endl;
+		return false;
+	}
+
+	if (!car2Text.loadFromFile("Resources/textures/Topdown_vehicle_sprites_pack/Audi.png")) {
+		std::cout << "Problems opening car 2 texture!" << std::endl;
+		return false;
+	}
+
+	car1Text.setSmooth(true);
+	car2Text.setSmooth(true);
 
 	fpsText.setFont(font);
 	fpsText.setCharacterSize(24);
@@ -64,12 +77,27 @@ int main()
 	sf::RenderWindow window;
 	sf::Text fpsText;
 	sf::Font font;
+	sf::Texture car1Text, car2Text;
 	sf::Clock clock;
 	sf::Int32 timeSinceLastFpsLog = fpsRefreshMs;
 
-	//EntityFactory entityFactory = EntityFactory();
+	/*for (int j = 1; j < 50; j++) {
+		for (int i = 1; i < 30; i++) {
+			auto square1 = entityFactory.CreateSquare(10, sf::Vector2f(20 * j + 50, 20 * i + 50), 0.0f);
+			G_STATICOBJECTS.push_back(square1);
+		}
+	}*/
+
+	if (!Setup(window, font, fpsText, car1Text, car2Text)) {
+		std::cout << "Problems encountered in setup, terminating program!" << std::endl;
+		return 0;
+	}
+
 	EventHandler eventHandler = EventHandler();
-	auto player1 = EntityFactory::CreatePlayer1(sf::Vector2f(40.0f, 50.0f));
+	//auto player1 = EntityFactory::CreatePlayer1(sf::Vector2f(40.0f, 50.0f));
+
+	auto player1 = EntityFactory::CreatePlayer1V2(sf::Vector2f(40.0f, 50.0f), car1Text);
+	
 	auto player2 = EntityFactory::CreatePlayer2(sf::Vector2f(40.0f, 90.0f));
 	auto square = EntityFactory::CreateSquare(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f);
 	auto emitter = ParticleEmitter();
@@ -79,18 +107,6 @@ int main()
 	G_VARIABLEOBJECTS.push_back(player2);
 	G_STATICOBJECTS.push_back(square);
 
-
-	/*for (int j = 1; j < 50; j++) {
-		for (int i = 1; i < 30; i++) {
-			auto square1 = entityFactory.CreateSquare(10, sf::Vector2f(20 * j + 50, 20 * i + 50), 0.0f);
-			G_STATICOBJECTS.push_back(square1);
-		}
-	}*/
-
-	if (!Setup(window, font, fpsText)) {
-		std::cout << "Problems encountered in setup, terminating program!" << std::endl;
-		return 0;
-	}
 
 	worldSpaceManager.UpdateAllEntitiesInCollSpace();
 

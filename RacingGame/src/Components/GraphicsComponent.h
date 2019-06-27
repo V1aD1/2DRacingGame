@@ -8,6 +8,7 @@ class GraphicsComponent
 public:
 	GraphicsComponent();
 	GraphicsComponent(sf::Shape* shape);
+	GraphicsComponent(sf::Sprite* sprite);
 	virtual ~GraphicsComponent();
 
 	virtual void Update(Entity& entity, sf::RenderWindow& window, float dtTimeMilli) = 0;
@@ -20,6 +21,7 @@ public:
 
 protected:
 	sf::Shape* m_shape;
+	sf::Sprite* m_sprite;
 	float m_alphaChangeRate = 0;
 	float m_scaleChangeRate = 0;
 };

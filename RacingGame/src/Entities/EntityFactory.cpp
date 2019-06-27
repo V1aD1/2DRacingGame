@@ -3,6 +3,7 @@
 
 #include "Static/SquareGraphicsComponent.h"
 #include "Car/CarGraphicsComponent.h"
+#include "Car/CarGraphicsComponentV2.h"
 #include "Particle/ParticleGraphicsComponent.h"
 
 #include "Car/CarPhysicsComponent.h"
@@ -82,6 +83,31 @@ Entity * EntityFactory::CreateCar(sf::Vector2f startPos, sf::Color color, InputC
 Entity * EntityFactory::CreateParticle(float alphaChangeRate)
 {
 	return new Entity(sf::Vector2f(50, 500), 0, nullptr, new ParticlePhysicsComponent(), new ParticleGraphicsComponent(alphaChangeRate), nullptr);
+}
+
+Entity * EntityFactory::CreatePlayer1V2(sf::Vector2f startPos, sf::Texture& carText)
+{
+	auto inputCom = new InputComponentP1();
+
+	auto size = carText.getSize();
+
+	//create shape for graphics component
+	sf::Sprite* sprite = new sf::Sprite(carText);
+	sprite->setOrigin(size.x / 2.0f, size.y / 2.0f);
+	sprite->setPosition(0.0f, 0.0f);
+
+	//create corners for physics component
+	std::vector<sf::Vector2f> corners = std::vector<sf::Vector2f>();
+	corners.push_back(sf::Vector2f(-(size.x / 2.0f), -(size.y / 2.0f)));
+	corners.push_back(sf::Vector2f(size.x / 2.0f, -(size.y / 2.0f)));
+	corners.push_back(sf::Vector2f(size.x / 2.0f, size.y / 2.0f));
+	corners.push_back(sf::Vector2f(-(size.x / 2.0f), size.y / 2.0f));
+
+	auto physics = new CarPhysicsComponent(startPos, MathCommon::DegreesToRadians(0.0f), corners);
+	auto graphics = new CarGraphicsComponentV2(sprite);
+	auto collision = new VariableCollisionComponent(startPos, 0.0f, corners);
+
+	return new Entity(startPos, 0.0f, inputCom, physics, graphics, collision);
 }
 
 

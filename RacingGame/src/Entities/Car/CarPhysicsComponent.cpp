@@ -167,7 +167,6 @@ void CarPhysicsComponent::CreateDustClouds(Entity& entity, std::vector<int> whee
 	}
 }
 
-//todo doesn't work if reversing or transferring momentum
 void CarPhysicsComponent::AllignVelocityWithNewDir(float dtTimeMilli, sf::Vector2f dirToAllignTo)
 {
 	if (MathCommon::GetMagnitude(m_newState.GetVelocity()) == 0.0f)

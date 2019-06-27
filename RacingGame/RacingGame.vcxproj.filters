@@ -81,6 +81,9 @@
     <ClCompile Include="src\Components\PhysicsComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Entities\Car\CarGraphicsComponentV2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Entities\Car\CarGraphicsComponent.h">
@@ -144,6 +147,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Components\PhysicsComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Entities\Car\CarGraphicsComponentV2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
