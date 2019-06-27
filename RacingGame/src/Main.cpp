@@ -35,6 +35,7 @@ void PerfTest(sf::RenderWindow& window, EventHandler& eventHandler) {
 	Timer("Perf Task");
 }
 
+//todo pass an intRect for every texture to read
 bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText, sf::Texture& car1Text, sf::Texture& car2Text) {
 	Timer("Setup Function");
 	sf::ContextSettings settings;
@@ -50,7 +51,7 @@ bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText, sf::Text
 		return false;
 	}
 
-	if (!car1Text.loadFromFile("Resources/textures/Topdown_vehicle_sprites_pack/Car.png")) {
+	if (!car1Text.loadFromFile("Resources/textures/Topdown_vehicle_sprites_pack/Car.png", sf::IntRect(90, 23, 77, 207))) {
 		std::cout << "Problems opening car 1 texture!" << std::endl;
 		return false;
 	}

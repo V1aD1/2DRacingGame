@@ -18,7 +18,7 @@
 #include "../Other/MathCommon.h"
 
 const float EntityFactory::c_car_length = 40.0f;
-const float EntityFactory::c_car_height = 10.0f;
+const float EntityFactory::c_car_width = 10.0f;
 
 
 Entity* EntityFactory::CreateSquare(float sideLen, sf::Vector2f pos, float rotDeg) {
@@ -55,7 +55,7 @@ Entity * EntityFactory::CreatePlayer2(sf::Vector2f pos)
 
 Entity * EntityFactory::CreateCar(sf::Vector2f startPos, sf::Color color, InputComponent* inputCom)
 {
-	auto size = sf::Vector2f(c_car_length, c_car_height);
+	auto size = sf::Vector2f(c_car_length, c_car_width);
 
 	//create shape for graphics component
 	sf::RectangleShape* shape = new sf::RectangleShape(size);
@@ -93,21 +93,26 @@ Entity * EntityFactory::CreatePlayer1V2(sf::Vector2f startPos, sf::Texture& carT
 
 	//create shape for graphics component
 	sf::Sprite* sprite = new sf::Sprite(carText);
-	sprite->setOrigin(size.x / 2.0f, size.y / 2.0f);
+
+	//resizing texture, only comparing length
+	auto scale = sf::Vector2f(c_car_length / size.y, c_car_length / size.y);
+	sprite->setScale(scale);
+
+	sprite->setOrigin(size.x * scale.x / 2.0f, size.y * scale.y / 2.0f);
 	sprite->setPosition(0.0f, 0.0f);
 
 	//create corners for physics component
 	std::vector<sf::Vector2f> corners = std::vector<sf::Vector2f>();
-	corners.push_back(sf::Vector2f(-(size.x / 2.0f), -(size.y / 2.0f)));
-	corners.push_back(sf::Vector2f(size.x / 2.0f, -(size.y / 2.0f)));
-	corners.push_back(sf::Vector2f(size.x / 2.0f, size.y / 2.0f));
-	corners.push_back(sf::Vector2f(-(size.x / 2.0f), size.y / 2.0f));
+	corners.push_back(sf::Vector2f(-(size.x * scale.x / 2.0f), -(size.y * scale.y / 2.0f)));
+	corners.push_back(sf::Vector2f(size.x * scale.x / 2.0f, -(size.y * scale.y / 2.0f)));
+	corners.push_back(sf::Vector2f(size.x * scale.x / 2.0f, size.y * scale.y / 2.0f));
+	corners.push_back(sf::Vector2f(-(size.x * scale.x / 2.0f), size.y * scale.y / 2.0f));
 
-	auto physics = new CarPhysicsComponent(startPos, MathCommon::DegreesToRadians(0.0f), corners);
+	auto physics = new CarPhysicsComponent(startPos, MathCommon::DegreesToRadians(90.0f), corners);
 	auto graphics = new CarGraphicsComponentV2(sprite);
 	auto collision = new VariableCollisionComponent(startPos, 0.0f, corners);
 
-	return new Entity(startPos, 0.0f, inputCom, physics, graphics, collision);
+	return new Entity(startPos, 90.0f, inputCom, physics, graphics, collision);
 }
 
 

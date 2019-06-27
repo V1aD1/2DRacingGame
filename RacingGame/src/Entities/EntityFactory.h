@@ -20,6 +20,6 @@ private:
 
 private:
 	static const float c_car_length;
-	static const float c_car_height;
+	static const float c_car_width;
 };
 

@@ -168,7 +168,7 @@ void PhysicsComponent::SetPosition(sf::Vector2f newPos)
 
 void PhysicsComponent::SetRotation(float newRotInRad)
 {
-	m_currState.SetRotation(newRotInRad);
+	//m_currState.SetRotation(newRotInRad);
 	m_newState.SetRotation(newRotInRad);
 }
 

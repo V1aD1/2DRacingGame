@@ -5,6 +5,7 @@
 #include "../../Other/MathCommon.h"
 #include "../Particle/ParticleEmitter.h"
 
+//todo make rot speed fast if braking, slow otherwise
 const float CarPhysicsComponent::car_rotationSpeed = 180.0f;
 const float CarPhysicsComponent::car_acceleration = 0.25f;
 const float CarPhysicsComponent::car_frictionForce = 0.1f;
@@ -95,7 +96,7 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 
 	//skidding effect 
 	if (m_currState.GetCurrentAcceleration() != 0 && MathCommon::GetMagnitude(m_currState.GetVelocity()) < m_maxSpeed / 2) {
-		CreateDustClouds(entity, { 0, 3 });
+		CreateDustClouds(entity, { 2, 3 });
 	}
 
 	else if (abs(MathCommon::RadiansToDegrees(MathCommon::GetAngleBetweenVectorsInRads(m_currState.GetForwardDir(), m_currState.GetVelocity()))) > 45.0f){

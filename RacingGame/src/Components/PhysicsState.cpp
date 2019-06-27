@@ -53,7 +53,7 @@ void PhysicsState::UpdateToNewState(const PhysicsState& other)
 }
 
 void PhysicsState::UpdateForwardDir() {
-	m_forwardDir = sf::Vector2f(std::cos(m_rotInRad), std::sin(m_rotInRad));
+	m_forwardDir = sf::Vector2f(std::sin(m_rotInRad), -std::cos(m_rotInRad));
 }
 
 PhysicsState::PhysicsState(const PhysicsState& other)
