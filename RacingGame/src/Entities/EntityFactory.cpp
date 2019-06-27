@@ -85,21 +85,20 @@ Entity * EntityFactory::CreateParticle(float alphaChangeRate)
 	return new Entity(sf::Vector2f(50, 500), 0, nullptr, new ParticlePhysicsComponent(), new ParticleGraphicsComponent(alphaChangeRate), nullptr);
 }
 
+//todo replace CreatePlayer1 with this functionality
 Entity * EntityFactory::CreatePlayer1V2(sf::Vector2f startPos, float startRotInDeg, sf::Texture& carText)
 {
 	auto inputCom = new InputComponentP1();
-
 	auto size = carText.getSize();
 
 	//create shape for graphics component
 	sf::Sprite* sprite = new sf::Sprite(carText);
+	//origin must ignore all transformation applied to the texture!!
+	sprite->setOrigin(size.x/ 2.0f, size.y/ 2.0f); 
 
 	//resizing texture, only comparing length
 	auto scale = sf::Vector2f(c_car_length / size.y, c_car_length / size.y);
 	sprite->setScale(scale);
-
-	sprite->setOrigin(size.x * scale.x / 2.0f, size.y * scale.y / 2.0f);
-	sprite->setPosition(0.0f, 0.0f);
 
 	//create corners for physics component
 	std::vector<sf::Vector2f> corners = std::vector<sf::Vector2f>();
@@ -108,7 +107,7 @@ Entity * EntityFactory::CreatePlayer1V2(sf::Vector2f startPos, float startRotInD
 	corners.push_back(sf::Vector2f(size.x * scale.x / 2.0f, size.y * scale.y / 2.0f));
 	corners.push_back(sf::Vector2f(-(size.x * scale.x / 2.0f), size.y * scale.y / 2.0f));
 
-	auto physics = new CarPhysicsComponent(startPos, MathCommon::DegreesToRadians(90.0f), corners);
+	auto physics = new CarPhysicsComponent(startPos, 0.0f, corners);
 	auto graphics = new CarGraphicsComponentV2(sprite);
 	auto collision = new VariableCollisionComponent(startPos, 0.0f, corners);
 

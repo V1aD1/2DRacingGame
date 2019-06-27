@@ -16,9 +16,8 @@ void SquareGraphicsComponent::Update(Entity& entity, sf::RenderWindow& window, f
 	if (m_shape) {
 		m_shape->setRotation(entity.GetRotationInDegrees());
 		m_shape->setPosition(entity.GetPosition());
+		window.draw(*m_shape);
 	}
-
-	window.draw(*m_shape);
 
 	DBG_DrawCorners(entity, window);
 }
