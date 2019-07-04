@@ -105,19 +105,22 @@ int main()
 	sf::Texture car1Text = LoadTexture("Resources/textures/Topdown_vehicle_sprites_pack/Car.png", sf::IntRect(90, 23, 77, 207));
 	sf::Texture car2Text = LoadTexture("Resources/textures/Topdown_vehicle_sprites_pack/Mini_truck.png", sf::IntRect(72, 35, 91, 203));
 	sf::Texture boxText = LoadTexture("Resources/textures/Props/RTS_Crate.png");
+	sf::Texture shrubText = LoadTexture("Resources/textures/Props/shrub.png");
 
 	EventHandler eventHandler = EventHandler();
 
-	auto player1 = EntityFactory::CreatePlayer1(sf::Vector2f(40.0f, 50.0f), 90.0f, car1Text);	
-	auto player2 = EntityFactory::CreatePlayer2(sf::Vector2f(40.0f, 90.0f), 90.0f, car2Text);
 	//auto square = EntityFactory::DBG_CreateSquare(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f);
 	auto square = EntityFactory::CreateStaticCollisionObject(sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f, sf::Vector2f(0.5, 0.5), boxText);
+	auto shrub = EntityFactory::CreateDecorativeObject(sf::Vector2f(100, 100), 0, sf::Vector2f(1, 1), shrubText);
+	auto player1 = EntityFactory::CreatePlayer1(sf::Vector2f(40.0f, 50.0f), 90.0f, car1Text);	
+	auto player2 = EntityFactory::CreatePlayer2(sf::Vector2f(40.0f, 90.0f), 90.0f, car2Text);
 	auto emitter = ParticleEmitter();
 
 	G_VARIABLEOBJECTS.push_back(player1);
 	G_VARIABLEOBJECTS.push_back(player2);
+	
 	G_STATICOBJECTS.push_back(square);
-
+	G_STATICOBJECTS.push_back(shrub);
 
 	worldSpaceManager.UpdateAllEntitiesInCollSpace();
 

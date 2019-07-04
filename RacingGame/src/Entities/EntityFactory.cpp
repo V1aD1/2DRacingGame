@@ -67,10 +67,29 @@ Entity* EntityFactory::CreateStaticCollisionObject(sf::Vector2f startPos, float 
 	return new Entity(startPos, startRotInDeg, nullptr, nullptr, graphics, collision);
 }
 
-//todo
-Entity * EntityFactory::CreateDecorativeObject(sf::Vector2f startPos, float startRotInDeg, sf::Vector2f scale, sf::Texture & text)
+//todo variable objects are drawn above decorative ones, fix that
+Entity * EntityFactory::CreateDecorativeObject(sf::Vector2f startPos, float startRotInDeg, sf::Vector2f scale, sf::Texture& text)
 {
-	return nullptr;
+	auto size = text.getSize();
+
+	//create shape for graphics component
+	sf::Sprite* sprite = new sf::Sprite(text);
+	//origin must ignore all transformation applied to the texture!!
+	sprite->setOrigin(size.x / 2.0f, size.y / 2.0f);
+
+	sprite->setScale(scale);
+
+	//create corners for physics component
+	std::vector<sf::Vector2f> localCorners = std::vector<sf::Vector2f>();
+	localCorners.push_back(sf::Vector2f(-(size.x * scale.x / 2.0f), -(size.y * scale.y / 2.0f)));
+	localCorners.push_back(sf::Vector2f(size.x * scale.x / 2.0f, -(size.y * scale.y / 2.0f)));
+	localCorners.push_back(sf::Vector2f(size.x * scale.x / 2.0f, size.y * scale.y / 2.0f));
+	localCorners.push_back(sf::Vector2f(-(size.x * scale.x / 2.0f), size.y * scale.y / 2.0f));
+
+	//todo use TextureGraphicsComponent or something
+	auto graphics = new SpriteGraphicsComponent(sprite);
+
+	return new Entity(startPos, startRotInDeg, nullptr, nullptr, graphics, nullptr);
 }
 
 Entity* EntityFactory::CreatePlayer1(sf::Vector2f startPos, float startRotInDeg, sf::Texture& carText)

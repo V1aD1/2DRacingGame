@@ -57,12 +57,15 @@ void WorldSpaceManager::AddEntityToCollisionSpace(Entity* entity)
 {
 	std::vector<sf::Vector2i> pairs;
 
-	auto worldCorners = *entity->GetWorldCorners();
+	auto worldCorners = entity->GetWorldCorners();
 
-	auto coords = GetCollisionSpaceCoords(std::vector<sf::Vector2f>(std::begin(worldCorners), std::end(worldCorners)));
+	if (worldCorners != nullptr) {
 
-	for (auto coord : coords) {
-		worldSpace[coord.x][coord.y].push_back(entity);
+		auto coords = GetCollisionSpaceCoords(std::vector<sf::Vector2f>(std::begin(*worldCorners), std::end(*worldCorners)));
+
+		for (auto coord : coords) {
+			worldSpace[coord.x][coord.y].push_back(entity);
+		}
 	}
 }
 
