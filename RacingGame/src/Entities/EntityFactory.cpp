@@ -20,7 +20,7 @@ const float EntityFactory::c_car_length = 40.0f;
 const float EntityFactory::c_car_width = 10.0f;
 
 
-Entity* EntityFactory::CreateSquare(float sideLen, sf::Vector2f pos, float startRotInDeg) {
+Entity* EntityFactory::DBG_CreateSquare(float sideLen, sf::Vector2f pos, float startRotInDeg) {
 	float halfSideLen = sideLen / 2;
 
 	sf::Shape* shape = new sf::RectangleShape(sf::Vector2f(sideLen, sideLen));

@@ -163,7 +163,6 @@
     <ClCompile Include="src\Components\CollisionComponent.cpp" />
     <ClCompile Include="src\Entities\Car\CarPhysicsComponent.cpp" />
     <ClCompile Include="src\Components\GraphicsComponent.cpp" />
-    <ClCompile Include="src\Entities\Car\CarGraphicsComponent.cpp" />
     <ClCompile Include="src\Entities\Entity.cpp" />
     <ClCompile Include="src\Components\InputComponent.cpp" />
     <ClCompile Include="src\Other\MathCommon.cpp" />
@@ -187,7 +186,6 @@
     <ClInclude Include="src\Entities\EntityFactory.h" />
     <ClInclude Include="src\Components\CollisionComponent.h" />
     <ClInclude Include="src\Entities\Car\CarPhysicsComponent.h" />
-    <ClInclude Include="src\Entities\Car\CarGraphicsComponent.h" />
     <ClInclude Include="src\Components\GraphicsComponent.h" />
     <ClInclude Include="src\Components\InputComponent.h" />
     <ClInclude Include="src\Entities\Entity.h" />
