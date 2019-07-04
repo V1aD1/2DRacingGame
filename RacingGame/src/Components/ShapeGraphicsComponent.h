@@ -1,7 +1,7 @@
 #pragma once
-#include "../../Components/GraphicsComponent.h"
+#include "GraphicsComponent.h"
 
-class CarGraphicsComponentV2 : public GraphicsComponent
+class ShapeGraphicsComponent : public GraphicsComponent
 {
 private:
 	float circleRad = 2.0f;
@@ -11,8 +11,8 @@ private:
 	void DBG_DrawCorners(const Entity& entity, sf::RenderWindow& window);
 
 public:
-	CarGraphicsComponentV2(sf::Sprite* sprite);
-	~CarGraphicsComponentV2();
+	ShapeGraphicsComponent(sf::Shape* shape);
+	~ShapeGraphicsComponent();
 
 	void Update(Entity& entity, sf::RenderWindow & window, float dtTimeMilli) override;
 };

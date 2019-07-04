@@ -1,9 +1,6 @@
 #include "EntityFactory.h"
 #include "Entity.h"
 
-#include "Static/SquareGraphicsComponent.h"
-#include "Car/CarGraphicsComponent.h"
-#include "Car/CarGraphicsComponentV2.h"
 #include "Particle/ParticleGraphicsComponent.h"
 
 #include "Car/CarPhysicsComponent.h"
@@ -14,6 +11,8 @@
 
 #include "../Components/StaticCollisionComponent.h"
 #include "../Components/VariableCollisionComponent.h"
+#include "../Components/ShapeGraphicsComponent.h"
+#include "../Components/SpriteGraphicsComponent.h"
 
 #include "../Other/MathCommon.h"
 
@@ -37,7 +36,7 @@ Entity* EntityFactory::CreateSquare(float sideLen, sf::Vector2f pos, float start
 	localCorners.push_back(sf::Vector2f(halfSideLen, halfSideLen));
 	localCorners.push_back(sf::Vector2f(-halfSideLen, halfSideLen));
 
-	auto graphics = new SquareGraphicsComponent(shape);
+	auto graphics = new ShapeGraphicsComponent(shape);
 	auto collision = new StaticCollisionComponent(pos, MathCommon::DegreesToRadians(startRotInDeg), localCorners);
 
 	return new Entity(pos, startRotInDeg, nullptr, nullptr, graphics, collision);
@@ -62,7 +61,7 @@ Entity* EntityFactory::CreateStaticCollisionObject(sf::Vector2f startPos, float 
 	localCorners.push_back(sf::Vector2f(-(size.x * scale.x / 2.0f), size.y * scale.y / 2.0f));
 
 	//todo use TextureGraphicsComponent or something
-	auto graphics = new CarGraphicsComponentV2(sprite);
+	auto graphics = new SpriteGraphicsComponent(sprite);
 	auto collision = new StaticCollisionComponent(startPos, MathCommon::DegreesToRadians(startRotInDeg), localCorners);
 
 	return new Entity(startPos, startRotInDeg, nullptr, nullptr, graphics, collision);
@@ -105,7 +104,7 @@ Entity* EntityFactory::CreateCar(sf::Vector2f startPos, float startRotInDeg, sf:
 	corners.push_back(sf::Vector2f(-(size.x * scale.x / 2.0f), size.y * scale.y / 2.0f));
 
 	auto physics = new CarPhysicsComponent(startPos, 0.0f, corners);
-	auto graphics = new CarGraphicsComponentV2(sprite);
+	auto graphics = new SpriteGraphicsComponent(sprite);
 	auto collision = new VariableCollisionComponent(startPos, 0.0f, corners);
 
 	return new Entity(startPos, startRotInDeg, inputCom, physics, graphics, collision);

@@ -57,9 +57,6 @@
     <ClCompile Include="src\Entities\Particle\ParticleGraphicsComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Entities\Static\SquareGraphicsComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Components\StaticCollisionComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -81,7 +78,10 @@
     <ClCompile Include="src\Components\PhysicsComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Entities\Car\CarGraphicsComponentV2.cpp">
+    <ClCompile Include="src\Components\ShapeGraphicsComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\SpriteGraphicsComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -116,9 +116,6 @@
     <ClInclude Include="src\Entities\Particle\ParticlePhysicsComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Entities\Static\SquareGraphicsComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Components\VariableCollisionComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -149,7 +146,10 @@
     <ClInclude Include="src\Components\PhysicsComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Entities\Car\CarGraphicsComponentV2.h">
+    <ClInclude Include="src\Components\ShapeGraphicsComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\SpriteGraphicsComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

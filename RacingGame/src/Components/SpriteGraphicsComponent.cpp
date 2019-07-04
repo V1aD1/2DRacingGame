@@ -1,10 +1,8 @@
-#include <iostream>
-
-#include "CarGraphicsComponentV2.h"
-#include "../Entity.h"
+#include "SpriteGraphicsComponent.h"
+#include "../Entities/Entity.h"
 
 
-CarGraphicsComponentV2::CarGraphicsComponentV2(sf::Sprite* sprite) : GraphicsComponent(sprite)
+SpriteGraphicsComponent::SpriteGraphicsComponent(sf::Sprite* sprite) : GraphicsComponent(sprite)
 {
 	for (int i = 0; i < 4; i++) {
 		auto circle = sf::CircleShape(circleRad, 4);
@@ -13,11 +11,11 @@ CarGraphicsComponentV2::CarGraphicsComponentV2(sf::Sprite* sprite) : GraphicsCom
 	}
 }
 
-CarGraphicsComponentV2::~CarGraphicsComponentV2()
+SpriteGraphicsComponent::~SpriteGraphicsComponent()
 {
 }
 
-void CarGraphicsComponentV2::Update(Entity& entity, sf::RenderWindow& window, float dtTimeMilli)
+void SpriteGraphicsComponent::Update(Entity& entity, sf::RenderWindow& window, float dtTimeMilli)
 {
 	if (m_sprite) {
 		m_sprite->setRotation(entity.GetRotationInDegrees());
@@ -28,7 +26,7 @@ void CarGraphicsComponentV2::Update(Entity& entity, sf::RenderWindow& window, fl
 	DBG_DrawCorners(entity, window);
 }
 
-void CarGraphicsComponentV2::DBG_DrawCorners(const Entity& entity, sf::RenderWindow& window)
+void SpriteGraphicsComponent::DBG_DrawCorners(const Entity& entity, sf::RenderWindow& window)
 {
 	auto entityCorners = entity.GetWorldCorners();
 	if (entityCorners && entityCorners->size() == 4) {

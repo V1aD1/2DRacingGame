@@ -150,7 +150,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Entities\Car\CarGraphicsComponentV2.cpp" />
+    <ClCompile Include="src\Components\ShapeGraphicsComponent.cpp" />
+    <ClCompile Include="src\Components\SpriteGraphicsComponent.cpp" />
     <ClCompile Include="src\Components\PhysicsState.cpp" />
     <ClCompile Include="src\Components\PhysicsComponent.cpp" />
     <ClCompile Include="src\Entities\Particle\ParticlePhysicsComponent.cpp" />
@@ -162,7 +163,6 @@
     <ClCompile Include="src\Components\CollisionComponent.cpp" />
     <ClCompile Include="src\Entities\Car\CarPhysicsComponent.cpp" />
     <ClCompile Include="src\Components\GraphicsComponent.cpp" />
-    <ClCompile Include="src\Entities\Static\SquareGraphicsComponent.cpp" />
     <ClCompile Include="src\Entities\Car\CarGraphicsComponent.cpp" />
     <ClCompile Include="src\Entities\Entity.cpp" />
     <ClCompile Include="src\Components\InputComponent.cpp" />
@@ -175,7 +175,8 @@
     <ClCompile Include="src\Components\VariableCollisionComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Entities\Car\CarGraphicsComponentV2.h" />
+    <ClInclude Include="src\Components\ShapeGraphicsComponent.h" />
+    <ClInclude Include="src\Components\SpriteGraphicsComponent.h" />
     <ClInclude Include="src\Components\PhysicsState.h" />
     <ClInclude Include="src\Components\PhysicsComponent.h" />
     <ClInclude Include="src\Entities\Particle\ParticlePhysicsComponent.h" />
@@ -187,7 +188,6 @@
     <ClInclude Include="src\Components\CollisionComponent.h" />
     <ClInclude Include="src\Entities\Car\CarPhysicsComponent.h" />
     <ClInclude Include="src\Entities\Car\CarGraphicsComponent.h" />
-    <ClInclude Include="src\Entities\Static\SquareGraphicsComponent.h" />
     <ClInclude Include="src\Components\GraphicsComponent.h" />
     <ClInclude Include="src\Components\InputComponent.h" />
     <ClInclude Include="src\Entities\Entity.h" />
