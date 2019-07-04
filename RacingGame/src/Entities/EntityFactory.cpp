@@ -43,58 +43,24 @@ Entity* EntityFactory::CreateSquare(float sideLen, sf::Vector2f pos, float rotDe
 	return new Entity(pos, rotDeg, nullptr, nullptr, graphics, collision);
 }
 
-Entity * EntityFactory::CreatePlayer1(sf::Vector2f pos)
+Entity* EntityFactory::CreatePlayer1(sf::Vector2f startPos, float startRotInDeg, sf::Texture& carText)
 {
-	return CreateCar(pos, sf::Color::Blue, new InputComponentP1());
+	return CreateCar(startPos, startRotInDeg, carText, new InputComponentP1());
 }
 
-Entity * EntityFactory::CreatePlayer2(sf::Vector2f pos)
+Entity* EntityFactory::CreatePlayer2(sf::Vector2f startPos, float startRotInDeg, sf::Texture& carText)
 {
-	return CreateCar(pos, sf::Color::Yellow, new InputComponentP2());
+	return CreateCar(startPos, startRotInDeg, carText, new InputComponentP2());
 }
 
-Entity * EntityFactory::CreateCar(sf::Vector2f startPos, sf::Color color, InputComponent* inputCom)
+Entity* EntityFactory::CreateCar(sf::Vector2f startPos, float startRotInDeg, sf::Texture& carText, InputComponent* inputCom)
 {
-	auto size = sf::Vector2f(c_car_length, c_car_width);
-
-	//create shape for graphics component
-	sf::RectangleShape* shape = new sf::RectangleShape(size);
-	shape->setFillColor(color);
-	shape->setOutlineThickness(1.0f);
-	shape->setOutlineColor(sf::Color(250, 150, 100));
-	shape->setOrigin(size.x / 2.0f, size.y / 2.0f);
-	shape->setPosition(0.0f, 0.0f);
-
-
-	//create corners for physics component
-	std::vector<sf::Vector2f> corners = std::vector<sf::Vector2f>();
-	corners.push_back(sf::Vector2f(-size.x / 2.0f, -size.y / 2.0f));
-	corners.push_back(sf::Vector2f(size.x / 2.0f, -size.y / 2.0f));
-	corners.push_back(sf::Vector2f(size.x / 2.0f, size.y / 2.0f));
-	corners.push_back(sf::Vector2f(-size.x / 2.0f, size.y / 2.0f));
-
-	auto physics = new CarPhysicsComponent(startPos, MathCommon::DegreesToRadians(0.0f), corners);
-	auto graphics = new CarGraphicsComponent(shape);
-	auto collision = new VariableCollisionComponent(startPos, 0.0f, corners);
-
-	return new Entity(startPos, 0.0f, inputCom, physics, graphics, collision);
-}
-
-Entity * EntityFactory::CreateParticle(float alphaChangeRate)
-{
-	return new Entity(sf::Vector2f(50, 500), 0, nullptr, new ParticlePhysicsComponent(), new ParticleGraphicsComponent(alphaChangeRate), nullptr);
-}
-
-//todo replace CreatePlayer1 with this functionality
-Entity * EntityFactory::CreatePlayer1V2(sf::Vector2f startPos, float startRotInDeg, sf::Texture& carText)
-{
-	auto inputCom = new InputComponentP1();
 	auto size = carText.getSize();
 
 	//create shape for graphics component
 	sf::Sprite* sprite = new sf::Sprite(carText);
 	//origin must ignore all transformation applied to the texture!!
-	sprite->setOrigin(size.x/ 2.0f, size.y/ 2.0f); 
+	sprite->setOrigin(size.x / 2.0f, size.y / 2.0f);
 
 	//resizing texture, only comparing length
 	auto scale = sf::Vector2f(c_car_length / size.y, c_car_length / size.y);
@@ -112,6 +78,11 @@ Entity * EntityFactory::CreatePlayer1V2(sf::Vector2f startPos, float startRotInD
 	auto collision = new VariableCollisionComponent(startPos, 0.0f, corners);
 
 	return new Entity(startPos, startRotInDeg, inputCom, physics, graphics, collision);
+}
+
+Entity * EntityFactory::CreateParticle(float alphaChangeRate)
+{
+	return new Entity(sf::Vector2f(50, 500), 0, nullptr, new ParticlePhysicsComponent(), new ParticleGraphicsComponent(alphaChangeRate), nullptr);
 }
 
 

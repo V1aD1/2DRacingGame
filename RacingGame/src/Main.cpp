@@ -56,7 +56,7 @@ bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText, sf::Text
 		return false;
 	}
 
-	if (!car2Text.loadFromFile("Resources/textures/Topdown_vehicle_sprites_pack/Audi.png")) {
+	if (!car2Text.loadFromFile("Resources/textures/Topdown_vehicle_sprites_pack/Mini_truck.png", sf::IntRect(72, 35, 91, 203))) {
 		std::cout << "Problems opening car 2 texture!" << std::endl;
 		return false;
 	}
@@ -95,14 +95,11 @@ int main()
 	}
 
 	EventHandler eventHandler = EventHandler();
-	//auto player1 = EntityFactory::CreatePlayer1(sf::Vector2f(40.0f, 50.0f));
 
-	auto player1 = EntityFactory::CreatePlayer1V2(sf::Vector2f(40.0f, 50.0f), 90.0f, car1Text);
-	
-	auto player2 = EntityFactory::CreatePlayer2(sf::Vector2f(40.0f, 90.0f));
+	auto player1 = EntityFactory::CreatePlayer1(sf::Vector2f(40.0f, 50.0f), 90.0f, car1Text);	
+	auto player2 = EntityFactory::CreatePlayer2(sf::Vector2f(40.0f, 90.0f), 90.0f, car2Text);
 	auto square = EntityFactory::CreateSquare(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f);
 	auto emitter = ParticleEmitter();
-
 
 	G_VARIABLEOBJECTS.push_back(player1);
 	G_VARIABLEOBJECTS.push_back(player2);
