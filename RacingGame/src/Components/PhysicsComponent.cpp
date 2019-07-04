@@ -202,6 +202,7 @@ void PhysicsComponent::DBG_Slide(Entity& entity, const sf::Vector2f & dir, float
 {
 }
 
+//by default, an entity is non-kinematic
 sf::Vector2f PhysicsComponent::HandleCollision(sf::Vector2f otherEntityVelocity)
 {
 	return sf::Vector2f();

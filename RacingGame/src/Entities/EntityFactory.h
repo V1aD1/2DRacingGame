@@ -12,8 +12,9 @@ public:
 	static Entity* CreatePlayer1(sf::Vector2f startPos, float startRotInDeg, sf::Texture& carText);
 	static Entity* CreatePlayer2(sf::Vector2f startPos, float startRotInDeg, sf::Texture& carText);
 	static Entity* CreateParticle(float alphaReductionRate);
+	static Entity* CreateTerrain(float sideLen, sf::Vector2f startPos, sf::Vector2f scale);
 
-	static Entity* DBG_CreateSquare(float sideLen, sf::Vector2f pos, float startRotInDeg);
+	static Entity* DBG_CreateSquare(float sideLen, sf::Vector2f startPos, float startRotInDeg);
 
 private:
 	static Entity* CreateCar(sf::Vector2f startPos, float startRotInDeg, sf::Texture& carText, InputComponent* inputCom);

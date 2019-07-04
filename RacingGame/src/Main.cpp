@@ -51,7 +51,7 @@ sf::Texture& LoadTexture(std::string path, sf::IntRect intRect) {
 
 	textToLoad->setSmooth(true);
 
-	if (textToLoad->loadFromFile(path, intRect))
+	if (!textToLoad->loadFromFile(path, intRect))
 		std::cout << "Problems opening texture located at path" << path << "!" << std::endl;
 
 	return *textToLoad;
@@ -108,8 +108,19 @@ int main()
 	sf::Texture shrubText = LoadTexture("Resources/textures/Props/shrub.png");
 
 	EventHandler eventHandler = EventHandler();
+	
+	//important for terrain to be divided into squares
+	/*float terrainLen = 100;
+	for (int i = 0; (i + 1) * terrainLen < screenLen; i++) {
+		for (int j = 0; (j + 1) * terrainLen < screenHeight; j++) {
+			auto grassTerrain = EntityFactory::CreateTerrain(100, sf::Vector2f(i * terrainLen + terrainLen / 2, j * terrainLen + terrainLen / 2), sf::Vector2f(1, 1));
+			G_STATICOBJECTS.push_back(grassTerrain);
+		}
+	}*/
 
-	//auto square = EntityFactory::DBG_CreateSquare(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f);
+	auto grassTerrain = EntityFactory::CreateTerrain(100, sf::Vector2f(300, 300), sf::Vector2f(1, 1));
+	G_STATICOBJECTS.push_back(grassTerrain);
+	
 	auto square = EntityFactory::CreateStaticCollisionObject(sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f, sf::Vector2f(0.5, 0.5), boxText);
 	auto shrub = EntityFactory::CreateDecorativeObject(sf::Vector2f(100, 100), 0, sf::Vector2f(1, 1), shrubText);
 	auto player1 = EntityFactory::CreatePlayer1(sf::Vector2f(40.0f, 50.0f), 90.0f, car1Text);	

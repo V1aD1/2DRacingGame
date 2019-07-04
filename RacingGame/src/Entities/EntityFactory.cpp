@@ -20,7 +20,7 @@ const float EntityFactory::c_car_length = 40.0f;
 const float EntityFactory::c_car_width = 10.0f;
 
 
-Entity* EntityFactory::DBG_CreateSquare(float sideLen, sf::Vector2f pos, float startRotInDeg) {
+Entity* EntityFactory::DBG_CreateSquare(float sideLen, sf::Vector2f startPos, float startRotInDeg) {
 	float halfSideLen = sideLen / 2;
 
 	sf::Shape* shape = new sf::RectangleShape(sf::Vector2f(sideLen, sideLen));
@@ -28,8 +28,6 @@ Entity* EntityFactory::DBG_CreateSquare(float sideLen, sf::Vector2f pos, float s
 	shape->setFillColor(sf::Color::Red);
 
 	std::vector<sf::Vector2f> localCorners;
-	std::vector<sf::Vector2f> worldCorners;
-
 
 	localCorners.push_back(sf::Vector2f(-halfSideLen, -halfSideLen));
 	localCorners.push_back(sf::Vector2f(halfSideLen, -halfSideLen));
@@ -37,9 +35,9 @@ Entity* EntityFactory::DBG_CreateSquare(float sideLen, sf::Vector2f pos, float s
 	localCorners.push_back(sf::Vector2f(-halfSideLen, halfSideLen));
 
 	auto graphics = new ShapeGraphicsComponent(shape);
-	auto collision = new StaticCollisionComponent(pos, MathCommon::DegreesToRadians(startRotInDeg), localCorners);
+	auto collision = new StaticCollisionComponent(startPos, MathCommon::DegreesToRadians(startRotInDeg), localCorners);
 
-	return new Entity(pos, startRotInDeg, nullptr, nullptr, graphics, collision);
+	return new Entity(startPos, startRotInDeg, nullptr, nullptr, graphics, collision);
 }
 
 Entity* EntityFactory::CreateStaticCollisionObject(sf::Vector2f startPos, float startRotInDeg, sf::Vector2f scale, sf::Texture& text)
@@ -132,6 +130,29 @@ Entity* EntityFactory::CreateCar(sf::Vector2f startPos, float startRotInDeg, sf:
 Entity * EntityFactory::CreateParticle(float alphaChangeRate)
 {
 	return new Entity(sf::Vector2f(50, 500), 0, nullptr, new ParticlePhysicsComponent(), new ParticleGraphicsComponent(alphaChangeRate), nullptr);
+}
+
+Entity * EntityFactory::CreateTerrain(float sideLen, sf::Vector2f startPos, sf::Vector2f scale)
+{
+	float halfSideLen = sideLen / 2;
+
+	sf::Shape* shape = new sf::RectangleShape(sf::Vector2f(sideLen, sideLen));
+	shape->setOrigin(halfSideLen, halfSideLen);
+	shape->setFillColor(sf::Color(86, 176, 0));
+
+	std::vector<sf::Vector2f> localCorners;
+
+	localCorners.push_back(sf::Vector2f(-halfSideLen, -halfSideLen));
+	localCorners.push_back(sf::Vector2f(halfSideLen, -halfSideLen));
+	localCorners.push_back(sf::Vector2f(halfSideLen, halfSideLen));
+	localCorners.push_back(sf::Vector2f(-halfSideLen, halfSideLen));
+
+	//default physics component is non-kinematic by default
+	auto physics = new PhysicsComponent(startPos, 0, localCorners, 0, 0, 0, 0);
+	auto graphics = new ShapeGraphicsComponent(shape);
+	auto collision = new StaticCollisionComponent(startPos, MathCommon::DegreesToRadians(0), localCorners);
+
+	return new Entity(startPos, 0, nullptr, physics, graphics, collision);
 }
 
 
