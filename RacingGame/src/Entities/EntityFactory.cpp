@@ -21,7 +21,7 @@ const float EntityFactory::c_car_length = 40.0f;
 const float EntityFactory::c_car_width = 10.0f;
 
 
-Entity* EntityFactory::CreateSquare(float sideLen, sf::Vector2f pos, float rotDeg) {
+Entity* EntityFactory::CreateSquare(float sideLen, sf::Vector2f pos, float startRotInDeg) {
 	float halfSideLen = sideLen / 2;
 
 	sf::Shape* shape = new sf::RectangleShape(sf::Vector2f(sideLen, sideLen));
@@ -38,9 +38,40 @@ Entity* EntityFactory::CreateSquare(float sideLen, sf::Vector2f pos, float rotDe
 	localCorners.push_back(sf::Vector2f(-halfSideLen, halfSideLen));
 
 	auto graphics = new SquareGraphicsComponent(shape);
-	auto collision = new StaticCollisionComponent(pos, MathCommon::DegreesToRadians(rotDeg), localCorners);
+	auto collision = new StaticCollisionComponent(pos, MathCommon::DegreesToRadians(startRotInDeg), localCorners);
 
-	return new Entity(pos, rotDeg, nullptr, nullptr, graphics, collision);
+	return new Entity(pos, startRotInDeg, nullptr, nullptr, graphics, collision);
+}
+
+Entity* EntityFactory::CreateStaticCollisionObject(sf::Vector2f startPos, float startRotInDeg, sf::Vector2f scale, sf::Texture& text)
+{
+	auto size = text.getSize();
+
+	//create shape for graphics component
+	sf::Sprite* sprite = new sf::Sprite(text);
+	//origin must ignore all transformation applied to the texture!!
+	sprite->setOrigin(size.x / 2.0f, size.y / 2.0f);
+
+	sprite->setScale(scale);
+
+	//create corners for physics component
+	std::vector<sf::Vector2f> localCorners = std::vector<sf::Vector2f>();
+	localCorners.push_back(sf::Vector2f(-(size.x * scale.x / 2.0f), -(size.y * scale.y / 2.0f)));
+	localCorners.push_back(sf::Vector2f(size.x * scale.x / 2.0f, -(size.y * scale.y / 2.0f)));
+	localCorners.push_back(sf::Vector2f(size.x * scale.x / 2.0f, size.y * scale.y / 2.0f));
+	localCorners.push_back(sf::Vector2f(-(size.x * scale.x / 2.0f), size.y * scale.y / 2.0f));
+
+	//todo use TextureGraphicsComponent or something
+	auto graphics = new CarGraphicsComponentV2(sprite);
+	auto collision = new StaticCollisionComponent(startPos, MathCommon::DegreesToRadians(startRotInDeg), localCorners);
+
+	return new Entity(startPos, startRotInDeg, nullptr, nullptr, graphics, collision);
+}
+
+//todo
+Entity * EntityFactory::CreateDecorativeObject(sf::Vector2f startPos, float startRotInDeg, sf::Vector2f scale, sf::Texture & text)
+{
+	return nullptr;
 }
 
 Entity* EntityFactory::CreatePlayer1(sf::Vector2f startPos, float startRotInDeg, sf::Texture& carText)

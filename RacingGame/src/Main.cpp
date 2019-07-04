@@ -35,8 +35,30 @@ void PerfTest(sf::RenderWindow& window, EventHandler& eventHandler) {
 	Timer("Perf Task");
 }
 
+sf::Texture& LoadTexture(std::string path) {
+	sf::Texture* textToLoad = new sf::Texture();
+	
+	textToLoad->setSmooth(true);
+	
+	if(textToLoad->loadFromFile(path))
+		std::cout << "Problems opening texture located at path" << path << "!" << std::endl;
+
+	return *textToLoad;
+}
+
+sf::Texture& LoadTexture(std::string path, sf::IntRect intRect) {
+	sf::Texture* textToLoad = new sf::Texture();
+
+	textToLoad->setSmooth(true);
+
+	if (textToLoad->loadFromFile(path, intRect))
+		std::cout << "Problems opening texture located at path" << path << "!" << std::endl;
+
+	return *textToLoad;
+}
+
 //todo pass an intRect for every texture to read
-bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText, sf::Texture& car1Text, sf::Texture& car2Text) {
+bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText) {
 	Timer("Setup Function");
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
@@ -50,19 +72,6 @@ bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText, sf::Text
 		std::cout << "Problems opening font file!" << std::endl;
 		return false;
 	}
-
-	if (!car1Text.loadFromFile("Resources/textures/Topdown_vehicle_sprites_pack/Car.png", sf::IntRect(90, 23, 77, 207))) {
-		std::cout << "Problems opening car 1 texture!" << std::endl;
-		return false;
-	}
-
-	if (!car2Text.loadFromFile("Resources/textures/Topdown_vehicle_sprites_pack/Mini_truck.png", sf::IntRect(72, 35, 91, 203))) {
-		std::cout << "Problems opening car 2 texture!" << std::endl;
-		return false;
-	}
-
-	car1Text.setSmooth(true);
-	car2Text.setSmooth(true);
 
 	fpsText.setFont(font);
 	fpsText.setCharacterSize(24);
@@ -78,7 +87,6 @@ int main()
 	sf::RenderWindow window;
 	sf::Text fpsText;
 	sf::Font font;
-	sf::Texture car1Text, car2Text;
 	sf::Clock clock;
 	sf::Int32 timeSinceLastFpsLog = fpsRefreshMs;
 
@@ -89,16 +97,21 @@ int main()
 		}
 	}*/
 
-	if (!Setup(window, font, fpsText, car1Text, car2Text)) {
+	if (!Setup(window, font, fpsText)) {
 		std::cout << "Problems encountered in setup, terminating program!" << std::endl;
 		return 0;
 	}
+
+	sf::Texture car1Text = LoadTexture("Resources/textures/Topdown_vehicle_sprites_pack/Car.png", sf::IntRect(90, 23, 77, 207));
+	sf::Texture car2Text = LoadTexture("Resources/textures/Topdown_vehicle_sprites_pack/Mini_truck.png", sf::IntRect(72, 35, 91, 203));
+	sf::Texture boxText = LoadTexture("Resources/textures/Props/RTS_Crate.png");
 
 	EventHandler eventHandler = EventHandler();
 
 	auto player1 = EntityFactory::CreatePlayer1(sf::Vector2f(40.0f, 50.0f), 90.0f, car1Text);	
 	auto player2 = EntityFactory::CreatePlayer2(sf::Vector2f(40.0f, 90.0f), 90.0f, car2Text);
-	auto square = EntityFactory::CreateSquare(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f);
+	//auto square = EntityFactory::CreateSquare(250, sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f);
+	auto square = EntityFactory::CreateStaticCollisionObject(sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f, sf::Vector2f(0.5, 0.5), boxText);
 	auto emitter = ParticleEmitter();
 
 	G_VARIABLEOBJECTS.push_back(player1);
