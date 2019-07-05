@@ -133,7 +133,7 @@ Entity * EntityFactory::CreateParticle(float alphaChangeRate)
 	return new Entity(sf::Vector2f(50, 500), 0, nullptr, new ParticlePhysicsComponent(), new ParticleGraphicsComponent(alphaChangeRate), nullptr);
 }
 
-Entity * EntityFactory::CreateTerrain(float sideLen, sf::Vector2f startPos, sf::Vector2f scale)
+Entity * EntityFactory::CreateGrassTerrain(float sideLen, sf::Vector2f startPos, sf::Vector2f scale)
 {
 	float halfSideLen = sideLen / 2;
 
@@ -150,6 +150,29 @@ Entity * EntityFactory::CreateTerrain(float sideLen, sf::Vector2f startPos, sf::
 
 	//default physics component is non-kinematic by default
 	auto physics = new TerrainPhysicsComponent(startPos, localCorners, 0.1f);
+	auto graphics = new ShapeGraphicsComponent(shape);
+	auto collision = new StaticCollisionComponent(startPos, MathCommon::DegreesToRadians(0), localCorners);
+
+	return new Entity(startPos, 0, nullptr, physics, graphics, collision);
+}
+
+Entity * EntityFactory::CreateDirtTerrain(float sideLen, sf::Vector2f startPos, sf::Vector2f scale)
+{
+	float halfSideLen = sideLen / 2;
+
+	sf::Shape* shape = new sf::RectangleShape(sf::Vector2f(sideLen, sideLen));
+	shape->setOrigin(halfSideLen, halfSideLen);
+	shape->setFillColor(sf::Color(160, 82, 45));
+
+	std::vector<sf::Vector2f> localCorners;
+
+	localCorners.push_back(sf::Vector2f(-halfSideLen, -halfSideLen));
+	localCorners.push_back(sf::Vector2f(halfSideLen, -halfSideLen));
+	localCorners.push_back(sf::Vector2f(halfSideLen, halfSideLen));
+	localCorners.push_back(sf::Vector2f(-halfSideLen, halfSideLen));
+
+	//default physics component is non-kinematic by default
+	auto physics = new TerrainPhysicsComponent(startPos, localCorners, 0.0f);
 	auto graphics = new ShapeGraphicsComponent(shape);
 	auto collision = new StaticCollisionComponent(startPos, MathCommon::DegreesToRadians(0), localCorners);
 

@@ -113,12 +113,12 @@ int main()
 	float terrainLen = 100;
 	for (int i = 4; (i + 1) * terrainLen < screenLen; i++) {
 		for (int j = 4; (j + 1) * terrainLen < screenHeight; j++) {
-			auto grassTerrain = EntityFactory::CreateTerrain(100, sf::Vector2f(i * terrainLen + terrainLen / 2, j * terrainLen + terrainLen / 2), sf::Vector2f(1, 1));
+			auto grassTerrain = EntityFactory::CreateGrassTerrain(100, sf::Vector2f(i * terrainLen + terrainLen / 2, j * terrainLen + terrainLen / 2), sf::Vector2f(1, 1));
 			G_STATICOBJECTS.push_back(grassTerrain);
 		}
 	}
 
-	auto grassTerrain = EntityFactory::CreateTerrain(100, sf::Vector2f(300, 300), sf::Vector2f(1, 1));
+	auto grassTerrain = EntityFactory::CreateDirtTerrain(100, sf::Vector2f(300, 300), sf::Vector2f(1, 1));
 	G_STATICOBJECTS.push_back(grassTerrain);
 	
 	auto square = EntityFactory::CreateStaticCollisionObject(sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f, sf::Vector2f(0.5, 0.5), boxText);
