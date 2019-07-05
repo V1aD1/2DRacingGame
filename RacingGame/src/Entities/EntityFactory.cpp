@@ -5,6 +5,7 @@
 
 #include "Car/CarPhysicsComponent.h"
 #include "Particle/ParticlePhysicsComponent.h"
+#include "Terrain/TerrainPhysicsComponent.h"
 
 #include "Car/InputComponentP1.h"
 #include "Car/InputComponentP2.h"
@@ -148,7 +149,7 @@ Entity * EntityFactory::CreateTerrain(float sideLen, sf::Vector2f startPos, sf::
 	localCorners.push_back(sf::Vector2f(-halfSideLen, halfSideLen));
 
 	//default physics component is non-kinematic by default
-	auto physics = new PhysicsComponent(startPos, 0, localCorners, 0, 0, 0, 0);
+	auto physics = new TerrainPhysicsComponent(startPos, localCorners);
 	auto graphics = new ShapeGraphicsComponent(shape);
 	auto collision = new StaticCollisionComponent(startPos, MathCommon::DegreesToRadians(0), localCorners);
 

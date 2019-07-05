@@ -172,6 +172,7 @@
     <ClCompile Include="src\Other\WorldSpaceManager.cpp" />
     <ClCompile Include="src\Components\StaticCollisionComponent.cpp" />
     <ClCompile Include="src\Components\VariableCollisionComponent.cpp" />
+    <ClCompile Include="src\Entities\Terrain\TerrainPhysicsComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Components\ShapeGraphicsComponent.h" />
@@ -195,6 +196,7 @@
     <ClInclude Include="src\Other\WorldSpaceManager.h" />
     <ClInclude Include="src\Components\StaticCollisionComponent.h" />
     <ClInclude Include="src\Components\VariableCollisionComponent.h" />
+    <ClInclude Include="src\Entities\Terrain\TerrainPhysicsComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
