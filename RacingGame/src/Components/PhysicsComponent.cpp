@@ -22,6 +22,7 @@ PhysicsComponent::PhysicsComponent(sf::Vector2f pos,
 	m_rotationSpeed = rotSpeed;
 	m_acceleration = acceleration;
 	m_frictionDeceleration = frictionDeceleration;
+	m_currFrictionDeceleration = m_frictionDeceleration;
 }
 
 PhysicsComponent::~PhysicsComponent() {}
@@ -100,7 +101,7 @@ void PhysicsComponent::Decelerate(float dtTimeMilli)
 }
 
 void PhysicsComponent::ApplyFriction(float dtTimeMilli) {
-	SlowDown(m_frictionDeceleration, dtTimeMilli);
+	SlowDown(m_currFrictionDeceleration, dtTimeMilli);
 }
 
 void PhysicsComponent::Brake(Entity& entity, float dtTimeMilli)
@@ -179,6 +180,11 @@ void PhysicsComponent::SetAcceleration(float newAcc)
 	m_acceleration = newAcc;
 }
 
+void PhysicsComponent::AddToCurrFriction(float amount)
+{
+	m_currFrictionDeceleration += amount;
+}
+
 void PhysicsComponent::SetRandomness(int newRand)
 {
 	;
@@ -196,6 +202,10 @@ void PhysicsComponent::Update(Entity& entity, float dtMilli)
 {
 	entity.SetPosition(m_currState.GetWorldPosition());
 	entity.SetRotation(MathCommon::RadiansToDegrees(m_currState.GetRotInRad()));
+
+	//resetting the value of the current friction, 
+	//so that it resets to default if leaving a terrain
+	m_currFrictionDeceleration = m_frictionDeceleration;
 }
 
 void PhysicsComponent::DBG_Slide(Entity& entity, const sf::Vector2f & dir, float dtMilli)
@@ -203,7 +213,7 @@ void PhysicsComponent::DBG_Slide(Entity& entity, const sf::Vector2f & dir, float
 }
 
 //by default, an entity is non-kinematic
-sf::Vector2f PhysicsComponent::HandleCollision(sf::Vector2f otherEntityVelocity)
+sf::Vector2f PhysicsComponent::HandleCollision(sf::Vector2f otherEntityVelocity, Entity& otherEntity)
 {
 	return sf::Vector2f();
 }

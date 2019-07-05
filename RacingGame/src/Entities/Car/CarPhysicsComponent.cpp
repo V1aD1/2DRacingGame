@@ -69,7 +69,7 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 	if(collisionEntity != nullptr){
 
 		//alert other entity of collision
-		auto absorbedVel = collisionEntity->HandleCollision(m_newState.GetVelocity());
+		auto absorbedVel = collisionEntity->HandleCollision(m_newState.GetVelocity(), entity);
 
 		//if collision occurs with a kinematic object 
 		//then halt all velocity on the car and do NOT apply new state
@@ -125,7 +125,7 @@ void CarPhysicsComponent::DBG_Slide(Entity& entity, const sf::Vector2f& dir, flo
 	m_newState.Update(dtMilli, car_maxVel);
 }
 
-sf::Vector2f CarPhysicsComponent::HandleCollision(sf::Vector2f otherEntityVel)
+sf::Vector2f CarPhysicsComponent::HandleCollision(sf::Vector2f otherEntityVel, Entity& otherEntity)
 {
 	auto absorbedVel = otherEntityVel / 2.0f;
 	m_newState.ApplyVelocity(absorbedVel);

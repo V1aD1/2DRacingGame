@@ -27,7 +27,7 @@ public:
 	void Update(Entity& entity, float dtMilli) override;
 	void Brake(Entity& entity, float dtTimeMilli) override;
 	void DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli) override;
-	sf::Vector2f HandleCollision(sf::Vector2f otherEntityVel) override;
+	sf::Vector2f HandleCollision(sf::Vector2f otherEntityVel, Entity& otherEntity) override;
 	void Rotate(float dtTimeMilli, bool left) override;
 	void SetBrakingFlag(bool newFlag) override;
 	void SetReversingFlag(bool newFlag) override;

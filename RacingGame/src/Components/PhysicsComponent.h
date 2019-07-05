@@ -32,13 +32,14 @@ public:
 	void SetPosition(sf::Vector2f newPos);
 	void SetRotation(float newRotInRad);
 	void SetAcceleration(float newAcc);
+	void AddToCurrFriction(float amount);
 	virtual void SetRandomness(int newRand);
 	virtual void SetBrakingFlag(bool newFlag);
 	virtual void SetReversingFlag(bool newFlag);
 
 	virtual void Update(Entity& entity, float dtMilli);
 	virtual void DBG_Slide(Entity& entity, const sf::Vector2f& dir, float dtMilli);
-	virtual sf::Vector2f HandleCollision(sf::Vector2f otherEntityVelocity);
+	virtual sf::Vector2f HandleCollision(sf::Vector2f otherEntityVelocity, Entity& otherEntity);
 
 	const std::vector<sf::Vector2i>& GetCollisionSpaceCoords() const;
 	const std::vector<sf::Vector2i>& GetPrevCollisionSpaceCoords() const;
@@ -61,6 +62,7 @@ protected:
 	float m_rotationSpeed;
 	float m_acceleration;
 	float m_frictionDeceleration;
+	float m_currFrictionDeceleration;
 	float m_dbg_slideSpeed = 150.0f;
 };
 

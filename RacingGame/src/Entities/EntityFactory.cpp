@@ -149,7 +149,7 @@ Entity * EntityFactory::CreateTerrain(float sideLen, sf::Vector2f startPos, sf::
 	localCorners.push_back(sf::Vector2f(-halfSideLen, halfSideLen));
 
 	//default physics component is non-kinematic by default
-	auto physics = new TerrainPhysicsComponent(startPos, localCorners);
+	auto physics = new TerrainPhysicsComponent(startPos, localCorners, 1.0f);
 	auto graphics = new ShapeGraphicsComponent(shape);
 	auto collision = new StaticCollisionComponent(startPos, MathCommon::DegreesToRadians(0), localCorners);
 
