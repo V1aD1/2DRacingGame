@@ -202,10 +202,6 @@ void PhysicsComponent::Update(Entity& entity, float dtMilli)
 {
 	entity.SetPosition(m_currState.GetWorldPosition());
 	entity.SetRotation(MathCommon::RadiansToDegrees(m_currState.GetRotInRad()));
-
-	//resetting the value of the current friction, 
-	//so that it resets to default if leaving a terrain
-	m_currFrictionDeceleration = m_frictionDeceleration;
 }
 
 void PhysicsComponent::DBG_Slide(Entity& entity, const sf::Vector2f & dir, float dtMilli)

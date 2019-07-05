@@ -5,7 +5,7 @@
 #include "../../Other/MathCommon.h"
 #include "../Particle/ParticleEmitter.h"
 
-//todo make rot speed fast if braking, slow otherwise
+//todo make rot speed be based on speed and whether braking
 const float CarPhysicsComponent::car_rotationSpeed = 180.0f;
 const float CarPhysicsComponent::car_acceleration = 0.25f;
 const float CarPhysicsComponent::car_frictionForce = 0.1f;
@@ -36,6 +36,10 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 {
 	m_prevState = m_currState;
 	ApplyFriction(dtMilli);
+
+	//resetting the value of the current friction, 
+	//so that it resets to default if leaving a terrain
+	m_currFrictionDeceleration = m_frictionDeceleration;
 
 	//determining if moving forward or backward
 	bool movingForward = false, movingBackward = false;

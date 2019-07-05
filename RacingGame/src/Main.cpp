@@ -110,13 +110,13 @@ int main()
 	EventHandler eventHandler = EventHandler();
 	
 	//important for terrain to be divided into squares
-	/*float terrainLen = 100;
-	for (int i = 0; (i + 1) * terrainLen < screenLen; i++) {
-		for (int j = 0; (j + 1) * terrainLen < screenHeight; j++) {
+	float terrainLen = 100;
+	for (int i = 4; (i + 1) * terrainLen < screenLen; i++) {
+		for (int j = 4; (j + 1) * terrainLen < screenHeight; j++) {
 			auto grassTerrain = EntityFactory::CreateTerrain(100, sf::Vector2f(i * terrainLen + terrainLen / 2, j * terrainLen + terrainLen / 2), sf::Vector2f(1, 1));
 			G_STATICOBJECTS.push_back(grassTerrain);
 		}
-	}*/
+	}
 
 	auto grassTerrain = EntityFactory::CreateTerrain(100, sf::Vector2f(300, 300), sf::Vector2f(1, 1));
 	G_STATICOBJECTS.push_back(grassTerrain);
