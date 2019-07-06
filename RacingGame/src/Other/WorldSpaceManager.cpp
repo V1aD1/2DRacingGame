@@ -188,13 +188,28 @@ void WorldSpaceManager::ClearVariableEntities() {
 	}
 }
 
-void WorldSpaceManager::DBG_Draw(sf::RenderWindow& window) const
+void WorldSpaceManager::DBG_Draw(sf::RenderWindow& window)
 {
 	for (int i = 0; i < 10; i++)
 	{
 		for (int j = 0; j < 10; j++) {
 			if (!worldSpace[i][j].empty())
-			{				
+			{		
+				auto color = cells[i][j].getFillColor();
+
+				if(worldSpace[i][j].size() == 1)
+					color.a = 50;		
+				
+				else if (worldSpace[i][j].size() == 2)
+					color.a = 75;
+
+				else if (worldSpace[i][j].size() == 3)
+					color.a = 100;
+
+				else if (worldSpace[i][j].size() > 3)
+					color.a = 150;
+
+				cells[i][j].setFillColor(color);
 				window.draw(cells[i][j]);
 			}
 		}

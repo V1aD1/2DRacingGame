@@ -26,7 +26,7 @@ public:
 	std::vector<Entity*> GetEntitiesAtCoords(const std::vector<sf::Vector2i>& coords) const;
 	void ClearWorldSpace();
 	void ClearVariableEntities();
-	void DBG_Draw(sf::RenderWindow& window) const;
+	void DBG_Draw(sf::RenderWindow& window);
 
 private:
 	template <typename T>
