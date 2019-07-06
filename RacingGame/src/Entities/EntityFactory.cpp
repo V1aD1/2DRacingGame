@@ -179,6 +179,29 @@ Entity * EntityFactory::CreateDirtTerrain(float sideLen, sf::Vector2f startPos, 
 	return new Entity(startPos, 0, nullptr, physics, graphics, collision);
 }
 
+Entity * EntityFactory::CreateRoadTerrain(float sideLen, sf::Vector2f startPos, sf::Vector2f scale)
+{
+	float halfSideLen = sideLen / 2;
+
+	sf::Shape* shape = new sf::RectangleShape(sf::Vector2f(sideLen, sideLen));
+	shape->setOrigin(halfSideLen, halfSideLen);
+	shape->setFillColor(sf::Color(128, 128, 128));
+
+	std::vector<sf::Vector2f> localCorners;
+
+	localCorners.push_back(sf::Vector2f(-halfSideLen, -halfSideLen));
+	localCorners.push_back(sf::Vector2f(halfSideLen, -halfSideLen));
+	localCorners.push_back(sf::Vector2f(halfSideLen, halfSideLen));
+	localCorners.push_back(sf::Vector2f(-halfSideLen, halfSideLen));
+
+	//default physics component is non-kinematic by default
+	auto physics = new TerrainPhysicsComponent(startPos, localCorners, 0.0f, CarPhysicsComponent::car_maxSpeed);
+	auto graphics = new ShapeGraphicsComponent(shape);
+	auto collision = new StaticCollisionComponent(startPos, MathCommon::DegreesToRadians(0), localCorners);
+
+	return new Entity(startPos, 0, nullptr, physics, graphics, collision);
+}
+
 
 
 

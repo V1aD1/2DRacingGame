@@ -14,6 +14,7 @@ public:
 	static Entity* CreateParticle(float alphaReductionRate);
 	static Entity* CreateGrassTerrain(float sideLen, sf::Vector2f startPos, sf::Vector2f scale);
 	static Entity* CreateDirtTerrain(float sideLen, sf::Vector2f startPos, sf::Vector2f scale);
+	static Entity* CreateRoadTerrain(float sideLen, sf::Vector2f startPos, sf::Vector2f scale);
 
 	static Entity* DBG_CreateSquare(float sideLen, sf::Vector2f startPos, float startRotInDeg);
 

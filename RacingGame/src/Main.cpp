@@ -110,6 +110,8 @@ int main()
 	EventHandler eventHandler = EventHandler();
 	
 	//important for terrain to be divided into squares
+	//important for terrain to be added in a specific order, 
+	//so that terrain ranking can be maintained (grass > dirt > road)
 	float terrainLen = 100;
 	for (int i = 4; (i + 1) * terrainLen < screenLen; i++) {
 		for (int j = 4; (j + 1) * terrainLen < screenHeight; j++) {
@@ -118,8 +120,8 @@ int main()
 		}
 	}
 
-	auto grassTerrain = EntityFactory::CreateDirtTerrain(100, sf::Vector2f(300, 300), sf::Vector2f(1, 1));
-	G_STATICOBJECTS.push_back(grassTerrain);
+	auto dirtTerrain = EntityFactory::CreateRoadTerrain(100, sf::Vector2f(300, 300), sf::Vector2f(1, 1));
+	G_STATICOBJECTS.push_back(dirtTerrain);
 	
 	auto square = EntityFactory::CreateStaticCollisionObject(sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f, sf::Vector2f(0.5, 0.5), boxText);
 	auto shrub = EntityFactory::CreateDecorativeObject(sf::Vector2f(100, 100), 0, sf::Vector2f(1, 1), shrubText);
