@@ -18,7 +18,7 @@ sf::Vector2f TerrainPhysicsComponent::HandleCollision(sf::Vector2f otherEntityVe
 	//change the friction coeficient of the entity here
 	if (otherEntity.m_physics)
 	{
-		otherEntity.m_physics->AddToCurrFriction(m_frictionCoefficient);
+		otherEntity.m_physics->SetCurrFriction(m_frictionCoefficient);
 		otherEntity.m_physics->SetMaxSpeed(m_newMaxSpeed);
 	}
 

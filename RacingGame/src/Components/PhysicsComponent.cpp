@@ -213,9 +213,9 @@ void PhysicsComponent::SetAcceleration(float newAcc)
 	m_acceleration = newAcc;
 }
 
-void PhysicsComponent::AddToCurrFriction(float amount)
+void PhysicsComponent::SetCurrFriction(float newFric)
 {
-	m_currFrictionDeceleration += amount;
+	m_currFrictionDeceleration = newFric;
 }
 
 void PhysicsComponent::SetRandomness(int newRand)

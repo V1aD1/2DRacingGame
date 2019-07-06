@@ -33,7 +33,7 @@ public:
 	void SetPosition(sf::Vector2f newPos);
 	void SetRotation(float newRotInRad);
 	void SetAcceleration(float newAcc);
-	void AddToCurrFriction(float amount);
+	void SetCurrFriction(float newFric);
 	virtual void SetRandomness(int newRand);
 	virtual void SetBrakingFlag(bool newFlag);
 	virtual void SetReversingFlag(bool newFlag);

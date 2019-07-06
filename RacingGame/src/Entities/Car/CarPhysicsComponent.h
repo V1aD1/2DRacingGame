@@ -5,11 +5,11 @@ class CarPhysicsComponent :public PhysicsComponent
 {
 public:
 	static const float car_maxSpeed;
+	static const float car_frictionForce;
 
 private:
 	static const float car_rotationSpeed;
 	static const float car_acceleration;
-	static const float car_frictionForce;
 	static const float car_brakeDeceleration;
 	static const float car_dbg_slideSpeed;
 	static const float car_skidEffectFrequencyMs;
