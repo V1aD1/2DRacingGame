@@ -139,29 +139,42 @@ int main()
 	}
 #pragma endregion
 
-/*#pragma region OuterDirt	
-	for (int currX = 2, currY = 2; currX < 25; currX++) {
-		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX, currY - 1), sf::Vector2f(1, 1)));
-		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX, currY + 1 + 8 + 1), sf::Vector2f(1, 1)));
+#pragma region OuterDirt
+	//top and bottom
+	for (int currX = 5, currY = 1; currX < 25; currX++) {
+		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX, currY), sf::Vector2f(1, 1)));
+		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX, currY + 11), sf::Vector2f(1, 1)));
 	}
 
-	for (int currX = 2, currY = 3; currY < 6; currY++) {
-		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX - 1, currY), sf::Vector2f(1, 1)));
-		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX + 1 + 1 + 24 + 1, currY), sf::Vector2f(1, 1)));
+	//left and right
+	for (int currX = 3, currY = 3; currY < 11; currY++) {
+		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX, currY), sf::Vector2f(1, 1)));
+		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX + 23, currY), sf::Vector2f(1, 1)));
 	}
+
+	for (int currX = 4, currY = 1; currY < 4; currY++) {
+		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX , currY), sf::Vector2f(1, 1)));
+		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX + 21, currY), sf::Vector2f(1, 1)));
+
+		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX, currY + 9), sf::Vector2f(1, 1)));
+		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX + 21, currY + 9), sf::Vector2f(1, 1)));
+	}
+
+
 #pragma endregion
 
 #pragma region InnerDirt
-	for (int currX = 2, currY = 3; currY < 6; currY++) {
-		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX + 1 + 1 + 1, currY), sf::Vector2f(1, 1)));
-		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX + 24 - 1, currY), sf::Vector2f(1, 1)));
-	}
-	
-	for (int currX = 5, currY = 4; currX < 19; currX++) {
+	for (int currX = 7, currY = 4; currX < 23; currX++) {
 		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX, currY), sf::Vector2f(1, 1)));
 		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX, currY + 5), sf::Vector2f(1, 1)));
 	}
-#pragma endregion*/
+	
+	for (int currX = 7, currY = 5; currY < 9; currY++) {
+		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX, currY), sf::Vector2f(1, 1)));
+		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX + 15, currY), sf::Vector2f(1, 1)));
+	}
+
+#pragma endregion
 
 
 	/*for (int i = 4; (i + 1) * terrainLen < screenLen; i++) {
