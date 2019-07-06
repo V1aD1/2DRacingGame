@@ -18,6 +18,7 @@
 #include "Entities/Particle/ParticleEmitter.h"
 
 static const sf::Int32 fpsRefreshMs = 500;
+static const float terrainLen = 50;
 
 //global variables
 extern const int screenLen = 1500, screenHeight = 700;
@@ -29,6 +30,10 @@ extern std::stack<Entity*> G_FREEPARTICLES;
 extern ParticleEmitter G_EMITTER;
 
 WorldSpaceManager worldSpaceManager = WorldSpaceManager();
+
+sf::Vector2f GetTerrainCoords(int x, int y) {
+	return sf::Vector2f(x * terrainLen, y * terrainLen);
+}
 
 //a function I'll be using to do performance testing
 void PerfTest(sf::RenderWindow& window, EventHandler& eventHandler) {
@@ -112,8 +117,54 @@ int main()
 	//important for terrain to be divided into squares
 	//important for terrain to be added in a specific order, 
 	//so that terrain ranking can be maintained (grass > dirt > road)
-	float terrainLen = 100;
-	for (int i = 4; (i + 1) * terrainLen < screenLen; i++) {
+	//todo read terrain mappings from a file
+	
+#pragma region Road
+	for (int currX = 5, currY = 2; currX < 25; currX++) {
+		G_STATICOBJECTS.push_back(EntityFactory::CreateRoadTerrain(terrainLen, GetTerrainCoords(currX, currY), sf::Vector2f(1, 1)));
+		G_STATICOBJECTS.push_back(EntityFactory::CreateRoadTerrain(terrainLen, GetTerrainCoords(currX, currY + 1), sf::Vector2f(1, 1)));
+
+		G_STATICOBJECTS.push_back(EntityFactory::CreateRoadTerrain(terrainLen, GetTerrainCoords(currX, currY + 8), sf::Vector2f(1, 1)));
+		G_STATICOBJECTS.push_back(EntityFactory::CreateRoadTerrain(terrainLen, GetTerrainCoords(currX, currY + 1 + 1 * 8), sf::Vector2f(1, 1)));
+	}
+
+	for (int currX = 4, currY = 4; currY < 10; currY++) {
+		G_STATICOBJECTS.push_back(EntityFactory::CreateRoadTerrain(terrainLen, GetTerrainCoords(currX, currY), sf::Vector2f(1, 1)));
+		G_STATICOBJECTS.push_back(EntityFactory::CreateRoadTerrain(terrainLen, GetTerrainCoords(currX + 1, currY), sf::Vector2f(1, 1)));
+		G_STATICOBJECTS.push_back(EntityFactory::CreateRoadTerrain(terrainLen, GetTerrainCoords(currX + 1 + 1, currY), sf::Vector2f(1, 1)));
+
+		G_STATICOBJECTS.push_back(EntityFactory::CreateRoadTerrain(terrainLen, GetTerrainCoords(currX + 19, currY), sf::Vector2f(1, 1)));
+		G_STATICOBJECTS.push_back(EntityFactory::CreateRoadTerrain(terrainLen, GetTerrainCoords(currX + 1 + 19, currY), sf::Vector2f(1, 1)));
+		G_STATICOBJECTS.push_back(EntityFactory::CreateRoadTerrain(terrainLen, GetTerrainCoords(currX + 1 + 1 + 19, currY), sf::Vector2f(1, 1)));
+	}
+#pragma endregion
+
+/*#pragma region OuterDirt	
+	for (int currX = 2, currY = 2; currX < 25; currX++) {
+		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX, currY - 1), sf::Vector2f(1, 1)));
+		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX, currY + 1 + 8 + 1), sf::Vector2f(1, 1)));
+	}
+
+	for (int currX = 2, currY = 3; currY < 6; currY++) {
+		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX - 1, currY), sf::Vector2f(1, 1)));
+		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX + 1 + 1 + 24 + 1, currY), sf::Vector2f(1, 1)));
+	}
+#pragma endregion
+
+#pragma region InnerDirt
+	for (int currX = 2, currY = 3; currY < 6; currY++) {
+		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX + 1 + 1 + 1, currY), sf::Vector2f(1, 1)));
+		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX + 24 - 1, currY), sf::Vector2f(1, 1)));
+	}
+	
+	for (int currX = 5, currY = 4; currX < 19; currX++) {
+		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX, currY), sf::Vector2f(1, 1)));
+		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX, currY + 5), sf::Vector2f(1, 1)));
+	}
+#pragma endregion*/
+
+
+	/*for (int i = 4; (i + 1) * terrainLen < screenLen; i++) {
 		for (int j = 4; (j + 1) * terrainLen < screenHeight; j++) {
 			auto grassTerrain = EntityFactory::CreateGrassTerrain(100, sf::Vector2f(i * terrainLen + terrainLen / 2, j * terrainLen + terrainLen / 2), sf::Vector2f(1, 1));
 			G_STATICOBJECTS.push_back(grassTerrain);
@@ -121,7 +172,7 @@ int main()
 	}
 
 	auto dirtTerrain = EntityFactory::CreateRoadTerrain(100, sf::Vector2f(300, 300), sf::Vector2f(1, 1));
-	G_STATICOBJECTS.push_back(dirtTerrain);
+	G_STATICOBJECTS.push_back(dirtTerrain);*/
 	
 	auto square = EntityFactory::CreateStaticCollisionObject(sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f, sf::Vector2f(0.5, 0.5), boxText);
 	auto shrub = EntityFactory::CreateDecorativeObject(sf::Vector2f(100, 100), 0, sf::Vector2f(1, 1), shrubText);
@@ -132,8 +183,8 @@ int main()
 	G_VARIABLEOBJECTS.push_back(player1);
 	G_VARIABLEOBJECTS.push_back(player2);
 	
-	G_STATICOBJECTS.push_back(square);
-	G_STATICOBJECTS.push_back(shrub);
+	//G_STATICOBJECTS.push_back(square);
+	//G_STATICOBJECTS.push_back(shrub);
 
 	worldSpaceManager.UpdateAllEntitiesInCollSpace();
 
