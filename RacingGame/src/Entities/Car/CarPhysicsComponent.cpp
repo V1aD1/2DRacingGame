@@ -10,7 +10,7 @@ const float CarPhysicsComponent::car_rotationSpeed = 180.0f;
 const float CarPhysicsComponent::car_acceleration = 0.25f;
 const float CarPhysicsComponent::car_frictionForce = 0.1f;
 const float CarPhysicsComponent::car_brakeDeceleration = 0.1f;
-const float CarPhysicsComponent::car_maxVel = 0.3f;
+const float CarPhysicsComponent::car_maxSpeed = 0.3f;
 const float CarPhysicsComponent::car_skidEffectFrequencyMs = 200.0f;
 
 ParticleEmitter G_EMITTER;
@@ -19,7 +19,7 @@ CarPhysicsComponent::CarPhysicsComponent(sf::Vector2f pos, float rotRad, const s
 	PhysicsComponent(pos,
 		rotRad,
 		cornersWithoutRotationApplied,
-		car_maxVel,
+		car_maxSpeed,
 		car_rotationSpeed,
 		car_acceleration,
 		car_frictionForce)
@@ -64,7 +64,8 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 		//if moving perpendicularly then don't realign velocity
 	}
 
-	m_newState.Update(dtMilli, car_maxVel);
+	m_newState.Update(dtMilli, m_maxSpeed);
+	m_maxSpeed = car_maxSpeed;
 
 	auto collisionInfo = DetectCollision(entity);
 	auto collisionEntity = std::get<0>(collisionInfo);
@@ -89,7 +90,7 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 				0.5f,
 				-2.0f,
 				60,
-				MathCommon::GetMagnitude(absorbedVel) / car_maxVel * 5,
+				MathCommon::GetMagnitude(absorbedVel) / car_maxSpeed * 5,
 				10);
 
 			//this is necessary to make the car recover from a collision more quickly...
@@ -126,7 +127,7 @@ void CarPhysicsComponent::DBG_Slide(Entity& entity, const sf::Vector2f& dir, flo
 	//halting all movement on the car
 	m_newState.SetVelocity(sf::Vector2f(0.0f, 0.0f));
 	m_newState.SetWorldPos(m_newState.GetWorldPosition() + dir * dtMilli / 1000.0f * m_dbg_slideSpeed);
-	m_newState.Update(dtMilli, car_maxVel);
+	m_newState.Update(dtMilli, car_maxSpeed);
 }
 
 sf::Vector2f CarPhysicsComponent::HandleCollision(sf::Vector2f otherEntityVel, Entity& otherEntity)

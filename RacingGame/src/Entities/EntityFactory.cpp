@@ -149,7 +149,7 @@ Entity * EntityFactory::CreateGrassTerrain(float sideLen, sf::Vector2f startPos,
 	localCorners.push_back(sf::Vector2f(-halfSideLen, halfSideLen));
 
 	//default physics component is non-kinematic by default
-	auto physics = new TerrainPhysicsComponent(startPos, localCorners, 0.1f);
+	auto physics = new TerrainPhysicsComponent(startPos, localCorners, 0.1f, CarPhysicsComponent::car_maxSpeed / 2);
 	auto graphics = new ShapeGraphicsComponent(shape);
 	auto collision = new StaticCollisionComponent(startPos, MathCommon::DegreesToRadians(0), localCorners);
 
@@ -172,7 +172,7 @@ Entity * EntityFactory::CreateDirtTerrain(float sideLen, sf::Vector2f startPos, 
 	localCorners.push_back(sf::Vector2f(-halfSideLen, halfSideLen));
 
 	//default physics component is non-kinematic by default
-	auto physics = new TerrainPhysicsComponent(startPos, localCorners, 0.0f);
+	auto physics = new TerrainPhysicsComponent(startPos, localCorners, 0.0f, CarPhysicsComponent::car_maxSpeed * 0.75);
 	auto graphics = new ShapeGraphicsComponent(shape);
 	auto collision = new StaticCollisionComponent(startPos, MathCommon::DegreesToRadians(0), localCorners);
 

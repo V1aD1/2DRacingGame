@@ -20,13 +20,13 @@ PhysicsState::PhysicsState(sf::Vector2f pos, float rotRad, const std::vector<sf:
 
 PhysicsState::~PhysicsState() {}
 
-void PhysicsState::Update(float dtMilli, float maxVelocity) {
+void PhysicsState::Update(float dtMilli, float maxSpeed) {
 	
 	//update world position
 	m_velocity += m_currentAcceleration * m_forwardDir * (dtMilli / 1000.0f);
 
-	if (MathCommon::GetMagnitude(m_velocity) > maxVelocity)
-		m_velocity = MathCommon::ChangeLength(m_velocity, maxVelocity);
+	if (MathCommon::GetMagnitude(m_velocity) > maxSpeed)
+		m_velocity = MathCommon::ChangeLength(m_velocity, maxSpeed);
 
 	m_worldPos = m_worldPos + m_velocity * dtMilli;
 
