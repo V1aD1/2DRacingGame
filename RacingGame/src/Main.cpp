@@ -177,6 +177,15 @@ int main()
 
 #pragma endregion
 
+#pragma region InnerGrass
+	for (int currY = 5; currY < 9; currY++) {
+		for (int currX = 8; currX < 22; currX++) {
+			G_STATICOBJECTS.push_back(EntityFactory::CreateGrassTerrain(terrainLen, GetTerrainCoords(currX, currY), sf::Vector2f(1, 1)));
+		}
+	}
+#pragma endregion
+
+
 
 	/*for (int i = 4; (i + 1) * terrainLen < screenLen; i++) {
 		for (int j = 4; (j + 1) * terrainLen < screenHeight; j++) {
@@ -195,7 +204,7 @@ int main()
 	auto emitter = ParticleEmitter();
 
 	G_VARIABLEOBJECTS.push_back(player1);
-	G_VARIABLEOBJECTS.push_back(player2);
+	//G_VARIABLEOBJECTS.push_back(player2);
 	
 	//G_STATICOBJECTS.push_back(square);
 	//G_STATICOBJECTS.push_back(shrub);
