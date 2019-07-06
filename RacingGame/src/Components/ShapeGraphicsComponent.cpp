@@ -22,7 +22,7 @@ void ShapeGraphicsComponent::Update(Entity & entity, sf::RenderWindow & window, 
 		window.draw(*m_shape);
 	}
 
-	DBG_DrawCorners(entity, window);
+	//DBG_DrawCorners(entity, window);
 }
 
 void ShapeGraphicsComponent::DBG_DrawCorners(const Entity & entity, sf::RenderWindow & window)

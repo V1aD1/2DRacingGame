@@ -32,7 +32,7 @@ extern ParticleEmitter G_EMITTER;
 WorldSpaceManager worldSpaceManager = WorldSpaceManager();
 
 sf::Vector2f GetTerrainCoords(int x, int y) {
-	return sf::Vector2f(x * terrainLen, y * terrainLen);
+	return sf::Vector2f(x * terrainLen + terrainLen/2, y * terrainLen + terrainLen/2);
 }
 
 //a function I'll be using to do performance testing
@@ -149,6 +149,7 @@ int main()
 	//left and right
 	for (int currX = 3, currY = 3; currY < 11; currY++) {
 		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX, currY), sf::Vector2f(1, 1)));
+		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX, currY), sf::Vector2f(1, 1)));
 		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX + 23, currY), sf::Vector2f(1, 1)));
 	}
 
@@ -241,7 +242,7 @@ int main()
 			//emitter.EmitCircle(sf::Vector2f(200, 400), 0.2f, 0.3f, 1.25f, 1.0f, -1.0f, 1, 90);
 		}
 
-		worldSpaceManager.DBG_Draw(window);
+		//worldSpaceManager.DBG_Draw(window);
 
 		if ((timeSinceLastFpsLog += dtMillis) > fpsRefreshMs) {
 			fpsText.setString(std::to_string(static_cast<int>(1000000.0f / dtMicros)));

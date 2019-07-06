@@ -23,7 +23,7 @@ void SpriteGraphicsComponent::Update(Entity& entity, sf::RenderWindow& window, f
 		window.draw(*m_sprite);
 	}
 
-	DBG_DrawCorners(entity, window);
+	//DBG_DrawCorners(entity, window);
 }
 
 void SpriteGraphicsComponent::DBG_DrawCorners(const Entity& entity, sf::RenderWindow& window)
