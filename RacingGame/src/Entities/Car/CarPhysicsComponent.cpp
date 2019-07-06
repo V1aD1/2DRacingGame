@@ -67,35 +67,38 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 	m_newState.Update(dtMilli, m_maxSpeed);
 	m_maxSpeed = car_maxSpeed;
 
-	auto collisionInfo = DetectCollision(entity);
-	auto collisionEntity = std::get<0>(collisionInfo);
-	auto collisionLocation = std::get<1>(collisionInfo);
+	auto collisionInfoList = DetectCollisionV2(entity);
 
-	if(collisionEntity != nullptr){
+	for (auto collisionInfo : collisionInfoList) {
+		auto collisionEntity = std::get<0>(collisionInfo);
+		auto collisionLocation = std::get<1>(collisionInfo);
 
-		//alert other entity of collision
-		auto absorbedVel = collisionEntity->HandleCollision(m_newState.GetVelocity(), entity);
+		if (collisionEntity != nullptr) {
 
-		//if collision occurs with a kinematic object 
-		//then halt all velocity on the car and do NOT apply new state
-		//otherwise apply new state
-		if (MathCommon::GetMagnitude(absorbedVel) > 0.0f) {
-			//emit collision spark
-			G_EMITTER.EmitCone(
-				collisionLocation,
-				-absorbedVel,
-				0.2f,
-				0.2f,
-				-3.0f,
-				0.5f,
-				-2.0f,
-				60,
-				MathCommon::GetMagnitude(absorbedVel) / car_maxSpeed * 5,
-				10);
+			//alert other entity of collision
+			auto absorbedVel = collisionEntity->HandleCollision(m_newState.GetVelocity(), entity);
 
-			//this is necessary to make the car recover from a collision more quickly...
-			m_newState = m_currState;
-			m_newState.SetVelocity(m_newState.GetVelocity() - absorbedVel);
+			//if collision occurs with a kinematic object 
+			//then halt all velocity on the car and do NOT apply new state
+			//otherwise apply new state
+			if (MathCommon::GetMagnitude(absorbedVel) > 0.0f) {
+				//emit collision spark
+				G_EMITTER.EmitCone(
+					collisionLocation,
+					-absorbedVel,
+					0.2f,
+					0.2f,
+					-3.0f,
+					0.5f,
+					-2.0f,
+					60,
+					MathCommon::GetMagnitude(absorbedVel) / car_maxSpeed * 5,
+					10);
+
+				//this is necessary to make the car recover from a collision more quickly...
+				m_newState = m_currState;
+				m_newState.SetVelocity(m_newState.GetVelocity() - absorbedVel);
+			}
 		}
 	}
 

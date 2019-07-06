@@ -242,7 +242,7 @@ int main()
 			//emitter.EmitCircle(sf::Vector2f(200, 400), 0.2f, 0.3f, 1.25f, 1.0f, -1.0f, 1, 90);
 		}
 
-		worldSpaceManager.DBG_Draw(window);
+		//worldSpaceManager.DBG_Draw(window);
 
 		if ((timeSinceLastFpsLog += dtMillis) > fpsRefreshMs) {
 			fpsText.setString(std::to_string(static_cast<int>(1000000.0f / dtMicros)));

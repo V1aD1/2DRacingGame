@@ -1,6 +1,7 @@
 #pragma once
 
 #include <tuple>
+#include <list>
 #include <SFML/Graphics.hpp>
 #include "PhysicsState.h"
 
@@ -53,8 +54,10 @@ protected:
 	PhysicsState m_currState;
 
 protected:
-	std::tuple<Entity*, sf::Vector2f> DetectCollision(Entity& self);
-	Entity* DetectCollisionLineTest(Entity& self);
+	std::tuple<Entity*, sf::Vector2f> DetectCollision(Entity& self) const;
+	std::list<std::tuple<Entity*, sf::Vector2f>> DetectCollisionV2(Entity& self) const;
+
+	Entity* DetectCollisionLineTest(Entity& self) const;
 	void SlowDown(float deceleration, float dtTimeMilli);
 
 protected:

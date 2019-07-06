@@ -29,7 +29,7 @@ PhysicsComponent::~PhysicsComponent() {}
 
 //IMPORTANT: function should only be called after computing 
 //final position of m_newState!!
-std::tuple<Entity*, sf::Vector2f> PhysicsComponent::DetectCollision(Entity& self) {
+std::tuple<Entity*, sf::Vector2f> PhysicsComponent::DetectCollision(Entity& self) const{
 
 	//check every object in same cell(s) as newState
 	//for a collision, using point triangle test method
@@ -60,8 +60,41 @@ std::tuple<Entity*, sf::Vector2f> PhysicsComponent::DetectCollision(Entity& self
 	return std::make_tuple(nullptr, sf::Vector2f());
 }
 
+std::list<std::tuple<Entity*, sf::Vector2f>> PhysicsComponent::DetectCollisionV2(Entity & self) const
+{
+	//check every object in same cell(s) as newState
+	//for a collision, using point triangle test method
+	auto potentialCollisionEntities = worldSpaceManager.GetEntitiesAtCoords(m_newState.GetCollisionSpaceCoordinates());
+
+	std::list<std::tuple<Entity*, sf::Vector2f>> collisionList = std::list<std::tuple<Entity*, sf::Vector2f>>();
+
+	//check every static object for a collision
+	//using point triangle test method
+	for (auto otherEntity : potentialCollisionEntities) {
+
+		//to avoid collision detection with itself
+		//todo change to use ID of objects instead
+		if (otherEntity == &self)
+			continue;
+
+		//first check collision from this entity's perspective
+		std::tuple<bool, sf::Vector2f> collisionData = m_newState.IsColliding(otherEntity->GetWorldCorners());
+
+		//if no collision, also check from the other entity's perspective
+		if (std::get<0>(collisionData) == false) {
+			collisionData = otherEntity->IsColliding(&m_newState.GetWorldCorners());
+		}
+
+		if (std::get<0>(collisionData) == true) {
+			collisionList.push_front(std::make_tuple(otherEntity, std::get<1>(collisionData)));
+		}
+	}
+
+	return collisionList;
+}
+
 //nice and eloquent, but unfortunately doesn't determine point of collision
-Entity* PhysicsComponent::DetectCollisionLineTest(Entity& self)
+Entity* PhysicsComponent::DetectCollisionLineTest(Entity& self) const
 {
 	//check every object in same cell(s) as newState
 	//for a collision, using point triangle test method
