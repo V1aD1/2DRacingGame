@@ -23,6 +23,7 @@ static const float terrainLen = 50;
 //global variables
 extern const int screenLen = 1500, screenHeight = 700;
 
+std::vector<Entity*> G_DECORATIVEOBJECTS;
 extern std::vector<Entity*> G_STATICOBJECTS;
 extern std::vector<Entity*> G_VARIABLEOBJECTS;
 extern std::vector<Entity*> G_PARTICLES;
@@ -219,33 +220,58 @@ int main()
 
 #pragma region Barriers
 
-#pragma endregion
+	//top left corner
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(175, 125), 0, sf::Vector2f(0.1, 0.1), boxText));
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(125, 125), 0, sf::Vector2f(0.1, 0.1), boxText));
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(175, 75), 0, sf::Vector2f(0.1, 0.1), boxText));
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(125, 75), 0, sf::Vector2f(0.1, 0.1), boxText));
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(175, 25), 0, sf::Vector2f(0.1, 0.1), boxText));
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(125, 25), 0, sf::Vector2f(0.1, 0.1), boxText));
 
+	//top right
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(1375, 125), 0, sf::Vector2f(0.1, 0.1), boxText));
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(1325, 125), 0, sf::Vector2f(0.1, 0.1), boxText));
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(1375, 75), 0, sf::Vector2f(0.1, 0.1), boxText));
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(1325, 75), 0, sf::Vector2f(0.1, 0.1), boxText));
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(1375, 25), 0, sf::Vector2f(0.1, 0.1), boxText));
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(1325, 25), 0, sf::Vector2f(0.1, 0.1), boxText));
+	
+	//bottom left
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(175, 675), 0, sf::Vector2f(0.1, 0.1), boxText));
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(125, 675), 0, sf::Vector2f(0.1, 0.1), boxText));
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(175, 625), 0, sf::Vector2f(0.1, 0.1), boxText));
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(125, 625), 0, sf::Vector2f(0.1, 0.1), boxText));
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(175, 575), 0, sf::Vector2f(0.1, 0.1), boxText));
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(125, 575), 0, sf::Vector2f(0.1, 0.1), boxText));
 
+	//bottom right
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(1375, 670), 0, sf::Vector2f(0.1, 0.1), boxText));
 
+	/*G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(125, 125), 0, sf::Vector2f(0.1, 0.1), boxText));
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(175, 75), 0, sf::Vector2f(0.1, 0.1), boxText));
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(125, 75), 0, sf::Vector2f(0.1, 0.1), boxText));
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(175, 25), 0, sf::Vector2f(0.1, 0.1), boxText));
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(125, 25), 0, sf::Vector2f(0.1, 0.1), boxText));*/
 
-
-	/*for (int i = 4; (i + 1) * terrainLen < screenLen; i++) {
-		for (int j = 4; (j + 1) * terrainLen < screenHeight; j++) {
-			auto grassTerrain = EntityFactory::CreateGrassTerrain(100, sf::Vector2f(i * terrainLen + terrainLen / 2, j * terrainLen + terrainLen / 2), sf::Vector2f(1, 1));
-			G_STATICOBJECTS.push_back(grassTerrain);
-		}
+	//centre
+	for (int currX = 550; currX < 1000; currX += 50) {
+		G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(currX, 350), 0, sf::Vector2f(0.1, 0.1), boxText));
 	}
 
-	auto dirtTerrain = EntityFactory::CreateRoadTerrain(100, sf::Vector2f(300, 300), sf::Vector2f(1, 1));
-	G_STATICOBJECTS.push_back(dirtTerrain);*/
-	
-	auto square = EntityFactory::CreateStaticCollisionObject(sf::Vector2f(screenLen / 2, screenHeight / 2), 123.0f, sf::Vector2f(0.5, 0.5), boxText);
-	auto shrub = EntityFactory::CreateDecorativeObject(sf::Vector2f(100, 100), 0, sf::Vector2f(1, 1), shrubText);
-	auto player1 = EntityFactory::CreatePlayer1(sf::Vector2f(40.0f, 50.0f), 90.0f, car1Text);	
-	auto player2 = EntityFactory::CreatePlayer2(sf::Vector2f(40.0f, 90.0f), 90.0f, car2Text);
+
+#pragma endregion
+
+#pragma region Decorations
+	G_DECORATIVEOBJECTS.push_back(EntityFactory::CreateDecorativeObject(sf::Vector2f(480, 340), 0, sf::Vector2f(0.5, 0.5), shrubText));
+	G_DECORATIVEOBJECTS.push_back(EntityFactory::CreateDecorativeObject(sf::Vector2f(1020, 340), 0, sf::Vector2f(0.5, 0.5), shrubText));
+#pragma endregion
+
+	auto player1 = EntityFactory::CreatePlayer1(sf::Vector2f(6 * terrainLen, 2.5 * terrainLen), 90.0f, car1Text);	
+	auto player2 = EntityFactory::CreatePlayer2(sf::Vector2f(6 * terrainLen, 3.5 * terrainLen), 90.0f, car2Text);
 	auto emitter = ParticleEmitter();
 
 	G_VARIABLEOBJECTS.push_back(player1);
 	G_VARIABLEOBJECTS.push_back(player2);
-	
-	G_STATICOBJECTS.push_back(square);
-	//G_STATICOBJECTS.push_back(shrub);
 
 	worldSpaceManager.UpdateAllEntitiesInCollSpace();
 
@@ -281,6 +307,10 @@ int main()
 
 		for (auto variableObject : G_VARIABLEOBJECTS) {
 			variableObject->Update(window, dtMillis, eventHandler);
+		}
+
+		for (auto decorativeObject : G_DECORATIVEOBJECTS) {
+			decorativeObject->Update(window, dtMillis, eventHandler);
 		}
 
 		if (eventHandler.qFlag)
