@@ -19,6 +19,7 @@
 
 const float EntityFactory::c_car_length = 40.0f;
 const float EntityFactory::c_car_width = 10.0f;
+const float EntityFactory::c_road_line_width = 7.0f;
 
 
 Entity* EntityFactory::DBG_CreateSquare(float sideLen, sf::Vector2f startPos, float startRotInDeg) {
@@ -78,17 +79,16 @@ Entity * EntityFactory::CreateDecorativeObject(sf::Vector2f startPos, float star
 
 	sprite->setScale(scale);
 
-	//create corners for physics component
-	std::vector<sf::Vector2f> localCorners = std::vector<sf::Vector2f>();
-	localCorners.push_back(sf::Vector2f(-(size.x * scale.x / 2.0f), -(size.y * scale.y / 2.0f)));
-	localCorners.push_back(sf::Vector2f(size.x * scale.x / 2.0f, -(size.y * scale.y / 2.0f)));
-	localCorners.push_back(sf::Vector2f(size.x * scale.x / 2.0f, size.y * scale.y / 2.0f));
-	localCorners.push_back(sf::Vector2f(-(size.x * scale.x / 2.0f), size.y * scale.y / 2.0f));
-
-	//todo use TextureGraphicsComponent or something
+	//todo rename to TextureGraphicsComponent or something
 	auto graphics = new SpriteGraphicsComponent(sprite);
 
 	return new Entity(startPos, startRotInDeg, nullptr, nullptr, graphics, nullptr);
+}
+
+Entity * EntityFactory::CreateDecorativeObject(sf::Shape* shape, sf::Vector2f pos, float rot)
+{
+	auto graphics = new ShapeGraphicsComponent(shape);
+	return new Entity(pos, rot, nullptr, nullptr, graphics, nullptr);
 }
 
 Entity* EntityFactory::CreatePlayer1(sf::Vector2f startPos, float startRotInDeg, sf::Texture& carText)
@@ -200,6 +200,15 @@ Entity * EntityFactory::CreateRoadTerrain(float sideLen, sf::Vector2f startPos, 
 	auto collision = new StaticCollisionComponent(startPos, MathCommon::DegreesToRadians(0), localCorners);
 
 	return new Entity(startPos, 0, nullptr, physics, graphics, collision);
+}
+
+Entity * EntityFactory::CreateRoadLine(float length, sf::Vector2f pos, float rot)
+{
+	sf::Shape* shape = new sf::RectangleShape(sf::Vector2f(length, c_road_line_width));
+	shape->setOrigin(length/2, c_road_line_width/2);
+	shape->setFillColor(sf::Color::White);
+
+	return CreateDecorativeObject(shape, pos, rot);
 }
 
 

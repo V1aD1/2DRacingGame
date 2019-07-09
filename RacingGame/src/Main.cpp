@@ -120,6 +120,8 @@ int main()
 	//todo read terrain mappings from a file
 	
 #pragma region Road
+
+	//top and bottom
 	for (int currX = 5, currY = 2; currX < 25; currX++) {
 		G_STATICOBJECTS.push_back(EntityFactory::CreateRoadTerrain(terrainLen, GetTerrainCoords(currX, currY), sf::Vector2f(1, 1)));
 		G_STATICOBJECTS.push_back(EntityFactory::CreateRoadTerrain(terrainLen, GetTerrainCoords(currX, currY + 1), sf::Vector2f(1, 1)));
@@ -128,6 +130,7 @@ int main()
 		G_STATICOBJECTS.push_back(EntityFactory::CreateRoadTerrain(terrainLen, GetTerrainCoords(currX, currY + 1 + 1 * 8), sf::Vector2f(1, 1)));
 	}
 
+	//left and right
 	for (int currX = 4, currY = 4; currY < 10; currY++) {
 		G_STATICOBJECTS.push_back(EntityFactory::CreateRoadTerrain(terrainLen, GetTerrainCoords(currX, currY), sf::Vector2f(1, 1)));
 		G_STATICOBJECTS.push_back(EntityFactory::CreateRoadTerrain(terrainLen, GetTerrainCoords(currX + 1, currY), sf::Vector2f(1, 1)));
@@ -160,8 +163,22 @@ int main()
 		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX, currY + 9), sf::Vector2f(1, 1)));
 		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX + 21, currY + 9), sf::Vector2f(1, 1)));
 	}
+#pragma endregion
 
+#pragma region OutterGrass
 
+	//top and bottom
+	for (int currX = 4, currY = 0; currX < 26; currX++) {
+		G_STATICOBJECTS.push_back(EntityFactory::CreateGrassTerrain(terrainLen, GetTerrainCoords(currX, currY), sf::Vector2f(1, 1)));
+		G_STATICOBJECTS.push_back(EntityFactory::CreateGrassTerrain(terrainLen, GetTerrainCoords(currX, currY + 13), sf::Vector2f(1, 1)));
+	}
+
+	//left and right
+	for (int currX = 2, currY = 3; currY < 11; currY++) {
+		G_STATICOBJECTS.push_back(EntityFactory::CreateGrassTerrain(terrainLen, GetTerrainCoords(currX, currY), sf::Vector2f(1, 1)));
+		G_STATICOBJECTS.push_back(EntityFactory::CreateGrassTerrain(terrainLen, GetTerrainCoords(currX, currY), sf::Vector2f(1, 1)));
+		G_STATICOBJECTS.push_back(EntityFactory::CreateGrassTerrain(terrainLen, GetTerrainCoords(currX + 25, currY), sf::Vector2f(1, 1)));
+	}
 #pragma endregion
 
 #pragma region InnerDirt
@@ -174,7 +191,6 @@ int main()
 		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX, currY), sf::Vector2f(1, 1)));
 		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX + 15, currY), sf::Vector2f(1, 1)));
 	}
-
 #pragma endregion
 
 #pragma region InnerGrass
@@ -184,6 +200,28 @@ int main()
 		}
 	}
 #pragma endregion
+
+#pragma region RoadLines
+
+	//top and bottom
+	for (int currX = 8; currX < 23; currX++) {
+		G_STATICOBJECTS.push_back(EntityFactory::CreateRoadLine(20, sf::Vector2f(currX * terrainLen, 3 * terrainLen), 0));
+		G_STATICOBJECTS.push_back(EntityFactory::CreateRoadLine(20, sf::Vector2f(currX * terrainLen, 11 * terrainLen), 0));
+
+	}
+
+	//left and right
+	for (int currY = 5; currY < 10; currY++) {
+		G_STATICOBJECTS.push_back(EntityFactory::CreateRoadLine(20, sf::Vector2f(5.5 * terrainLen, currY * terrainLen), 90));
+		G_STATICOBJECTS.push_back(EntityFactory::CreateRoadLine(20, sf::Vector2f(24.5 * terrainLen, currY * terrainLen), 90));
+	}
+#pragma endregion
+
+#pragma region Barriers
+
+#pragma endregion
+
+
 
 
 
@@ -204,9 +242,9 @@ int main()
 	auto emitter = ParticleEmitter();
 
 	G_VARIABLEOBJECTS.push_back(player1);
-	//G_VARIABLEOBJECTS.push_back(player2);
+	G_VARIABLEOBJECTS.push_back(player2);
 	
-	//G_STATICOBJECTS.push_back(square);
+	G_STATICOBJECTS.push_back(square);
 	//G_STATICOBJECTS.push_back(shrub);
 
 	worldSpaceManager.UpdateAllEntitiesInCollSpace();
