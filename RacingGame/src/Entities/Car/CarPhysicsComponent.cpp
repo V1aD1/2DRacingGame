@@ -153,7 +153,7 @@ void CarPhysicsComponent::Rotate(float dtTimeMilli, bool left)
 
 		float rotAmount;
 		if(!m_braking_flag)
-			rotAmount = direction * (m_rotationSpeed - 0.7 * (m_rotationSpeed * newStateSpeed/m_maxSpeed)) * (dtTimeMilli / 1000.0f);
+			rotAmount = direction * (m_rotationSpeed - 0.6 * (m_rotationSpeed * newStateSpeed/m_maxSpeed)) * (dtTimeMilli / 1000.0f);
 		else
 			rotAmount = direction * m_rotationSpeed * (dtTimeMilli / 1000.0f);
 
