@@ -46,7 +46,7 @@ sf::Texture& LoadTexture(std::string path) {
 	
 	textToLoad->setSmooth(true);
 	
-	if(textToLoad->loadFromFile(path))
+	if(!textToLoad->loadFromFile(path))
 		std::cout << "Problems opening texture located at path" << path << "!" << std::endl;
 
 	return *textToLoad;

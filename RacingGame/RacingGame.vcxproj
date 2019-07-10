@@ -175,6 +175,7 @@
     <ClCompile Include="src\Entities\Terrain\TerrainPhysicsComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="src\Components\ShapeGraphicsComponent.h" />
     <ClInclude Include="src\Components\SpriteGraphicsComponent.h" />
     <ClInclude Include="src\Components\PhysicsState.h" />
@@ -197,6 +198,9 @@
     <ClInclude Include="src\Components\StaticCollisionComponent.h" />
     <ClInclude Include="src\Components\VariableCollisionComponent.h" />
     <ClInclude Include="src\Entities\Terrain\TerrainPhysicsComponent.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="RacingGame.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
