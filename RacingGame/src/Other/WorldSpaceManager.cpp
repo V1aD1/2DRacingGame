@@ -155,7 +155,6 @@ std::vector<sf::Vector2i> WorldSpaceManager::GetCollisionSpaceCoords(const std::
 	return pairs;
 }
 
-//todo exception thrown when exiting bounds of world
 std::vector<Entity*> WorldSpaceManager::GetEntitiesAtCoords(const std::vector<sf::Vector2i>& coords) const
 {
 	std::vector<Entity*> entitiesToRet = std::vector<Entity*>();

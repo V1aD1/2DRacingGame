@@ -151,7 +151,12 @@ void CarPhysicsComponent::Rotate(float dtTimeMilli, bool left)
 	//no turning if car isn't moving
 	if (newStateSpeed > 0.0f) {
 
-		rotAmount = direction * m_rotationSpeed * (dtTimeMilli / 1000.0f);
+		float rotAmount;
+		if(!m_braking_flag)
+			rotAmount = direction * (m_rotationSpeed - 0.7 * (m_rotationSpeed * newStateSpeed/m_maxSpeed)) * (dtTimeMilli / 1000.0f);
+		else
+			rotAmount = direction * m_rotationSpeed * (dtTimeMilli / 1000.0f);
+
 		m_newState.Rotate(MathCommon::DegreesToRadians(rotAmount));
 	}
 }

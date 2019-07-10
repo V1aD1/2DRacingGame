@@ -15,7 +15,6 @@ private:
 	static const float car_skidEffectFrequencyMs;
 
 	//flags
-	//todo read up on flags...
 	bool m_braking_flag;
 	bool m_reversing_flag;
 

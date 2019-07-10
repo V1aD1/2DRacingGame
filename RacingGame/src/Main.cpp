@@ -63,7 +63,6 @@ sf::Texture& LoadTexture(std::string path, sf::IntRect intRect) {
 	return *textToLoad;
 }
 
-//todo pass an intRect for every texture to read
 bool Setup(sf::RenderWindow& window, sf::Font& font, sf::Text& fpsText) {
 	Timer("Setup Function");
 	sf::ContextSettings settings;
@@ -166,6 +165,18 @@ int main()
 	}
 #pragma endregion
 
+#pragma region InnerDirt
+	for (int currX = 7, currY = 4; currX < 23; currX++) {
+		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX, currY), sf::Vector2f(1, 1)));
+		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX, currY + 5), sf::Vector2f(1, 1)));
+	}
+
+	for (int currX = 7, currY = 5; currY < 9; currY++) {
+		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX, currY), sf::Vector2f(1, 1)));
+		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX + 15, currY), sf::Vector2f(1, 1)));
+	}
+#pragma endregion
+
 #pragma region OutterGrass
 
 	//top and bottom
@@ -179,18 +190,6 @@ int main()
 		G_STATICOBJECTS.push_back(EntityFactory::CreateGrassTerrain(terrainLen, GetTerrainCoords(currX, currY), sf::Vector2f(1, 1)));
 		G_STATICOBJECTS.push_back(EntityFactory::CreateGrassTerrain(terrainLen, GetTerrainCoords(currX, currY), sf::Vector2f(1, 1)));
 		G_STATICOBJECTS.push_back(EntityFactory::CreateGrassTerrain(terrainLen, GetTerrainCoords(currX + 25, currY), sf::Vector2f(1, 1)));
-	}
-#pragma endregion
-
-#pragma region InnerDirt
-	for (int currX = 7, currY = 4; currX < 23; currX++) {
-		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX, currY), sf::Vector2f(1, 1)));
-		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX, currY + 5), sf::Vector2f(1, 1)));
-	}
-	
-	for (int currX = 7, currY = 5; currY < 9; currY++) {
-		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX, currY), sf::Vector2f(1, 1)));
-		G_STATICOBJECTS.push_back(EntityFactory::CreateDirtTerrain(terrainLen, GetTerrainCoords(currX + 15, currY), sf::Vector2f(1, 1)));
 	}
 #pragma endregion
 
