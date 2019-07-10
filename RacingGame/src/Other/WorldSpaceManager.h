@@ -11,6 +11,8 @@ class WorldSpaceManager
 private:
 	float cellWidth;
 	float cellHeight;
+	static const int c_worldSpace_x_cell_count = 10;
+	static const int c_worldSpace_y_cell_count = 10;
 
 public:
 	WorldSpaceManager();
@@ -35,8 +37,8 @@ private:
 
 private:
 	//world space will always be divided into 100 cells
-	std::list<Entity*> worldSpace[10][10];
-	sf::RectangleShape cells [10][10];
+	std::list<Entity*> worldSpace[c_worldSpace_x_cell_count][c_worldSpace_y_cell_count];
+	sf::RectangleShape cells [c_worldSpace_y_cell_count][c_worldSpace_y_cell_count];
 };
 
 template<typename T>

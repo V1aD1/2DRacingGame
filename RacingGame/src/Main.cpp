@@ -119,7 +119,7 @@ int main()
 	//important for terrain to be added in a specific order, 
 	//so that terrain ranking can be maintained (grass > dirt > road)
 	//todo read terrain mappings from a file
-	
+
 #pragma region Road
 
 	//top and bottom
@@ -245,26 +245,46 @@ int main()
 	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(125, 575), 0, sf::Vector2f(0.1, 0.1), boxText));
 
 	//bottom right
-	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(1375, 670), 0, sf::Vector2f(0.1, 0.1), boxText));
-
-	/*G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(125, 125), 0, sf::Vector2f(0.1, 0.1), boxText));
-	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(175, 75), 0, sf::Vector2f(0.1, 0.1), boxText));
-	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(125, 75), 0, sf::Vector2f(0.1, 0.1), boxText));
-	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(175, 25), 0, sf::Vector2f(0.1, 0.1), boxText));
-	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(125, 25), 0, sf::Vector2f(0.1, 0.1), boxText));*/
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(1375, 675), 0, sf::Vector2f(0.1, 0.1), boxText));
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(1325, 675), 0, sf::Vector2f(0.1, 0.1), boxText));
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(1375, 625), 0, sf::Vector2f(0.1, 0.1), boxText));
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(1325, 625), 0, sf::Vector2f(0.1, 0.1), boxText));
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(1375, 575), 0, sf::Vector2f(0.1, 0.1), boxText));
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(1325, 575), 0, sf::Vector2f(0.1, 0.1), boxText));
 
 	//centre
 	for (int currX = 550; currX < 1000; currX += 50) {
 		G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(currX, 350), 0, sf::Vector2f(0.1, 0.1), boxText));
 	}
 
+	//top
+	for (int currX = 230; currX < 1300; currX += 65) {
+		G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(currX, -10), 0, sf::Vector2f(0.1, 0.1), boxText));
+	}
+
+	//bottom
+	for (int currX = 230; currX < 1300; currX += 65) {
+		G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(currX, 710), 0, sf::Vector2f(0.1, 0.1), boxText));
+	}
+
+	//left
+	for (int currY = 125; currY < 600; currY += 50) {
+		G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(75, currY), 0, sf::Vector2f(0.1, 0.1), boxText));
+	}
+
+	//right
+	for (int currY = 125; currY < 600; currY += 50) {
+		G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(1425, currY), 0, sf::Vector2f(0.1, 0.1), boxText));
+	}
 
 #pragma endregion
-
+	
 #pragma region Decorations
 	G_DECORATIVEOBJECTS.push_back(EntityFactory::CreateDecorativeObject(sf::Vector2f(480, 340), 0, sf::Vector2f(0.5, 0.5), shrubText));
 	G_DECORATIVEOBJECTS.push_back(EntityFactory::CreateDecorativeObject(sf::Vector2f(1020, 340), 0, sf::Vector2f(0.5, 0.5), shrubText));
 #pragma endregion
+
+	G_STATICOBJECTS.push_back(EntityFactory::CreateStaticCollisionObject(sf::Vector2f(1375, 675), 0, sf::Vector2f(0.1, 0.1), boxText));
 
 	auto player1 = EntityFactory::CreatePlayer1(sf::Vector2f(6 * terrainLen, 2.5 * terrainLen), 90.0f, car1Text);	
 	auto player2 = EntityFactory::CreatePlayer2(sf::Vector2f(6 * terrainLen, 3.5 * terrainLen), 90.0f, car2Text);
