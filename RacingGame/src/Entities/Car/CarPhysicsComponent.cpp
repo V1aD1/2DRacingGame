@@ -96,8 +96,14 @@ void CarPhysicsComponent::Update(Entity& entity, float dtMilli)
 					10);
 
 				//this is necessary to make the car recover from a collision more quickly...
-				m_newState = m_currState;
-				m_newState.SetVelocity(m_newState.GetVelocity() - absorbedVel);
+				if (MathCommon::GetMagnitude(absorbedVel) == MathCommon::GetMagnitude(m_newState.GetVelocity())) {
+					m_newState = m_currState;
+					m_newState.SetVelocity(sf::Vector2f(0, 0));
+				}
+				else {
+					m_newState = m_currState;
+					m_newState.SetVelocity(m_newState.GetVelocity() - absorbedVel);
+				}
 			}
 		}
 	}
