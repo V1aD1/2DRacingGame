@@ -17,7 +17,7 @@
 #include "Other/WorldSpaceManager.h"
 #include "Entities/Particle/ParticleEmitter.h"
 
-static const sf::Int32 fpsRefreshMs = 500;
+static const sf::Int32 fpsRefreshMs = 10;
 static const float terrainLen = 50;
 
 //global variables
